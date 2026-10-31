@@ -1,595 +1,513 @@
-import { useEffect, useMemo, useState } from 'react';
-import { apiFetch } from './api';
-import type { DashboardSummary, UserRole } from './types';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-type Language = 'pt' | 'en' | 'es';
-type ViewKey = 'dashboard' | 'subjects' | 'materials' | 'agenda' | 'quizzes' | 'reports';
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #e2e8f0;
+  background: #0b1020;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-const initialForm = {
-  name: '',
-  email: '',
-  password: '',
-  role: 'student' as UserRole
-};
+* {
+  box-sizing: border-box;
+}
 
-const materialsCatalog = [
-  { id: 'mat-1', title: 'Aula 01 - Vetores', type: 'PDF', duration: '18 min', status: 'Disponível' },
-  { id: 'mat-2', title: 'Resumo de Cálculo I', type: 'Resumo', duration: '12 min', status: 'Em revisão' },
-  { id: 'mat-3', title: 'Slides de Programação', type: 'PPT', duration: '20 min', status: 'Disponível' },
-  { id: 'mat-4', title: 'Atividade de Física', type: 'Exercício', duration: '15 min', status: 'Corrigir' }
-];
+html, body, #root {
+  margin: 0;
+  min-height: 100%;
+  min-width: 100%;
+  background: linear-gradient(180deg, #081120 0%, #101b2d 100%);
+}
 
-const agendaItems = [
-  { id: 'ag-1', title: 'Revisão de Álgebra', time: 'Hoje • 18:00', type: 'Estudo' },
-  { id: 'ag-2', title: 'Quiz de Física', time: 'Amanhã • 09:30', type: 'Avaliação' },
-  { id: 'ag-3', title: 'Entrega de resumo', time: 'Quarta • 14:00', type: 'Entrega' },
-  { id: 'ag-4', title: 'Sprint de Programação', time: 'Quinta • 10:00', type: 'Trabalho' }
-];
+body {
+  min-height: 100vh;
+}
 
-const quizCards = [
-  { id: 'q-1', title: 'Prova de Programação', score: '92%', date: '12/10', questions: 15 },
-  { id: 'q-2', title: 'Atividade de Álgebra', score: '88%', date: '08/10', questions: 10 },
-  { id: 'q-3', title: 'Quiz de Cálculo', score: '76%', date: '05/10', questions: 12 }
-];
+button,
+input,
+select {
+  font: inherit;
+}
 
-const reportBars = [
-  { label: 'Matemática', value: 84 },
-  { label: 'Física', value: 72 },
-  { label: 'Programação', value: 91 },
-  { label: 'História', value: 68 }
-];
+button {
+  cursor: pointer;
+}
 
-const translations = {
-  pt: {
-    auth: {
-      subtitle: 'Plataforma acadêmica',
-      title: 'Biomaster Academy',
-      description: 'Organize estudos, materiais, provas e desempenho em um só lugar.',
-      login: 'Entrar',
-      register: 'Cadastrar',
-      name: 'Nome',
-      email: 'E-mail',
-      password: 'Senha',
-      role: 'Perfil',
-      student: 'Aluno',
-      teacher: 'Professor',
-      admin: 'Admin',
-      account: 'Criar conta',
-      loading: 'Carregando...'
-    },
-    dashboard: {
-      welcome: 'Bem-vindo(a),',
-      brand: 'Biomaster',
-      nav: {
-        dashboard: 'Dashboard',
-        subjects: 'Disciplinas',
-        materials: 'Materiais',
-        agenda: 'Agenda',
-        quizzes: 'Quizzes',
-        reports: 'Relatórios'
-      },
-      logout: 'Sair',
-      newTask: 'Nova tarefa',
-      mySubjects: 'Minhas disciplinas',
-      nextTasks: 'Próximas tarefas',
-      recentPerformance: 'Desempenho recente',
-      pending: 'Pendente',
-      done: 'Concluída',
-      stats: {
-        subjects: 'Disciplinas',
-        classes: 'Aulas concluídas',
-        quiz: 'Quiz recente',
-        weekly: 'Meta semanal'
-      },
-      subjectDetail: 'Visão geral das disciplinas',
-      materialsTitle: 'Materiais disponíveis',
-      agendaTitle: 'Agenda de estudos',
-      quizzesTitle: 'Avaliações recentes',
-      reportsTitle: 'Progresso por disciplina',
-      learningPlan: 'Plano de aprendizado',
-      noItems: 'Nenhum item disponível.'
-    },
-    language: 'Idioma'
-  },
-  en: {
-    auth: {
-      subtitle: 'Academic platform',
-      title: 'Biomaster Academy',
-      description: 'Organize your studies, materials, assessments and performance in one place.',
-      login: 'Login',
-      register: 'Register',
-      name: 'Name',
-      email: 'E-mail',
-      password: 'Password',
-      role: 'Profile',
-      student: 'Student',
-      teacher: 'Teacher',
-      admin: 'Admin',
-      account: 'Create account',
-      loading: 'Loading...'
-    },
-    dashboard: {
-      welcome: 'Welcome,',
-      brand: 'Biomaster',
-      nav: {
-        dashboard: 'Dashboard',
-        subjects: 'Subjects',
-        materials: 'Materials',
-        agenda: 'Agenda',
-        quizzes: 'Quizzes',
-        reports: 'Reports'
-      },
-      logout: 'Logout',
-      newTask: 'New task',
-      mySubjects: 'My subjects',
-      nextTasks: 'Upcoming tasks',
-      recentPerformance: 'Recent performance',
-      pending: 'Pending',
-      done: 'Completed',
-      stats: {
-        subjects: 'Subjects',
-        classes: 'Classes completed',
-        quiz: 'Recent quiz',
-        weekly: 'Weekly goal'
-      },
-      subjectDetail: 'Overview of subjects',
-      materialsTitle: 'Available materials',
-      agendaTitle: 'Study agenda',
-      quizzesTitle: 'Recent assessments',
-      reportsTitle: 'Progress by subject',
-      learningPlan: 'Learning plan',
-      noItems: 'No items available.'
-    },
-    language: 'Language'
-  },
-  es: {
-    auth: {
-      subtitle: 'Plataforma académica',
-      title: 'Biomaster Academy',
-      description: 'Organiza tus estudios, materiales, evaluaciones y rendimiento en un solo lugar.',
-      login: 'Iniciar sesión',
-      register: 'Registrarse',
-      name: 'Nombre',
-      email: 'Correo',
-      password: 'Contraseña',
-      role: 'Perfil',
-      student: 'Estudiante',
-      teacher: 'Profesor',
-      admin: 'Admin',
-      account: 'Crear cuenta',
-      loading: 'Cargando...'
-    },
-    dashboard: {
-      welcome: 'Bienvenido(a),',
-      brand: 'Biomaster',
-      nav: {
-        dashboard: 'Panel',
-        subjects: 'Asignaturas',
-        materials: 'Materiales',
-        agenda: 'Agenda',
-        quizzes: 'Cuestionarios',
-        reports: 'Informes'
-      },
-      logout: 'Cerrar sesión',
-      newTask: 'Nueva tarea',
-      mySubjects: 'Mis asignaturas',
-      nextTasks: 'Próximas tareas',
-      recentPerformance: 'Rendimiento reciente',
-      pending: 'Pendiente',
-      done: 'Completada',
-      stats: {
-        subjects: 'Asignaturas',
-        classes: 'Clases completadas',
-        quiz: 'Cuestionario reciente',
-        weekly: 'Meta semanal'
-      },
-      subjectDetail: 'Resumen de asignaturas',
-      materialsTitle: 'Materiales disponibles',
-      agendaTitle: 'Agenda de estudio',
-      quizzesTitle: 'Evaluaciones recientes',
-      reportsTitle: 'Progreso por asignatura',
-      learningPlan: 'Plan de aprendizaje',
-      noItems: 'No hay elementos disponibles.'
-    },
-    language: 'Idioma'
-  }
-} as const;
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at top, rgba(96, 165, 250, 0.18), transparent 30%);
+}
 
-export default function App() {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
-  const [form, setForm] = useState(initialForm);
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem('biomaster-token'));
-  const [dashboard, setDashboard] = useState<DashboardSummary | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [language, setLanguage] = useState<Language>(() => {
-    const stored = localStorage.getItem('biomaster-language');
-    return stored === 'en' || stored === 'es' ? stored : 'pt';
-  });
-  const [activeView, setActiveView] = useState<ViewKey>('dashboard');
+.auth-card {
+  width: min(980px, 100%);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.32);
+}
 
-  const t = translations[language];
+.brand-block {
+  padding: 48px 40px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(15, 118, 110, 0.12));
+}
 
-  useEffect(() => {
-    localStorage.setItem('biomaster-language', language);
-  }, [language]);
+.mini-label {
+  display: inline-block;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  margin-bottom: 12px;
+}
 
-  useEffect(() => {
-    if (!token) {
-      setDashboard(null);
-      return;
-    }
+.brand-block h1 {
+  margin: 0 0 14px;
+  font-size: clamp(2.3rem, 6vw, 4rem);
+}
 
-    const loadDashboard = async () => {
-      try {
-        setLoading(true);
-        const data = await apiFetch<DashboardSummary>('/api/dashboard', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setDashboard(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar dashboard.');
-      } finally {
-        setLoading(false);
-      }
-    };
+.brand-block p {
+  margin: 0;
+  max-width: 420px;
+  color: #cbd5e1;
+  font-size: 1.05rem;
+}
 
-    loadDashboard();
-  }, [token]);
+.auth-panel {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: rgba(15, 23, 42, 0.9);
+}
 
-  const greeting = useMemo(() => {
-    if (!dashboard) return t.auth.loading;
-    return dashboard.user.name;
-  }, [dashboard, t.auth.loading]);
+.language-row,
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
 
-  const navItems = [
-    { key: 'dashboard', label: t.dashboard.nav.dashboard },
-    { key: 'subjects', label: t.dashboard.nav.subjects },
-    { key: 'materials', label: t.dashboard.nav.materials },
-    { key: 'agenda', label: t.dashboard.nav.agenda },
-    { key: 'quizzes', label: t.dashboard.nav.quizzes },
-    { key: 'reports', label: t.dashboard.nav.reports }
-  ] as const;
+.language-label,
+.language-inline span {
+  color: #cbd5e1;
+  font-size: 0.82rem;
+}
 
-  async function handleSubmit() {
-    setError('');
-    setLoading(true);
+.language-select,
+.language-inline select,
+.auth-panel input,
+.auth-panel select {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
 
-    try {
-      const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
-      const payload =
-        mode === 'login'
-          ? { email: form.email, password: form.password }
-          : form;
+.switcher {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+}
 
-      const response = await apiFetch<{ token: string; user: { name: string; role: UserRole } }>(endpoint, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
+.switcher button {
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  padding: 12px 10px;
+  font-weight: 700;
+}
 
-      localStorage.setItem('biomaster-token', response.token);
-      setToken(response.token);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Não foi possível concluir a operação.');
-    } finally {
-      setLoading(false);
-    }
-  }
+.switcher button.active {
+  background: #2563eb;
+  color: white;
+}
 
-  function handleLogout() {
-    localStorage.removeItem('biomaster-token');
-    setToken(null);
-    setDashboard(null);
-    setForm(initialForm);
-    setActiveView('dashboard');
-  }
+.auth-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
 
-  const localizedStats = dashboard?.stats.map((item) => {
-    if (item.label === 'Disciplinas' || item.label === 'Subjects' || item.label === 'Asignaturas') {
-      return { ...item, label: t.dashboard.stats.subjects };
-    }
+.auth-panel input,
+.auth-panel select {
+  padding: 12px 14px;
+}
 
-    if (item.label === 'Aulas concluídas' || item.label === 'Classes completed' || item.label === 'Clases completadas') {
-      return { ...item, label: t.dashboard.stats.classes };
-    }
+.primary-button,
+.logout-button,
+.nav-button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 700;
+}
 
-    if (item.label === 'Quiz recente' || item.label === 'Recent quiz' || item.label === 'Cuestionario reciente') {
-      return { ...item, label: t.dashboard.stats.quiz };
-    }
+.primary-button {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: white;
+}
 
-    if (item.label === 'Meta semanal' || item.label === 'Weekly goal' || item.label === 'Meta semanal') {
-      return { ...item, label: t.dashboard.stats.weekly };
-    }
+.error {
+  margin: 0;
+  color: #fca5a5;
+  font-size: 0.9rem;
+}
 
-    return item;
-  });
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
 
-  const renderView = () => {
-    if (!dashboard) return null;
+.sidebar {
+  width: 260px;
+  background: rgba(15, 23, 42, 0.9);
+  border-right: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+}
 
-    switch (activeView) {
-      case 'subjects':
-        return (
-          <section className="section-panel">
-            <div className="section-heading">
-              <h2>{t.dashboard.subjectDetail}</h2>
-            </div>
-            <div className="subject-card-grid">
-              {dashboard.subjects.map((subject) => (
-                <article key={subject.id} className="subject-main-card">
-                  <div className="subject-header-row">
-                    <span className="subject-dot" style={{ background: subject.color }} />
-                    <h3>{subject.name}</h3>
-                  </div>
-                  <p>{subject.description}</p>
-                  <div className="progress-line">
-                    <span style={{ width: `${subject.progress}%` }} />
-                  </div>
-                  <strong>{subject.progress}%</strong>
-                </article>
-              ))}
-            </div>
-          </section>
-        );
-      case 'materials':
-        return (
-          <section className="section-panel">
-            <div className="section-heading">
-              <h2>{t.dashboard.materialsTitle}</h2>
-            </div>
-            <div className="material-grid">
-              {materialsCatalog.map((material) => (
-                <article key={material.id} className="material-card">
-                  <span className="badge dark">{material.type}</span>
-                  <h3>{material.title}</h3>
-                  <p>{material.duration}</p>
-                  <span className="badge soft">{material.status}</span>
-                </article>
-              ))}
-            </div>
-          </section>
-        );
-      case 'agenda':
-        return (
-          <section className="section-panel">
-            <div className="section-heading">
-              <h2>{t.dashboard.agendaTitle}</h2>
-            </div>
-            <ul className="agenda-list">
-              {agendaItems.map((item) => (
-                <li key={item.id} className="agenda-item">
-                  <div>
-                    <strong>{item.title}</strong>
-                    <small>{item.time}</small>
-                  </div>
-                  <span className="badge primary">{item.type}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        );
-      case 'quizzes':
-        return (
-          <section className="section-panel">
-            <div className="section-heading">
-              <h2>{t.dashboard.quizzesTitle}</h2>
-            </div>
-            <div className="quiz-grid">
-              {quizCards.map((quiz) => (
-                <article key={quiz.id} className="quiz-card">
-                  <span>{quiz.title}</span>
-                  <strong>{quiz.score}</strong>
-                  <small>{quiz.date}</small>
-                  <em>{quiz.questions} questões</em>
-                </article>
-              ))}
-            </div>
-          </section>
-        );
-      case 'reports':
-        return (
-          <section className="section-panel">
-            <div className="section-heading">
-              <h2>{t.dashboard.reportsTitle}</h2>
-            </div>
-            <div className="report-list">
-              {reportBars.map((item) => (
-                <div key={item.label} className="report-row">
-                  <div className="report-label-row">
-                    <span>{item.label}</span>
-                    <strong>{item.value}%</strong>
-                  </div>
-                  <div className="report-track">
-                    <span style={{ width: `${item.value}%` }} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        );
-      default:
-        return (
-          <>
-            <section className="stats-grid">
-              {(localizedStats ?? dashboard.stats).map((item) => (
-                <article key={item.label} className="stat-card">
-                  <span>{item.label}</span>
-                  <strong>{item.value}</strong>
-                </article>
-              ))}
-            </section>
+.brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #7dd3fc;
+  margin-bottom: 28px;
+}
 
-            <section className="content-grid">
-              <div className="panel">
-                <h2>{t.dashboard.mySubjects}</h2>
-                <ul className="subject-list">
-                  {dashboard.subjects.map((subject) => (
-                    <li key={subject.id}>
-                      <div className="subject-meta">
-                        <span className="subject-dot" style={{ background: subject.color }} />
-                        <div>
-                          <strong>{subject.name}</strong>
-                          <small>{subject.description}</small>
-                        </div>
-                      </div>
-                      <div className="subject-progress">
-                        <span>{subject.progress}%</span>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
-              <div className="panel">
-                <h2>{t.dashboard.nextTasks}</h2>
-                <ul className="task-list">
-                  {dashboard.tasks.map((task) => (
-                    <li key={task.id}>
-                      <div>
-                        <strong>{task.title}</strong>
-                        <small>{task.due}</small>
-                      </div>
-                      <span className={task.status === 'done' ? 'done' : 'pending'}>
-                        {task.status === 'done' ? t.dashboard.done : t.dashboard.pending}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </section>
+.nav-button {
+  width: 100%;
+  background: transparent;
+  color: #cbd5e1;
+  text-align: left;
+  border: 1px solid transparent;
+}
 
-            <section className="panel bottom-panel">
-              <h2>{t.dashboard.recentPerformance}</h2>
-              <div className="assessment-grid">
-                {dashboard.recentAssessments.map((assessment) => (
-                  <div key={assessment.title} className="assessment-card">
-                    <span>{assessment.title}</span>
-                    <strong>{assessment.score}</strong>
-                    <small>{assessment.date}</small>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </>
-        );
-    }
-  };
+.nav-button.active {
+  background: rgba(59, 130, 246, 0.1);
+  color: white;
+  border-color: rgba(96, 165, 250, 0.2);
+}
 
-  if (!token || !dashboard) {
-    return (
-      <div className="auth-shell">
-        <div className="auth-card">
-          <div className="brand-block">
-            <span className="mini-label">{t.auth.subtitle}</span>
-            <h1>{t.auth.title}</h1>
-            <p>{t.auth.description}</p>
-          </div>
+.logout-button {
+  margin-top: auto;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+}
 
-          <div className="auth-panel">
-            <div className="language-row">
-              <label htmlFor="language-selector" className="language-label">{t.language}</label>
-              <select
-                id="language-selector"
-                className="language-select"
-                value={language}
-                onChange={(event) => setLanguage(event.target.value as Language)}
-              >
-                <option value="pt">Português</option>
-                <option value="en">English</option>
-                <option value="es">Español</option>
-              </select>
-            </div>
+.main-content {
+  flex: 1;
+  padding: 36px;
+}
 
-            <div className="switcher">
-              <button className={mode === 'login' ? 'active' : ''} onClick={() => setMode('login')}>
-                {t.auth.login}
-              </button>
-              <button className={mode === 'register' ? 'active' : ''} onClick={() => setMode('register')}>
-                {t.auth.register}
-              </button>
-            </div>
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
 
-            {mode === 'register' && (
-              <label>
-                {t.auth.name}
-                <input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
-              </label>
-            )}
+.eyebrow {
+  margin: 0;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
 
-            <label>
-              {t.auth.email}
-              <input value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
-            </label>
+.topbar h1 {
+  margin: 4px 0 0;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
 
-            <label>
-              {t.auth.password}
-              <input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
-            </label>
+.language-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1;
+  font-size: 0.8rem;
+}
 
-            {mode === 'register' && (
-              <label>
-                {t.auth.role}
-                <select value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value as UserRole })}>
-                  <option value="student">{t.auth.student}</option>
-                  <option value="teacher">{t.auth.teacher}</option>
-                  <option value="admin">{t.auth.admin}</option>
-                </select>
-              </label>
-            )}
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
 
-            {error && <p className="error">{error}</p>}
+.stat-card,
+.panel,
+.section-panel,
+.subject-main-card,
+.material-card,
+.quiz-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 18px;
+  padding: 20px;
+}
 
-            <button className="primary-button" onClick={handleSubmit} disabled={loading}>
-              {loading ? t.auth.loading : mode === 'login' ? t.auth.login : t.auth.account}
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-card span {
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.stat-card strong {
+  font-size: 1.8rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.panel h2,
+.section-heading h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.subject-list,
+.task-list,
+.agenda-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subject-list li,
+.task-list li,
+.agenda-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.subject-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.subject-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.subject-meta small,
+.task-list small,
+.agenda-item small {
+  display: block;
+  color: #94a3b8;
+}
+
+.subject-progress {
+  color: #7dd3fc;
+  font-weight: 700;
+}
+
+.task-list .pending,
+.task-list .done,
+.badge {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.task-list .pending {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+}
+
+.task-list .done {
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
+}
+
+.badge.dark {
+  background: rgba(30, 41, 59, 0.9);
+  color: #e2e8f0;
+}
+
+.badge.soft {
+  background: rgba(148, 163, 184, 0.12);
+  color: #dbeafe;
+}
+
+.badge.primary {
+  background: rgba(59, 130, 246, 0.14);
+  color: #93c5fd;
+}
+
+.bottom-panel {
+  margin-top: 12px;
+}
+
+.assessment-grid,
+.subject-card-grid,
+.material-grid,
+.quiz-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.assessment-card,
+.material-card,
+.quiz-card {
+  background: rgba(30, 41, 59, 0.7);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.assessment-card span,
+.quiz-card span,
+.material-card p,
+.subject-main-card p {
+  color: #cbd5e1;
+}
+
+.assessment-card strong,
+.quiz-card strong {
+  font-size: 1.8rem;
+}
+
+.assessment-card small,
+.quiz-card small,
+.material-card .badge,
+.subject-main-card strong {
+  color: #94a3b8;
+}
+
+.subject-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.subject-main-card h3,
+.material-card h3 {
+  margin: 0;
+}
+
+.progress-line {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  overflow: hidden;
+  margin: 14px 0 8px;
+}
+
+.progress-line span,
+.report-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #38bdf8, #2563eb);
+}
+
+.report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.report-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-label-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #e2e8f0;
+}
+
+.report-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .auth-card {
+    grid-template-columns: 1fr;
   }
 
-  return (
-    <div className="app-shell">
-      <aside className="sidebar">
-        <div className="brand">{t.dashboard.brand}</div>
-        <nav>
-          {navItems.map((item) => (
-            <button
-              key={item.key}
-              type="button"
-              className={activeView === item.key ? 'nav-button active' : 'nav-button'}
-              onClick={() => setActiveView(item.key)}
-            >
-              {item.label}
-            </button>
-          ))}
-        </nav>
-        <button className="logout-button" onClick={handleLogout}>{t.dashboard.logout}</button>
-      </aside>
+  .app-shell {
+    flex-direction: column;
+  }
 
-      <main className="main-content">
-        <header className="topbar">
-          <div>
-            <p className="eyebrow">{t.dashboard.welcome}</p>
-            <h1>{greeting}</h1>
-          </div>
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+  }
 
-          <div className="header-actions">
-            <label className="language-inline">
-              <span>{t.language}</span>
-              <select value={language} onChange={(event) => setLanguage(event.target.value as Language)}>
-                <option value="pt">Português</option>
-                <option value="en">English</option>
-                <option value="es">Español</option>
-              </select>
-            </label>
-            <button className="primary-button">{t.dashboard.newTask}</button>
-          </div>
-        </header>
+  .topbar,
+  .header-actions,
+  .language-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-        {renderView()}
-      </main>
-    </div>
-  );
+  .content-grid,
+  .stats-grid,
+  .assessment-grid,
+  .subject-card-grid,
+  .material-grid,
+  .quiz-grid {
+    grid-template-columns: 1fr;
+  }
 }
 

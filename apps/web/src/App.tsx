@@ -1,224 +1,416 @@
-import { useEffect, useMemo, useState } from 'react';
-import { apiFetch } from './api';
-import type { DashboardSummary, UserRole } from './types';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-const initialForm = {
-  name: '',
-  email: '',
-  password: '',
-  role: 'student' as UserRole
-};
+:root {
+  font-family: 'Inter', sans-serif;
+  color: #e2e8f0;
+  background: #0b1020;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-export default function App() {
-  const [mode, setMode] = useState<'login' | 'register'>('login');
-  const [form, setForm] = useState(initialForm);
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem('biomaster-token'));
-  const [dashboard, setDashboard] = useState<DashboardSummary | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+* {
+  box-sizing: border-box;
+}
 
-  useEffect(() => {
-    if (!token) {
-      setDashboard(null);
-      return;
-    }
+html, body, #root {
+  margin: 0;
+  min-height: 100%;
+  min-width: 100%;
+  background: linear-gradient(180deg, #081120 0%, #101b2d 100%);
+}
 
-    const loadDashboard = async () => {
-      try {
-        setLoading(true);
-        const data = await apiFetch<DashboardSummary>('/api/dashboard', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setDashboard(data);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Erro ao carregar dashboard.');
-      } finally {
-        setLoading(false);
-      }
-    };
+body {
+  min-height: 100vh;
+}
 
-    loadDashboard();
-  }, [token]);
+button,
+input,
+select {
+  font: inherit;
+}
 
-  const greeting = useMemo(() => {
-    if (!dashboard) return 'Carregando...';
-    return dashboard.user.name;
-  }, [dashboard]);
+button {
+  cursor: pointer;
+}
 
-  async function handleSubmit() {
-    setError('');
-    setLoading(true);
+.auth-shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at top, rgba(96, 165, 250, 0.18), transparent 30%);
+}
 
-    try {
-      const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register';
-      const payload =
-        mode === 'login'
-          ? { email: form.email, password: form.password }
-          : form;
+.auth-card {
+  width: min(980px, 100%);
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.32);
+}
 
-      const response = await apiFetch<{ token: string; user: { name: string; role: UserRole } }>(endpoint, {
-        method: 'POST',
-        body: JSON.stringify(payload)
-      });
+.brand-block {
+  padding: 48px 40px;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(15, 118, 110, 0.12));
+}
 
-      localStorage.setItem('biomaster-token', response.token);
-      setToken(response.token);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Não foi possível concluir a operação.');
-    } finally {
-      setLoading(false);
-    }
+.mini-label {
+  display: inline-block;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  margin-bottom: 12px;
+}
+
+.brand-block h1 {
+  margin: 0 0 14px;
+  font-size: clamp(2.3rem, 6vw, 4rem);
+}
+
+.brand-block p {
+  margin: 0;
+  max-width: 420px;
+  color: #cbd5e1;
+  font-size: 1.05rem;
+}
+
+.auth-panel {
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: rgba(15, 23, 42, 0.9);
+}
+
+.language-row,
+.header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.language-label,
+.language-inline span {
+  color: #cbd5e1;
+  font-size: 0.82rem;
+}
+
+.language-select,
+.language-inline select {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+.switcher {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.switcher button {
+  border: none;
+  background: transparent;
+  color: #cbd5e1;
+  padding: 12px 10px;
+  font-weight: 700;
+}
+
+.switcher button.active {
+  background: #2563eb;
+  color: white;
+}
+
+.auth-panel label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #e2e8f0;
+  font-weight: 600;
+}
+
+.auth-panel input,
+.auth-panel select {
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(15, 23, 42, 0.8);
+  color: white;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.primary-button,
+.logout-button {
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 700;
+}
+
+.primary-button {
+  background: linear-gradient(135deg, #38bdf8, #2563eb);
+  color: white;
+}
+
+.error {
+  margin: 0;
+  color: #fca5a5;
+  font-size: 0.9rem;
+}
+
+.app-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  background: rgba(15, 23, 42, 0.9);
+  border-right: 1px solid rgba(148, 163, 184, 0.2);
+  padding: 28px 18px;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #7dd3fc;
+  margin-bottom: 28px;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar a {
+  padding: 10px 12px;
+  border-radius: 10px;
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background: rgba(59, 130, 246, 0.1);
+  color: white;
+}
+
+.logout-button {
+  margin-top: auto;
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+}
+
+.main-content {
+  flex: 1;
+  padding: 36px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+}
+
+.topbar h1 {
+  margin: 4px 0 0;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+.language-inline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1;
+  font-size: 0.8rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.stat-card,
+.panel {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: 18px;
+  padding: 20px;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-card span {
+  color: #94a3b8;
+  font-size: 0.82rem;
+}
+
+.stat-card strong {
+  font-size: 1.8rem;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.panel h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.subject-list,
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.subject-list li,
+.task-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(30, 41, 59, 0.7);
+}
+
+.subject-meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.subject-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.subject-meta small,
+.task-list small {
+  display: block;
+  color: #94a3b8;
+}
+
+.subject-progress {
+  color: #7dd3fc;
+  font-weight: 700;
+}
+
+.task-list .pending,
+.task-list .done {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.task-list .pending {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+}
+
+.task-list .done {
+  background: rgba(16, 185, 129, 0.12);
+  color: #6ee7b7;
+}
+
+.bottom-panel {
+  margin-top: 12px;
+}
+
+.assessment-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(180px, 1fr));
+  gap: 14px;
+}
+
+.assessment-card {
+  background: rgba(30, 41, 59, 0.7);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.assessment-card span {
+  color: #cbd5e1;
+}
+
+.assessment-card strong {
+  font-size: 1.8rem;
+}
+
+.assessment-card small {
+  color: #94a3b8;
+}
+
+@media (max-width: 900px) {
+  .auth-card {
+    grid-template-columns: 1fr;
   }
 
-  function handleLogout() {
-    localStorage.removeItem('biomaster-token');
-    setToken(null);
-    setDashboard(null);
-    setForm(initialForm);
+  .app-shell {
+    flex-direction: column;
   }
 
-  if (!token || !dashboard) {
-    return (
-      <div className="auth-shell">
-        <div className="auth-card">
-          <div className="brand-block">
-            <span className="mini-label">Plataforma academica</span>
-            <h1>Biomaster Academy</h1>
-            <p>Organize estudos, materiais, provas e desempenho em um só lugar.</p>
-          </div>
-
-          <div className="auth-panel">
-            <div className="switcher">
-              <button className={mode === 'login' ? 'active' : ''} onClick={() => setMode('login')}>
-                Entrar
-              </button>
-              <button className={mode === 'register' ? 'active' : ''} onClick={() => setMode('register')}>
-                Cadastrar
-              </button>
-            </div>
-
-            {mode === 'register' && (
-              <label>
-                Nome
-                <input value={form.name} onChange={(event) => setForm({ ...form, name: event.target.value })} />
-              </label>
-            )}
-
-            <label>
-              E-mail
-              <input value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} />
-            </label>
-
-            <label>
-              Senha
-              <input type="password" value={form.password} onChange={(event) => setForm({ ...form, password: event.target.value })} />
-            </label>
-
-            {mode === 'register' && (
-              <label>
-                Perfil
-                <select value={form.role} onChange={(event) => setForm({ ...form, role: event.target.value as UserRole })}>
-                  <option value="student">Aluno</option>
-                  <option value="teacher">Professor</option>
-                  <option value="admin">Admin</option>
-                </select>
-              </label>
-            )}
-
-            {error && <p className="error">{error}</p>}
-
-            <button className="primary-button" onClick={handleSubmit} disabled={loading}>
-              {loading ? 'Carregando...' : mode === 'login' ? 'Entrar' : 'Criar conta'}
-            </button>
-          </div>
-        </div>
-      </div>
-    );
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.2);
   }
 
-  return (
-    <div className="app-shell">
-      <aside className="sidebar">
-        <div className="brand">Biomaster</div>
-        <nav>
-          <a className="active">Dashboard</a>
-          <a>Disciplinas</a>
-          <a>Materiais</a>
-          <a>Agenda</a>
-          <a>Quizzes</a>
-          <a>Relatórios</a>
-        </nav>
-        <button className="logout-button" onClick={handleLogout}>Sair</button>
-      </aside>
+  .topbar,
+  .header-actions,
+  .language-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-      <main className="main-content">
-        <header className="topbar">
-          <div>
-            <p className="eyebrow">Bem-vindo(a),</p>
-            <h1>{greeting}</h1>
-          </div>
-          <button className="primary-button">Nova tarefa</button>
-        </header>
-
-        <section className="stats-grid">
-          {dashboard.stats.map((item) => (
-            <article key={item.label} className="stat-card">
-              <span>{item.label}</span>
-              <strong>{item.value}</strong>
-            </article>
-          ))}
-        </section>
-
-        <section className="content-grid">
-          <div className="panel">
-            <h2>Minhas disciplinas</h2>
-            <ul className="subject-list">
-              {dashboard.subjects.map((subject) => (
-                <li key={subject.id}>
-                  <div className="subject-meta">
-                    <span className="subject-dot" style={{ background: subject.color }} />
-                    <div>
-                      <strong>{subject.name}</strong>
-                      <small>{subject.description}</small>
-                    </div>
-                  </div>
-                  <div className="subject-progress">
-                    <span>{subject.progress}%</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="panel">
-            <h2>Próximas tarefas</h2>
-            <ul className="task-list">
-              {dashboard.tasks.map((task) => (
-                <li key={task.id}>
-                  <div>
-                    <strong>{task.title}</strong>
-                    <small>{task.due}</small>
-                  </div>
-                  <span className={task.status === 'done' ? 'done' : 'pending'}>{task.status === 'done' ? 'Concluída' : 'Pendente'}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="panel bottom-panel">
-          <h2>Desempenho recente</h2>
-          <div className="assessment-grid">
-            {dashboard.recentAssessments.map((assessment) => (
-              <div key={assessment.title} className="assessment-card">
-                <span>{assessment.title}</span>
-                <strong>{assessment.score}</strong>
-                <small>{assessment.date}</small>
-              </div>
-            ))}
-          </div>
-        </section>
-      </main>
-    </div>
-  );
+  .content-grid,
+  .stats-grid,
+  .assessment-grid {
+    grid-template-columns: 1fr;
+  }
 }

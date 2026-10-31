@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Análisis de comisiones Hotmart · Biomáster Academy</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
+<style>
+:root{--navy:#1f2f4a;--blue:#4f74ad;--sky:#e8f0fc;--gold:#e8cd8c;--ink:#16213a;--mut:#56637f;--line:#dbe5f5;--ok:#1f7a5c;--bad:#b03a2e}
+*{box-sizing:border-box}body{margin:0;background:#f4f8ff;color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif}
+.wrap{max-width:1000px;margin:0 auto;padding:28px 20px 70px}h1,h2,h3{font-family:Poppins,sans-serif;color:var(--navy);margin:0}
+h1{font-size:28px}h2{font-size:19px;margin:26px 0 8px}p.sub{color:var(--mut);margin:6px 0 0}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-top:14px}
+.g{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.g3{grid-template-columns:repeat(3,1fr)}
+label{display:block;font-size:12px;font-weight:600;color:var(--mut)}input,select{width:100%;height:38px;border:1px solid #d5ddec;border-radius:10px;padding:0 10px;font:inherit;margin-top:3px;background:#fff}
+.out{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}.out div{background:var(--sky);border-radius:12px;padding:10px 12px}.out span{display:block;font-size:11px;font-weight:600;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}.out b{font:800 20px Poppins,sans-serif;color:var(--navy)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin-top:10px}th,td{padding:8px 10px;border-bottom:1px solid #eef2fa;text-align:left}th{font:700 11px Poppins,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);background:#f6f9ff}td.r,th.r{text-align:right}
+.bar{height:10px;border-radius:6px;background:#eef2fa;overflow:hidden;display:flex;margin-top:6px}.bar i{display:block;height:100%}
+.note{background:#fff6dc;border:1px solid #f1e2b0;color:#5c4400;border-radius:12px;padding:10px 14px;font-size:13px;margin-top:12px}
+.btn{border:0;border-radius:99px;background:var(--navy);color:#fff;font:600 14px Poppins,sans-serif;padding:10px 20px;cursor:pointer}
+.priv{font-size:12.5px;color:var(--ok);font-weight:600}
+@media(max-width:760px){.g,.out,.g3{grid-template-columns:1fr 1fr}}
+</style></head><body><div class="wrap">
+<h1>¿Cuánto me cobra Hotmart realmente?</h1>
+<p class="sub">Dos formas: <b>A)</b> sube tu informe de ventas y mide la comisión real; <b>B)</b> estima con tus números. Todo se calcula en tu navegador: <span class="priv">🔒 ningún dato sale de tu computadora.</span></p>
+
+<h2>A · Medir con tu informe real de ventas (CSV)</h2>
+<div class="card">
+<p style="margin:0 0 10px;color:var(--mut)">En Hotmart: <b>Ventas → Informe de ventas → Exportar</b> (CSV o Excel guardado como CSV). Sube el archivo y elige qué columna es el <b>valor pagado por el cliente</b> y cuál el <b>valor que recibes</b>.</p>
+<input type="file" id="file" accept=".csv,.txt">
+<div id="map" hidden style="margin-top:12px"><div class="g">
+<label>Valor bruto (lo que paga el cliente)<select id="cG"></select></label>
+<label>Valor que recibes (neto)<select id="cN"></select></label>
+<label>Estado de la venta<select id="cS"></select></label>
+<label>Fecha<select id="cD"></select></label>
+<label>Producto / plan<select id="cP"></select></label>
+<label>Moneda<select id="cC"></select></label>
+<label>Estados que cuentan como venta<input id="okst" value="aprobad,aprovad,complet,approved,paid,pago,garant"></label>
+<label>Estados de reembolso/contracargo<input id="rfst" value="reembols,reembolso,estorn,refund,chargeback,contracargo,devuel"></label></div>
+<p style="margin:10px 0 0"><button class="btn" id="go">Calcular</button></p></div>
+<div id="res"></div></div>
+
+<h2>B · Estimar con tus números</h2>
+<div class="card"><div class="g">
+<label>Ventas/mes plan mensual (USD 25,90)<input id="s1" type="number" value="100" min="0"></label>
+<label>Ventas/mes plan semestral (USD 129,90)<input id="s2" type="number" value="10" min="0"></label>
+<label>Ventas/mes plan anual (USD 219,90)<input id="s3" type="number" value="5" min="0"></label>
+<label>Renovaciones mensuales/mes (cuentan como transacción)<input id="s4" type="number" value="0" min="0"></label>
+<label>Comisión % de Hotmart<input id="pc" type="number" value="9.9" step="0.1"></label>
+<label>Tarifa fija por transacción (USD)<input id="fx" type="number" value="0.5" step="0.01"></label>
+<label>Tarifa del reproductor por venta (USD) <small>(0 si ya está incluida)</small><input id="pl" type="number" value="0" step="0.01"></label>
+<label>Anticipación de cobros (% sobre lo anticipado)<input id="an" type="number" value="0" step="0.1"></label>
+<label>% de ventas que anticipas<input id="anp" type="number" value="0" step="5"></label>
+<label>Spread / conversión de moneda (%)<input id="fxs" type="number" value="0" step="0.1"></label>
+<label>Reembolsos (% de ventas)<input id="rf" type="number" value="5" step="0.5"></label>
+<label>Pasarela propia (%, para comparar)<input id="gw" type="number" value="4.5" step="0.1"></label></div>
+<div class="out" id="est"></div><div id="estTbl"></div>
+<div class="note"><b>Cómo leer esto:</b> la comisión «fija» pesa mucho en el plan mensual (USD 0,50 sobre USD 25,90 ≈ 1,9 pts) y casi nada en el anual. Si pagas además la tarifa del reproductor (versiones antiguas: ≈ USD 1,49 por venta aprobada), el plan mensual puede acercarse al 17–18%. Ver la propuesta, sección 4B.</div></div>
+</div>
+<script>
+(function(){
+var $=function(i){return document.getElementById(i)},fm=function(x,c){return (c||'USD')+' '+(Math.round(x*100)/100).toLocaleString('es',{minimumFractionDigits:2,maximumFractionDigits:2})},pc=function(x){return (Math.round(x*10)/10).toLocaleString('es')+'%'};
+/* ---------- B: estimador ---------- */
+var PR=[25.9,129.9,219.9];
+function est(){var v=function(i){return +$(i).value||0},s=[v('s1'),v('s2'),v('s3')],ren=v('s4'),P=v('pc')/100,F=v('fx'),PL=v('pl'),AN=v('an')/100*v('anp')/100,SP=v('fxs')/100,RF=v('rf')/100,GW=v('gw')/100;
+ var gross=0,fees=0,rows='';
+ var items=[['Plan mensual (nuevas)',s[0],PR[0]],['Plan semestral',s[1],PR[1]],['Plan anual',s[2],PR[2]],['Renovaciones mensuales',ren,PR[0]]];
+ items.forEach(function(it){var n=it[1],p=it[2],g=n*p,f=g*(P+AN+SP)+n*(F+PL);gross+=g;fees+=f;rows+='<tr><td>'+it[0]+'</td><td class="r">'+n+'</td><td class="r">'+fm(g)+'</td><td class="r">'+fm(f)+'</td><td class="r"><b>'+pc(g?f/g*100:0)+'</b></td></tr>'});
+ var ref=gross*RF,net=gross-fees-ref;
+ $('est').innerHTML='<div><span>Ventas brutas/mes</span><b>'+fm(gross)+'</b></div><div><span>Comisiones Hotmart</span><b>'+fm(fees)+'</b></div><div><span>Comisión efectiva</span><b>'+pc(gross?fees/gross*100:0)+'</b></div><div><span>Con pasarela propia ('+pc(GW*100)+')</span><b>'+fm(gross*GW)+'</b></div>';
+ $('estTbl').innerHTML='<table><thead><tr><th>Concepto</th><th class="r">Ventas</th><th class="r">Bruto</th><th class="r">Comisiones</th><th class="r">% efectivo</th></tr></thead><tbody>'+rows+'<tr><td><b>Total</b></td><td></td><td class="r"><b>'+fm(gross)+'</b></td><td class="r"><b>'+fm(fees)+'</b></td><td class="r"><b>'+pc(gross?fees/gross*100:0)+'</b></td></tr></tbody></table><p style="color:#56637f;font-size:13px">Reembolsos estimados: '+fm(ref)+' · Te queda ≈ <b>'+fm(net)+'</b> al mes. Diferencia con pasarela propia: <b style="color:#1f7a5c">'+fm(fees-gross*GW)+'/mes</b>.</p>'}
+document.querySelectorAll('#s1,#s2,#s3,#s4,#pc,#fx,#pl,#an,#anp,#fxs,#rf,#gw').forEach(function(e){e.addEventListener('input',est)});est();
+/* ---------- A: CSV ---------- */
+var rowsCsv=[],hdr=[];
+function parseCSV(t){t=t.replace(/^﻿/,'');var first=t.split(/\r?\n/)[0],d=(first.match(/;/g)||[]).length>(first.match(/,/g)||[]).length?';':(first.indexOf('\t')>-1?'\t':','),o=[],r=[],c='',q=false;
+ for(var i=0;i<t.length;i++){var ch=t[i];if(q){if(ch=='"'){if(t[i+1]=='"'){c+='"';i++}else q=false}else c+=ch}else if(ch=='"')q=true;else if(ch==d){r.push(c);c=''}else if(ch=='\n'||ch=='\r'){if(ch=='\r'&&t[i+1]=='\n')i++;r.push(c);c='';if(r.length>1||r[0]!=='')o.push(r);r=[]}else c+=ch}
+ if(c!==''||r.length){r.push(c);o.push(r)}return o}
+function num(s){if(s==null)return NaN;s=String(s).replace(/[^\d,.\-]/g,'');if(!s)return NaN;var lc=s.lastIndexOf(','),ld=s.lastIndexOf('.');if(lc>ld)s=s.replace(/\./g,'').replace(',','.');else s=s.replace(/,/g,'');return parseFloat(s)}
+function guess(re){for(var i=0;i<hdr.length;i++)if(re.test(hdr[i].toLowerCase()))return i;return -1}
+$('file').addEventListener('change',function(e){var f=e.target.files[0];if(!f)return;var rd=new FileReader();rd.onload=function(){var all=parseCSV(String(rd.result));hdr=all[0]||[];rowsCsv=all.slice(1);
+ var opts='<option value="-1">— ninguna —</option>'+hdr.map(function(h,i){return '<option value="'+i+'">'+h.replace(/</g,'&lt;')+'</option>'}).join('');
+ ['cG','cN','cS','cD','cP','cC'].forEach(function(id){$(id).innerHTML=opts});
+ var netRE=/(receb|recib|liquid|l[ií]quid|net|neto|ganancia|comiss|comisi|earn|you receive|producer|produtor)/,g={cG:null,cN:netRE,cS:/(status|estado|situa)/,cD:/(data|fecha|date)/,cP:/(produto|producto|product|oferta|offer|plano|plan)/,cC:/(moeda|moneda|currency)/},grossRE=/(pre(c|ç)i?o|price|valor|amount|total|bruto|gross)/;
+ var gi=-1;for(var j=0;j<hdr.length;j++){var hh=hdr[j].toLowerCase();if(grossRE.test(hh)&&!netRE.test(hh)){gi=j;break}}$('cG').value=gi;
+ Object.keys(g).forEach(function(k){if(g[k]){var ix=guess(g[k]);$(k).value=ix}});
+ $('map').hidden=false;$('res').innerHTML='<div class="note">Se leyeron <b>'+rowsCsv.length+'</b> filas y <b>'+hdr.length+'</b> columnas. Revisa que las columnas elegidas sean las correctas y pulsa «Calcular».</div>'};rd.readAsText(f,'utf-8')});
+$('go').addEventListener('click',function(){var ix=function(id){return +$(id).value},G=ix('cG'),N=ix('cN'),S=ix('cS'),D=ix('cD'),P=ix('cP'),C=ix('cC');
+ if(G<0||N<0){$('res').innerHTML='<div class="note">Elige las columnas de <b>valor bruto</b> y <b>valor que recibes</b>.</div>';return}
+ var ok=$('okst').value.toLowerCase().split(',').map(function(x){return x.trim()}).filter(Boolean),rf=$('rfst').value.toLowerCase().split(',').map(function(x){return x.trim()}).filter(Boolean);
+ var has=function(s,l){s=(s||'').toLowerCase();return l.some(function(x){return s.indexOf(x)>-1})};
+ var T={g:0,n:0,c:0,rg:0,rc:0},by={},mo={},cur={};
+ rowsCsv.forEach(function(r){var g=num(r[G]),n=num(r[N]);if(isNaN(g)||isNaN(n))return;var st=S>-1?r[S]:'';
+  if(S>-1&&has(st,rf)){T.rg+=g;T.rc++;return}
+  if(S>-1&&ok.length&&!has(st,ok))return;
+  T.g+=g;T.n+=n;T.c++;var k=P>-1?(r[P]||'—'):'Todos';(by[k]=by[k]||{g:0,n:0,c:0});by[k].g+=g;by[k].n+=n;by[k].c++;
+  if(D>-1){var m=String(r[D]).match(/(\d{4})[-\/](\d{2})|(\d{2})[\/-](\d{2})[\/-](\d{4})/),key=m?(m[1]?m[1]+'-'+m[2]:m[5]+'-'+m[4]):null;if(key){(mo[key]=mo[key]||{g:0,n:0,c:0});mo[key].g+=g;mo[key].n+=n;mo[key].c++}}
+  if(C>-1)cur[r[C]]=(cur[r[C]]||0)+1});
+ if(!T.c){$('res').innerHTML='<div class="note">No se encontraron ventas aprobadas con esos criterios. Revisa la columna de estado y los textos de «Estados que cuentan como venta».</div>';return}
+ var fee=T.g-T.n,eff=fee/T.g*100,tbl=function(o,title){var ks=Object.keys(o).sort();return '<h3 style="margin-top:18px">'+title+'</h3><table><thead><tr><th>'+title.split(' ')[1]+'</th><th class="r">Ventas</th><th class="r">Bruto</th><th class="r">Recibes</th><th class="r">Comisión</th><th class="r">% efectivo</th></tr></thead><tbody>'+ks.map(function(k){var x=o[k],f=x.g-x.n;return '<tr><td>'+String(k).replace(/</g,'&lt;')+'</td><td class="r">'+x.c+'</td><td class="r">'+fm(x.g,'')+'</td><td class="r">'+fm(x.n,'')+'</td><td class="r">'+fm(f,'')+'</td><td class="r"><b>'+pc(x.g?f/x.g*100:0)+'</b></td></tr>'}).join('')+'</tbody></table>'};
+ $('res').innerHTML='<div class="out"><div><span>Ventas aprobadas</span><b>'+T.c+'</b></div><div><span>Bruto</span><b>'+fm(T.g,'')+'</b></div><div><span>Comisión total</span><b>'+fm(fee,'')+'</b></div><div><span>Comisión efectiva real</span><b style="color:'+(eff>12?'#b03a2e':'#1f7a5c')+'">'+pc(eff)+'</b></div></div>'+
+ '<div class="note">Reembolsos/contracargos detectados: <b>'+T.rc+'</b> por '+fm(T.rg,'')+'. <b>Importante:</b> la «comisión efectiva» es 1 − (recibes ÷ bruto): incluye tarifa Hotmart, fija, reproductor, conversión y cualquier descuento que aparezca en tu informe. Si tu columna «recibes» ya descuenta afiliados o coproductores, el % incluirá esas comisiones. Mezcla de monedas: '+(Object.keys(cur).length?Object.keys(cur).join(', '):'no indicada')+' — no se convierte; analiza una moneda a la vez.</div>'+(P>-1?tbl(by,'Por producto/plan'):'')+(D>-1&&Object.keys(mo).length?tbl(mo,'Por mes'):'')});
+})();
+</script></body></html>

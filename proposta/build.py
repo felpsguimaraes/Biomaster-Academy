@@ -4,7 +4,7 @@ import math, html, pathlib
 ARPU = 22.0          # ingreso medio mensual por alumno (USD), mezcla de planes con descuento
 MIN_ALUMNO = 240     # minutos de video vistos por alumno al mes
 MIN_CURSO = 1500     # minutos totales de video del curso (≈17 módulos × 4 aulas × ~20 min)
-FEE_HOTMART = 0.11   # comisión efectiva estimada Hotmart (9,9% + USD 0,50 por cobro; fuente secundaria)
+FEE_HOTMART = 0.11   # comisión efectiva estimada Hotmart (9,9% + tarifa fija; ver sección 4B; puede llegar a ≈ 17% si se cobra el reproductor aparte)
 FEE_GW = 0.045       # comisión efectiva estimada de pasarela propia (tarjeta/PIX/local; a confirmar)
 A_SETUP, A_MES = 1200, 150
 B_PRECIO, B_MANT = 4800, 100
@@ -62,6 +62,25 @@ pagos = table(["Proveedor", "PIX", "USD", "PYG", "Cobro recurrente", "Notas"], [
  ["<b>Bancard</b> (Paraguay)", "<b>Sí</b>: el cliente paga en reales y el comercio recibe en guaraníes en 48 h (documentado)", "Dólares según contrato", "<b>Sí</b>", "Parcial (a confirmar)", "Requiere comercio en Paraguay."],
  ["<b>Pagopar / upay</b> (Paraguay)", "QR Pix (≈ 2,9% según blog)", "—", "<b>Sí</b>", "<b>Sí</b>, con reintentos", "≈ 2% débito, 3% crédito (blog; confirmar). Requiere comercio en Paraguay."],
  ["<b>Stripe</b>", "Pix para negocios brasileños (verificar)", "<b>Sí</b>", "No", "<b>Sí</b>", "Fuentes secundarias indican que <b>no abre cuentas con domicilio en Paraguay</b>; confirmar en stripe.com/global. Código de la plataforma ya listo."],
+], "wide")
+
+hot_tbl = table(["Componente", "Qué cobra (según fuentes consultadas)", "Impacto en un plan mensual de USD 25,90", "Estado de la cifra"], [
+ ["Comisión por venta", "9,9% por venta aprobada (puede bajar hasta ≈ 8,9% con facturación anual de 6 cifras)", "≈ USD 2,56 (9,9%)", "Varias fuentes concuerdan"],
+ ["Tarifa fija por transacción", "Antes ≈ USD 0,50 (o R$ 1,00); fuentes recientes indican <b>R$ 2,49</b> desde el 21/09/2026", "≈ USD 0,45–0,50 (1,7–1,9 pts) y se repite en <b>cada renovación</b>", "Fuentes en conflicto: confirmar en tu cuenta"],
+ ["Reproductor de video Hotmart", "Antes ≈ R$ 2,49 o USD 1,49 por venta aprobada; la propia Hotmart dice que desde 21/09/2026 queda <b>incluido en la tarifa fija</b>", "Hasta ≈ USD 1,49 (5,8 pts) si todavía se cobra aparte", "Versiones de la ayuda en conflicto"],
+ ["Anticipación de cobros", "≈ 2,19%–4,79% (tarjeta estándar) si adelantas el dinero", "Hasta ≈ USD 0,50–1,20", "Un texto de mayo/2026; confirmar"],
+ ["Conversión de moneda / spread", "Se aplica un tipo de cambio al convertir; en Argentina hay un cargo específico de 9,5%", "Depende del país y del par de monedas", "Sin porcentaje general verificado"],
+ ["Retiros", "≈ USD 1 por solicitud + costos del banco receptor", "Pequeño", "Blog, 2021–2025"],
+ ["Microtransacción (≤ R$ 10)", "≈ 20% por venta", "No aplica a tus planes", "Fuente única"],
+ ["Afiliados / coproductores", "Su comisión sale de tu parte", "Variable", "—"],
+], "wide")
+hib_tbl = table(["", "1 · Todo en Hotmart (hoy)", "2 · Híbrido: Hotmart cobra + plataforma propia", "3 · Plataforma + pasarela propia"], [
+ ["Quién cobra", "Hotmart", "Hotmart (checkout, medios de pago, impuestos)", "Pagopar / Bancard / Stripe / dLocal…"],
+ ["Quién entrega el curso", "Hotmart Club (área de miembros gratuita)", "<b>Tu plataforma</b> (marca, panel, repasos, preguntas) abre el acceso automáticamente al recibir el aviso de compra (webhook)", "Tu plataforma"],
+ ["Comisión por venta", "≈ 9,9% + fija (+ reproductor si aplica)", "<b>La misma comisión de Hotmart</b>; se ahorra el reproductor/hosting de video de Hotmart si lo alojas por tu cuenta", "≈ 2–5% según medio (a confirmar)"],
+ ["Ahorro posible", "—", "Pequeño (solo reproductor y extras)", "Grande (≈ 6–7 puntos de la venta)"],
+ ["Trabajo de desarrollo", "—", "≈ 15–25 h (webhook, creación de cuentas, altas/bajas)", "≈ 20–40 h por proveedor + cumplimiento"],
+ ["Riesgo", "Dependes de sus reglas, retenciones y bloqueos", "Mismo riesgo de pagos, mejor experiencia", "Gestionas reembolsos, contracargos e impuestos"],
 ], "wide")
 opciones = table(["", "A · Licencia + operación", "B · Cesión total", "C · Socio"], [
  ["Inversión inicial", f"{usd(A_SETUP)}", f"{usd(B_PRECIO)}", f"{usd(C_SETUP)}"],
@@ -131,6 +150,16 @@ footer{{padding:30px 0 50px;font-size:12px;color:var(--mut)}}footer a{{color:var
 <div class="note warn"><b>Conclusión honesta de la investigación:</b> no encontré un único proveedor <u>confirmado oficialmente</u> que cubra PIX + USD + PYG para una vendedora pequeña con un solo contrato. Los mejores candidatos son <b>dLocal</b> (todo en uno, pero orientado a empresas) o una combinación <b>Bancard / Pagopar (PYG + PIX local) + procesador de USD</b>. La elección depende de <b>dónde está registrada la titular y su cuenta bancaria</b> (Paraguay, Brasil u otro país) — dato que necesitamos. Los sitios oficiales de los proveedores no pudieron consultarse en esta investigación: todas las tarifas deben confirmarse con cada proveedor antes de decidir.</div>
 <p><b>Cómo lo resolvemos técnicamente:</b></p><ul class="ck"><li><b>Tarjeta:</b> cobro recurrente mensual automático.</li><li><b>PIX y medios locales:</b> el alumno paga un período fijo (mensual, semestral o anual) y recibe acceso hasta el vencimiento, sin débito automático; el sistema avisa antes de que venza. Encaja muy bien con los planes semestral y anual.</li><li>La plataforma ya está preparada para sumar proveedores sin rehacerla (≈ 20–40 horas por proveedor).</li></ul>
 <p><b>Recomendación por escenario:</b> (1) <i>Titular con RUC y cuenta en Paraguay:</i> Bancard o Pagopar para PYG y PIX + Hotmart/PayPal para USD. (2) <i>Titular o socio con entidad en Brasil:</i> Stripe (USD y PIX) + local. (3) <i>Volumen alto:</i> dLocal como único proveedor.</p></section>
+
+
+<section><h2><small>4B · Hotmart</small>¿Cuánto paga hoy y qué cambia con un modelo híbrido?</h2>
+<p class="lead">Importante: según las fuentes, el <b>área de miembros de Hotmart (Hotmart Club) es gratuita</b>. Lo que encarece es la <b>comisión de pago</b> (9,9% + fija) y, hasta septiembre de 2026, la tarifa del reproductor de video. Es decir: <u>no es el «hosting» lo que se paga caro, sino el procesamiento de pagos y el marketplace</u>.</p>{hot_tbl}
+<div class="note"><b>Ejemplo (plan mensual USD 25,90):</b> 9,9% (USD 2,56) + fija ≈ USD 0,50 = <b>≈ 11,8%</b>. Si además se cobra el reproductor (USD 1,49): <b>≈ 17,6%</b>. Si anticipa el 100% de los cobros al 3%: <b>≈ 20%</b>. En planes semestral y anual el peso de las tarifas fijas es mucho menor (≈ 10,3% y ≈ 10,1%).</div>
+<p><b>Para saber cuánto paga realmente:</b> abrir <code>proposta/analisis-hotmart.html</code>, subir el <b>informe de ventas</b> de Hotmart (Ventas → Informe → Exportar) y la herramienta calcula la comisión efectiva real por plan y por mes, sin enviar datos a ningún servidor. También permite estimar con sus propios números.</p>
+<h3 style="margin-top:20px">¿Se puede dejar solo el cobro en Hotmart y tener una plataforma propia?</h3>
+<p class="lead"><b>Sí.</b> Hotmart permite enviar <b>avisos automáticos (webhooks)</b> a un sistema externo cuando hay una compra aprobada, cancelación de suscripción, reembolso o contracargo. La plataforma propia recibe el aviso, crea o activa la cuenta del alumno y le da o quita acceso. <i>(Eventos documentados: compra aprobada y cancelación de suscripción, API de webhooks v2; la forma exacta de validar el aviso con el «hottok» debe verificarse en la documentación oficial al implementar.)</i></p>{hib_tbl}
+<div class="note"><b>Recomendación:</b> empezar por el <b>modelo 2 (híbrido)</b>: es rápido, mantiene los medios de pago que ya funcionan (tarjetas internacionales, PIX en Brasil) y deja lista la experiencia propia. Después, <b>agregar pasarelas propias</b> (modelo 3) para los nuevos alumnos —empezando por PIX/guaraníes locales— y mover el volumen gradualmente. Así se reduce el riesgo y la comisión baja por etapas. Mientras tanto, <b>negociar la tarifa con Hotmart</b> si su facturación anual supera el tramo de 6 cifras.</div>
+</section>
 
 <section><h2><small>5 · Costos de operación</small>Cuánto cuesta mantenerla</h2>{infra_tbl}
 <h3 style="margin-top:22px">Escenarios mensuales (estimación)</h3>

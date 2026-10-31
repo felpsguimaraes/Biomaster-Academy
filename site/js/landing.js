@@ -1,4 +1,4 @@
-/* Landing 3D: mundo molecular con profundidad ligada al scroll, tarjetas que "vuelan" hacia ti,
+/* Landing: fondo de red molecular dorada plana y estática, tarjetas que "vuelan" hacia ti,
    anillo 3D del método fijado por scroll, laptop que se abre y tilt en tarjetas. Respeta prefers-reduced-motion. */
 (function(){
 var L=document.getElementById('landing');if(!L)return;
@@ -16,44 +16,55 @@ $('#path').innerHTML=BIO.MODS.map(function(m){var on=!m.locked;
 var FEAT=['Curso completo de Bioquímica','Videoaulas y materiales','Repasos y banco de preguntas','PDFs premium (Ciclo de Krebs y más)','Actualizaciones del contenido'];
 var CSYM={USD:'USD',PYG:'Gs',BRL:'R$'},WAYS={USD:'Tarjeta internacional',PYG:'Tarjeta · QR · transferencia',BRL:'PIX · tarjeta'};
 function renderPlans(){var c=BIO.getCur();
- $('#curTog').innerHTML=BIO.CURS.map(function(x){return '<button type="button" data-cur="'+x[0]+'" aria-pressed="'+(x[0]===c)+'">'+x[1]+'</button>'}).join('')+'<span>Paga en tu moneda · '+WAYS[c]+'</span>';
+ $('#curTog').innerHTML='<div class="lp-seg" role="group" aria-label="Moneda">'+BIO.CURS.map(function(x){return '<button type="button" data-cur="'+x[0]+'" aria-pressed="'+(x[0]===c)+'">'+x[1]+'</button>'}).join('')+'</div><span>Paga en tu moneda · '+WAYS[c]+'</span>';
  $('#planGrid').innerHTML=BIO.PLANS.map(function(p){var hot=p.id==='anual',sv=BIO.saveOf(p,c),price=BIO.planPrice(p,c).replace(/^(USD|Gs|R\$)\s/,'');
- return '<article class="lp-plan'+(hot?' hot':'')+'" data-3d="rise">'+(sv>0?'<span class="badge">Ahorra '+sv+'%</span>':'')+'<h3>'+esc(p.name)+'</h3><div class="price"><small>'+CSYM[c]+'</small>'+price+'</div><p class="per">'+(p.months>1?BIO.planPer(p,c)+' por mes · pago por '+p.months+' meses':'por mes · cancela cuando quieras')+'</p><ul>'+FEAT.map(function(f){return '<li>'+f+'</li>'}).join('')+'</ul><button class="lp-btn '+(hot?'gold':'navy')+'" data-pay="'+p.id+'">Elegir '+esc(p.name.split(' ')[0].toLowerCase())+' →</button></article>'}).join('');
+ return '<article class="lp-plan'+(hot?' hot':'')+'" data-3d="rise">'+(sv>0?'<span class="badge">Ahorra '+sv+'%</span>':'')+'<h3>'+esc(p.name)+'</h3><div class="price"><small>'+CSYM[c]+'</small>'+price+'</div><p class="per">'+(p.months>1?BIO.planPer(p,c)+' por mes · pago por '+p.months+' meses':'por mes · cancela cuando quieras')+'</p><ul>'+FEAT.map(function(f){return '<li>'+f+'</li>'}).join('')+'</ul><button class="lp-btn '+(hot?'gold':'primary')+' block" data-pay="'+p.id+'">Elegir '+esc(p.name.split(' ')[0].toLowerCase())+'</button></article>'}).join('');
  items=$$('[data-3d]')}
 var items=[];
 $('#curTog').addEventListener('click',function(e){var b=e.target.closest('[data-cur]');if(b)BIO.setCur(b.dataset.cur)});
 document.addEventListener('biocur:change',renderPlans);
 
-/* ---------- Mundo 3D de fondo ---------- */
-var cam=$('#w3dCam'),nodes=[],DEPTH=2600,W=innerWidth,H=innerHeight;
-function build(){cam.innerHTML='';nodes=[];W=innerWidth;H=innerHeight;var n=W<760?14:30;
- var cols=[['#fff','#8fb0dc'],['#fff6dc','#e8cd8c'],['#fff','#4f74ad'],['#fff','#bcd5f7']];
- for(var i=0;i<n;i++){var el=document.createElement('div'),k=Math.random(),o={el:el,z:Math.random()*DEPTH,x:Math.random()*W,y:Math.random()*H,rz:Math.random()*360,sp:(Math.random()-.5)*10,t:''};
-  if(k<.5){var s=26+Math.random()*60;el.className='n atom';el.style.width=el.style.height=s+'px';var c=cols[i%cols.length];el.style.setProperty('--c1',c[0]);el.style.setProperty('--c2',c[1]);o.t='atom';o.s=s}
-  else if(k<.78){var h=90+Math.random()*140;el.className='n hex';el.style.width=h+'px';el.style.height=h+'px';el.innerHTML='<svg viewBox="-50 -50 100 100"><polygon points="0,-46 40,-23 40,23 0,46 -40,23 -40,-23" fill="rgba(255,255,255,.18)" stroke="#4f74ad" stroke-opacity=".5" stroke-width="2.2" stroke-linejoin="round"/><circle cx="0" cy="-46" r="4.5" fill="#4f74ad" fill-opacity=".5"/><circle cx="40" cy="23" r="4.5" fill="#e8cd8c"/><circle cx="-40" cy="23" r="4.5" fill="#4f74ad" fill-opacity=".5"/></svg>';o.t='hex';o.s=h}
-  else{var l=80+Math.random()*180;el.className='n bond';el.style.width=l+'px';o.t='bond';o.s=l}
-  cam.appendChild(el);nodes.push(o)}}
-function placeWorld(sy,tm,mx,my){
- for(var i=0;i<nodes.length;i++){var o=nodes[i],z=((o.z+sy*.75)%DEPTH)-DEPTH+420;
-  var op=clamp((z+DEPTH-420)/600,0,1)*clamp((420-z)/280,0,1);
-  var px=o.x+mx*(z+DEPTH)*.02,py=o.y+my*(z+DEPTH)*.015;
-  o.el.style.opacity=(op*.6).toFixed(3);
-  o.el.style.transform='translate3d('+px.toFixed(1)+'px,'+py.toFixed(1)+'px,'+z.toFixed(0)+'px) rotateZ('+(o.rz+tm*o.sp).toFixed(1)+'deg) rotateY('+((tm*o.sp*.6)%360).toFixed(1)+'deg)'}}
+/* ---------- Fondo: red molecular dorada, plana y estática ---------- */
+/* Mismo estilo de los materiales de la profesora: hexágonos de línea fina, enlaces y nodos huecos,
+   agrupados en las esquinas y desvaneciéndose hacia el centro. No se mueve. */
+var cam=$('#w3dCam');
+function seeded(x){return function(){x=(x*16807)%2147483647;return (x-1)/2147483646}}
+function hexPath(cx,cy,r){var d='';for(var k=0;k<6;k++){var a=Math.PI/3*k+Math.PI/6;d+=(k?'L':'M')+(cx+r*Math.cos(a)).toFixed(1)+','+(cy+r*Math.sin(a)).toFixed(1)}return d+'Z'}
+function cluster(r,ax,ay,rad,n,base,sm2){var pts=[],out='',i,j;
+ var W0=innerWidth,H0=innerHeight,tries=0;while(pts.length<n&&tries<n*40){tries++;var ang=r()*Math.PI*2,dist=Math.pow(r(),.7)*rad,x=ax+Math.cos(ang)*dist,y=ay+Math.sin(ang)*dist;
+  if(x<8||y<8||x>W0-8||y>H0-8)continue;var ok=true;for(j=0;j<pts.length;j++){var ex=pts[j].x-x,ey=pts[j].y-y;if(ex*ex+ey*ey<sm2*sm2*.12){ok=false;break}}
+  if(ok)pts.push({x:x,y:y,d:dist/rad,k:r()})}
+ n=pts.length;
+ for(i=0;i<n;i++){var a=pts[i],best=[];for(j=0;j<n;j++){if(i===j)continue;var dx=pts[j].x-a.x,dy=pts[j].y-a.y,dd=dx*dx+dy*dy;best.push([dd,j])}
+  best.sort(function(u,v){return u[0]-v[0]});var m=a.k<.3?1:(a.k<.85?2:3),MX=sm2*sm2;
+  for(j=0;j<m&&j<best.length;j++){if(best[j][0]>MX)break;var q=pts[best[j][1]];
+   var o=(base*(1-Math.max(a.d,q.d)*.85)).toFixed(2);out+='<line x1="'+a.x.toFixed(1)+'" y1="'+a.y.toFixed(1)+'" x2="'+q.x.toFixed(1)+'" y2="'+q.y.toFixed(1)+'" opacity="'+o+'"/>'}}
+ pts.forEach(function(a){var o=(base*(1-a.d*.85)).toFixed(2);
+  if(a.k<.45){var hr=9+r()*11;out+='<path d="'+hexPath(a.x,a.y,hr)+'" fill="#fbf8ef" opacity="'+o+'"/>'}
+  else if(a.k<.78){out+='<circle cx="'+a.x.toFixed(1)+'" cy="'+a.y.toFixed(1)+'" r="'+(2.5+r()*2.5).toFixed(1)+'" fill="#fbf8ef" opacity="'+o+'"/>'}
+  else{out+='<circle cx="'+a.x.toFixed(1)+'" cy="'+a.y.toFixed(1)+'" r="2.2" fill="#d4b26a" stroke="none" opacity="'+o+'"/>'}});
+ return out}
+function build(){var W=innerWidth,H=innerHeight,r=seeded(23),sm=W<760,R=Math.min(W,H)*(sm?.55:.42),L=sm?70:95,h='';
+ h+=cluster(r,W*.97,H*.06,R,sm?26:46,.9,L);          /* esquina superior derecha */
+ h+=cluster(r,W*.03,H*.96,R*1.05,sm?26:48,.9,L);     /* esquina inferior izquierda */
+ h+=cluster(r,W*.96,H*.8,R*.5,sm?9:16,.6,L);          /* toque discreto a la derecha */
+ h+=cluster(r,W*.04,H*.25,R*.42,sm?8:13,.55,L);       /* toque discreto arriba a la izquierda */
+ cam.innerHTML='<svg class="bm-net" width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" aria-hidden="true"><g fill="none" stroke="#cfa955" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">'+h+'</g></svg>'}
+function placeWorld(){}
 build();var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,200)});
 
-/* ---------- Anillo del método ---------- */
-var STEPS=[['01','Aprende','Videoaulas por módulos y conceptos, para avanzar sin perderte.'],['02','Conecta','Mapas, esquemas y explicaciones visuales que integran las vías.'],['03','Repasa','Flashcards y repasos rápidos para fijar lo esencial.'],['04','Practica','Preguntas para comprobar tu comprensión y detectar puntos débiles.'],['05','Material premium','PDFs exclusivos para estudiar a fondo, como el de Ciclo de Krebs.'],['06','Desafíos','Ejercicios de repaso con banco de respuestas para medir lo que sabes.']];
-var ring=$('#ring'),ringSec=$('#metodo'),dots=$('#ringDots'),rNum=$('#ringNum'),rT=$('#ringTitle'),rX=$('#ringText'),rot=0,rotT=0,sIdx=-1;
-dots.innerHTML=STEPS.map(function(){return '<i></i>'}).join('');
-function setStep(i){if(i===sIdx)return;sIdx=i;var s=STEPS[i];rNum.textContent=s[0];rT.textContent=s[1];rX.textContent=s[2];$$('i',dots).forEach(function(d,k){d.classList.toggle('on',k===i)})}
-setStep(0);
-
-/* ---------- Panel: pantallas ---------- */
-var shots=$$('#shots img'),tabs=$$('.lp-tabs button'),lab=$('#shotLabel'),NAMES=['Inicio','Mi curso','Repaso','Preguntas','Materiales'],si=0,hold=false;
-function setShot(i){si=(i+shots.length)%shots.length;shots.forEach(function(s,k){s.classList.toggle('on',k===si)});tabs.forEach(function(b,k){b.setAttribute('aria-selected',k===si)});lab.textContent='Panel · '+NAMES[si]}
-tabs.forEach(function(b,k){b.addEventListener('click',function(){setShot(k)})});
-var lap=$('.lp-laptop');lap.addEventListener('pointerenter',function(){hold=true});lap.addEventListener('pointerleave',function(){hold=false});
-if(!RM)setInterval(function(){if(!hold&&!L.hidden&&!document.hidden)setShot(si+1)},4500);
+/* ---------- Método + panel: una sola sección; las pantallas cambian con el scroll ---------- */
+var MP=[['01','Tu panel','Inicio','Sabes qué estudiar hoy, dónde continuar y cuánto ya avanzaste.'],
+ ['02','Aprende','Mi curso','Videoaulas por módulos y conceptos, para avanzar sin perderte.'],
+ ['03','Conecta','Clase','Esquemas y explicaciones visuales que integran las vías metabólicas.'],
+ ['04','Repasa','Repaso','Flashcards y repasos rápidos para fijar lo esencial.'],
+ ['05','Practica','Preguntas','Preguntas y desafíos para comprobar lo que entendiste.'],
+ ['06','Material premium','Materiales','PDFs exclusivos para estudiar a fondo, como el de Ciclo de Krebs.']];
+var shots=$$('#shots img'),stepsEl=$('#mpSteps'),lab=$('#shotLabel'),mpSec=$('#metodo'),si=-1;
+stepsEl.innerHTML=MP.map(function(m){return '<li>'+m[1]+'</li>'}).join('');var steps=$$('li',stepsEl);
+function setShot(i){if(i===si)return;si=i;var m=MP[i];shots.forEach(function(s,k){s.classList.toggle('on',k===si)});steps.forEach(function(b,k){b.classList.toggle('on',k===si);b.classList.toggle('done',k<si)});
+ lab.textContent='Panel · '+m[2];$('#mpNum').textContent=m[0];$('#mpTitle').textContent=m[1];$('#mpText').textContent=m[3]}
+setShot(0);
 
 /* ---------- Mouse: owl + mundo ---------- */
 var mx=0,my=0,tx=0,ty=0,owl=$('#owl'),art=$('#heroArt');
@@ -78,9 +89,7 @@ function frame(now){ticking=false;if(L.hidden)return;
   var below=clamp(t,0,1.3),above=clamp(-t,0,1.3);
   el.style.transform='translate3d(0,0,'+(-below*170+above*-60).toFixed(0)+'px) rotateX('+(below*20-above*5).toFixed(1)+'deg)';
   el.style.opacity=(1-clamp(below-.75,0,1)*.9-clamp(above-1,0,1)*.7).toFixed(2)}
- if(!RM||true){var rr=ringSec.getBoundingClientRect(),prog=clamp(-rr.top/(rr.height-vh),0,1);
-  if(!RM){rotT=-prog*300;rot+=(rotT-rot)*.12;ring.style.setProperty('--rot',rot.toFixed(2)+'deg')}
-  setStep(clamp(Math.round(prog*5),0,5))}
+ {var pr=mpSec.getBoundingClientRect(),pp=clamp(-pr.top/Math.max(1,pr.height-vh),0,.999);setShot(Math.floor(pp*MP.length))}
  if(!RM){owl.style.transform='translateZ(60px) rotateY('+(mx*26).toFixed(1)+'deg) rotateX('+(-my*18).toFixed(1)+'deg)';
   $$('.orb',art).forEach(function(o,k){o.style.transform='translate3d('+(mx*(k?-50:30)).toFixed(1)+'px,'+(my*(k?-40:24)).toFixed(1)+'px,0)'})}
  if(!RM)request()}

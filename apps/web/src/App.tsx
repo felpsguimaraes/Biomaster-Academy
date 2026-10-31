@@ -106,7 +106,9 @@ button {
 }
 
 .language-select,
-.language-inline select {
+.language-inline select,
+.auth-panel input,
+.auth-panel select {
   border: 1px solid rgba(148, 163, 184, 0.2);
   background: rgba(15, 23, 42, 0.8);
   color: white;
@@ -145,15 +147,12 @@ button {
 
 .auth-panel input,
 .auth-panel select {
-  border: 1px solid rgba(148, 163, 184, 0.2);
-  background: rgba(15, 23, 42, 0.8);
-  color: white;
-  border-radius: 12px;
   padding: 12px 14px;
 }
 
 .primary-button,
-.logout-button {
+.logout-button,
+.nav-button {
   border: none;
   border-radius: 12px;
   padding: 12px 18px;
@@ -198,16 +197,18 @@ button {
   gap: 10px;
 }
 
-.sidebar a {
-  padding: 10px 12px;
-  border-radius: 10px;
+.nav-button {
+  width: 100%;
+  background: transparent;
   color: #cbd5e1;
-  text-decoration: none;
+  text-align: left;
+  border: 1px solid transparent;
 }
 
-.sidebar a.active {
+.nav-button.active {
   background: rgba(59, 130, 246, 0.1);
   color: white;
+  border-color: rgba(96, 165, 250, 0.2);
 }
 
 .logout-button {
@@ -258,7 +259,11 @@ button {
 }
 
 .stat-card,
-.panel {
+.panel,
+.section-panel,
+.subject-main-card,
+.material-card,
+.quiz-card {
   background: rgba(15, 23, 42, 0.7);
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 18px;
@@ -287,13 +292,15 @@ button {
   margin-bottom: 22px;
 }
 
-.panel h2 {
+.panel h2,
+.section-heading h2 {
   margin-top: 0;
   margin-bottom: 16px;
 }
 
 .subject-list,
-.task-list {
+.task-list,
+.agenda-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -303,7 +310,8 @@ button {
 }
 
 .subject-list li,
-.task-list li {
+.task-list li,
+.agenda-item {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -327,7 +335,8 @@ button {
 }
 
 .subject-meta small,
-.task-list small {
+.task-list small,
+.agenda-item small {
   display: block;
   color: #94a3b8;
 }
@@ -338,7 +347,8 @@ button {
 }
 
 .task-list .pending,
-.task-list .done {
+.task-list .done,
+.badge {
   padding: 5px 10px;
   border-radius: 999px;
   font-size: 0.72rem;
@@ -355,17 +365,37 @@ button {
   color: #6ee7b7;
 }
 
+.badge.dark {
+  background: rgba(30, 41, 59, 0.9);
+  color: #e2e8f0;
+}
+
+.badge.soft {
+  background: rgba(148, 163, 184, 0.12);
+  color: #dbeafe;
+}
+
+.badge.primary {
+  background: rgba(59, 130, 246, 0.14);
+  color: #93c5fd;
+}
+
 .bottom-panel {
   margin-top: 12px;
 }
 
-.assessment-grid {
+.assessment-grid,
+.subject-card-grid,
+.material-grid,
+.quiz-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(180px, 1fr));
   gap: 14px;
 }
 
-.assessment-card {
+.assessment-card,
+.material-card,
+.quiz-card {
   background: rgba(30, 41, 59, 0.7);
   border-radius: 14px;
   padding: 16px;
@@ -374,16 +404,79 @@ button {
   gap: 6px;
 }
 
-.assessment-card span {
+.assessment-card span,
+.quiz-card span,
+.material-card p,
+.subject-main-card p {
   color: #cbd5e1;
 }
 
-.assessment-card strong {
+.assessment-card strong,
+.quiz-card strong {
   font-size: 1.8rem;
 }
 
-.assessment-card small {
+.assessment-card small,
+.quiz-card small,
+.material-card .badge,
+.subject-main-card strong {
   color: #94a3b8;
+}
+
+.subject-header-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.subject-main-card h3,
+.material-card h3 {
+  margin: 0;
+}
+
+.progress-line {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  overflow: hidden;
+  margin: 14px 0 8px;
+}
+
+.progress-line span,
+.report-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #38bdf8, #2563eb);
+}
+
+.report-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.report-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.report-label-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: #e2e8f0;
+}
+
+.report-track {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.12);
+  overflow: hidden;
 }
 
 @media (max-width: 900px) {
@@ -410,7 +503,11 @@ button {
 
   .content-grid,
   .stats-grid,
-  .assessment-grid {
+  .assessment-grid,
+  .subject-card-grid,
+  .material-grid,
+  .quiz-grid {
     grid-template-columns: 1fr;
   }
 }
+

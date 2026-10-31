@@ -3,6 +3,7 @@ import { apiFetch } from './api';
 import type { DashboardSummary, UserRole } from './types';
 
 type Language = 'pt' | 'en' | 'es';
+type ViewKey = 'dashboard' | 'subjects' | 'materials' | 'agenda' | 'quizzes' | 'reports';
 
 const initialForm = {
   name: '',
@@ -10,6 +11,33 @@ const initialForm = {
   password: '',
   role: 'student' as UserRole
 };
+
+const materialsCatalog = [
+  { id: 'mat-1', title: 'Aula 01 - Vetores', type: 'PDF', duration: '18 min', status: 'Disponível' },
+  { id: 'mat-2', title: 'Resumo de Cálculo I', type: 'Resumo', duration: '12 min', status: 'Em revisão' },
+  { id: 'mat-3', title: 'Slides de Programação', type: 'PPT', duration: '20 min', status: 'Disponível' },
+  { id: 'mat-4', title: 'Atividade de Física', type: 'Exercício', duration: '15 min', status: 'Corrigir' }
+];
+
+const agendaItems = [
+  { id: 'ag-1', title: 'Revisão de Álgebra', time: 'Hoje • 18:00', type: 'Estudo' },
+  { id: 'ag-2', title: 'Quiz de Física', time: 'Amanhã • 09:30', type: 'Avaliação' },
+  { id: 'ag-3', title: 'Entrega de resumo', time: 'Quarta • 14:00', type: 'Entrega' },
+  { id: 'ag-4', title: 'Sprint de Programação', time: 'Quinta • 10:00', type: 'Trabalho' }
+];
+
+const quizCards = [
+  { id: 'q-1', title: 'Prova de Programação', score: '92%', date: '12/10', questions: 15 },
+  { id: 'q-2', title: 'Atividade de Álgebra', score: '88%', date: '08/10', questions: 10 },
+  { id: 'q-3', title: 'Quiz de Cálculo', score: '76%', date: '05/10', questions: 12 }
+];
+
+const reportBars = [
+  { label: 'Matemática', value: 84 },
+  { label: 'Física', value: 72 },
+  { label: 'Programação', value: 91 },
+  { label: 'História', value: 68 }
+];
 
 const translations = {
   pt: {
@@ -52,7 +80,14 @@ const translations = {
         classes: 'Aulas concluídas',
         quiz: 'Quiz recente',
         weekly: 'Meta semanal'
-      }
+      },
+      subjectDetail: 'Visão geral das disciplinas',
+      materialsTitle: 'Materiais disponíveis',
+      agendaTitle: 'Agenda de estudos',
+      quizzesTitle: 'Avaliações recentes',
+      reportsTitle: 'Progresso por disciplina',
+      learningPlan: 'Plano de aprendizado',
+      noItems: 'Nenhum item disponível.'
     },
     language: 'Idioma'
   },
@@ -96,7 +131,14 @@ const translations = {
         classes: 'Classes completed',
         quiz: 'Recent quiz',
         weekly: 'Weekly goal'
-      }
+      },
+      subjectDetail: 'Overview of subjects',
+      materialsTitle: 'Available materials',
+      agendaTitle: 'Study agenda',
+      quizzesTitle: 'Recent assessments',
+      reportsTitle: 'Progress by subject',
+      learningPlan: 'Learning plan',
+      noItems: 'No items available.'
     },
     language: 'Language'
   },
@@ -140,7 +182,14 @@ const translations = {
         classes: 'Clases completadas',
         quiz: 'Cuestionario reciente',
         weekly: 'Meta semanal'
-      }
+      },
+      subjectDetail: 'Resumen de asignaturas',
+      materialsTitle: 'Materiales disponibles',
+      agendaTitle: 'Agenda de estudio',
+      quizzesTitle: 'Evaluaciones recientes',
+      reportsTitle: 'Progreso por asignatura',
+      learningPlan: 'Plan de aprendizaje',
+      noItems: 'No hay elementos disponibles.'
     },
     language: 'Idioma'
   }
@@ -157,6 +206,7 @@ export default function App() {
     const stored = localStorage.getItem('biomaster-language');
     return stored === 'en' || stored === 'es' ? stored : 'pt';
   });
+  const [activeView, setActiveView] = useState<ViewKey>('dashboard');
 
   const t = translations[language];
 
@@ -192,6 +242,15 @@ export default function App() {
     return dashboard.user.name;
   }, [dashboard, t.auth.loading]);
 
+  const navItems = [
+    { key: 'dashboard', label: t.dashboard.nav.dashboard },
+    { key: 'subjects', label: t.dashboard.nav.subjects },
+    { key: 'materials', label: t.dashboard.nav.materials },
+    { key: 'agenda', label: t.dashboard.nav.agenda },
+    { key: 'quizzes', label: t.dashboard.nav.quizzes },
+    { key: 'reports', label: t.dashboard.nav.reports }
+  ] as const;
+
   async function handleSubmit() {
     setError('');
     setLoading(true);
@@ -222,6 +281,7 @@ export default function App() {
     setToken(null);
     setDashboard(null);
     setForm(initialForm);
+    setActiveView('dashboard');
   }
 
   const localizedStats = dashboard?.stats.map((item) => {
@@ -243,6 +303,177 @@ export default function App() {
 
     return item;
   });
+
+  const renderView = () => {
+    if (!dashboard) return null;
+
+    switch (activeView) {
+      case 'subjects':
+        return (
+          <section className="section-panel">
+            <div className="section-heading">
+              <h2>{t.dashboard.subjectDetail}</h2>
+            </div>
+            <div className="subject-card-grid">
+              {dashboard.subjects.map((subject) => (
+                <article key={subject.id} className="subject-main-card">
+                  <div className="subject-header-row">
+                    <span className="subject-dot" style={{ background: subject.color }} />
+                    <h3>{subject.name}</h3>
+                  </div>
+                  <p>{subject.description}</p>
+                  <div className="progress-line">
+                    <span style={{ width: `${subject.progress}%` }} />
+                  </div>
+                  <strong>{subject.progress}%</strong>
+                </article>
+              ))}
+            </div>
+          </section>
+        );
+      case 'materials':
+        return (
+          <section className="section-panel">
+            <div className="section-heading">
+              <h2>{t.dashboard.materialsTitle}</h2>
+            </div>
+            <div className="material-grid">
+              {materialsCatalog.map((material) => (
+                <article key={material.id} className="material-card">
+                  <span className="badge dark">{material.type}</span>
+                  <h3>{material.title}</h3>
+                  <p>{material.duration}</p>
+                  <span className="badge soft">{material.status}</span>
+                </article>
+              ))}
+            </div>
+          </section>
+        );
+      case 'agenda':
+        return (
+          <section className="section-panel">
+            <div className="section-heading">
+              <h2>{t.dashboard.agendaTitle}</h2>
+            </div>
+            <ul className="agenda-list">
+              {agendaItems.map((item) => (
+                <li key={item.id} className="agenda-item">
+                  <div>
+                    <strong>{item.title}</strong>
+                    <small>{item.time}</small>
+                  </div>
+                  <span className="badge primary">{item.type}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      case 'quizzes':
+        return (
+          <section className="section-panel">
+            <div className="section-heading">
+              <h2>{t.dashboard.quizzesTitle}</h2>
+            </div>
+            <div className="quiz-grid">
+              {quizCards.map((quiz) => (
+                <article key={quiz.id} className="quiz-card">
+                  <span>{quiz.title}</span>
+                  <strong>{quiz.score}</strong>
+                  <small>{quiz.date}</small>
+                  <em>{quiz.questions} questões</em>
+                </article>
+              ))}
+            </div>
+          </section>
+        );
+      case 'reports':
+        return (
+          <section className="section-panel">
+            <div className="section-heading">
+              <h2>{t.dashboard.reportsTitle}</h2>
+            </div>
+            <div className="report-list">
+              {reportBars.map((item) => (
+                <div key={item.label} className="report-row">
+                  <div className="report-label-row">
+                    <span>{item.label}</span>
+                    <strong>{item.value}%</strong>
+                  </div>
+                  <div className="report-track">
+                    <span style={{ width: `${item.value}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+        );
+      default:
+        return (
+          <>
+            <section className="stats-grid">
+              {(localizedStats ?? dashboard.stats).map((item) => (
+                <article key={item.label} className="stat-card">
+                  <span>{item.label}</span>
+                  <strong>{item.value}</strong>
+                </article>
+              ))}
+            </section>
+
+            <section className="content-grid">
+              <div className="panel">
+                <h2>{t.dashboard.mySubjects}</h2>
+                <ul className="subject-list">
+                  {dashboard.subjects.map((subject) => (
+                    <li key={subject.id}>
+                      <div className="subject-meta">
+                        <span className="subject-dot" style={{ background: subject.color }} />
+                        <div>
+                          <strong>{subject.name}</strong>
+                          <small>{subject.description}</small>
+                        </div>
+                      </div>
+                      <div className="subject-progress">
+                        <span>{subject.progress}%</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="panel">
+                <h2>{t.dashboard.nextTasks}</h2>
+                <ul className="task-list">
+                  {dashboard.tasks.map((task) => (
+                    <li key={task.id}>
+                      <div>
+                        <strong>{task.title}</strong>
+                        <small>{task.due}</small>
+                      </div>
+                      <span className={task.status === 'done' ? 'done' : 'pending'}>
+                        {task.status === 'done' ? t.dashboard.done : t.dashboard.pending}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </section>
+
+            <section className="panel bottom-panel">
+              <h2>{t.dashboard.recentPerformance}</h2>
+              <div className="assessment-grid">
+                {dashboard.recentAssessments.map((assessment) => (
+                  <div key={assessment.title} className="assessment-card">
+                    <span>{assessment.title}</span>
+                    <strong>{assessment.score}</strong>
+                    <small>{assessment.date}</small>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        );
+    }
+  };
 
   if (!token || !dashboard) {
     return (
@@ -322,12 +553,16 @@ export default function App() {
       <aside className="sidebar">
         <div className="brand">{t.dashboard.brand}</div>
         <nav>
-          <a className="active">{t.dashboard.nav.dashboard}</a>
-          <a>{t.dashboard.nav.subjects}</a>
-          <a>{t.dashboard.nav.materials}</a>
-          <a>{t.dashboard.nav.agenda}</a>
-          <a>{t.dashboard.nav.quizzes}</a>
-          <a>{t.dashboard.nav.reports}</a>
+          {navItems.map((item) => (
+            <button
+              key={item.key}
+              type="button"
+              className={activeView === item.key ? 'nav-button active' : 'nav-button'}
+              onClick={() => setActiveView(item.key)}
+            >
+              {item.label}
+            </button>
+          ))}
         </nav>
         <button className="logout-button" onClick={handleLogout}>{t.dashboard.logout}</button>
       </aside>
@@ -352,66 +587,7 @@ export default function App() {
           </div>
         </header>
 
-        <section className="stats-grid">
-          {(localizedStats ?? dashboard.stats).map((item) => (
-            <article key={item.label} className="stat-card">
-              <span>{item.label}</span>
-              <strong>{item.value}</strong>
-            </article>
-          ))}
-        </section>
-
-        <section className="content-grid">
-          <div className="panel">
-            <h2>{t.dashboard.mySubjects}</h2>
-            <ul className="subject-list">
-              {dashboard.subjects.map((subject) => (
-                <li key={subject.id}>
-                  <div className="subject-meta">
-                    <span className="subject-dot" style={{ background: subject.color }} />
-                    <div>
-                      <strong>{subject.name}</strong>
-                      <small>{subject.description}</small>
-                    </div>
-                  </div>
-                  <div className="subject-progress">
-                    <span>{subject.progress}%</span>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="panel">
-            <h2>{t.dashboard.nextTasks}</h2>
-            <ul className="task-list">
-              {dashboard.tasks.map((task) => (
-                <li key={task.id}>
-                  <div>
-                    <strong>{task.title}</strong>
-                    <small>{task.due}</small>
-                  </div>
-                  <span className={task.status === 'done' ? 'done' : 'pending'}>
-                    {task.status === 'done' ? t.dashboard.done : t.dashboard.pending}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="panel bottom-panel">
-          <h2>{t.dashboard.recentPerformance}</h2>
-          <div className="assessment-grid">
-            {dashboard.recentAssessments.map((assessment) => (
-              <div key={assessment.title} className="assessment-card">
-                <span>{assessment.title}</span>
-                <strong>{assessment.score}</strong>
-                <small>{assessment.date}</small>
-              </div>
-            ))}
-          </div>
-        </section>
+        {renderView()}
       </main>
     </div>
   );

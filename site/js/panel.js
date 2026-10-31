@@ -29,12 +29,15 @@ var S=load();
 var syncT;
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
  if(window.BioAPI&&BioAPI.state.on&&BioAPI.state.user){clearTimeout(syncT);syncT=setTimeout(function(){BioAPI.req('PUT','/api/progress',{progress:S}).catch(function(){})},800)}}
+function applyLessons(){var A=window.BioAPI;if(!A||!A.state.on)return;var by={};Object.keys(A.state.lessons).forEach(function(id){var l=A.state.lessons[id];(by[l.module]=by[l.module]||[]).push(l)});
+ MODS.forEach(function(m){var ls=by[m.id];if(!ls||!ls.length)return;ls.sort(function(a,b){return a.position-b.position});m.L=ls.map(function(l){return[l.title,l.duration]});m.l=ls.length;m.locked=false});
+ TOTAL=MODS.reduce(function(a,m){return a+m.l},0)}
 var pulled=false;
 function pull(){if(pulled||!window.BioAPI||!BioAPI.state.on||!BioAPI.state.user)return;pulled=true;
  BioAPI.req('GET','/api/progress').then(function(d){
   if(d.progress){S=Object.assign({done:{},pins:[],notes:[],open:'m0'},d.progress);if(!S.open)S.open='m0';try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(!document.getElementById('app').hidden)paint()}
   else save()}).catch(function(){pulled=false})}
-document.addEventListener('bioapi:change',function(){pull();planBox();var a=document.getElementById('app');if(a&&!a.hidden)paint()});
+document.addEventListener('bioapi:change',function(){applyLessons();pull();planBox();var a=document.getElementById('app');if(a&&!a.hidden)paint()});
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function safeUrl(u){u=String(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u))u='https://'+u;try{var x=new URL(u);return/^https?:$/.test(x.protocol)?x.href:''}catch(e){return''}}
 function doneIn(m){var c=0;for(var i=1;i<=m.l;i++)if(S.done[m.id+'-'+i])c++;return c}
@@ -78,7 +81,8 @@ var R={
   return h}
 };
 
-function userBox(){var u=window.BioAPI&&BioAPI.state.on&&BioAPI.state.user,av=document.getElementById('meAv');if(!av)return;
+function userBox(){var ad=document.getElementById('adminLink');if(ad)ad.hidden=!(window.BioAPI&&BioAPI.state.admin);
+ var u=window.BioAPI&&BioAPI.state.on&&BioAPI.state.user,av=document.getElementById('meAv');if(!av)return;
  if(!u){return}
  var nm=u.name||u.email.split('@')[0];av.textContent=nm.slice(0,2).toUpperCase();document.getElementById('meName').textContent=nm;document.getElementById('meSub').innerHTML='<button class="linkbtn" data-logout>Cerrar sesión</button>'}
 function planBox(){userBox();var s=window.BioPay&&BioPay.sub(),el=document.getElementById('planbox'),f=document.getElementById('pfoot-plan');if(!el)return;

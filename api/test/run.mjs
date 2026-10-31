@@ -5,11 +5,15 @@ import { hmacHex } from '../src/lib.js';
 
 const ORIGIN = 'https://site.test';
 const baseEnv = () => ({ DB: makeDB(), SITE_URL: ORIGIN, ALLOWED_ORIGIN: ORIGIN, SIM_MODE: 'false', ADMIN_EMAILS: 'prof@x.com', INSECURE_COOKIES: '0' });
+const pending = [];
+const ctx = { waitUntil: (p) => pending.push(p) };
+const flush = async () => { await Promise.all(pending.splice(0)); };
 const call = (env, method, path, { body, cookie, headers = {}, csrf = true, origin = ORIGIN } = {}) =>
-  api.fetch(new Request('https://api.test' + path, { method, headers: { ...(body !== undefined ? { 'content-type': 'application/json' } : {}), ...(csrf && method !== 'GET' ? { 'x-requested-with': 'biomaster' } : {}), ...(origin ? { origin } : {}), ...(cookie ? { cookie } : {}), ...headers }, body: body !== undefined ? JSON.stringify(body) : undefined }), env);
+  api.fetch(new Request('https://api.test' + path, { method, headers: { ...(body !== undefined ? { 'content-type': 'application/json' } : {}), ...(csrf && method !== 'GET' ? { 'x-requested-with': 'biomaster' } : {}), ...(origin ? { origin } : {}), ...(cookie ? { cookie } : {}), ...headers }, body: body !== undefined ? JSON.stringify(body) : undefined }), env, ctx);
 const j = async (r) => r.json();
 const cookieOf = (r) => /bio_session=[a-f0-9]{64}/.exec(r.headers.get('set-cookie') || '')?.[0];
-let n = 0; const ok = (m) => console.log(`  ✓ ${++n}. ${m}`);
+let n = 0; const verify = (env, email) => env.DB.prepare('UPDATE users SET email_verified=1 WHERE email=?').bind(email).run();
+const ok = (m) => console.log(`  ✓ ${++n}. ${m}`);
 
 /* ---- Auth ---- */
 { const env = baseEnv();
@@ -35,7 +39,7 @@ let n = 0; const ok = (m) => console.log(`  ✓ ${++n}. ${m}`);
 /* ---- Progreso y aulas ---- */
 { const env = { ...baseEnv(), SIM_MODE: 'true' };
   const reg = async (email) => cookieOf(await call(env, 'POST', '/api/auth/register', { body: { email, password: 'secreto123' } }));
-  const ana = await reg('ana@x.com'), prof = await reg('prof@x.com');
+  const ana = await reg('ana@x.com'), prof = await reg('prof@x.com'); await verify(env, 'prof@x.com');
   assert.equal((await call(env, 'GET', '/api/progress')).status, 401); ok('progreso exige sesión');
   await call(env, 'PUT', '/api/progress', { cookie: ana, body: { progress: { done: { 'm6-1': true, '<script>': true }, pins: ['m6', 'x<y'], notes: [{ t: 'nota', u: 'https://a.b' }], open: 'm6' } } });
   const p = (await j(await call(env, 'GET', '/api/progress', { cookie: ana }))).progress; assert.deepEqual(p.done, { 'm6-1': true }); assert.deepEqual(p.pins, ['m6']); ok('progreso se guarda saneado (claves/ids inválidos descartados)');
@@ -83,6 +87,55 @@ let n = 0; const ok = (m) => console.log(`  ✓ ${++n}. ${m}`);
   await send(subEv('evt_4', 'customer.subscription.updated', { status: 'active', metadata: {} })); assert.equal((await j(await call(env, 'GET', '/api/me', { cookie: ck }))).access, true); ok('usuario resuelto por stripe_customer cuando falta metadata');
   await send(subEv('evt_5', 'customer.subscription.deleted')); me = await j(await call(env, 'GET', '/api/me', { cookie: ck })); assert.equal(me.access, false); assert.equal(me.subscription.status, 'canceled'); ok('suscripción eliminada → sin acceso');
   r = await call(env, 'POST', '/api/portal', { cookie: ck }); assert.match((await j(r)).url, /billing\.stripe\.com/); ok('portal de cobro devuelve URL de Stripe');
+  globalThis.fetch = realFetch;
+}
+/* ---- Recuperación de contraseña, bienvenida y panel admin ---- */
+{ const env = { ...baseEnv(), RESEND_API_KEY: 're_test', MAIL_FROM: 'Biomáster <hola@x.com>', SIM_MODE: 'true' };
+  const mails = []; const realFetch = globalThis.fetch;
+  globalThis.fetch = async (url, init) => { mails.push({ url: String(url), auth: init.headers.authorization, ...JSON.parse(init.body) }); return new Response('{}', { status: 200 }); };
+  const ck = cookieOf(await call(env, 'POST', '/api/auth/register', { body: { email: 'ana@x.com', password: 'secreto123', name: 'Ana <b>' } })); await flush();
+  assert.equal(mails.length, 1); assert.equal(mails[0].to[0], 'ana@x.com'); assert.match(mails[0].subject, /Bienvenid/); assert.ok(!mails[0].html.includes('<b>')); assert.equal(mails[0].auth, 'Bearer re_test'); ok('registro envía e-mail de bienvenida (HTML escapado)');
+  mails.length = 0;
+  let r = await call(env, 'POST', '/api/auth/forgot', { body: { email: 'nadie@x.com' } }); await flush(); assert.equal(r.status, 200); assert.equal(mails.length, 0); ok('olvidé contraseña: cuenta inexistente → 200 genérico y sin e-mail');
+  r = await call(env, 'POST', '/api/auth/forgot', { body: { email: 'ana@x.com' } }); await flush(); assert.equal(r.status, 200); assert.equal(mails.length, 1);
+  const token = /#reset=([a-f0-9]{64})/.exec(mails[0].html)?.[1]; assert.ok(token); assert.ok(mails[0].html.includes(ORIGIN + '/#reset=')); ok('cuenta existente → e-mail con enlace de un solo uso');
+  const stored = await env.DB.prepare('SELECT token_hash FROM password_resets').first(); assert.notEqual(stored.token_hash, token); ok('el token se guarda solo como hash');
+  assert.equal((await call(env, 'POST', '/api/auth/reset', { body: { token: 'f'.repeat(64), password: 'nueva12345' } })).status, 400); ok('token falso → 400');
+  assert.equal((await call(env, 'POST', '/api/auth/reset', { body: { token, password: 'corta' } })).status, 400);
+  assert.equal((await call(env, 'POST', '/api/auth/reset', { body: { token, password: 'nueva12345' } })).status, 200);
+  assert.equal((await j(await call(env, 'GET', '/api/me', { cookie: ck }))).user, null); ok('restablecer cierra las sesiones abiertas');
+  assert.equal((await call(env, 'POST', '/api/auth/login', { body: { email: 'ana@x.com', password: 'secreto123' } })).status, 401);
+  assert.equal((await call(env, 'POST', '/api/auth/login', { body: { email: 'ana@x.com', password: 'nueva12345' } })).status, 200); ok('la contraseña vieja deja de funcionar y la nueva sí');
+  assert.equal((await call(env, 'POST', '/api/auth/reset', { body: { token, password: 'otra123456' } })).status, 400); ok('el enlace no se puede reutilizar');
+  await call(env, 'POST', '/api/auth/forgot', { body: { email: 'ana@x.com' } }); await flush(); const t2 = /#reset=([a-f0-9]{64})/.exec(mails.at(-1).html)[1];
+  await env.DB.prepare('UPDATE password_resets SET expires_at=1').run(); assert.equal((await call(env, 'POST', '/api/auth/reset', { body: { token: t2, password: 'otra123456' } })).status, 400); ok('enlace vencido → 400');
+  for (let i = 0; i < 3; i++) await call(env, 'POST', '/api/auth/forgot', { body: { email: 'ana@x.com' } });
+  assert.equal((await call(env, 'POST', '/api/auth/forgot', { body: { email: 'ana@x.com' } })).status, 429); ok('límite de solicitudes de recuperación por correo → 429');
+  /* admin */
+  const env2 = { ...baseEnv(), SIM_MODE: 'true' };
+  const prof = cookieOf(await call(env2, 'POST', '/api/auth/register', { body: { email: 'prof@x.com', password: 'secreto123' } }));
+  const s1 = cookieOf(await call(env2, 'POST', '/api/auth/register', { body: { email: 's1@x.com', password: 'secreto123', name: 'S1' } }));
+  const s2 = cookieOf(await call(env2, 'POST', '/api/auth/register', { body: { email: 's2@x.com', password: 'secreto123' } }));
+  await call(env2, 'POST', '/api/auth/register', { body: { email: 's3@x.com', password: 'secreto123' } });
+  assert.equal((await call(env2, 'GET', '/api/admin/stats', { cookie: prof })).status, 403); assert.equal((await j(await call(env2, 'GET', '/api/me', { cookie: prof }))).admin, false); ok('admin: correo de ADMIN_EMAILS sin verificar NO es administrador');
+  await verify(env2, 'prof@x.com');
+  await call(env2, 'POST', '/api/sim/subscribe', { cookie: s1, body: { plan: 'mensual' } }); await call(env2, 'POST', '/api/sim/subscribe', { cookie: s2, body: { plan: 'anual' } });
+  assert.equal((await call(env2, 'GET', '/api/admin/stats', { cookie: s1 })).status, 403); assert.equal((await call(env2, 'GET', '/api/admin/lessons', { cookie: s1 })).status, 403); assert.equal((await call(env2, 'GET', '/api/admin/stats')).status, 401); ok('admin: alumno → 403, anónimo → 401');
+  const st = await j(await call(env2, 'GET', '/api/admin/stats', { cookie: prof })); assert.equal(st.users, 4); assert.equal(st.active, 2); assert.deepEqual(st.byPlan, { mensual: 1, semestral: 0, anual: 1 }); assert.equal(st.mrr, 44.23); assert.equal(st.students.length, 4); ok('estadísticas: alumnos, activos, por plan y MRR estimado');
+  const L = (id, module, position, extra = {}) => ({ id, module, position, title: 'T' + id, duration: '10:00', video_url: 'https://v.test/' + id, free: false, ...extra });
+  await call(env2, 'PUT', '/api/admin/lessons', { cookie: prof, body: { lessons: [L('m6-1', 'm6', 1), L('m6-2', 'm6', 2), L('m6-3', 'm6', 3), L('m7-1', 'm7', 1)] } });
+  await call(env2, 'PUT', '/api/admin/lessons', { cookie: prof, body: { replace: ['m6'], lessons: [L('m6-1', 'm6', 1, { title: 'Nuevo' }), L('m6-2', 'm6', 2)] } });
+  const ad = (await j(await call(env2, 'GET', '/api/admin/lessons', { cookie: prof }))).lessons; assert.deepEqual(ad.map((l) => l.id), ['m6-1', 'm6-2', 'm7-1']); assert.equal(ad[0].title, 'Nuevo'); assert.equal(ad[0].video_url, 'https://v.test/m6-1'); ok('guardar módulo con replace elimina aulas sobrantes y no toca otros módulos');
+  await call(env2, 'PUT', '/api/admin/lessons', { cookie: prof, body: { replace: ['m6'], lessons: [] } });
+  assert.deepEqual((await j(await call(env2, 'GET', '/api/admin/lessons', { cookie: prof }))).lessons.map((l) => l.id), ['m7-1']); ok('replace con lista vacía vacía el módulo');
+  assert.equal((await call(env2, 'PUT', '/api/admin/lessons', { cookie: prof, body: { replace: ['x;DROP'], lessons: [] } })).status, 400); ok('replace con módulo inválido → 400');
+  /* verificación por restablecimiento convierte la cuenta en admin */
+  mails.length = 0; const sq = cookieOf(await call(env2, 'POST', '/api/auth/register', { body: { email: 'prof2@x.com', password: 'impostor123' } }));
+  env2.ADMIN_EMAILS = 'prof@x.com,prof2@x.com'; assert.equal((await call(env2, 'GET', '/api/admin/stats', { cookie: sq })).status, 403);
+  env2.RESEND_API_KEY = 're_test'; await call(env2, 'POST', '/api/auth/forgot', { body: { email: 'prof2@x.com' } }); await flush();
+  const tk = /#reset=([a-f0-9]{64})/.exec(mails.at(-1).html)[1]; await call(env2, 'POST', '/api/auth/reset', { body: { token: tk, password: 'verdadera123' } });
+  assert.equal((await call(env2, 'GET', '/api/admin/stats', { cookie: sq })).status, 401); ok('la sesión del impostor se cierra al restablecer');
+  const real = cookieOf(await call(env2, 'POST', '/api/auth/login', { body: { email: 'prof2@x.com', password: 'verdadera123' } })); assert.equal((await call(env2, 'GET', '/api/admin/stats', { cookie: real })).status, 200); ok('tras verificar el correo (restablecer) la cuenta es administradora');
   globalThis.fetch = realFetch;
 }
 console.log(`\n${n} pruebas OK`);

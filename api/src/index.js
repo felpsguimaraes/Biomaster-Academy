@@ -1,6 +1,7 @@
 /* Biomáster Academy · API (Cloudflare Worker + D1).
    Auth con sesión por cookie HttpOnly, suscripción vía Stripe (Checkout + Customer Portal + webhook),
    progreso del alumno y contenido de aulas protegido por suscripción. */
+import { sendEmail, welcomeEmail, resetEmail } from './mail.js';
 import { json, HttpError, now, randomHex, sha256Hex, hashPassword, timingSafeEqual, stripe, verifyStripeSignature } from './lib.js';
 
 const PLANS = ['mensual', 'semestral', 'anual'];
@@ -44,7 +45,7 @@ async function startSession(env, userId) {
 async function currentUser(req, env) {
   const m = /(?:^|;\s*)bio_session=([a-f0-9]{64})/.exec(req.headers.get('cookie') || '');
   if (!m) return null;
-  return first(env.DB, 'SELECT u.id,u.email,u.name FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.id=? AND s.expires_at>?', await sha256Hex(m[1]), now());
+  return first(env.DB, 'SELECT u.id,u.email,u.name,u.email_verified FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.id=? AND s.expires_at>?', await sha256Hex(m[1]), now());
 }
 async function requireUser(req, env) { const u = await currentUser(req, env); if (!u) throw new HttpError(401, 'Inicia sesión para continuar.'); return u; }
 
@@ -90,11 +91,16 @@ function cleanProgress(d) {
 }
 
 /* ---------- Rutas ---------- */
+// Admin = correo en ADMIN_EMAILS **y verificado** (evita que otra persona registre antes ese correo)
+const isAdmin = (env, u) => !!u.email_verified && (env.ADMIN_EMAILS || '').toLowerCase().split(',').map((s) => s.trim()).filter(Boolean).includes(u.email);
+async function requireAdmin(req, env) { const u = await requireUser(req, env); if (!isAdmin(env, u)) throw new HttpError(403, 'Sin permiso.'); return u; }
+const MONTHLY_CENTS = { mensual: 2590, semestral: 2165, anual: 1833 }; // equivalente mensual (estimado), igual al sitio
+
 const routes = {
   'GET /api/health': async () => json({ ok: true }),
   'GET /api/config': async (req, env) => json({ stripe: !!env.STRIPE_SECRET_KEY, sim: env.SIM_MODE === 'true' && !env.STRIPE_SECRET_KEY, plans: PLANS }),
 
-  'POST /api/auth/register': async (req, env) => {
+  'POST /api/auth/register': async (req, env, ctx) => {
     const b = await body(req);
     const email = String(b.email || '').trim().toLowerCase(), password = String(b.password || ''), name = String(b.name || '').trim().slice(0, 80);
     if (!EMAIL_RE.test(email)) throw new HttpError(400, 'Escribe un correo válido.');
@@ -103,6 +109,7 @@ const routes = {
     if (await first(env.DB, 'SELECT 1 AS x FROM users WHERE email=?', email)) throw new HttpError(409, 'Ya existe una cuenta con ese correo. Inicia sesión.');
     const { hash, salt } = await hashPassword(password), id = crypto.randomUUID();
     await run(env.DB, 'INSERT INTO users(id,email,name,pw_hash,pw_salt,created_at) VALUES(?,?,?,?,?,?)', id, email, name, hash, salt, now());
+    ctx?.waitUntil?.(sendEmail(env, email, welcomeEmail(env, { name })));
     return json({ user: { id, email, name } }, 201, await startSession(env, id));
   },
   'POST /api/auth/login': async (req, env) => {
@@ -113,6 +120,31 @@ const routes = {
     if (!u || !timingSafeEqual(hash, u.pw_hash)) throw new HttpError(401, 'Correo o contraseña incorrectos.');
     return json({ user: { id: u.id, email: u.email, name: u.name } }, 200, await startSession(env, u.id));
   },
+  'POST /api/auth/forgot': async (req, env, ctx) => {
+    const email = String((await body(req)).email || '').trim().toLowerCase();
+    await throttle(env, `forgot:${req.headers.get('cf-connecting-ip') || 'x'}`, 10, 3600);
+    if (EMAIL_RE.test(email)) await throttle(env, `forgot:${email}`, 3, 3600);
+    const u = EMAIL_RE.test(email) ? await first(env.DB, 'SELECT id FROM users WHERE email=?', email) : null;
+    if (u) {
+      const token = randomHex(32);
+      await run(env.DB, 'DELETE FROM password_resets WHERE expires_at<? OR user_id=?', now(), u.id);
+      await run(env.DB, 'INSERT INTO password_resets(token_hash,user_id,expires_at) VALUES(?,?,?)', await sha256Hex(token), u.id, now() + 3600);
+      ctx?.waitUntil?.(sendEmail(env, email, resetEmail(env, `${env.SITE_URL}/#reset=${token}`)));
+    }
+    return json({ ok: true }); // misma respuesta exista o no la cuenta
+  },
+  'POST /api/auth/reset': async (req, env) => {
+    const b = await body(req), token = String(b.token || ''), password = String(b.password || '');
+    if (!/^[a-f0-9]{64}$/.test(token)) throw new HttpError(400, 'El enlace no es válido o venció.');
+    if (password.length < 8 || password.length > 200) throw new HttpError(400, 'La contraseña debe tener al menos 8 caracteres.');
+    const th = await sha256Hex(token), r = await first(env.DB, 'SELECT user_id FROM password_resets WHERE token_hash=? AND used=0 AND expires_at>?', th, now());
+    if (!r) throw new HttpError(400, 'El enlace no es válido o venció.');
+    const { hash, salt } = await hashPassword(password);
+    await run(env.DB, 'UPDATE users SET email_verified=1,pw_hash=?,pw_salt=? WHERE id=?', hash, salt, r.user_id);
+    await run(env.DB, 'UPDATE password_resets SET used=1 WHERE token_hash=?', th);
+    await run(env.DB, 'DELETE FROM sessions WHERE user_id=?', r.user_id); // cierra todas las sesiones
+    return json({ ok: true });
+  },
   'POST /api/auth/logout': async (req, env) => {
     const m = /(?:^|;\s*)bio_session=([a-f0-9]{64})/.exec(req.headers.get('cookie') || '');
     if (m) await run(env.DB, 'DELETE FROM sessions WHERE id=?', await sha256Hex(m[1]));
@@ -122,7 +154,7 @@ const routes = {
     const u = await currentUser(req, env);
     if (!u) return json({ user: null, subscription: null, access: false });
     const sub = await getSub(env, u.id);
-    return json({ user: u, subscription: publicSub(sub), access: hasAccess(sub), admin: (env.ADMIN_EMAILS || '').toLowerCase().split(',').map((s) => s.trim()).includes(u.email) });
+    return json({ user: { id: u.id, email: u.email, name: u.name }, subscription: publicSub(sub), access: hasAccess(sub), admin: isAdmin(env, u) });
   },
 
   'GET /api/progress': async (req, env) => {
@@ -141,9 +173,9 @@ const routes = {
     return json({ access, lessons: results.map((l) => ({ id: l.id, module: l.module, position: l.position, title: l.title, duration: l.duration, free: !!l.free, video: l.free || access ? l.video_url : '', locked: !(l.free || access) })) });
   },
   'PUT /api/admin/lessons': async (req, env) => {
-    const u = await requireUser(req, env);
-    if (!(env.ADMIN_EMAILS || '').toLowerCase().split(',').map((s) => s.trim()).includes(u.email)) throw new HttpError(403, 'Sin permiso.');
-    const list = (await body(req, 262144)).lessons;
+    await requireAdmin(req, env);
+    const payload = await body(req, 262144), list = payload.lessons, replace = Array.isArray(payload.replace) ? payload.replace : [];
+    if (replace.some((m) => !/^m\d{1,2}$/.test(m))) throw new HttpError(400, 'Módulo no válido.');
     if (!Array.isArray(list) || list.length > 300) throw new HttpError(400, 'Lista de aulas no válida.');
     const stmts = list.map((l) => {
       if (!/^m\d{1,2}-\d{1,3}$/.test(l.id) || !/^m\d{1,2}$/.test(l.module)) throw new HttpError(400, `ID no válido: ${l.id}`);
@@ -153,10 +185,29 @@ const routes = {
         ON CONFLICT(id) DO UPDATE SET module=excluded.module,position=excluded.position,title=excluded.title,duration=excluded.duration,video_url=excluded.video_url,free=excluded.free,updated_at=excluded.updated_at`)
         .bind(l.id, l.module, Number(l.position) || 0, String(l.title || '').slice(0, 160), String(l.duration || '').slice(0, 10), video.slice(0, 500), l.free ? 1 : 0, now());
     });
+    for (const m of replace) { // borra las aulas del módulo que ya no están en la lista
+      const keep = list.filter((l) => l.module === m).map((l) => l.id);
+      stmts.push(env.DB.prepare(`DELETE FROM lessons WHERE module=?${keep.length ? ` AND id NOT IN (${keep.map(() => '?').join(',')})` : ''}`).bind(m, ...keep));
+    }
     if (stmts.length) await env.DB.batch(stmts);
     return json({ ok: true, count: stmts.length });
   },
 
+  'GET /api/admin/lessons': async (req, env) => {
+    await requireAdmin(req, env);
+    const { results } = await env.DB.prepare('SELECT id,module,position,title,duration,video_url,free FROM lessons ORDER BY module,position').all();
+    return json({ lessons: results.map((l) => ({ ...l, free: !!l.free })) });
+  },
+  'GET /api/admin/stats': async (req, env) => {
+    await requireAdmin(req, env);
+    const users = (await first(env.DB, 'SELECT COUNT(*) AS n FROM users')).n;
+    const { results: subs } = await env.DB.prepare("SELECT plan,status,stripe_sub,current_period_end FROM subscriptions WHERE status IN ('active','trialing')").all();
+    const live = subs.filter((s) => s.stripe_sub || s.current_period_end > now());
+    const byPlan = { mensual: 0, semestral: 0, anual: 0 }; let mrr = 0; // centavos
+    for (const s of live) if (byPlan[s.plan] !== undefined) { byPlan[s.plan]++; mrr += MONTHLY_CENTS[s.plan]; }
+    const { results: recent } = await env.DB.prepare(`SELECT u.email,u.name,u.created_at,s.plan,s.status,s.cancel_at_period_end FROM users u LEFT JOIN subscriptions s ON s.user_id=u.id ORDER BY u.created_at DESC LIMIT 500`).all();
+    return json({ users, active: live.length, byPlan, mrr: mrr / 100, simulated: live.filter((s) => !s.stripe_sub).length, students: recent });
+  },
   'POST /api/checkout': async (req, env) => {
     const u = await requireUser(req, env), plan = (await body(req)).plan;
     if (!PLANS.includes(plan)) throw new HttpError(400, 'Plan no válido.');
@@ -222,7 +273,7 @@ async function webhook(req, env) {
 }
 
 export default {
-  async fetch(req, env) {
+  async fetch(req, env, ctx) {
     const url = new URL(req.url), cors = corsHeaders(req, env);
     try {
       if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
@@ -232,7 +283,7 @@ export default {
         const h = routes[`${req.method} ${url.pathname}`];
         if (!h) throw new HttpError(404, 'No encontrado.');
         if (req.method !== 'GET') assertCsrf(req, env);
-        res = await h(req, env);
+        res = await h(req, env, ctx);
       }
       for (const [k, v] of Object.entries(cors)) res.headers.set(k, v);
       return res;

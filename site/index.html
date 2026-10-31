@@ -1,5 +1,6 @@
 <!doctype html>
-<html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
+</style></head><body>
 <title>Projeto Biomáster Academy</title>
 <style>
 /* Layout: página de ventas pública + panel del alumno con la estructura de la plataforma Sinusal (barra lateral, migas, encabezados con punto). */
@@ -528,6 +529,9 @@ a{color:inherit}
  .steps-grid{grid-template-columns:1fr}.steps-grid li,.steps-grid li+li{padding:20px 0 6px;border-left:0;border-bottom:1px solid var(--e-line)}
  #landing .final{padding:60px 22px 0}
 }
+/* Fondo de transparencia molecular en la portada (pedido de la profesora) */
+#landing .sales-hero{background:url(assets/molecular-bg.svg) 40% 50%/cover no-repeat,linear-gradient(135deg,var(--e-cream),var(--e-bg))}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #landing .sales-hero{background:linear-gradient(135deg,var(--e-cream),var(--e-bg))}}
 </style>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
 
@@ -569,7 +573,7 @@ a{color:inherit}
     </section>
     <section id="metodo" class="sec intro">
       <span class="eyebrow">APRENDER CON SENTIDO</span>
-      <h2>Deja de decorar rutas.<br>Empieza a entender conexiones.</h2>
+      <h2>Deja de memorizar rutas.<br>Empieza a entender conexiones.</h2>
       <p>Biomáster transforma contenidos complejos en una secuencia clara: aprende, practica, repasa y comprueba lo que realmente dominaste.</p>
       <div class="m4" id="m4">
         <div class="m4-tabs" role="tablist" aria-label="Método Biomáster">
@@ -717,9 +721,9 @@ function pinSvg(on){return '<svg viewBox="0 0 24 24" fill="'+(on?'currentColor':
 var VIEWS=[['inicio','Inicio'],['curso','Mi curso'],['repaso','Repaso'],['preguntas','Preguntas'],['materiales','Materiales'],['fijados','Fijados']];
 var MODS=[
  {id:'m0',n:'00',tag:'EMPIEZA POR AQUÍ',t:'Bienvenida Biomáster',d:'Conoce la plataforma y cómo sacar el máximo provecho del curso.',i:'flask',L:[['¡Bienvenido, Biomáster! Empieza por aquí','01:09']]},
- {id:'m1',n:'01',t:'Química básica',d:'Los cimientos químicos que necesitas antes de entrar a la bioquímica.',i:'flask',locked:true},
- {id:'m2',n:'02',t:'Fundamentos de Bioquímica',d:'Biomoléculas, agua, pH y bases para comprender el metabolismo.',i:'net',locked:true},
- {id:'m3',n:'03',t:'Aminoácidos y proteínas',d:'Estructura, propiedades y función de aminoácidos y proteínas.',i:'inf',locked:true},
+ {id:'m1',n:'01',t:'Química básica',d:'Átomos, enlaces químicos y química orgánica.',i:'flask',locked:true},
+ {id:'m2',n:'02',t:'Fundamentos de Bioquímica',d:'Introducción a la bioquímica, bioelementos, agua y pH, biomoléculas orgánicas.',i:'net',locked:true},
+ {id:'m3',n:'03',t:'Aminoácidos y proteínas',d:'Bioquímica estructural: monómeros (aminoácidos, nucleótidos, monosacáridos), péptidos de importancia fisiológica, proteínas y su ciclo de vida, niveles estructurales, mal plegamiento proteico, hemoglobina y mioglobina.',i:'inf',locked:true},
  {id:'m4',n:'04',t:'Carbohidratos y lípidos',d:'Estructura y función de los carbohidratos y los lípidos.',i:'flask',locked:true},
  {id:'m5',n:'05',t:'Ácidos nucleicos y vitaminas',d:'Nucleótidos, ADN, ARN y el papel de las vitaminas.',i:'net',locked:true},
  {id:'m6',n:'06',t:'Fundamentos del Metabolismo',d:'Introducción al metabolismo y regulación enzimática.',i:'inf',L:[['Introducción al Metabolismo I','11:32'],['Introducción al Metabolismo II','26:05'],['Regulación Enzimática I','23:56'],['Regulación Enzimática II','18:14']]},

@@ -1,0 +1,177 @@
+"""Genera propuesta-comercial.html con los escenarios calculados. Editar SUPUESTOS y volver a ejecutar:  python3 proposta/build.py"""
+import math, html, pathlib
+# ---------- SUPUESTOS (editar) ----------
+ARPU = 22.0          # ingreso medio mensual por alumno (USD), mezcla de planes con descuento
+MIN_ALUMNO = 240     # minutos de video vistos por alumno al mes
+MIN_CURSO = 1500     # minutos totales de video del curso (≈17 módulos × 4 aulas × ~20 min)
+FEE_HOTMART = 0.11   # comisión efectiva estimada Hotmart (9,9% + USD 0,50 por cobro; fuente secundaria)
+FEE_GW = 0.045       # comisión efectiva estimada de pasarela propia (tarjeta/PIX/local; a confirmar)
+A_SETUP, A_MES = 1200, 150
+B_PRECIO, B_MANT = 4800, 100
+C_SETUP, C_PCT = 500, 0.04
+ESCENARIOS = [100, 500, 2000]
+# -----------------------------------------
+def infra(n):
+    stor = 5 * math.ceil(MIN_CURSO / 1000); deliv = n * MIN_ALUMNO / 1000
+    email = 0 if n <= 1000 else 20
+    return dict(workers=5, dominio=1, email=email, stor=stor, deliv=deliv, total=5 + 1 + email + stor + deliv)
+def usd(x, d=0): return "USD " + f"{x:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+rows = ""
+for n in ESCENARIOS:
+    r = n * ARPU; i = infra(n); sav = r * (FEE_HOTMART - FEE_GW); a = sav - i["total"] - A_MES; b = sav - i["total"]; c = sav - i["total"] - C_PCT * r
+    rows += f"<tr><td><b>{n}</b></td><td>{usd(r)}</td><td>{usd(i['total'])}</td><td>{usd(r*FEE_HOTMART)}</td><td>{usd(r*FEE_GW)}</td><td>{usd(sav)}</td><td class='{'neg' if a<0 else 'pos'}'>{usd(a)}</td><td class='pos'>{usd(b)}</td><td class='pos'>{usd(c)}</td></tr>"
+BE = next(n for n in range(10, 3000) if n * ARPU * (FEE_HOTMART - FEE_GW) - infra(n)["total"] - A_MES >= 0)
+LOGO = "../site/assets/logo-coruja.png"; OWL = "../site/assets/coruja-alas.png"; PANEL = "../site/assets/panel-inicio.jpg"
+
+def table(head, rows_, cls=""):
+    h = "".join(f"<th>{x}</th>" for x in head)
+    b = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in rows_)
+    return f"<table class='t {cls}'><thead><tr>{h}</tr></thead><tbody>{b}</tbody></table>"
+
+OK, PROTO, TODO = "<span class='b ok'>✅ Listo</span>", "<span class='b pr'>🟡 Prototipo</span>", "<span class='b td'>⏳ Pendiente</span>"
+estado = table(["Área", "Función", "Estado", "Comentario"], [
+ ["Alumnos", "Sitio de ventas con experiencia 3D, planes y preguntas frecuentes", OK, "Falta el archivo del video de presentación y el nuevo video corto de bienvenida."],
+ ["Alumnos", "Panel: Inicio, Mi curso (progreso por aula), Fijados y notas, buscador", OK, "Progreso sincronizado en la nube al iniciar sesión."],
+ ["Alumnos", "Temario de 17 módulos + «Empieza por aquí»", OK, "Contenido grabado hoy: bienvenida + 4 aulas del módulo 06. El resto se publica a medida que se graba."],
+ ["Alumnos", "Reproductor de aulas protegido por plan (aula gratis visible, el resto con candado)", OK, "Requiere alojar los videos (ver costos). El enlace puede copiarse: para protección fuerte usar video con URL temporal."],
+ ["Alumnos", "Repaso: flashcards, rutas metabólicas, repaso de 10 min", PROTO, "Pantalla lista; falta cargar el contenido y la lógica de repetición espaciada."],
+ ["Alumnos", "Banco de preguntas y Desafíos con corrección", PROTO, "Pantalla lista; falta el motor de preguntas, corrección y puntaje."],
+ ["Alumnos", "Material premium (PDF Ciclo de Krebs)", PROTO, "Falta descarga protegida con marca de agua; la profesora enviará el PDF actualizado."],
+ ["Negocio", "Registro, inicio de sesión, recuperación de contraseña, correo de bienvenida", OK, "El correo requiere cuenta en Resend con dominio verificado."],
+ ["Negocio", "3 planes (mensual, semestral, anual) y «Gestionar plan»", OK, "Precios a confirmar por la profesora."],
+ ["Negocio", "Cobro con tarjeta (Stripe) con webhook y portal de cobranza", PROTO, "Código probado con simulador y 55 pruebas automáticas; <b>depende de que Stripe atienda a la titular</b> (ver sección 4)."],
+ ["Negocio", "PIX, guaraníes (PYG) y otros medios locales", TODO, "Requiere integrar un proveedor adicional (ver sección 4): ~20–40 h por proveedor."],
+ ["Profesora", "Panel: resumen de ventas, gestión de aulas por módulo, lista de alumnos y exportación CSV", OK, "Un módulo con aulas guardadas se publica solo."],
+ ["Seguridad", "HTTPS, contraseñas con hash, protección CSRF, límite de intentos, administración verificada", OK, "Validado en el entorno real de Cloudflare."],
+ ["Legal", "Términos, Política de Privacidad y Contrato", PROTO, "Borradores en <code>proposta/legal/</code>; requieren revisión de abogado."],
+])
+infra_tbl = table(["Concepto", "Servicio sugerido", "Costo", "Estado de la cifra"], [
+ ["Servidor de la API", "Cloudflare Workers", "Gratis para empezar · <b>USD 5/mes</b> plan Paid (recomendado en producción)", "Verificado en búsqueda sobre documentación de Cloudflare"],
+ ["Base de datos", "Cloudflare D1", "Incluida: gratis hasta 5 M lecturas y 100 mil escrituras por día y 5 GB; en Paid, 25 mil M lecturas y 50 M escrituras al mes incluidas; excedente USD 0,75/GB-mes", "Verificado (docs Cloudflare vía búsqueda)"],
+ ["Sitio web (archivos)", "Cloudflare Pages / Workers assets", "Sin costo relevante a esta escala", "Confirmar límites vigentes"],
+ ["Dominio", ".com (o .com.py)", "≈ USD 10–15/año (.com)", "Estimación, no verificada"],
+ ["Correos del sistema", "Resend", "Gratis hasta 3.000/mes (máx. 100/día) · Pro USD 20/mes (50.000)", "Terceros; confirmar en resend.com/pricing"],
+ ["Video de las aulas", "Cloudflare Stream", "USD 5 por 1.000 min almacenados + USD 1 por 1.000 min reproducidos (sin costo de ancho de banda aparte)", "Documentación oficial vía búsqueda; alternativa: Bunny Stream (por GB, más económico con mucho tráfico)"],
+ ["Comisión de cobro", "Ver sección 4", "Hotmart ≈ 9,9% + USD 0,50 por venta · pasarelas propias ≈ 2–5% según medio", "Fuentes secundarias: <b>confirmar con cada proveedor</b>"],
+ ["Legal / contabilidad", "Abogado + contador", "A definir", "—"],
+])
+pagos = table(["Proveedor", "PIX", "USD", "PYG", "Cobro recurrente", "Notas"], [
+ ["<b>Hotmart</b> (actual)", "Verificar para compradores en Brasil", "Checkout internacional con tarjeta", "No confirmado", "Sí (suscripciones)", "Ya operativo. ≈ 9,9% + USD 0,50 (fuente secundaria). Ofrece 20+ medios; detalle por país a confirmar con soporte."],
+ ["<b>dLocal</b>", "Sí (proveedor de PIX)", "Liquida en USD", "Sí (Paraguay)", "Sí vía integradores", "Más orientado a empresas; tarifas a medida (una fuente cita 0,99%–7,99% en dLocal Go). Es el candidato «todo en uno»; verificar acceso para un vendedor pequeño."],
+ ["<b>EBANX</b>", "Sí (Brasil)", "A confirmar", "Tarjetas en PYG (sin otros medios locales)", "A confirmar", "Una integración cubre Brasil y Paraguay; sin tarifas públicas."],
+ ["<b>Bancard</b> (Paraguay)", "<b>Sí</b>: el cliente paga en reales y el comercio recibe en guaraníes en 48 h (documentado)", "Dólares según contrato", "<b>Sí</b>", "Parcial (a confirmar)", "Requiere comercio en Paraguay."],
+ ["<b>Pagopar / upay</b> (Paraguay)", "QR Pix (≈ 2,9% según blog)", "—", "<b>Sí</b>", "<b>Sí</b>, con reintentos", "≈ 2% débito, 3% crédito (blog; confirmar). Requiere comercio en Paraguay."],
+ ["<b>Stripe</b>", "Pix para negocios brasileños (verificar)", "<b>Sí</b>", "No", "<b>Sí</b>", "Fuentes secundarias indican que <b>no abre cuentas con domicilio en Paraguay</b>; confirmar en stripe.com/global. Código de la plataforma ya listo."],
+], "wide")
+opciones = table(["", "A · Licencia + operación", "B · Cesión total", "C · Socio"], [
+ ["Inversión inicial", f"{usd(A_SETUP)}", f"{usd(B_PRECIO)}", f"{usd(C_SETUP)}"],
+ ["Pago mensual al desarrollador", f"{usd(A_MES)}/mes (operación, soporte, actualizaciones)", f"Opcional: {usd(B_MANT)}/mes", f"{int(C_PCT*100)}% de los ingresos brutos"],
+ ["Propiedad del código", "Del desarrollador (licencia de uso)", "De la titular", "A definir"],
+ ["Quién asume el riesgo", "Equilibrado", "La titular paga todo antes de vender", "Compartido: se paga más si ella vende más"],
+ ["Conviene si…", "Quiere empezar con poco y delegar el mantenimiento", "Quiere independencia y planea escalar", "Quiere mínimo desembolso y alinear incentivos"],
+], "wide")
+
+HTMLDOC = f"""<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Propuesta · Biomáster Academy — Plataforma propia de cursos</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap">
+<style>
+:root{{--navy:#1f2f4a;--blue:#4f74ad;--sky:#e8f0fc;--sky2:#d3e3fa;--gold:#e8cd8c;--ink:#16213a;--mut:#56637f;--line:#dbe5f5}}
+*{{box-sizing:border-box}}body{{margin:0;font:15px/1.6 Inter,system-ui,sans-serif;color:var(--ink);background:#f4f8ff}}
+h1,h2,h3{{font-family:Poppins,system-ui,sans-serif;color:var(--navy);letter-spacing:-.015em;margin:0}}
+.page{{max-width:980px;margin:0 auto;padding:0 28px}}
+.cover{{background:linear-gradient(135deg,#1f2f4a,#2f4a7a);color:#eaf1fb;padding:64px 0 48px}}
+.cover .page{{display:grid;grid-template-columns:1.3fr .7fr;gap:24px;align-items:center}}
+.cover h1{{color:#fff;font-size:42px;line-height:1.08;font-weight:800;margin:14px 0}}.cover p{{color:#c6d3ea;font-size:17px}}
+.cover img.owl{{width:100%;max-width:300px;justify-self:center;filter:drop-shadow(0 20px 24px rgba(0,0,0,.35))}}
+.tag{{display:inline-block;background:var(--gold);color:#3b2d08;font:700 12px Poppins,sans-serif;padding:5px 14px;border-radius:99px}}
+.logo{{display:flex;align-items:center;gap:10px;font:800 15px Poppins,sans-serif;letter-spacing:.05em;color:#fff}}.logo img{{width:38px;height:38px;border-radius:50%}}
+section{{padding:36px 0 8px}}section h2{{font-size:26px;margin-bottom:6px}}section h2 small{{display:block;font:700 11px Inter,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:4px}}
+p.lead{{color:var(--mut);margin:8px 0 14px}}
+.cards{{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}}.card{{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px}}.card b{{display:block;font:700 15px Poppins,sans-serif;color:var(--navy);margin-bottom:4px}}.card span{{font-size:13.5px;color:var(--mut)}}
+.t{{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px;margin:12px 0}}
+.t th{{background:#f6f9ff;text-align:left;font:700 11px Poppins,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}}.t th,.t td{{padding:9px 11px;border-bottom:1px solid #eef2fa;vertical-align:top}}
+.t td.pos{{color:#1f7a5c;font-weight:700}}.t td.neg{{color:#b03a2e;font-weight:700}}
+.b{{font:600 11px Inter,sans-serif;border-radius:99px;padding:3px 9px;white-space:nowrap}}.b.ok{{background:#e3f5ec;color:#1f7a5c}}.b.pr{{background:#fff3d6;color:#8a5a00}}.b.td{{background:#eef0f5;color:#56637f}}
+.note{{background:#fff6dc;border:1px solid #f1e2b0;border-radius:12px;padding:11px 15px;font-size:13.5px;margin:12px 0;color:#5c4400}}
+.warn{{background:#fdf2f0;border:1px solid #f0c9c4;color:#8f2d22}}
+ul.ck{{list-style:none;padding:0;margin:10px 0;display:grid;gap:7px}}ul.ck li:before{{content:"✓ ";color:#1f9d73;font-weight:700}}
+.calc{{background:#fff;border:1px solid var(--line);border-radius:18px;padding:20px;margin:14px 0}}.calc .g{{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}}
+.calc label{{font-size:12px;color:var(--mut);font-weight:600;display:block}}.calc input{{width:100%;height:38px;border:1px solid #d5ddec;border-radius:10px;padding:0 10px;font:inherit;margin-top:3px}}
+.calc .out{{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px}}.calc .out div{{background:var(--sky);border-radius:12px;padding:10px 12px}}.calc .out span{{display:block;font-size:11px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.05em}}.calc .out b{{font:800 19px Poppins,sans-serif;color:var(--navy)}}
+.steps{{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}}.steps li{{counter-increment:s;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px 12px 52px;position:relative}}.steps li:before{{content:counter(s);position:absolute;left:14px;top:11px;width:28px;height:28px;border-radius:9px;background:var(--navy);color:var(--gold);font:700 14px Poppins,sans-serif;display:grid;place-items:center}}
+footer{{padding:30px 0 50px;font-size:12px;color:var(--mut)}}footer a{{color:var(--blue)}}
+.shot{{border-radius:14px;border:1px solid var(--line);box-shadow:0 14px 30px rgba(31,47,74,.15);width:100%}}
+@media print{{body{{background:#fff}}section{{break-inside:auto}}.t,.card,.calc,.steps li{{break-inside:avoid}}.cover{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}.b,.note,.t th,.calc .out div{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}section>h2,section>h3,h3{{break-after:avoid}}section>h2 small{{break-after:avoid}}.t tr{{break-inside:avoid}}.page{{max-width:none;padding:0 6px}}}}
+@media screen and (max-width:760px){{.cover .page,.cards,.calc .g,.calc .out{{grid-template-columns:1fr}}}}
+</style></head><body>
+<header class="cover"><div class="page"><div>
+<div class="logo"><img src="{LOGO}" alt="">BIOMÁSTER ACADEMY</div>
+<h1>Tu plataforma propia de cursos, con tu marca y tus alumnos.</h1>
+<p>Propuesta comercial para la <b>Bioq. Andrea López Ramirez</b>: qué incluye, qué ya está listo, cuánto cuesta operarla, cómo cobrar con PIX, dólares y guaraníes, y los términos legales.</p>
+<span class="tag">Versión borrador · 31 de octubre de 2026</span></div><img class="owl" src="{OWL}" alt=""></div></header>
+<main class="page">
+
+<section><h2><small>1 · Resumen</small>Qué te proponemos</h2>
+<p class="lead">Pasar de vender dentro de una plataforma ajena a tener <b>tu propio espacio</b>: sitio de ventas, panel de alumnos, cobros y panel de gestión, con tu marca. Tú eres dueña de tus <b>alumnos, sus correos y tus precios</b>; sin depender de las reglas de un tercero.</p>
+<div class="cards"><div class="card"><b>Más margen</b><span>Menor comisión por venta que un marketplace: con 500 alumnos la diferencia estimada supera USD 700 al mes (sección 5).</span></div><div class="card"><b>Tu marca y tus datos</b><span>Lista de alumnos, progreso y ventas son tuyos. Puedes ofrecer cupones, planes y promociones propias.</span></div><div class="card"><b>Lista para crecer</b><span>Los módulos se publican a medida que los grabas. Los alumnos ven el avance del curso y nuevas aulas sin costo extra.</span></div></div>
+<img class="shot" src="{PANEL}" alt="Panel del alumno">
+</section>
+
+<section><h2><small>2 · Qué vende la plataforma</small>Lo que recibe tu alumno</h2>
+<p class="lead">El mensaje central: <b>«La Bioquímica no se memoriza, ¡se domina!»</b> Un método en 6 pasos dentro de un solo panel.</p>
+<div class="cards"><div class="card"><b>Aprende</b><span>Videoaulas por módulo, en orden: 17 módulos de la química básica a la bioquímica clínica.</span></div><div class="card"><b>Conecta</b><span>Mapas, esquemas y explicaciones visuales que integran las vías metabólicas.</span></div><div class="card"><b>Repasa</b><span>Flashcards y repasos rápidos de 10 minutos.</span></div><div class="card"><b>Practica</b><span>Banco de preguntas y detección de puntos débiles.</span></div><div class="card"><b>Material premium</b><span>PDFs exclusivos, como «Ciclo de Krebs».</span></div><div class="card"><b>Desafíos</b><span>Ejercicios con banco de respuestas para medir lo que sabes.</span></div></div>
+<p><b>Planes sugeridos:</b> Mensual USD 25,90 · Semestral USD 129,90 (≈ USD 21,65/mes, −16%) · Anual «Fundadores» USD 219,90 (≈ USD 18,33/mes, −29%). 7 días de garantía. <i>Precios a confirmar por la profesora; el plan anual se recomienda lanzarlo cuando haya más módulos publicados.</i></p></section>
+
+<section><h2><small>3 · Qué incluye hoy</small>Estado real de la plataforma</h2>
+<p class="lead">Transparencia total: lo que funciona hoy, lo que es prototipo y lo que falta.</p>{estado}
+<div class="note"><b>Oportunidades de ingreso adicionales</b> (fuera del alcance actual): cursos nuevos (p. ej. Hematología), certificados de finalización, programa de afiliados, convenios con universidades o centros de estudiantes, cupones de lanzamiento, y una cuenta gratuita con la clase de bienvenida para captar correos y convertirlos en alumnos.</div></section>
+
+<section><h2><small>4 · Cobros</small>PIX, dólares y guaraníes</h2>
+<p class="lead">Objetivo: que el alumno pague con el medio que ya usa — <b>PIX</b> (Brasil), <b>tarjeta en dólares</b> (internacional) y <b>guaraníes</b> (Paraguay).</p>{pagos}
+<div class="note warn"><b>Conclusión honesta de la investigación:</b> no encontré un único proveedor <u>confirmado oficialmente</u> que cubra PIX + USD + PYG para una vendedora pequeña con un solo contrato. Los mejores candidatos son <b>dLocal</b> (todo en uno, pero orientado a empresas) o una combinación <b>Bancard / Pagopar (PYG + PIX local) + procesador de USD</b>. La elección depende de <b>dónde está registrada la titular y su cuenta bancaria</b> (Paraguay, Brasil u otro país) — dato que necesitamos. Los sitios oficiales de los proveedores no pudieron consultarse en esta investigación: todas las tarifas deben confirmarse con cada proveedor antes de decidir.</div>
+<p><b>Cómo lo resolvemos técnicamente:</b></p><ul class="ck"><li><b>Tarjeta:</b> cobro recurrente mensual automático.</li><li><b>PIX y medios locales:</b> el alumno paga un período fijo (mensual, semestral o anual) y recibe acceso hasta el vencimiento, sin débito automático; el sistema avisa antes de que venza. Encaja muy bien con los planes semestral y anual.</li><li>La plataforma ya está preparada para sumar proveedores sin rehacerla (≈ 20–40 horas por proveedor).</li></ul>
+<p><b>Recomendación por escenario:</b> (1) <i>Titular con RUC y cuenta en Paraguay:</i> Bancard o Pagopar para PYG y PIX + Hotmart/PayPal para USD. (2) <i>Titular o socio con entidad en Brasil:</i> Stripe (USD y PIX) + local. (3) <i>Volumen alto:</i> dLocal como único proveedor.</p></section>
+
+<section><h2><small>5 · Costos de operación</small>Cuánto cuesta mantenerla</h2>{infra_tbl}
+<h3 style="margin-top:22px">Escenarios mensuales (estimación)</h3>
+<p class="lead">Supuestos: ingreso medio de {usd(ARPU)} por alumno/mes · {MIN_ALUMNO} min de video por alumno al mes · curso de ~{MIN_CURSO:,} min · comisión Hotmart ≈ {int(FEE_HOTMART*100)}% · pasarela propia ≈ {FEE_GW*100:.1f}%. <i>Edita los supuestos en la calculadora de abajo.</i></p>
+<div class="scroll"><table class="t wide"><thead><tr><th>Alumnos pagos</th><th>Ingresos</th><th>Infraestructura + video</th><th>Comisión Hotmart</th><th>Comisión pasarela propia</th><th>Ahorro bruto</th><th>Beneficio neto · Opción A</th><th>Opción B</th><th>Opción C</th></tr></thead><tbody>{rows}</tbody></table></div>
+<p style="font-size:13px;color:#56637f"><i>Beneficio neto = ahorro de comisiones − infraestructura − pago al desarrollador. Es el dinero extra frente a seguir 100% en Hotmart.</i></p>
+<div class="note"><b>Punto de equilibrio:</b> con la Opción A la plataforma empieza a rendir más que Hotmart desde aproximadamente <b>{BE} alumnos pagos</b>. Por debajo de ese número, quedarse en Hotmart es más barato. Lo que justifica la plataforma antes de ese punto es la marca, el control de datos y de precios, y el crecimiento planificado.</div>
+<div class="calc"><h3 style="margin-bottom:10px">Calculadora</h3><div class="g">
+<div><label>Alumnos pagos<input id="n" type="number" value="500" min="0"></label></div>
+<div><label>Ingreso medio/alumno (USD/mes)<input id="arpu" type="number" value="{ARPU}" step="0.5"></label></div>
+<div><label>Minutos de video por alumno/mes<input id="mins" type="number" value="{MIN_ALUMNO}"></label></div>
+<div><label>Minutos totales del curso<input id="cmin" type="number" value="{MIN_CURSO}"></label></div>
+<div><label>Comisión Hotmart (%)<input id="hot" type="number" value="{FEE_HOTMART*100:g}" step="0.1"></label></div>
+<div><label>Comisión pasarela propia (%)<input id="gw" type="number" value="{FEE_GW*100:g}" step="0.1"></label></div>
+<div><label>Opción<select id="opt" style="width:100%;height:38px;border:1px solid #d5ddec;border-radius:10px;margin-top:3px"><option value="A">A · {usd(A_MES)}/mes</option><option value="B">B · cesión (sin mensualidad)</option><option value="C">C · {int(C_PCT*100)}% de ingresos</option></select></label></div></div>
+<div class="out"><div><span>Ingresos/mes</span><b id="o1"></b></div><div><span>Infra + video</span><b id="o2"></b></div><div><span>Ahorro vs Hotmart</span><b id="o3"></b></div><div><span>Neto para la profesora</span><b id="o4"></b></div></div></div>
+</section>
+
+<section><h2><small>6 · Modelo de contratación</small>Tres formas de trabajar juntos</h2>{opciones}
+<p style="font-size:13px;color:#56637f"><i>Valores sugeridos como punto de partida (≈ 160 h de desarrollo a USD 30/h para la cesión total). Se ajustan en la negociación.</i></p>
+<p><b>Lo que NO incluye ninguna opción:</b> producción de videos, campañas de marketing, costos de terceros (ver sección 5) ni cambios fuera del alcance firmado. Las cuentas de hosting, dominio y pagos se abren <b>a nombre de la titular</b>.</p></section>
+
+<section><h2><small>7 · Aspectos legales</small>Documentos y marco normativo</h2>
+<ul class="ck"><li><b>Términos y Condiciones</b> de uso para alumnos (planes, renovación, cancelación, garantía de 7 días, licencia personal de contenido, aviso educativo).</li><li><b>Política de Privacidad</b> (datos tratados, proveedores, transferencias internacionales, derechos del titular).</li><li><b>Contrato de desarrollo y licencia/cesión</b> entre desarrollador y titular (propiedad del código, datos, soporte, confidencialidad).</li></ul>
+<p>Los tres están en <code>proposta/legal/</code> como <b>borradores</b> con campos por completar.</p>
+<div class="note"><b>Puntos a vigilar:</b><br>• <b>Paraguay</b> aprobó la <b>Ley N.º 7593/2025 de Protección de Datos Personales</b>; según las fuentes consultadas su vigencia plena sería ~24 meses tras su publicación (≈ noviembre de 2027) y crea una Agencia Nacional. Conviene diseñar el cumplimiento desde ahora. <i>Fechas por confirmar en el texto oficial.</i><br>• Si hay alumnos en <b>Brasil</b>, aplica la <b>LGPD</b>.<br>• <b>Derecho de consumidor y de arrepentimiento</b> en ventas a distancia: no pude confirmar en esta investigación qué plazo exige la Ley 1334/98 de Paraguay; la garantía de 7 días de la plataforma debe validarse por un abogado local.<br>• <b>Propiedad de los contenidos:</b> la titular debe acreditar derechos sobre videos, fotos y la mascota «búho».<br>• <b>Contenido de salud:</b> carácter educativo, no consejo médico.</div></section>
+
+<section><h2><small>8 · Hoja de ruta</small>Próximos pasos</h2>
+<ol class="steps"><li><b>Decisiones de la profesora</b> (semana 1): país y entidad de cobro, opción de contratación, precios definitivos, si seguirá en Hotmart durante la transición.</li><li><b>Puesta en producción base</b> (semanas 1–2): cuentas a nombre de la titular, dominio, base de datos, correo, publicación del sitio.</li><li><b>Cobros</b> (semanas 2–4): activar el proveedor elegido (tarjeta, PIX, PYG) y pruebas con pagos reales de bajo monto.</li><li><b>Contenido</b> (continuo): subir aulas del módulo 06 y siguientes; nuevo video de bienvenida; PDF premium actualizado.</li><li><b>Repaso y Preguntas</b> (semanas 4–8): flashcards, banco de preguntas, desafíos y descarga protegida de PDFs.</li><li><b>Lanzamiento</b>: migración o convivencia con Hotmart, comunicación a la base de alumnos, cupón de lanzamiento.</li></ol></section>
+
+<section><h2><small>9 · Supuestos y riesgos</small>Lo que conviene saber</h2>
+<ul class="ck"><li>Las cifras de infraestructura vienen de la documentación pública de Cloudflare; las comisiones de pago y varias tarifas provienen de <b>fuentes secundarias</b> y deben confirmarse. Los sitios oficiales de Stripe, Cloudflare y del Congreso paraguayo no estuvieron accesibles durante la investigación.</li><li>Depender de un desarrollador para mantener la plataforma es un riesgo: se mitiga con documentación, código con pruebas automáticas y cuentas a nombre de la titular.</li><li>Los videos protegidos por enlace pueden copiarse por un alumno; para proteger mejor se usa video con URL temporal (costo mayor).</li><li>Sin una base mínima de alumnos (≈ {BE}) quedarse en Hotmart sigue siendo más económico: la plataforma es una inversión de crecimiento.</li></ul></section>
+
+<footer><b>Fuentes consultadas (secundarias salvo indicación):</b> Cloudflare Workers/D1/Stream (documentación vía búsqueda) · Resend (pricing) · Hotmart (blogs y centro de ayuda) · Bancard (PIX para comercios) · Pagopar (blog de gestión) · dLocal / EBANX (documentación) · Ley N.º 7593/2025 (BACN, noticias y análisis legales) · Ley 1334/98. Documento de trabajo, sujeto a verificación.</footer>
+</main>
+<script>
+(function(){{var $=function(i){{return document.getElementById(i)}},f=function(x){{return 'USD '+Math.round(x).toLocaleString('es')}};
+function upd(){{var n=+$('n').value||0,a=+$('arpu').value||0,m=+$('mins').value||0,cm=+$('cmin').value||0,h=(+$('hot').value||0)/100,g=(+$('gw').value||0)/100,o=$('opt').value;
+var r=n*a,inf=5+1+(n>1000?20:0)+5*Math.ceil(cm/1000)+n*m/1000,sav=r*(h-g),fee=o==='A'?{A_MES}:(o==='C'?{C_PCT}*r:0);
+$('o1').textContent=f(r);$('o2').textContent=f(inf);$('o3').textContent=f(sav);var net=sav-inf-fee;$('o4').textContent=f(net);$('o4').style.color=net<0?'#b03a2e':'#1f7a5c'}}
+document.querySelectorAll('.calc input,.calc select').forEach(function(e){{e.addEventListener('input',upd)}});upd()}})();
+</script></body></html>"""
+pathlib.Path(__file__).with_name("propuesta-comercial.html").write_text(HTMLDOC, encoding="utf-8")
+print("ok; punto de equilibrio A =", BE)

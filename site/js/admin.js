@@ -49,7 +49,7 @@ function drawMods(){
   el.addEventListener('click',function(e){var h=e.target.closest('.mod>button');if(h){el.classList.toggle('open');draw();return}
    var b=e.target.closest('[data-a]');if(!b)return;sync();var i=+(b.closest('.row')||{dataset:{}}).dataset.i,a=b.dataset.a;
    if(a==='add'){rows.push({title:'',duration:'',video:'',free:false});draft=true}
-   else if(a==='rm'){if(confirm('¿Quitar esta aula? El progreso de los alumnos en las aulas siguientes se desplazará.')){rows.splice(i,1);draft=true}else return}
+   else if(a==='rm'){if(!b.dataset.sure){b.dataset.sure='1';b.textContent='¿Seguro?';return}rows.splice(i,1);draft=true}
    else if(a==='up'&&i>0){var t=rows[i];rows[i]=rows[i-1];rows[i-1]=t;draft=true}
    else if(a==='dn'&&i<rows.length-1){var t2=rows[i];rows[i]=rows[i+1];rows[i+1]=t2;draft=true}
    else if(a==='save'){save();return}

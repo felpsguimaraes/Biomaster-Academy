@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Biomáster Academy · La Bioquímica no se memoriza, ¡se domina!</title>
+<meta name="description" content="Videoaulas visuales, materiales, flashcards y preguntas de Bioquímica con la Bioq. Andrea López.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/panel.css">
+<link rel="stylesheet" href="css/landing.css">
+<link rel="stylesheet" href="css/checkout.css">
+</head><body>
+<div id="landing" hidden>
+  <div class="w3d" id="w3d" aria-hidden="true"><div class="w3d-cam" id="w3dCam"></div></div>
+  <header class="lp-nav" id="lpNav">
+    <button class="lp-logo" data-go="top" aria-label="Biomáster Academy, ir al inicio"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></button>
+    <nav aria-label="Secciones"><button data-go="metodo">Método</button><button data-go="temario">Temario</button><button data-go="profesora">Profesora</button><button data-go="planes">Planes</button></nav>
+    <div class="lp-nav-cta"><button class="lp-btn link sm" id="lpLogin" data-auth="login" hidden>Entrar</button><button class="lp-btn link sm" data-enter>Ver demo</button><button class="lp-btn primary sm" data-pay="mensual">Empezar</button></div>
+  </header>
+  <main class="lp-main" id="top">
+    <section class="lp-hero">
+      <div class="lp-hero-copy" data-3d="hero">
+        <span class="lp-chip">🧪 Claridad · Método · Rigor</span>
+        <h1>La Bioquímica <span class="u">no se memoriza.</span><br><em>¡Se domina!</em></h1>
+        <p>Videoaulas visuales, resúmenes, flashcards y preguntas en un solo panel, con la <b>Bioq. Andrea López</b>. Para estudiantes y profesionales de la salud que quieren entender el porqué de cada vía, no repetir de memoria.</p>
+        <div class="lp-actions"><button class="lp-btn primary" data-go="planes">Quiero acceso</button><button class="lp-btn link" data-enter>Ver el panel por dentro</button></div>
+        <p class="lp-price-note">Desde USD 25,90 al mes · 7 días de garantía</p>
+        <ul class="lp-proof"><li>Videoaulas organizadas</li><li>Materiales de apoyo</li><li>Repasos y preguntas</li><li>7 días de garantía</li></ul>
+      </div>
+      <div class="lp-hero-art" id="heroArt">
+        <div class="orb o1"></div><div class="orb o2"></div>
+        <img class="owl" id="owl" src="assets/coruja-alas.png" alt="Biomáster Academy: el búho de la marca">
+        <span class="float f1">ATP</span><span class="float f2">NADH</span><span class="float f3">pH 7,4</span>
+      </div>
+      <button class="lp-scroll" data-go="presentacion" aria-label="Seguir bajando">Desliza <i></i></button>
+    </section>
+
+    <section id="presentacion" class="lp-sec lp-pres">
+      <figure class="lp-video" data-3d="rise"><video controls playsinline preload="metadata" poster="assets/poster.jpg" aria-label="Presentación de Biomáster Academy por la Bioq. Andrea López"><source src="assets/presentacion.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video></figure>
+      <div class="lp-pres-copy" data-3d="rise">
+        <span class="lp-eyebrow">Presentación del curso</span>
+        <h2>Conoce a tu profe y cómo vas a estudiar Bioquímica.</h2>
+        <p>Dale play y escucha a la Bioq. Andrea López darte la bienvenida: una forma más clara, visual y organizada de entender Bioquímica.</p>
+        <ul class="lp-checks"><li>Videoaulas por módulos, en orden</li><li>Esquemas y materiales de apoyo</li><li>Flashcards y preguntas para repasar</li><li>Tu progreso siempre a la vista</li></ul>
+      </div>
+    </section>
+
+    <section class="lp-sec lp-pain">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">¿Te suena familiar?</span><h2>Estudiar Bioquímica no tiene que sentirse así.</h2></div>
+      <div class="lp-pain-grid">
+        <article data-3d="rise"><b>01</b><h3>Memorizas rutas y a los pocos días las olvidas</h3><p>Sin entender de dónde viene cada sustrato, todo parece una lista infinita de nombres.</p><em>Aquí: entiendes el porqué de cada vía.</em></article>
+        <article data-3d="rise"><b>02</b><h3>Tus apuntes están por todas partes</h3><p>Videos sueltos, PDFs y fotos de la pizarra que nunca se conectan entre sí.</p><em>Aquí: un solo panel, por módulos.</em></article>
+        <article data-3d="rise"><b>03</b><h3>Llegas al examen sin saber si dominas el tema</h3><p>Repasar sin practicar deja puntos débiles escondidos hasta el último día.</p><em>Aquí: repasos y preguntas para comprobarlo.</em></article>
+      </div>
+    </section>
+
+
+    <section id="metodo" class="lp-mpsec" aria-label="Método y panel Biomáster">
+     <div class="lp-mp-pin">
+      <div class="lp-mp-copy">
+        <span class="lp-eyebrow">Método y panel</span>
+        <h2>Deja de memorizar rutas. <em>Entiende conexiones.</em></h2>
+        <div class="lp-step" aria-live="polite"><b id="mpNum">01</b><div><h3 id="mpTitle">Tu panel</h3><p id="mpText">Sabes qué estudiar hoy, dónde continuar y cuánto ya avanzaste.</p></div></div>
+        <ol class="lp-shotsteps" id="mpSteps" aria-label="Etapas del método"></ol>
+        <button class="lp-btn link" data-enter>Explorar el panel</button>
+      </div>
+      <div class="lp-laptop">
+        <div class="lp-screen"><div class="bar"><u></u><u></u><u></u><span id="shotLabel">Panel · Inicio</span></div><div class="shots" id="shots">
+          <img src="assets/panel-inicio.jpg" alt="Panel del alumno: inicio con próxima clase y progreso" class="on">
+          <img src="assets/panel-curso.jpg" alt="Panel del alumno: módulos y aulas con progreso">
+          <img src="assets/conecta.jpg" alt="Clase de la plataforma: ferritina e inflamación">
+          <img src="assets/panel-repaso.jpg" alt="Panel del alumno: repaso con flashcards">
+          <img src="assets/panel-preguntas.jpg" alt="Panel del alumno: banco de preguntas">
+          <img src="assets/panel-materiales.jpg" alt="Panel del alumno: biblioteca de materiales"></div></div>
+        <div class="lp-base"></div>
+      </div>
+     </div>
+    </section>
+
+    <section id="temario" class="lp-sec lp-syl">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">Temario</span><h2>17 módulos, un solo camino.</h2><p>De la química básica a la bioquímica clínica, publicados por etapas.</p></div>
+      <ol class="lp-path" id="path"></ol>
+    </section>
+
+
+    <section id="profesora" class="lp-sec lp-teacher">
+      <figure class="lp-tfig" data-3d="rise"><div class="blob"></div><img src="assets/professora-foto.png" alt="Bioq. Andrea López, docente de Bioquímica"></figure>
+      <div class="lp-tcopy" data-3d="rise">
+        <span class="lp-eyebrow">Tu profe de Bioquímica</span>
+        <h2>“Quiero que entiendas el porqué, no que memorices por obligación.”</h2>
+        <p><b>Bioq. Andrea López Ramirez</b> es Bioquímica y Química Farmacéutica, y creó Biomáster Academy para llevar su método de enseñanza estructurado más allá del aula física.</p>
+        <div class="lp-stats"><div><b>10+</b><span>años en educación superior</span></div><div><b>2</b><span>especializaciones</span></div><div><b>7</b><span>días de garantía</span></div></div>
+        <ul class="lp-checks"><li>Especialista en Hematología laboratorial y clínica</li><li>Especialista en Didáctica Universitaria</li><li>Magíster en Educación (en curso)</li><li>Conferencista nacional e internacional</li></ul>
+      </div>
+    </section>
+
+    <section id="planes" class="lp-sec lp-plans">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">Planes</span><h2>Estudia a tu ritmo.</h2><p>Todos los planes incluyen el curso completo, materiales premium, repasos y preguntas. 7 días de garantía.</p></div>
+      <ol class="lp-howto" aria-label="Cómo empiezas"><li><b>1</b>Elige tu plan</li><li><b>2</b>Paga con tarjeta</li><li><b>3</b>Entra al panel</li><li><b>4</b>Estudia con método</li></ol>
+      <div class="lp-curtog" id="curTog"></div>
+      <div class="lp-plan-grid" id="planGrid"></div>
+      <p class="lp-note">Demostración: el pago es un simulador, no se realiza ningún cobro real. Precios sujetos a confirmación.</p>
+    </section>
+
+    <section class="lp-sec lp-faq">
+      <div class="lp-head" data-3d="rise"><h2>Preguntas frecuentes</h2></div>
+      <details><summary>¿Para quién es Biomáster Academy?</summary><p>Para estudiantes del área de la salud que necesitan entender Bioquímica con claridad, conectar las vías metabólicas y prepararse con más seguridad para sus evaluaciones.</p></details>
+      <details><summary>¿Qué incluye la membresía?</summary><p>Acceso al curso de Bioquímica: videoaulas por módulos, materiales de apoyo, flashcards de repaso, banco de preguntas, seguimiento de progreso y actualizaciones del contenido.</p></details>
+      <details><summary>¿Ya están todos los módulos?</summary><p>El curso se publica por etapas, empezando por la parte metabólica. Los módulos nuevos aparecen en tu panel sin costo adicional mientras tu plan esté activo.</p></details>
+      <details><summary>¿Cómo hago la compra?</summary><p>Eliges un plan, pagas con tarjeta y entras al panel. Puedes cambiar o cancelar tu plan desde “Gestionar plan”.</p></details>
+      <details><summary>¿Quién es la profesora?</summary><p>Andrea López Ramirez, Bioquímica y Química Farmacéutica, especialista en Hematología laboratorial y clínica y en Didáctica Universitaria, con más de 10 años de experiencia en educación superior.</p></details>
+      <details><summary>¿Y si no me convence?</summary><p>Tienes 7 días de garantía: exploras la plataforma y, si el contenido o la metodología no cumplen tus expectativas, solicitas el reembolso del 100% de tu dinero.</p></details>
+    </section>
+
+    <section class="lp-final">
+      <div data-3d="rise"><h2>Tu próxima clase puede ser el momento en que Bioquímica empiece a tener sentido.</h2><button class="lp-btn light" data-go="planes">Quiero empezar</button></div>
+      <img src="assets/professora-boneca.png" alt="" data-3d="rise">
+    </section>
+    <footer class="lp-foot"><div class="lp-logo"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></div><span>Bioquímica visual · práctica · conectada</span><small>© 2026 Biomáster Academy</small></footer>
+  </main>
+  <div class="lp-buybar"><button class="lp-btn primary" data-go="planes">Quiero acceso</button></div>
+</div>
+
+<div id="app" class="shell" hidden>
+  <aside class="side" aria-label="Menú del alumno">
+    <button class="logo" data-leave aria-label="Volver a la página de ventas"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></button>
+    <div class="ws"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16"/><path d="M2 5a2 2 0 0 1 2-2h4a4 4 0 0 1 4 4 4 4 0 0 1 4-4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4a4 4 0 0 0-4 2 4 4 0 0 0-4-2H4a2 2 0 0 1-2-2z"/></svg></div><div><b>Curso de Bioquímica</b><span>Membresía mensual</span></div></div>
+    <span class="slabel">TU ESTUDIO</span>
+    <nav class="snav" id="snav" aria-label="Navegación principal"></nav>
+    <a class="adminlink" id="adminLink" href="admin.html" hidden>⚙ Panel de la profesora</a>
+    <div class="plan" id="planbox"></div>
+    <div class="me"><div class="avatar" id="meAv">AB</div><div><b id="meName">Alumno Biomáster</b><small id="meSub">Mi perfil</small></div></div>
+  </aside>
+  <div class="content">
+    <header class="topbar">
+      <div class="crumbs"><span class="mid">Mi espacio</span><span class="mid">›</span><b id="crumb">Inicio</b></div>
+      <div class="searchbox">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" type="search" placeholder="Buscar módulos y materiales…" autocomplete="off" aria-label="Buscar">
+        <div class="results" id="results" hidden></div>
+      </div>
+      <button class="exit" data-leave>Salir</button>
+    </header>
+    <main id="page" class="page"></main>
+    <footer class="pfoot"><b>BIOMÁSTER ACADEMY</b><span>Vista de demostración · tu avance se guarda solo en este navegador</span><small id="pfoot-plan"></small></footer>
+  </div>
+  <nav class="tabs" id="tabs" aria-label="Navegación"></nav>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script src="js/course-data.js"></script>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/landing.js"></script>
+</body></html>

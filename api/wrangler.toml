@@ -1,0 +1,20 @@
+name = "biomaster-api"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+# Crie o banco com: npx wrangler d1 create biomaster  → cole o database_id abaixo
+# e aplique o esquema:  npx wrangler d1 execute biomaster --remote --file=schema.sql
+[[d1_databases]]
+binding = "DB"
+database_name = "biomaster"
+database_id = "COLE-O-ID-AQUI"
+
+[vars]
+SITE_URL = "https://SEU-DOMINIO"          # onde o site estático está publicado
+ALLOWED_ORIGIN = "https://SEU-DOMINIO"    # origem permitida para CORS/CSRF
+SIM_MODE = "false"                        # "true" só para demonstração (assina sem Stripe)
+ADMIN_EMAILS = ""                         # e-mails (vírgula) que podem editar aulas
+
+# Segredos (NUNCA no repositório): npx wrangler secret put NOME
+#   STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET,
+#   PRICE_MENSUAL, PRICE_SEMESTRAL, PRICE_ANUAL   (ids price_... do Stripe)

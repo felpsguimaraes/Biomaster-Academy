@@ -1,678 +1,140 @@
 <!doctype html>
-<html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
-</style></head><body>
-<title>Projeto Biomáster Academy</title>
-<style>
-/* Layout: página de ventas pública + panel del alumno con la estructura de la plataforma Sinusal (barra lateral, migas, encabezados con punto). */
-:root{
-  --bg:#f7f9fd; --surface:#ffffff; --surface-2:#eef3fb; --ink:#2b3a55; --muted:#6b7a94; --line:#e2e9f4;
-  --navy:#3d5078; --violet:#4f74ad; --violet-2:#8fb0dc; --lilac:#eaf1fb; --on-violet:#ffffff; --good:#1f7a5c;
-  --gold:#e8cd8c; --gold-2:#f1d9a0; --on-gold:#4a3b12;
-  --pa:#e1ecfa; --pb:#cddff4; --pc:#f4e8c8; --on-pa:#2b3a55; --on-pa-2:#4f5f7c; --dots:rgba(79,116,173,.16); --glow:rgba(255,255,255,.7); --glass:rgba(255,255,255,.65); --glass-line:rgba(79,116,173,.28);
-  --shadow:0 10px 34px rgba(61,80,120,.10);
-  --f-d:"Poppins",system-ui,-apple-system,"Segoe UI",sans-serif; --f-b:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#141a27; --surface:#1b2333; --surface-2:#222c41; --ink:#e8eef9; --muted:#9aa8c2; --line:#2a3650;
-  --violet:#9bb9e0; --violet-2:#7396c8; --lilac:#25324b; --on-violet:#18202f; --good:#5cc9a3; --shadow:0 10px 34px rgba(0,0,0,.35);
-  --pa:#25324b; --pb:#2d3e5e; --pc:#3a3425; --on-pa:#eef3fb; --on-pa-2:#bac7dd; --dots:rgba(155,185,224,.16); --glow:rgba(155,185,224,.12); --glass:rgba(255,255,255,.08); --glass-line:rgba(155,185,224,.3); color-scheme:dark}}
-:root[data-theme="dark"]{
-  --bg:#141a27; --surface:#1b2333; --surface-2:#222c41; --ink:#e8eef9; --muted:#9aa8c2; --line:#2a3650;
-  --violet:#9bb9e0; --violet-2:#7396c8; --lilac:#25324b; --on-violet:#18202f; --good:#5cc9a3; --shadow:0 10px 34px rgba(0,0,0,.35);
-  --pa:#25324b; --pb:#2d3e5e; --pc:#3a3425; --on-pa:#eef3fb; --on-pa-2:#bac7dd; --dots:rgba(155,185,224,.16); --glow:rgba(155,185,224,.12); --glass:rgba(255,255,255,.08); --glass-line:rgba(155,185,224,.3); color-scheme:dark}
-[hidden]{display:none!important}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-b);font-size:15px;line-height:1.55}
-h1,h2,h3,h4{font-family:var(--f-d);margin:0;letter-spacing:-.015em;text-wrap:balance}
-p{margin:0}
-button{font:inherit;cursor:pointer;color:inherit}
-a{color:inherit}
-:focus-visible{outline:2px solid var(--violet);outline-offset:2px}
-.eyebrow{display:block;color:var(--violet);font-size:10px;font-weight:800;letter-spacing:.14em;text-transform:uppercase}
-.wrap{max-width:1240px;margin:0 auto;padding-inline:16px}
-.logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:inherit;background:0;border:0;padding:0;text-align:left}
-.logo img{width:40px;height:40px;border-radius:50%;display:block;flex:none;box-shadow:0 0 0 2px var(--lilac)}
-.logo b{display:block;font:800 17px var(--f-d);letter-spacing:.04em;color:var(--navy)}
-.logo small{display:block;font-size:9px;letter-spacing:.36em;color:var(--violet);font-weight:700}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo b{color:var(--ink)}}
-:root[data-theme="dark"] .logo b{color:var(--ink)}
-
-/* ---------- Página de ventas ---------- */
-.pub-nav{display:flex;align-items:center;gap:28px;min-height:76px;flex-wrap:wrap;padding-block:12px}
-.pub-nav nav{margin-left:auto;display:flex;gap:26px}
-.pub-nav nav button{background:0;border:0;padding:6px 0;color:var(--muted);font-size:13px;font-weight:500}
-.pub-nav nav button:hover{color:var(--violet)}
-.btn{border:1px solid var(--line);background:var(--surface);color:var(--violet);border-radius:12px;padding:10px 18px;font-weight:700;font-size:13px;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-.btn:hover{border-color:var(--violet)}
-.btn.solid{background:var(--violet);color:var(--on-violet);border-color:var(--violet)}
-.cta{border:0;border-radius:13px;background:var(--surface);color:var(--violet);padding:14px 22px;font-weight:800;text-decoration:none;display:inline-block;font-size:14px}
-.cta.violet{background:var(--violet);color:var(--on-violet)}
-.cta.full{width:100%;text-align:center}
-.sales-hero{position:relative;overflow:hidden;border-radius:30px;color:var(--on-pa);padding:72px 60px;min-height:560px;display:flex;align-items:center;background:radial-gradient(circle at 83% 20%,var(--glow),transparent 32%),linear-gradient(125deg,var(--pa),var(--pb) 60%,var(--pc))}
-.sales-hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--dots) 1px,transparent 1px);background-size:26px 26px}
-.sales-copy{position:relative;z-index:1;width:58%}
-.pill{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.16em;background:var(--glass);border:1px solid var(--glass-line);padding:7px 12px;border-radius:20px}
-.sales-hero h1{font:800 clamp(2rem,5.4vw,3.4rem)/1.06 var(--f-d);margin:20px 0}
-.sales-hero h1 em,.hero h2 em{font-style:normal;color:var(--violet)}
-.sales-hero p{max-width:600px;color:var(--on-pa-2);font-size:17px;line-height:1.7}
-.sales-actions{display:flex;gap:12px;flex-wrap:wrap;margin:30px 0 22px}
-.ghost-w{border:1px solid var(--glass-line);background:var(--glass);color:var(--on-pa);border-radius:13px;padding:14px 22px;font-weight:700;font-size:14px}
-.proof{display:flex;gap:8px 20px;flex-wrap:wrap;font-size:12px;color:var(--on-pa-2)}
-.sales-hero>img{position:absolute;right:3%;bottom:-40px;width:42%;max-height:600px;object-fit:contain;filter:drop-shadow(0 22px 26px rgba(61,80,120,.28))}
-.sec{padding:96px 48px}
-.sec h2{font-size:clamp(1.7rem,3.6vw,2.5rem);line-height:1.15;margin:12px 0 16px}
-.intro{text-align:center}
-.intro>p{max-width:660px;margin:0 auto;color:var(--muted);line-height:1.7}
-.feat{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px;text-align:left}
-.feat article,.tool-grid article{border:1px solid var(--line);background:var(--surface);border-radius:20px;padding:24px;min-width:0}
-.ico{width:44px;height:44px;border-radius:13px;background:var(--lilac);color:var(--violet);display:grid;place-items:center}
-.ico svg{width:21px;height:21px}
-.feat h3{font-size:17px;margin:16px 0 6px}
-.feat p{font-size:14px;line-height:1.6;color:var(--muted)}
-.show{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;background:var(--surface-2);border-radius:30px}
-.show p,.teacher p,.price-copy p{color:var(--muted);line-height:1.7}
-.checks{list-style:none;padding:0;margin:24px 0;display:grid;gap:11px;font-size:14px;color:var(--ink)}
-.checks li{display:flex;gap:10px;align-items:flex-start}
-.checks li:before{content:"";flex:none;width:18px;height:18px;margin-top:2px;border-radius:50%;background:var(--lilac) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234f74ad' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7'/%3E%3C/svg%3E") center/11px no-repeat}
-.preview{background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:24px;box-shadow:var(--shadow);min-width:0}
-.preview-top{display:flex;justify-content:space-between;font-weight:600}
-.preview-top b{color:var(--violet)}
-.bar{height:7px;background:var(--surface-2);border-radius:8px;overflow:hidden}
-.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--violet-2));border-radius:8px}
-.preview .bar{margin:13px 0 20px}
-.pcard{padding:16px 18px;border:1px solid var(--line);border-radius:14px;margin-top:10px;display:grid;gap:4px}
-.pcard span{font-size:9px;color:var(--violet);font-weight:800;letter-spacing:.1em}
-.pcard small{color:var(--muted)}
-.pcard.dim{opacity:.55}
-.screen.collage{display:grid;grid-template-columns:1.6fr 1fr;gap:0;background:var(--surface)}
-.screen.collage img:first-child{object-position:top left}
-.screen.collage img:last-child{border-left:1px solid var(--line)}
-.screen.split{display:grid;grid-template-columns:minmax(0,38%) 1fr;gap:18px;align-items:stretch;padding:14px;background:linear-gradient(160deg,var(--pa),var(--pc))}
-.screen.split img{border-radius:10px;box-shadow:0 10px 24px rgba(61,80,120,.25);object-fit:cover;object-position:top}
-.screen.split>div{display:flex;flex-direction:column;justify-content:center;gap:8px;min-width:0;color:var(--on-pa)}
-.screen.split small{font-size:9.5px;font-weight:800;letter-spacing:.12em;color:var(--violet)}
-.screen.split b{font:700 clamp(15px,2.2vw,20px)/1.2 var(--f-d)}
-.screen.split p{font-size:12.5px;line-height:1.55;color:var(--on-pa-2)}
-.guar{display:grid;gap:4px;margin-top:16px;padding:14px 16px;border-radius:14px;background:var(--lilac);border:1px solid var(--line)}
-.guar b{font:700 14px var(--f-d);color:var(--violet)}
-.guar span{font-size:12.5px;line-height:1.55;color:var(--muted)}
-.creds{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px}
-.creds li{font-size:13px;font-weight:600;padding:7px 12px;border-radius:999px;background:var(--lilac);color:var(--violet);border:1px solid var(--line)}
-.shots{min-width:0;display:grid;gap:14px}
-.shots-stage{perspective:1400px;position:relative;aspect-ratio:1000/650}
-.shots-rig{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .2s ease-out}
-.shot{position:absolute;inset:0;margin:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 60px rgba(61,80,120,.22);opacity:0;transform:translateX(7%) translateZ(-120px) rotateY(-14deg) scale(.94);transition:transform .8s cubic-bezier(.2,.8,.2,1),opacity .6s;pointer-events:none}
-.shot.on{opacity:1;transform:none;pointer-events:auto}
-.shot.off{transform:translateX(-7%) translateZ(-120px) rotateY(14deg) scale(.94)}
-.shot img{width:100%;flex:1;min-height:0;object-fit:cover;object-position:top left;display:block}
-.shots-tabs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.shots-tabs button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 16px;font-size:13px;font-weight:700;transition:background .2s,color .2s}
-.shots-tabs button[aria-selected=true]{background:var(--violet);color:#fff;border-color:var(--violet)}
-.shots-note{text-align:center;color:var(--muted);font-size:12px}
-@media (prefers-reduced-motion:reduce){.shot,.shots-rig{transition:none}}
-.m4{display:grid;grid-template-columns:minmax(0,330px) 1fr;gap:40px;align-items:center;margin-top:36px;text-align:left}
-.m4-tabs{display:grid;gap:10px}
-.m4-tabs button{position:relative;overflow:hidden;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;transition:transform .25s,box-shadow .25s,border-color .25s}
-.m4-tabs button b{font:800 13px var(--f-d);color:var(--violet);background:var(--lilac);border-radius:10px;width:36px;height:36px;display:grid;place-items:center}
-.m4-tabs strong{display:block;font:700 16px var(--f-d)}
-.m4-tabs small{display:block;color:var(--muted);font-size:13px;line-height:1.45;margin-top:2px}
-.m4-tabs button[aria-selected=true]{border-color:var(--violet);box-shadow:0 14px 34px rgba(61,80,120,.14);transform:translateX(8px)}
-.m4-tabs button[aria-selected=true] b{background:var(--violet);color:#fff}
-.m4-tabs button i{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--violet-2)}
-.m4-tabs button[aria-selected=true] i{animation:m4fill 6s linear forwards}
-.m4:hover .m4-tabs button i,.m4:focus-within .m4-tabs button i{animation-play-state:paused}
-@keyframes m4fill{to{width:100%}}
-.stage{perspective:1500px;height:410px;position:relative;min-width:0;overflow-x:clip;overflow-y:visible;padding-top:10px}.m4{overflow-x:clip}
-.rig{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .2s ease-out}
-.c4{position:absolute;left:50%;top:50%;width:min(540px,84%);aspect-ratio:16/10;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:0 30px 60px rgba(61,80,120,.22);transform-style:preserve-3d;transition:transform .7s cubic-bezier(.2,.8,.2,1),opacity .6s,filter .6s;display:flex;flex-direction:column;overflow:visible;cursor:pointer}
-.c4[data-pos="0"]{transform:translate(-50%,-50%) translateZ(0);opacity:1;z-index:4;cursor:default}
-.c4[data-pos="1"]{transform:translate(calc(-50% + 22%),-50%) translateZ(-170px) rotateY(-30deg) scale(.88);opacity:.75;z-index:3;filter:saturate(.8)}
-.c4[data-pos="2"]{transform:translate(-50%,-50%) translateZ(-340px) scale(.72);opacity:0;z-index:1;pointer-events:none}
-.c4[data-pos="3"]{transform:translate(calc(-50% - 22%),-50%) translateZ(-170px) rotateY(30deg) scale(.88);opacity:.75;z-index:3;filter:saturate(.8)}
-.chrome{display:flex;align-items:center;gap:6px;padding:9px 14px;border-bottom:1px solid var(--line);font-size:11px;color:var(--muted);border-radius:18px 18px 0 0;background:var(--surface)}
-.chrome u{width:9px;height:9px;border-radius:50%;background:var(--line);text-decoration:none}
-.chrome span{margin-left:8px;font-weight:600}
-.screen{flex:1;min-height:0;border-radius:0 0 18px 18px;overflow:hidden;background:var(--surface-2)}
-.screen img{width:100%;height:100%;object-fit:cover;object-position:top;display:block}
-.chip{position:absolute;right:-12px;top:-14px;transform:translateZ(60px);font-style:normal;font-weight:800;font-size:12px;color:var(--on-gold);background:var(--gold);border-radius:999px;padding:7px 13px;box-shadow:0 10px 22px rgba(0,0,0,.25)}
-.fc{display:grid;grid-template-rows:1fr auto;gap:8px;padding:14px;background:linear-gradient(160deg,var(--lilac),var(--surface-2))}
-.flip{position:relative;border:0;background:none;padding:0;perspective:900px;min-height:0;color:inherit}
-.flip .face{position:absolute;inset:0;border-radius:14px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:8px;padding:14px 20px;text-align:center;backface-visibility:hidden;transition:transform .7s cubic-bezier(.2,.8,.2,1);background:var(--surface);border:1px solid var(--line)}
-.flip .back{transform:rotateY(180deg);background:linear-gradient(125deg,var(--pa),var(--pb) 60%,var(--pc));color:var(--on-pa);border:0}
-.flip.on .front{transform:rotateY(-180deg)}.flip.on .back{transform:rotateY(0)}
-.face small{font-size:9.5px;font-weight:800;letter-spacing:.12em;color:var(--violet)}
-.face.back small{color:var(--violet)}
-.face b{font:700 clamp(15px,2.3vw,21px)/1.25 var(--f-d)}
-.face i{font-style:normal;font-size:11px;color:var(--muted)}
-.face p{font-size:13px;line-height:1.5;color:var(--on-pa-2);max-width:380px}
-.fc-rate{display:flex;gap:8px;justify-content:center}
-.fc-rate span{font-size:11px;font-weight:700;padding:6px 14px;border-radius:10px;background:var(--surface);border:1px solid var(--line)}
-.qz{padding:16px 18px;display:flex;flex-direction:column;gap:8px;overflow:auto;background:var(--surface)}
-.qz small{font-size:9.5px;font-weight:800;letter-spacing:.12em;color:var(--violet)}
-.qz>b{font:700 14px/1.35 var(--f-d)}
-.opts{display:grid;gap:6px}
-.opts button{display:flex;gap:10px;align-items:center;text-align:left;font-size:12.5px;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);transition:background .2s,border-color .2s}
-.opts button i{font-style:normal;font-weight:800;width:22px;height:22px;border-radius:7px;background:var(--surface);display:grid;place-items:center;flex:none;font-size:11px}
-.opts button.ok{background:#e3f5ec;border-color:#1f7a5c}.opts button.no{background:#fdeaea;border-color:#c0392b}
-.fb{font-size:12px;color:var(--muted);line-height:1.45}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .opts button.ok{background:#12372b}:root:not([data-theme="light"]) .opts button.no{background:#3a1a1a}}
-:root[data-theme="dark"] .opts button.ok{background:#12372b}:root[data-theme="dark"] .opts button.no{background:#3a1a1a}
-@media (prefers-reduced-motion:reduce){.m4-tabs button[aria-selected=true] i{animation:none;width:100%}.c4,.rig,.flip .face{transition:none}}
-@media (max-width:980px){.m4{grid-template-columns:1fr;gap:24px}.m4-tabs{grid-template-columns:repeat(2,1fr)}.m4-tabs small{display:none}.m4-tabs button[aria-selected=true]{transform:none}.stage{height:340px}.c4[data-pos="1"]{transform:translate(calc(-50% + 14%),-50%) translateZ(-150px) rotateY(-26deg) scale(.86)}.c4[data-pos="3"]{transform:translate(calc(-50% - 14%),-50%) translateZ(-150px) rotateY(26deg) scale(.86)}}
-@media (max-width:560px){.screen.split p{display:none}.stage{height:300px}.c4{width:92%}.qz>b{font-size:12.5px}.opts button{font-size:11.5px;padding:6px 8px}}
-.pres{display:grid;grid-template-columns:minmax(0,340px) 1fr;gap:56px;align-items:center;justify-content:center}
-.pres-video{margin:0;border-radius:26px;overflow:hidden;background:var(--pb);box-shadow:0 24px 60px rgba(61,80,120,.28);aspect-ratio:9/16;max-height:600px;width:100%}
-.pres-video video{width:100%;height:100%;display:block;object-fit:cover;background:var(--pb)}
-.pres h2{font-size:clamp(1.6rem,3.6vw,2.4rem);line-height:1.15;margin:12px 0 14px}
-.pres p{color:var(--muted);line-height:1.7;font-size:16px}
-.pres .checks{font-size:15px}
-.cta.gold{background:var(--gold);color:var(--on-gold);box-shadow:0 10px 24px rgba(214,178,92,.35)}
-.cta.gold:hover{background:var(--gold-2)}
-.pv{display:grid;grid-template-columns:1fr 128px;gap:18px;align-items:stretch;margin-bottom:6px}
-.pv .bar{margin:13px 0 8px}
-.pv-prog small{color:var(--muted);font-size:12px}
-.vtile{position:relative;display:grid;place-items:center;aspect-ratio:9/16;max-height:226px;border-radius:16px;overflow:hidden;text-decoration:none;color:var(--on-pa);background:linear-gradient(125deg,var(--pa),var(--pb) 60%,var(--pc))}
-.vtile img{position:absolute;inset:auto 0 0 0;width:100%;opacity:.5}
-.vtile i{position:relative;width:42px;height:42px;border-radius:50%;background:var(--gold);color:var(--on-gold);display:grid;place-items:center;font-style:normal;font-size:15px;padding-left:3px;box-shadow:0 6px 16px rgba(0,0,0,.3)}
-.vtile span{position:absolute;left:8px;right:8px;bottom:8px;font-size:11px;font-weight:700;line-height:1.25;text-align:center;text-shadow:0 1px 6px rgba(5,12,65,.9)}
-.pain{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px;text-align:left}
-.pain article{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;min-width:0}
-.pain h3{font-size:16px;margin-bottom:6px}
-.pain p{font-size:14px;color:var(--muted);line-height:1.6}
-.pain em{display:block;margin-top:10px;font-style:normal;font-weight:700;font-size:13px;color:var(--violet)}
-.faq{max-width:760px;margin:0 auto}
-.faq h2{text-align:center;margin-bottom:22px}
-.faq details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-top:10px}
-.faq summary{cursor:pointer;font-weight:700;font-family:var(--f-d)}
-.faq details p{color:var(--muted);margin-top:10px;line-height:1.7;font-size:14px}
-.buybar{display:none}
-.sales-hero p strong{color:var(--on-pa)}
-.teacher{display:grid;grid-template-columns:.8fr 1.2fr;gap:60px;align-items:center}
-.teacher figure{margin:0;border-radius:28px;overflow:hidden;background:radial-gradient(circle at 50% 30%,var(--pa),var(--pb));display:grid;place-items:end center;min-height:300px}
-.teacher p+p{margin-top:14px}
-.teacher figure img{width:100%;max-height:480px;object-fit:contain;display:block}
-.sign{font-weight:700;color:var(--violet)!important}
-.pricing{display:grid;grid-template-columns:1fr .85fr;gap:64px;align-items:center;background:linear-gradient(125deg,var(--pa),var(--pb) 60%,var(--pc));color:var(--on-pa);border-radius:30px}
-.pricing .eyebrow{color:var(--violet)}
-.pricing .price-copy p{color:var(--on-pa-2)}
-.price-card{background:var(--surface);color:var(--ink);border-radius:24px;padding:32px;min-width:0}
-.price-card>span{font-size:10px;color:var(--violet);font-weight:800;letter-spacing:.12em}
-.price{font:800 clamp(2rem,5vw,2.7rem) var(--f-d);margin-top:8px;font-variant-numeric:tabular-nums}
-.price small{font-size:18px}
-.price-card>p{color:var(--muted);margin-top:-2px}
-.price-card hr{border:0;border-top:1px solid var(--line);margin:18px 0}
-.note{display:block;text-align:center;color:var(--muted);margin-top:12px;font-size:12px}
-.final{position:relative;overflow:hidden;margin:80px 0 36px;border-radius:30px;background:var(--lilac);min-height:400px;padding:56px 48px}
-.final>div{max-width:58%;position:relative;z-index:1}
-.final h2{font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.2;margin:12px 0 22px}
-.final img{position:absolute;right:5%;bottom:0;height:94%;width:auto;max-width:40%;object-fit:contain;object-position:bottom}
-.pub-foot{display:flex;align-items:center;gap:22px;flex-wrap:wrap;padding-block:24px 44px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
-.pub-foot>small{margin-left:auto}
-
-/* ---------- Panel del alumno ---------- */
-.shell{display:grid;grid-template-columns:240px minmax(0,1fr);min-height:100vh}
-.side{position:sticky;top:0;height:100vh;background:var(--surface);border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column;gap:18px;overflow-y:auto}
-.ws{display:flex;gap:10px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:11px 12px;background:var(--bg)}
-.ws .ico{width:34px;height:34px;border-radius:10px;flex:none}
-.ws .ico svg{width:17px;height:17px}
-.ws b{display:block;font-size:12px}
-.ws span{display:block;font-size:11px;color:var(--muted)}
-.slabel{font-size:10px;letter-spacing:.14em;color:var(--muted);font-weight:700;padding-inline:10px}
-.snav{display:grid;gap:4px}
-.snav button{position:relative;display:flex;gap:13px;align-items:center;min-height:43px;padding:11px 12px;border:0;border-radius:10px;background:0;color:var(--muted);font-size:13px;font-weight:500;text-align:left}
-.snav button svg{width:19px;height:19px;flex:none}
-.snav button:hover{background:var(--surface-2)}
-.snav button[aria-current="page"]{background:var(--lilac);color:var(--violet);font-weight:700}
-.snav button[aria-current="page"]:before{content:"";position:absolute;left:-16px;width:3px;height:18px;border-radius:5px;background:var(--violet)}
-.badge{margin-left:auto;font-size:10px;font-weight:700;color:var(--violet);background:var(--lilac);border-radius:20px;padding:1px 8px}
-.snav button[aria-current="page"] .badge{background:var(--surface)}
-.plan{margin-top:auto;border-radius:16px;padding:15px;color:var(--on-pa);background:linear-gradient(125deg,var(--pa),var(--pb) 60%,var(--pc));display:grid;gap:4px}
-.plan b{font-size:13px}
-.plan span{font-size:12px;opacity:.85;font-variant-numeric:tabular-nums}
-.plan a{margin-top:8px;text-align:center;text-decoration:none;font-size:12px;font-weight:700;border-radius:9px;padding:8px;background:var(--glass);color:var(--on-pa)}
-.me{display:flex;gap:10px;align-items:center;padding-inline:4px}
-.avatar{width:36px;height:36px;border-radius:50%;background:var(--lilac);color:var(--violet);display:grid;place-items:center;font-weight:800;font-size:11px;flex:none}
-.me b{display:block;font-size:12px}
-.me small{display:block;color:var(--muted);font-size:11px}
-.content{min-width:0;display:flex;flex-direction:column}
-.topbar{display:flex;align-items:center;gap:16px;padding:16px 40px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:env(safe-area-inset-top,0px);z-index:5}
-.crumbs{font-size:12px;color:var(--muted);display:flex;gap:10px;align-items:center;min-width:0;white-space:nowrap}
-.crumbs b{color:var(--ink);font-weight:600}
-.searchbox{margin-left:auto;position:relative;width:min(320px,45%)}
-.searchbox input{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:11px;padding:9px 12px 9px 34px;font:inherit;font-size:12px}
-.searchbox svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;color:var(--muted)}
-.results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:6px;display:grid;gap:2px;z-index:10}
-.results button{border:0;background:0;text-align:left;padding:9px 10px;border-radius:8px;font-size:12px;display:grid;gap:1px}
-.results button:hover{background:var(--surface-2)}
-.results small{color:var(--muted);font-size:10px}
-.exit{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:10px;padding:8px 13px;font-size:12px;font-weight:600}
-.page{padding:32px 40px 24px;display:grid;gap:22px;align-content:start;flex:1}
-.heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
-.heading h1{font-size:clamp(1.6rem,3.4vw,2.1rem);margin:8px 0 6px;font-weight:800}
-.heading h1 .dot{color:var(--violet-2)}
-.heading p{color:var(--muted);font-size:13px;max-width:60ch}
-.hero{position:relative;overflow:hidden;border-radius:26px;color:var(--on-pa);padding:40px 44px;min-height:300px;display:flex;align-items:center;background:radial-gradient(circle at 80% 30%,var(--glow),transparent 34%),linear-gradient(125deg,var(--pa),var(--pb) 60%,var(--pc));box-shadow:0 14px 36px rgba(61,80,120,.12)}
-.hero:before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--dots) 1px,transparent 1px);background-size:26px 26px}
-.hero-copy{position:relative;z-index:1;width:58%}
-.hero h2{font:800 clamp(1.5rem,3vw,2.2rem)/1.14 var(--f-d);margin:16px 0 10px}
-.hero p{font-size:13px;line-height:1.65;color:var(--on-pa-2);max-width:560px}
-.hero .actions{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0 4px}
-.hero .primary{background:var(--surface);color:var(--violet);border:0;padding:12px 18px;border-radius:12px;font-weight:800;font-size:13px}
-.hero .secondary{background:var(--glass);color:var(--on-pa);border:1px solid var(--glass-line);padding:12px 18px;border-radius:12px;font-size:13px}
-.hero>img{position:absolute;right:0;bottom:-40px;width:44%;max-height:380px;object-fit:contain;filter:drop-shadow(0 15px 25px rgba(6,14,73,.35))}
-.two{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,.8fr);gap:18px}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px;min-width:0}
-.card.lift{box-shadow:var(--shadow)}
-.sec-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.sec-title h3{font-size:19px;margin:5px 0}
-.link{background:0;border:0;color:var(--violet);font-size:12px;font-weight:700;padding:4px 0}
-.lesson{margin-top:16px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
-.thumb{width:150px;height:92px;border-radius:15px;background:linear-gradient(135deg,var(--pa),var(--violet-2));display:grid;place-items:center;position:relative;flex:none;overflow:hidden}
-.thumb:after{content:"C₆H₁₂O₆";position:absolute;left:12px;bottom:8px;color:rgba(255,255,255,.55);font-size:15px;transform:rotate(-8deg)}
-.play{z-index:1;background:#fff;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--violet)}
-.play svg{width:16px;height:16px;margin-left:2px}
-.thumb span{position:absolute;right:7px;top:7px;background:var(--navy);color:#fff;font-size:9px;padding:3px 6px;border-radius:5px;font-variant-numeric:tabular-nums}
-.linfo{flex:1;min-width:200px}
-.tag{font-size:9px;color:var(--violet);font-weight:800;letter-spacing:.08em}
-.lesson h4{font-size:16px;margin:6px 0}
-.lesson p{font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:10px}
-.lesson small,.mod small{font-size:11px;color:var(--muted)}
-.ring{margin:14px auto;width:112px;height:112px;border-radius:50%;display:grid;place-items:center;position:relative}
-.ring:after{content:"";position:absolute;inset:13px;border-radius:50%;background:var(--surface)}
-.ring div{position:relative;z-index:1;text-align:center;line-height:1.1}
-.ring b{font:800 24px var(--f-d);display:block;font-variant-numeric:tabular-nums}
-.ring span{font-size:10px;color:var(--muted)}
-.stats{display:flex;justify-content:space-around;border-top:1px solid var(--line);padding-top:14px;text-align:center}
-.stats b{display:block;font:800 17px var(--f-d);font-variant-numeric:tabular-nums}
-.stats span{font-size:10px;color:var(--muted)}
-.mods{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:16px}
-.mod{position:relative;border:1px solid var(--line);border-radius:16px;padding:18px;background:var(--surface);display:grid;gap:6px;align-content:start;transition:transform .2s,box-shadow .2s}
-.mod:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.mod .ico{width:38px;height:38px;border-radius:11px;margin-bottom:8px}
-.mod .ico svg{width:19px;height:19px}
-.mod h4{font-size:14px;padding-right:28px}
-.mod p{font-size:12px;color:var(--muted);line-height:1.5}
-.mod .open{margin-top:6px;border:0;background:0;color:var(--violet);font-size:12px;font-weight:700;text-align:left;padding:0}
-.locked{font-size:11px;color:var(--muted);background:var(--surface-2);border-radius:8px;padding:8px 10px;margin-top:6px}
-.pinbtn{position:absolute;top:12px;right:12px;width:30px;height:30px;border:0;border-radius:8px;background:0;color:var(--muted);display:grid;place-items:center}
-.pinbtn:hover{background:var(--surface-2);color:var(--violet)}
-.pinbtn.on{color:var(--violet)}
-.pinbtn svg{width:16px;height:16px}
-.tip{display:flex;align-items:stretch;gap:0;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--lilac)}
-.tip figure{margin:0;width:170px;flex:none;background:radial-gradient(circle at 50% 30%,var(--pa),var(--pb));display:grid;place-items:end center}
-.tip figure img{width:100%;height:100%;object-fit:contain;object-position:bottom;display:block;padding:10px 10px 0}
-.tip div{padding:22px 26px;min-width:0}
-.tip span{font-size:10px;color:var(--violet);font-weight:800;letter-spacing:.12em}
-.tip h3{font-size:17px;margin:6px 0}
-.tip p{font-size:13px;color:var(--muted);line-height:1.6;max-width:70ch}
-.workhead{background:linear-gradient(135deg,var(--lilac),var(--surface));border:1px solid var(--line);border-radius:22px;padding:26px}
-.workhead h2{font-size:clamp(1.3rem,2.6vw,1.75rem);margin:7px 0}
-.workhead p{color:var(--muted);font-size:13px}
-.courselist{display:grid;gap:12px}
-.cmod{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
-.chead{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:16px;align-items:center;padding:18px 20px;width:100%;border:0;background:0;text-align:left}
-.chead>b{font:800 26px var(--f-d);color:var(--violet-2);opacity:.55}
-.chead h3{font-size:16px;margin:3px 0}
-.chead p{font-size:12px;color:var(--muted);margin-bottom:8px}
-.chev{width:34px;height:34px;border-radius:50%;background:var(--lilac);color:var(--violet);display:grid;place-items:center;transition:transform .2s}
-.chev svg{width:16px;height:16px}
-.cmod.open .chev{transform:rotate(90deg)}
-.lessons{border-top:1px solid var(--line);padding:6px 20px 14px;display:grid}
-.lrow{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);font-size:13px}
-.lrow:last-child{border-bottom:0}
-.lrow input{width:18px;height:18px;accent-color:var(--violet);flex:none}
-.lrow label{flex:1;min-width:0;cursor:pointer}
-.lrow.done label{color:var(--muted);text-decoration:line-through}
-.lrow small{color:var(--muted);font-size:11px}
-.cmod.locked-m{opacity:.7}
-.tool-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.tool-grid h3{font-size:17px;margin:14px 0 6px}
-.tool-grid p{font-size:13px;color:var(--muted);line-height:1.55;min-height:40px}
-.act{margin-top:14px;border:0;background:var(--violet);color:var(--on-violet);border-radius:10px;padding:10px 15px;font-weight:700;font-size:12px}
-.quiz{background:linear-gradient(125deg,var(--pa),var(--pb) 60%,var(--pc));color:var(--on-pa);border-radius:20px;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.quiz span{font-size:10px;letter-spacing:.12em;color:var(--violet);font-weight:700}
-.quiz h3{font-size:20px;margin:6px 0}
-.quiz p{font-size:12px;color:var(--on-pa-2)}
-.quiz .act{background:var(--surface);color:var(--violet);margin:0}
-.qstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.qstats article{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;text-align:center}
-.qstats b{display:block;font:800 26px var(--f-d);color:var(--violet)}
-.qstats span{font-size:11px;color:var(--muted)}
-.mlist{display:grid;gap:10px}
-.mat{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:44px minmax(0,1fr) auto auto;align-items:center;gap:14px}
-.mat i{width:42px;height:42px;border-radius:10px;background:var(--lilac);color:var(--violet);display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:800}
-.mat h3{font-size:14px}
-.mat p{font-size:12px;color:var(--muted);margin-top:3px}
-.mat .pinbtn{position:static}
-.fx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.fx-card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;gap:5px;align-content:start;min-width:0}
-.fx-card h3{font-size:14px;padding-right:30px;overflow-wrap:anywhere}
-.fx-card p{font-size:12px;color:var(--muted)}
-.fx-card a{color:var(--violet);font-size:12px;font-weight:700;overflow-wrap:anywhere}
-.fx-card .go{border:0;background:0;color:var(--violet);font-size:12px;font-weight:700;text-align:left;padding:0}
-.fx-card .rm{position:absolute;top:10px;right:10px;width:28px;height:28px;border:0;border-radius:8px;background:0;color:var(--muted)}
-.fx-card .rm:hover{background:var(--surface-2);color:var(--violet)}
-.fx-form{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:16px}
-.fx-form label{display:grid;gap:5px;font-size:11px;color:var(--muted);font-weight:600;min-width:0}
-.fx-form input{border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:13px;background:var(--bg);color:var(--ink);min-width:0}
-.sub{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.empty{color:var(--muted);font-size:13px;border:1px dashed var(--line);border-radius:16px;padding:22px}
-.pfoot{display:flex;gap:18px;align-items:center;flex-wrap:wrap;padding:18px 40px 28px;color:var(--muted);font-size:11px}
-.pfoot b{color:var(--navy)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .pfoot b{color:var(--ink)}}
-:root[data-theme="dark"] .pfoot b{color:var(--ink)}
-.pfoot small{margin-left:auto}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;border-radius:12px;padding:11px 16px;font-size:12px;box-shadow:var(--shadow);z-index:50;max-width:calc(100% - 32px);text-align:center}
-.tabs{display:none}
-
-@media (max-width:980px){
-  .sales-copy{width:100%}
-  .sales-hero{padding:48px 28px;min-height:620px;align-items:flex-start}
-  .sales-hero>img{width:80%;opacity:.28;right:-10%}
-  .sec{padding:60px 22px}
-  .feat,.show,.teacher,.pricing{grid-template-columns:1fr}
-  .feat{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .show,.pricing{gap:30px}
-  .final>div{max-width:100%}
-  .final img{opacity:.18;width:80%}
-  .pub-nav nav{display:none}
-  .pub-foot>small{margin-left:0}
-  .shell{grid-template-columns:minmax(0,1fr)}
-  .side{display:none}
-  .topbar{padding:12px 16px}
-  .page{padding:22px 16px 90px}
-  .pfoot{padding:14px 16px 90px}
-  .hero{padding:30px 22px;min-height:420px;align-items:flex-start}
-  .hero-copy{width:100%}
-  .hero>img{width:70%;opacity:.3}
-  .two,.mods,.tool-grid,.qstats{grid-template-columns:1fr}
-  .tip{flex-direction:column}
-  .tip figure{width:100%;height:160px}
-  .mat{grid-template-columns:44px minmax(0,1fr) auto}
-  .mat .pinbtn{grid-column:3;grid-row:1}
-  .mat .act{grid-column:2/4;justify-self:start;margin-top:0}
-  .fx-form{grid-template-columns:1fr}
-  .chead{grid-template-columns:40px minmax(0,1fr) auto;gap:12px}
-  .tabs{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));justify-content:space-around}
-  .tabs button{flex:1;min-width:0;border:0;background:0;color:var(--muted);display:grid;justify-items:center;gap:2px;font-size:10px;padding:6px 2px;border-radius:10px}
-  .tabs button svg{width:20px;height:20px}
-  .tabs button[aria-current="page"]{color:var(--violet);background:var(--lilac);font-weight:700}
-  .crumbs .mid{display:none}
-  .searchbox{width:auto;flex:1}
-}
-@media (max-width:980px){.pain{grid-template-columns:1fr}.pres{grid-template-columns:1fr;gap:28px}.pres-video{max-width:340px;margin-inline:auto}.buybar{display:block;position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line)}.buybar .cta{display:block;text-align:center;width:100%}.pub-foot{margin-bottom:70px}}
-@media (max-width:560px){.feat{grid-template-columns:1fr}.proof{font-size:11px}.price-card{padding:24px}.exit{display:none}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
-/* ===== Editorial landing (inspirado en layouts sobrios: serif, crema/azul profundo) ===== */
-:root{--e-bg:#fafafa;--e-cream:#f5efe8;--e-card:#ffffff;--e-ink:#2a2f3a;--e-mut:#5f6675;--e-line:#e6dfd5;--e-navy:#1f2f4a;--e-navy-2:#17243a;--e-gold:#b58d4a;--e-gold-l:#e8cd8c;--e-on-navy:#f3efe8;--e-on-navy-2:#b8c2d6;--e-serif:"Cormorant Garamond",Georgia,"Times New Roman",serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--e-bg:#10151d;--e-cream:#161d29;--e-card:#1b2333;--e-ink:#e8eef9;--e-mut:#a3aec4;--e-line:#2a3650;--e-navy:#0c1422;--e-navy-2:#0a101b;--e-gold:#d6b672}}
-:root[data-theme="dark"]{--e-bg:#10151d;--e-cream:#161d29;--e-card:#1b2333;--e-ink:#e8eef9;--e-mut:#a3aec4;--e-line:#2a3650;--e-navy:#0c1422;--e-navy-2:#0a101b;--e-gold:#d6b672}
-#landing{overflow-x:clip;background:var(--e-bg);color:var(--e-ink)}
-#landing h1,#landing h2{font-family:var(--e-serif);font-weight:500;letter-spacing:-.01em;text-wrap:balance}
-#landing .eyebrow{color:var(--e-gold);font-size:11px;letter-spacing:.24em;font-weight:600}
-#landing .eyebrow:before{content:"— ";letter-spacing:0}
-#landing .sec h2{font-size:clamp(2rem,4.4vw,3.2rem);line-height:1.1;margin:14px 0 18px}
-#landing p,#landing li{color:var(--e-mut)}
-#landing .sec,#landing .final{position:relative}
-/* header */
-#landing .pub-nav{padding-block:18px}
-#landing .pub-nav nav button{text-transform:uppercase;letter-spacing:.14em;font-size:11px;font-weight:500;color:var(--e-ink)}
-#landing .pub-nav nav button:hover{color:var(--e-gold)}
-#landing .logo b{color:var(--e-ink)}
-.ed-enter{background:transparent!important;color:var(--e-ink)!important;border:1px solid var(--e-gold)!important;border-radius:2px!important;text-transform:uppercase;letter-spacing:.14em;font-size:11px!important;font-weight:600!important;padding:12px 20px!important}
-.ed-enter:hover{background:var(--e-gold)!important;color:#fff!important}
-/* buttons */
-#landing .cta{border-radius:2px;text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600;padding:17px 28px;box-shadow:none}
-#landing .cta.gold,#landing .cta.violet{background:var(--e-navy);color:var(--e-on-navy);border:1px solid var(--e-navy)}
-#landing .cta.gold:hover,#landing .cta.violet:hover{background:var(--e-gold);border-color:var(--e-gold);color:#fff}
-#landing .ghost-w{border-radius:2px;background:transparent;border:1px solid var(--e-ink);color:var(--e-ink);text-transform:uppercase;letter-spacing:.12em;font-size:12px;font-weight:600;padding:17px 28px}
-#landing .ghost-w:hover{background:var(--e-ink);color:var(--e-bg)}
-/* hero */
-#landing .sales-hero{border-radius:0;color:var(--e-ink);min-height:640px;padding:90px 0 90px;background:none;box-shadow:0 0 0 100vmax var(--e-cream);clip-path:inset(0 -100vmax);background:linear-gradient(135deg,var(--e-cream),var(--e-bg))}
-#landing .sales-hero:before{display:none}
-#landing .sales-hero{box-shadow:none;clip-path:none;border-bottom:1px solid var(--e-line)}
-#landing .sales-hero:after{content:"";position:absolute;right:2%;bottom:0;width:44%;height:86%;border-radius:999px 999px 0 0;background:linear-gradient(180deg,var(--e-cream),#e9dfd0);border:1px solid var(--e-line);z-index:0}
-:root[data-theme="dark"] #landing .sales-hero:after{background:linear-gradient(180deg,#1b2333,#222c41)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #landing .sales-hero:after{background:linear-gradient(180deg,#1b2333,#222c41)}}
-#landing .sales-hero>img{z-index:1;right:6%;bottom:-6px;width:36%;filter:drop-shadow(0 18px 22px rgba(31,47,74,.22))}
-#landing .sales-copy{width:56%;padding-left:48px}
-#landing .pill{background:none;border:0;padding:0;border-radius:0;color:var(--e-gold);font-size:11px;letter-spacing:.28em;font-weight:600}
-#landing .pill:before{content:"— "}
-#landing .sales-hero h1{font-size:clamp(2.7rem,6.4vw,5rem);line-height:1.02;font-weight:400;margin:22px 0 24px;color:var(--e-ink)}
-#landing .sales-hero h1 em{font-style:italic;color:var(--e-gold);font-weight:400}
-#landing .sales-hero p{color:var(--e-mut);font-size:18px;line-height:1.75;max-width:560px}
-#landing .sales-hero p strong{color:var(--e-ink)}
-#landing .proof{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:12px;letter-spacing:.04em;color:var(--e-mut)}
-#landing .proof span{color:var(--e-mut);background:none;border:0;padding:0}
-/* pain cards numbered */
-#landing .intro{text-align:left}
-#landing .pain{counter-reset:p;gap:0;border-top:1px solid var(--e-line);border-left:1px solid var(--e-line);margin-top:40px}
-#landing .pain article{counter-increment:p;background:var(--e-card);border:0;border-right:1px solid var(--e-line);border-bottom:1px solid var(--e-line);border-radius:0;padding:34px 30px 30px}
-#landing .pain article:before{content:"— 0" counter(p);display:block;font:500 13px var(--e-serif);letter-spacing:.2em;color:var(--e-gold);margin-bottom:18px}
-#landing .pain h3{font:500 26px/1.15 var(--e-serif);margin-bottom:10px;color:var(--e-ink)}
-#landing .pain p{font-size:14.5px}
-#landing .pain em{color:var(--e-gold);font-weight:600;font-size:12.5px;letter-spacing:.02em;border-top:1px solid var(--e-line);padding-top:12px;margin-top:16px}
-/* presentation band (cream) */
-#landing .pres{box-shadow:0 0 0 100vmax var(--e-cream);clip-path:inset(0 -100vmax);background:var(--e-cream);border-radius:0}
-#landing .pres-video{border-radius:2px;box-shadow:0 30px 60px rgba(31,47,74,.25);outline:1px solid var(--e-line);outline-offset:10px}
-#landing .checks li:before{border-radius:0;background-color:transparent;border:1px solid var(--e-gold)}
-#landing .checks li{color:var(--e-ink)}
-/* metodo */
-#landing #metodo{padding-top:110px}
-#landing .m4-tabs button{border-radius:0}
-/* panel dark band */
-#landing .show{background:var(--e-navy);color:var(--e-on-navy);border-radius:0;box-shadow:0 0 0 100vmax var(--e-navy);clip-path:inset(0 -100vmax)}
-#landing .show h2{color:var(--e-on-navy)}
-#landing .show p,#landing .show li,#landing .show .shots-note{color:var(--e-on-navy-2)}
-#landing .show .eyebrow{color:var(--e-gold-l)}
-#landing .show .checks li{color:var(--e-on-navy)}
-#landing .show .checks li:before{border-color:var(--e-gold-l)}
-#landing .show .cta.violet{background:transparent;border:1px solid var(--e-gold-l);color:var(--e-gold-l)}
-#landing .show .cta.violet:hover{background:var(--e-gold-l);color:var(--e-navy)}
-/* teacher */
-#landing .teacher figure{border-radius:0;background:linear-gradient(180deg,var(--e-cream),#e4d8c6);outline:1px solid var(--e-line);outline-offset:12px;margin:12px}
-:root[data-theme="dark"] #landing .teacher figure{background:linear-gradient(180deg,#1b2333,#222c41)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #landing .teacher figure{background:linear-gradient(180deg,#1b2333,#222c41)}}
-#landing .teacher h2{font-style:italic;font-weight:400}
-#landing .teacher p b{color:var(--e-ink)}
-.ed-stats{display:grid;grid-template-columns:repeat(3,1fr);margin:26px 0 8px;border-top:1px solid var(--e-line);border-bottom:1px solid var(--e-line)}
-.ed-stats div{padding:20px 12px;text-align:center;border-right:1px solid var(--e-line)}
-.ed-stats div:last-child{border-right:0}
-.ed-stats b{display:block;font:400 clamp(2.2rem,5vw,3.2rem)/1 var(--e-serif);color:var(--e-gold)}
-.ed-stats span{display:block;margin-top:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--e-mut)}
-#landing .creds li{border-radius:0;background:none;border:0;border-bottom:1px solid var(--e-line);color:var(--e-ink);font-weight:500;padding:6px 2px;font-size:13.5px}
-#landing .teacher .sign{font-family:var(--e-serif);font-style:italic;font-size:20px;color:var(--e-ink)}
-/* steps */
-#landing .steps{text-align:left;box-shadow:0 0 0 100vmax var(--e-cream);clip-path:inset(0 -100vmax);background:var(--e-cream)}
-.steps-grid{list-style:none;margin:40px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--e-line)}
-.steps-grid li{padding:30px 26px 10px 0;position:relative;min-width:0}
-.steps-grid li+li{padding-left:26px;border-left:1px solid var(--e-line)}
-.steps-grid b{display:block;font:400 clamp(2.6rem,5vw,3.6rem)/1 var(--e-serif);color:var(--e-gold);margin-bottom:12px}
-.steps-grid h3{font:500 24px/1.15 var(--e-serif);color:var(--e-ink);margin-bottom:8px}
-.steps-grid p{font-size:14.5px;line-height:1.65}
-/* pricing */
-#landing .pricing{background:var(--e-bg);color:var(--e-ink);border-radius:0}
-#landing .pricing .eyebrow{color:var(--e-gold)}
-#landing .pricing .price-copy p{color:var(--e-mut)}
-#landing .price-card{background:var(--e-card);border:1px solid var(--e-line);border-top:3px solid var(--e-gold);border-radius:2px;box-shadow:0 24px 50px rgba(31,47,74,.10)}
-#landing .price-card>span{color:var(--e-gold);letter-spacing:.24em}
-#landing .price{font:400 clamp(3rem,7vw,4.4rem) var(--e-serif);color:var(--e-ink)}
-#landing .price small{font-size:22px}
-#landing .guar{border-radius:2px;background:var(--e-cream);border:1px solid var(--e-line)}
-#landing .guar b{font:600 20px var(--e-serif);color:var(--e-ink)}
-/* faq */
-#landing .faq details{border-radius:0;background:none;border:0;border-bottom:1px solid var(--e-line);padding:20px 4px}
-#landing .faq summary{font:500 22px var(--e-serif);color:var(--e-ink)}
-#landing .faq h2{text-align:left}
-/* final dark */
-#landing .final{border-radius:0;margin:90px 0 0;background:var(--e-navy);color:var(--e-on-navy);box-shadow:0 0 0 100vmax var(--e-navy);clip-path:inset(0 -100vmax);padding:90px 48px 0;min-height:480px}
-#landing .final h2{color:var(--e-on-navy);font-size:clamp(2rem,4.2vw,3.4rem);font-weight:400;line-height:1.1}
-#landing .final .eyebrow{color:var(--e-gold-l)}
-#landing .final .cta.gold{background:var(--e-gold-l);color:var(--e-navy);border-color:var(--e-gold-l)}
-#landing .final .cta.gold:hover{background:#fff;border-color:#fff}
-#landing .final img{height:96%}
-#landing .pub-foot{border-top:0;color:var(--e-mut)}
-#landing .intro>p{margin:0;max-width:640px}
-#landing .shots-tabs{justify-content:center}
-#landing .shots-tabs button{background:transparent;color:var(--e-on-navy-2);border:1px solid rgba(232,205,140,.35);border-radius:2px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:11px}
-#landing .shots-tabs button[aria-selected=true]{background:var(--e-gold-l);color:var(--e-navy);border-color:var(--e-gold-l)}
-#landing .teacher .sign{color:var(--e-ink)!important}
-#landing .faq{max-width:860px;margin:0}
-#landing .eyebrow:before{content:"— ";white-space:pre}
-@media (max-width:980px){.steps-grid{grid-template-columns:1fr 1fr}.steps-grid li:nth-child(3){padding-left:0;border-left:0}.steps-grid li{padding-bottom:22px}}
-@media (max-width:760px){
- #landing .sales-hero{padding:56px 0 40px;min-height:0;align-items:flex-start}
- #landing .sales-copy{width:100%;padding-left:0}
- #landing .sales-hero>img{opacity:.22;width:70%;right:-8%}
- #landing .sales-hero:after{display:none}
- #landing .pain{grid-template-columns:1fr}
- .steps-grid{grid-template-columns:1fr}.steps-grid li,.steps-grid li+li{padding:20px 0 6px;border-left:0;border-bottom:1px solid var(--e-line)}
- #landing .final{padding:60px 22px 0}
-}
-/* Fondo de transparencia molecular en la portada (pedido de la profesora) */
-#landing .sales-hero{background:url(assets/molecular-bg.svg) 40% 50%/cover no-repeat,linear-gradient(135deg,var(--e-cream),var(--e-bg))}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) #landing .sales-hero{background:linear-gradient(135deg,var(--e-cream),var(--e-bg))}}
-</style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap">
-
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Biomáster Academy · La Bioquímica no se memoriza, ¡se domina!</title>
+<meta name="description" content="Videoaulas visuales, materiales, flashcards y preguntas de Bioquímica con la Bioq. Andrea López.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap">
+<link rel="stylesheet" href="css/panel.css">
+<link rel="stylesheet" href="css/landing.css">
+<link rel="stylesheet" href="css/checkout.css">
+</head><body>
 <div id="landing" hidden>
-  <div class="wrap">
-    <header class="pub-nav">
-      <a class="logo" href="#" onclick="return false"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></a>
-      <nav aria-label="Secciones"><button data-go="metodo">Método</button><button data-go="incluye">Qué incluye</button><button data-go="profesora">Profesora</button><button data-go="plan">Plan</button></nav>
-      <button class="btn ed-enter" data-enter>Entrar al panel</button>
-    </header>
-    <section class="sales-hero">
-      <div class="sales-copy">
-        <span class="pill">CLARIDAD · MÉTODO · RIGOR</span>
-        <h1>La Bioquímica no se memoriza.<br><em>¡Se domina!</em></h1>
-        <p>Videoaulas visuales, resúmenes, flashcards y preguntas en un solo panel, con la <strong>Bioq. Andrea López</strong>, Bioquímica Farmacéutica y docente. Para estudiantes de grado y posgrado y profesionales de la salud que quieren entender el porqué de cada vía, no repetir de memoria.</p>
-        <div class="sales-actions"><a class="cta gold" href="https://pay.hotmart.com/K106372869K?off=lg6zmcs9" target="_blank" rel="noopener noreferrer">Quiero acceso · USD 25,90/mes →</a><button class="ghost-w" data-enter>▶ Ver el panel por dentro</button></div>
-        <div class="proof"><span>✓ Videoaulas organizadas</span><span>✓ Materiales de apoyo</span><span>✓ Repasos y preguntas</span><span>✓ 7 días de garantía · menos de USD 1 por día</span></div>
+  <div class="w3d" id="w3d" aria-hidden="true"><div class="w3d-cam" id="w3dCam"></div></div>
+  <header class="lp-nav" id="lpNav">
+    <button class="lp-logo" data-go="top" aria-label="Biomáster Academy, ir al inicio"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></button>
+    <nav aria-label="Secciones"><button data-go="metodo">Método</button><button data-go="temario">Temario</button><button data-go="panel">Panel</button><button data-go="profesora">Profesora</button><button data-go="planes">Planes</button></nav>
+    <div class="lp-nav-cta"><button class="lp-btn ghost sm" data-enter>Ver demo</button><button class="lp-btn gold sm" data-pay="mensual">Empezar</button></div>
+  </header>
+  <main class="lp-main" id="top">
+    <section class="lp-hero">
+      <div class="lp-hero-copy" data-3d="hero">
+        <span class="lp-chip">🧪 Claridad · Método · Rigor</span>
+        <h1>La Bioquímica <span class="u">no se memoriza.</span><br><em>¡Se domina!</em></h1>
+        <p>Videoaulas visuales, resúmenes, flashcards y preguntas en un solo panel, con la <b>Bioq. Andrea López</b>. Para estudiantes y profesionales de la salud que quieren entender el porqué de cada vía, no repetir de memoria.</p>
+        <div class="lp-actions"><button class="lp-btn gold" data-go="planes">Quiero acceso · desde USD 25,90/mes →</button><button class="lp-btn ghost" data-enter>▶ Ver el panel por dentro</button></div>
+        <ul class="lp-proof"><li>Videoaulas organizadas</li><li>Materiales de apoyo</li><li>Repasos y preguntas</li><li>7 días de garantía</li></ul>
       </div>
-      <img src="assets/coruja-alas.png" alt="Biomáster Academy: el búho de la marca">
+      <div class="lp-hero-art" id="heroArt">
+        <div class="orb o1"></div><div class="orb o2"></div>
+        <img class="owl" id="owl" src="assets/coruja-alas.png" alt="Biomáster Academy: el búho de la marca">
+        <span class="float f1">ATP</span><span class="float f2">NADH</span><span class="float f3">pH 7,4</span>
+      </div>
+      <button class="lp-scroll" data-go="presentacion" aria-label="Seguir bajando">Desliza <i></i></button>
     </section>
-    <section id="presentacion" class="sec pres">
-      <figure class="pres-video"><video controls playsinline preload="metadata" poster="assets/poster.jpg" aria-label="Presentación de Biomáster Academy por la Bioq. Andrea López"><source src="assets/presentacion.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video></figure>
-      <div>
-        <span class="eyebrow">PRESENTACIÓN DEL CURSO</span>
+
+    <section id="presentacion" class="lp-sec lp-pres">
+      <figure class="lp-video" data-3d="rise"><video controls playsinline preload="metadata" poster="assets/poster.jpg" aria-label="Presentación de Biomáster Academy por la Bioq. Andrea López"><source src="assets/presentacion.mp4" type="video/mp4">Tu navegador no puede reproducir este video.</video></figure>
+      <div class="lp-pres-copy" data-3d="rise">
+        <span class="lp-eyebrow">Presentación del curso</span>
         <h2>Conoce a tu profe y cómo vas a estudiar Bioquímica.</h2>
-        <p>Dale play y escucha a la Bioq. Andrea López darte la bienvenida a Biomáster Academy: una forma más clara, visual y organizada de entender Bioquímica.</p>
-        <ul class="checks"><li>Videoaulas por módulos, en orden</li><li>Esquemas y materiales de apoyo</li><li>Flashcards y preguntas para repasar</li><li>Tu progreso siempre a la vista</li></ul>
-        <a class="cta gold" href="https://pay.hotmart.com/K106372869K?off=lg6zmcs9" target="_blank" rel="noopener noreferrer">Quiero acceso · USD 25,90/mes →</a>
+        <p>Dale play y escucha a la Bioq. Andrea López darte la bienvenida: una forma más clara, visual y organizada de entender Bioquímica.</p>
+        <ul class="lp-checks"><li>Videoaulas por módulos, en orden</li><li>Esquemas y materiales de apoyo</li><li>Flashcards y preguntas para repasar</li><li>Tu progreso siempre a la vista</li></ul>
       </div>
     </section>
-    <section class="sec intro">
-      <span class="eyebrow">¿TE SUENA FAMILIAR?</span>
-      <h2>Estudiar Bioquímica no tiene que sentirse así.</h2>
-      <div class="pain">
-        <article><h3>Memorizas rutas y a los pocos días las olvidas</h3><p>Sin entender de dónde viene cada sustrato, todo parece una lista infinita de nombres.</p><em>Aquí: entiendes el porqué de cada vía.</em></article>
-        <article><h3>Tus apuntes están por todas partes</h3><p>Videos sueltos, PDFs y fotos de la pizarra que nunca se conectan entre sí.</p><em>Aquí: un solo panel, por módulos.</em></article>
-        <article><h3>Llegas al examen sin saber si dominas el tema</h3><p>Repasar sin practicar deja puntos débiles escondidos hasta el último día.</p><em>Aquí: repasos y preguntas para comprobarlo.</em></article>
+
+    <section class="lp-sec lp-pain">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">¿Te suena familiar?</span><h2>Estudiar Bioquímica no tiene que sentirse así.</h2></div>
+      <div class="lp-pain-grid">
+        <article data-3d="rise"><b>01</b><h3>Memorizas rutas y a los pocos días las olvidas</h3><p>Sin entender de dónde viene cada sustrato, todo parece una lista infinita de nombres.</p><em>Aquí: entiendes el porqué de cada vía.</em></article>
+        <article data-3d="rise"><b>02</b><h3>Tus apuntes están por todas partes</h3><p>Videos sueltos, PDFs y fotos de la pizarra que nunca se conectan entre sí.</p><em>Aquí: un solo panel, por módulos.</em></article>
+        <article data-3d="rise"><b>03</b><h3>Llegas al examen sin saber si dominas el tema</h3><p>Repasar sin practicar deja puntos débiles escondidos hasta el último día.</p><em>Aquí: repasos y preguntas para comprobarlo.</em></article>
       </div>
     </section>
-    <section id="metodo" class="sec intro">
-      <span class="eyebrow">APRENDER CON SENTIDO</span>
-      <h2>Deja de memorizar rutas.<br>Empieza a entender conexiones.</h2>
-      <p>Biomáster transforma contenidos complejos en una secuencia clara: aprende, practica, repasa y comprueba lo que realmente dominaste.</p>
-      <div class="m4" id="m4">
-        <div class="m4-tabs" role="tablist" aria-label="Método Biomáster">
-          <button role="tab" aria-selected="true" data-i="0"><b>01</b><span><strong>Aprende</strong><small>Videoaulas por módulos y conceptos, para avanzar sin perderte.</small></span><i></i></button>
-          <button role="tab" aria-selected="false" data-i="1"><b>02</b><span><strong>Conecta</strong><small>Mapas, esquemas y explicaciones visuales que integran las vías.</small></span><i></i></button>
-          <button role="tab" aria-selected="false" data-i="2"><b>03</b><span><strong>Repasa</strong><small>Flashcards y repasos rápidos para fijar lo esencial.</small></span><i></i></button>
-          <button role="tab" aria-selected="false" data-i="3"><b>04</b><span><strong>Practica</strong><small>Preguntas para comprobar tu comprensión y detectar puntos débiles.</small></span><i></i></button>
-          <button role="tab" aria-selected="false" data-i="4"><b>05</b><span><strong>Material premium</strong><small>PDFs exclusivos para estudiar a fondo, como el de Ciclo de Krebs.</small></span><i></i></button>
-          <button role="tab" aria-selected="false" data-i="5"><b>06</b><span><strong>Desafíos</strong><small>Ejercicios de repaso con banco de respuestas para medir lo que sabes.</small></span><i></i></button>
+
+    <section id="metodo" class="lp-ringsec" aria-label="Método Biomáster">
+      <div class="lp-ring-pin">
+        <div class="lp-ring-copy">
+          <span class="lp-eyebrow">Aprender con sentido</span>
+          <h2>Deja de memorizar rutas.<br><em>Empieza a entender conexiones.</em></h2>
+          <p>Biomáster transforma contenidos complejos en una secuencia clara. Sigue bajando y gira el método.</p>
+          <div class="lp-step" aria-live="polite"><b id="ringNum">01</b><div><h3 id="ringTitle">Aprende</h3><p id="ringText">Videoaulas por módulos y conceptos, para avanzar sin perderte.</p></div></div>
+          <div class="lp-dots" id="ringDots"></div>
         </div>
-        <div class="stage" id="stage" aria-live="polite">
-          <div class="rig" id="rig">
-            <article class="c4" data-i="0" data-pos="0"><div class="chrome"><u></u><u></u><u></u><span>Aprende · videoaula</span></div><div class="screen collage"><img src="assets/aprende.jpg" alt="Videoaula de la Bioq. Andrea López con caso clínico de inflamación crónica"><img src="assets/plataforma.jpg" alt="Lista de videoaulas por módulo en la plataforma"></div><em class="chip">▶ Videoaulas</em></article>
-            <article class="c4" data-i="1" data-pos="1"><div class="chrome"><u></u><u></u><u></u><span>Conecta · esquema visual</span></div><div class="screen"><img src="assets/conecta.jpg" alt="La Bioq. Andrea explicando por qué la ferritina alta no siempre significa mucho hierro"></div><em class="chip">✎ Mapa visual</em></article>
-            <article class="c4" data-i="2" data-pos="2"><div class="chrome"><u></u><u></u><u></u><span>Repasa · flashcards</span></div><div class="screen fc"><button class="flip" id="flip" aria-label="Voltear la flashcard"><span class="face front"><small>FLASHCARD · EJEMPLO</small><b>¿Ferritina alta = mucho hierro?</b><i>Toca para ver la respuesta</i></span><span class="face back"><small>RESPUESTA</small><b>No siempre.</b><p>La ferritina es un reactante de fase aguda: sube con la inflamación aunque el hierro esté bajo.</p></span></button><div class="fc-rate"><span>Difícil</span><span>Bien</span><span>Fácil</span></div></div><em class="chip">↻ Flashcards</em></article>
-            <article class="c4" data-i="3" data-pos="2"><div class="chrome"><u></u><u></u><u></u><span>Practica · banco de preguntas</span></div><div class="screen qz"><small>PREGUNTA · EJEMPLO ILUSTRATIVO</small><b>Paciente con artritis reumatoide, hierro sérico bajo y ferritina de 480 ng/mL. ¿Qué explica mejor la ferritina alta?</b><div class="opts" id="opts"><button data-ok="0"><i>A</i>Sobrecarga de hierro</button><button data-ok="1"><i>B</i>Inflamación crónica (reactante de fase aguda)</button><button data-ok="0"><i>C</i>Déficit de ferritina</button></div><p class="fb" id="fb" hidden></p></div><em class="chip">✓ Práctica</em></article>
-            <article class="c4" data-i="4" data-pos="2"><div class="chrome"><u></u><u></u><u></u><span>Material premium · PDFs exclusivos</span></div><div class="screen split"><img src="assets/pdf-krebs.jpg" alt="Portada del PDF exclusivo Ciclo de Krebs"><div><small>MATERIAL PREMIUM</small><b>Ciclo de Krebs</b><p>El motor energético de la célula y su lógica clínica. Material exclusivo de Biomáster Academy.</p></div></div><em class="chip">★ PDFs exclusivos</em></article>
-            <article class="c4" data-i="5" data-pos="3"><div class="chrome"><u></u><u></u><u></u><span>Desafíos · banco de respuestas</span></div><div class="screen split"><img src="assets/desafio.jpg" alt="Hoja Desafío Biomáster con preguntas del ciclo de Krebs"><div><small>DESAFÍO BIOMÁSTER</small><b>Ejercicios de repaso</b><p>Preguntas para elegir la respuesta correcta según la lógica metabólica de la clase, con banco de respuestas.</p></div></div><em class="chip">✎ Desafíos</em></article>
-          </div>
-        </div>
-      </div>
-    </section>
-    <section id="incluye" class="sec show">
-      <div>
-        <span class="eyebrow">TODO EN UN SOLO LUGAR</span>
-        <h2>Tu Bioquímica, organizada.</h2>
-        <p>Un panel simple para que sepas qué estudiar, dónde continuar y cuánto ya avanzaste.</p>
-        <ul class="checks"><li>Videoaulas organizadas por módulos</li><li>Materiales y resúmenes de apoyo</li><li>Flashcards de repaso</li><li>Banco de preguntas</li><li>Progreso de aprendizaje</li><li>Acceso a actualizaciones del curso</li></ul>
-        <button class="cta violet" data-enter>Explorar el panel →</button>
-      </div>
-      <div class="shots" id="shots" aria-label="Vistas del panel del alumno">
-        <div class="shots-stage" id="shotsStage"><div class="shots-rig" id="shotsRig">
-          <figure class="shot" data-i="0"><div class="chrome"><u></u><u></u><u></u><span>Panel · Inicio</span></div><img src="assets/panel-inicio.jpg" alt="Panel del alumno: inicio con próxima clase y progreso"></figure>
-          <figure class="shot" data-i="1"><div class="chrome"><u></u><u></u><u></u><span>Panel · Mi curso</span></div><img src="assets/panel-curso.jpg" alt="Panel del alumno: módulos y aulas con progreso"></figure>
-          <figure class="shot" data-i="2"><div class="chrome"><u></u><u></u><u></u><span>Panel · Repaso</span></div><img src="assets/panel-repaso.jpg" alt="Panel del alumno: repaso con flashcards"></figure>
-          <figure class="shot" data-i="3"><div class="chrome"><u></u><u></u><u></u><span>Panel · Preguntas</span></div><img src="assets/panel-preguntas.jpg" alt="Panel del alumno: banco de preguntas"></figure>
-          <figure class="shot" data-i="4"><div class="chrome"><u></u><u></u><u></u><span>Panel · Materiales</span></div><img src="assets/panel-materiales.jpg" alt="Panel del alumno: biblioteca de materiales"></figure>
+        <div class="lp-ring-stage"><div class="lp-ring" id="ring">
+          <figure style="--i:0"><img src="assets/aprende.jpg" alt="Videoaula: caso clínico de artritis reumatoide"><figcaption>Aprende</figcaption></figure>
+          <figure style="--i:1"><img src="assets/conecta.jpg" alt="Clase de la plataforma: ferritina e inflamación"><figcaption>Conecta</figcaption></figure>
+          <figure style="--i:2"><img src="assets/panel-repaso.jpg" alt="Panel de repaso con flashcards"><figcaption>Repasa</figcaption></figure>
+          <figure style="--i:3"><img src="assets/panel-preguntas.jpg" alt="Banco de preguntas"><figcaption>Practica</figcaption></figure>
+          <figure style="--i:4"><img src="assets/pdf-krebs.jpg" alt="Portada del PDF premium Ciclo de Krebs"><figcaption>Material premium</figcaption></figure>
+          <figure style="--i:5"><img src="assets/desafio.jpg" alt="Hoja Desafío Biomáster"><figcaption>Desafíos</figcaption></figure>
         </div></div>
-        <div class="shots-tabs" role="tablist" aria-label="Pantallas del panel"><button role="tab" aria-selected="true" data-i="0">Inicio</button><button role="tab" aria-selected="false" data-i="1">Mi curso</button><button role="tab" aria-selected="false" data-i="2">Repaso</button><button role="tab" aria-selected="false" data-i="3">Preguntas</button><button role="tab" aria-selected="false" data-i="4">Materiales</button></div>
-        <small class="shots-note">Vista de demostración del panel del alumno.</small>
       </div>
     </section>
-    <section id="profesora" class="sec teacher">
-      <figure><img src="assets/professora-foto.png" alt="Bioq. Andrea López, docente de Bioquímica"></figure>
-      <div>
-        <span class="eyebrow">TU PROFE DE BIOQUÍMICA</span>
+
+    <section id="temario" class="lp-sec lp-syl">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">Temario</span><h2>17 módulos, un solo camino.</h2><p>De la química básica a la bioquímica clínica. Los módulos se publican a medida que la profesora los termina de grabar.</p></div>
+      <ol class="lp-path" id="path"></ol>
+    </section>
+
+    <section id="panel" class="lp-sec lp-panel">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">Todo en un solo lugar</span><h2>Tu Bioquímica, organizada.</h2><p>Un panel simple para que sepas qué estudiar, dónde continuar y cuánto ya avanzaste.</p></div>
+      <div class="lp-laptop" data-3d="open">
+        <div class="lp-screen"><div class="bar"><u></u><u></u><u></u><span id="shotLabel">Panel · Inicio</span></div><div class="shots" id="shots">
+          <img src="assets/panel-inicio.jpg" alt="Panel del alumno: inicio con próxima clase y progreso" class="on">
+          <img src="assets/panel-curso.jpg" alt="Panel del alumno: módulos y aulas con progreso">
+          <img src="assets/panel-repaso.jpg" alt="Panel del alumno: repaso con flashcards">
+          <img src="assets/panel-preguntas.jpg" alt="Panel del alumno: banco de preguntas">
+          <img src="assets/panel-materiales.jpg" alt="Panel del alumno: biblioteca de materiales"></div></div>
+        <div class="lp-base"></div>
+      </div>
+      <div class="lp-tabs" role="tablist" aria-label="Pantallas del panel"><button role="tab" aria-selected="true">Inicio</button><button role="tab" aria-selected="false">Mi curso</button><button role="tab" aria-selected="false">Repaso</button><button role="tab" aria-selected="false">Preguntas</button><button role="tab" aria-selected="false">Materiales</button></div>
+      <div class="lp-center"><button class="lp-btn navy" data-enter>Explorar el panel →</button></div>
+    </section>
+
+    <section id="profesora" class="lp-sec lp-teacher">
+      <figure class="lp-tfig" data-3d="rise"><div class="blob"></div><img src="assets/professora-foto.png" alt="Bioq. Andrea López, docente de Bioquímica"></figure>
+      <div class="lp-tcopy" data-3d="rise">
+        <span class="lp-eyebrow">Tu profe de Bioquímica</span>
         <h2>“Quiero que entiendas el porqué, no que memorices por obligación.”</h2>
-        <p><b>Bioq. Andrea López Ramirez</b> es Bioquímica y Química Farmacéutica, y creó Biomáster Academy para llevar su método de enseñanza estructurado más allá del aula física. Su idea es simple: cuando entiendes de dónde viene cada sustrato y para qué sirve cada vía, ya no necesitas memorizar a la fuerza.</p>
-        <div class="ed-stats"><div><b>10+</b><span>años en educación superior</span></div><div><b>2</b><span>especializaciones</span></div><div><b>7</b><span>días de garantía</span></div></div>
-        <ul class="creds"><li>Especialista en Hematología laboratorial y clínica</li><li>Especialista en Didáctica Universitaria</li><li>Magíster en Educación (en curso)</li><li>Más de 10 años en educación superior</li><li>Conferencista nacional e internacional</li></ul>
-        <p class="sign" style="margin-top:14px">— Bioq. Andrea López Ramirez · Fundadora de Biomáster Academy</p>
-        <a class="cta violet" style="margin-top:22px" href="https://pay.hotmart.com/K106372869K?off=lg6zmcs9" target="_blank" rel="noopener noreferrer">Estudiar con la Bioq. Andrea →</a>
+        <p><b>Bioq. Andrea López Ramirez</b> es Bioquímica y Química Farmacéutica, y creó Biomáster Academy para llevar su método de enseñanza estructurado más allá del aula física.</p>
+        <div class="lp-stats"><div><b>10+</b><span>años en educación superior</span></div><div><b>2</b><span>especializaciones</span></div><div><b>7</b><span>días de garantía</span></div></div>
+        <ul class="lp-checks"><li>Especialista en Hematología laboratorial y clínica</li><li>Especialista en Didáctica Universitaria</li><li>Magíster en Educación (en curso)</li><li>Conferencista nacional e internacional</li></ul>
       </div>
     </section>
-    <section class="sec steps">
-      <span class="eyebrow">CÓMO EMPIEZAS</span>
-      <h2>Cuatro pasos y ya estás estudiando.</h2>
-      <ol class="steps-grid">
-        <li><b>01</b><h3>Elige tu plan</h3><p>Membresía mensual de USD 25,90, con 7 días de garantía.</p></li>
-        <li><b>02</b><h3>Paga en Hotmart</h3><p>Compra segura en una plataforma de pagos reconocida.</p></li>
-        <li><b>03</b><h3>Entra al panel</h3><p>Videoaulas por módulos, materiales, repasos y preguntas.</p></li>
-        <li><b>04</b><h3>Estudia con método</h3><p>Aprende, conecta, repasa y practica a tu ritmo.</p></li>
+
+    <section class="lp-sec lp-steps">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">Cómo empiezas</span><h2>Cuatro pasos y ya estás estudiando.</h2></div>
+      <ol class="lp-steps-grid">
+        <li data-3d="rise"><b>01</b><h3>Elige tu plan</h3><p>Mensual, semestral o anual, con 7 días de garantía.</p></li>
+        <li data-3d="rise"><b>02</b><h3>Paga con tarjeta</h3><p>Pago seguro; recibes tu recibo por correo.</p></li>
+        <li data-3d="rise"><b>03</b><h3>Entra al panel</h3><p>Videoaulas por módulos, materiales, repasos y preguntas.</p></li>
+        <li data-3d="rise"><b>04</b><h3>Estudia con método</h3><p>Aprende, conecta, repasa y practica a tu ritmo.</p></li>
       </ol>
     </section>
-    <section id="plan" class="sec pricing">
-      <div class="price-copy">
-        <span class="eyebrow">PLAN BIOMÁSTER</span>
-        <h2>Estudia a tu ritmo.<br>Avanza todos los días.</h2>
-        <p>Acceso mensual a la experiencia Biomáster Academy.</p>
-      </div>
-      <div class="price-card">
-        <span>MEMBRESÍA MENSUAL</span>
-        <div class="price"><small>USD</small> 25,90</div>
-        <p>por mes · menos de USD 1 por día</p>
-        <hr>
-        <ul class="checks"><li>Acceso al curso de Bioquímica</li><li>Videoaulas y materiales</li><li>Repasos y preguntas</li><li>PDFs exclusivos</li><li>Actualizaciones del contenido</li></ul>
-        <a class="cta gold full" href="https://pay.hotmart.com/K106372869K?off=lg6zmcs9" target="_blank" rel="noopener noreferrer">Empezar ahora →</a>
-        <div class="guar"><b>7 días de garantía</b><span>Pruébalo sin riesgo. Si el contenido o la metodología no cumplen tus expectativas, pides el reembolso del 100% de tu dinero. Procesado de forma segura por Hotmart.</span></div>
-      </div>
+
+    <section id="planes" class="lp-sec lp-plans">
+      <div class="lp-head" data-3d="rise"><span class="lp-eyebrow">Planes</span><h2>Estudia a tu ritmo.<br>Avanza todos los días.</h2><p>Todos incluyen el curso completo, materiales premium, repasos, preguntas y actualizaciones.</p></div>
+      <div class="lp-plan-grid" id="planGrid"></div>
+      <p class="lp-note">Demostración: el pago es un simulador, no se realiza ningún cobro real. Precios sujetos a confirmación.</p>
     </section>
-    <section class="sec faq">
-      <h2>Preguntas frecuentes</h2>
+
+    <section class="lp-sec lp-faq">
+      <div class="lp-head" data-3d="rise"><h2>Preguntas frecuentes</h2></div>
       <details><summary>¿Para quién es Biomáster Academy?</summary><p>Para estudiantes del área de la salud que necesitan entender Bioquímica con claridad, conectar las vías metabólicas y prepararse con más seguridad para sus evaluaciones.</p></details>
       <details><summary>¿Qué incluye la membresía?</summary><p>Acceso al curso de Bioquímica: videoaulas por módulos, materiales de apoyo, flashcards de repaso, banco de preguntas, seguimiento de progreso y actualizaciones del contenido.</p></details>
-      <details><summary>¿Cómo hago la compra?</summary><p>La compra se realiza en Hotmart, una plataforma de pagos reconocida. Al tocar el botón de acceso verás allí los medios de pago disponibles. La membresía es mensual (USD 25,90).</p></details>
+      <details><summary>¿Ya están todos los módulos?</summary><p>El curso se publica por etapas, empezando por la parte metabólica. Los módulos nuevos aparecen en tu panel sin costo adicional mientras tu plan esté activo.</p></details>
+      <details><summary>¿Cómo hago la compra?</summary><p>Eliges un plan, pagas con tarjeta y entras al panel. Puedes cambiar o cancelar tu plan desde “Gestionar plan”.</p></details>
       <details><summary>¿Quién es la profesora?</summary><p>Andrea López Ramirez, Bioquímica y Química Farmacéutica, especialista en Hematología laboratorial y clínica y en Didáctica Universitaria, con más de 10 años de experiencia en educación superior.</p></details>
-      <details><summary>¿Y si no me convence?</summary><p>Tienes 7 días de garantía: exploras la plataforma y, si el contenido o la metodología no cumplen tus expectativas, solicitas el reembolso del 100% de tu dinero. La compra se procesa de forma segura por Hotmart.</p></details>
+      <details><summary>¿Y si no me convence?</summary><p>Tienes 7 días de garantía: exploras la plataforma y, si el contenido o la metodología no cumplen tus expectativas, solicitas el reembolso del 100% de tu dinero.</p></details>
     </section>
-    <section class="final">
-      <div><span class="eyebrow">BIOMÁSTER ACADEMY</span><h2>Tu próxima clase puede ser el momento en que Bioquímica empiece a tener sentido.</h2><a class="cta gold" href="https://pay.hotmart.com/K106372869K?off=lg6zmcs9" target="_blank" rel="noopener noreferrer">Quiero empezar ahora →</a></div>
-      <img src="assets/professora-boneca.png" alt="">
+
+    <section class="lp-final">
+      <div data-3d="rise"><h2>Tu próxima clase puede ser el momento en que Bioquímica empiece a tener sentido.</h2><button class="lp-btn gold" data-go="planes">Quiero empezar ahora →</button></div>
+      <img src="assets/professora-boneca.png" alt="" data-3d="rise">
     </section>
-    <div class="buybar"><a class="cta gold" href="https://pay.hotmart.com/K106372869K?off=lg6zmcs9" target="_blank" rel="noopener noreferrer">Quiero acceso · USD 25,90/mes →</a></div>
-    <footer class="pub-foot">
-      <div class="logo"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></div>
-      <span>Bioquímica visual · práctica · conectada</span>
-      <small>© 2026 Biomáster Academy</small>
-    </footer>
-  </div>
+    <footer class="lp-foot"><div class="lp-logo"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></div><span>Bioquímica visual · práctica · conectada</span><small>© 2026 Biomáster Academy</small></footer>
+  </main>
+  <div class="lp-buybar"><button class="lp-btn gold" data-go="planes">Quiero acceso · desde USD 25,90/mes →</button></div>
 </div>
 
 <div id="app" class="shell" hidden>
@@ -681,7 +143,7 @@ a{color:inherit}
     <div class="ws"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v16"/><path d="M2 5a2 2 0 0 1 2-2h4a4 4 0 0 1 4 4 4 4 0 0 1 4-4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4a4 4 0 0 0-4 2 4 4 0 0 0-4-2H4a2 2 0 0 1-2-2z"/></svg></div><div><b>Curso de Bioquímica</b><span>Membresía mensual</span></div></div>
     <span class="slabel">TU ESTUDIO</span>
     <nav class="snav" id="snav" aria-label="Navegación principal"></nav>
-    <div class="plan"><b>Plan Biomáster</b><span>USD 25,90 / mes</span><a href="https://pay.hotmart.com/K106372869K?off=lg6zmcs9" target="_blank" rel="noopener noreferrer">Gestionar plan</a></div>
+    <div class="plan" id="planbox"></div>
     <div class="me"><div class="avatar">AB</div><div><b>Alumno Biomáster</b><small>Mi perfil</small></div></div>
   </aside>
   <div class="content">
@@ -695,148 +157,13 @@ a{color:inherit}
       <button class="exit" data-leave>Salir</button>
     </header>
     <main id="page" class="page"></main>
-    <footer class="pfoot"><b>BIOMÁSTER ACADEMY</b><span>Vista de demostración · tu avance se guarda solo en este navegador</span><small>USD 25,90 / mes</small></footer>
+    <footer class="pfoot"><b>BIOMÁSTER ACADEMY</b><span>Vista de demostración · tu avance se guarda solo en este navegador</span><small id="pfoot-plan"></small></footer>
   </div>
   <nav class="tabs" id="tabs" aria-label="Navegación"></nav>
 </div>
 <div class="toast" id="toast" hidden></div>
-
-<script>
-(function(){
-var HOT='https://pay.hotmart.com/K106372869K?off=lg6zmcs9';
-var KEY='biomaster.panel.v2';
-var IC={
- inicio:'<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
- curso:'<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>',
- repaso:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/>',
- preguntas:'<circle cx="12" cy="12" r="10"/><path d="m8 12.5 3 3 5-6"/>',
- materiales:'<path d="M12 5v16"/><path d="M2 5a2 2 0 0 1 2-2h4a4 4 0 0 1 4 4 4 4 0 0 1 4-4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4a4 4 0 0 0-4 2 4 4 0 0 0-4-2H4a2 2 0 0 1-2-2z"/>',
- fijados:'<path d="M12 17v5"/><path d="M9 10.8a2 2 0 0 1-1.1 1.8l-1.8.9A2 2 0 0 0 5 15.2V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.8a2 2 0 0 0-1.1-1.8l-1.8-.9A2 2 0 0 1 15 10.8V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z"/>',
- chev:'<path d="m9 18 6-6-6-6"/>', flask:'<path d="M10 2v7.5L4.5 19a2 2 0 0 0 1.7 3h11.6a2 2 0 0 0 1.7-3L14 9.5V2"/><path d="M8.5 2h7M7 16h10"/>',
- net:'<circle cx="6" cy="7" r="2.5"/><circle cx="18" cy="7" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8.2 8.3 10.8 15.6M15.8 8.3 13.2 15.6M8.5 7h7"/>',
- inf:'<path d="M12 12c-2-2.5-4-4-6-4a4 4 0 0 0 0 8c2 0 4-1.500 6-4zm0 0c2 2.5 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.500-6 4z"/>', play:'<path d="M6 4v16l14-8z"/>'
-};
-function svg(n,extra){return '<svg viewBox="0 0 24 24" fill="'+(n==='play'?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"'+(extra||'')+'>'+IC[n]+'</svg>'}
-function pinSvg(on){return '<svg viewBox="0 0 24 24" fill="'+(on?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC.fijados+'</svg>'}
-var VIEWS=[['inicio','Inicio'],['curso','Mi curso'],['repaso','Repaso'],['preguntas','Preguntas'],['materiales','Materiales'],['fijados','Fijados']];
-var MODS=[
- {id:'m0',n:'00',tag:'EMPIEZA POR AQUÍ',t:'Bienvenida Biomáster',d:'Conoce la plataforma y cómo sacar el máximo provecho del curso.',i:'flask',L:[['¡Bienvenido, Biomáster! Empieza por aquí','01:09']]},
- {id:'m1',n:'01',t:'Química básica',d:'Átomos, enlaces químicos y química orgánica.',i:'flask',locked:true},
- {id:'m2',n:'02',t:'Fundamentos de Bioquímica',d:'Introducción a la bioquímica, bioelementos, agua y pH, biomoléculas orgánicas.',i:'net',locked:true},
- {id:'m3',n:'03',t:'Aminoácidos y proteínas',d:'Bioquímica estructural: monómeros (aminoácidos, nucleótidos, monosacáridos), péptidos de importancia fisiológica, proteínas y su ciclo de vida, niveles estructurales, mal plegamiento proteico, hemoglobina y mioglobina.',i:'inf',locked:true},
- {id:'m4',n:'04',t:'Carbohidratos y lípidos',d:'Estructura y función de los carbohidratos y los lípidos.',i:'flask',locked:true},
- {id:'m5',n:'05',t:'Ácidos nucleicos y vitaminas',d:'Nucleótidos, ADN, ARN y el papel de las vitaminas.',i:'net',locked:true},
- {id:'m6',n:'06',t:'Fundamentos del Metabolismo',d:'Introducción al metabolismo y regulación enzimática.',i:'inf',L:[['Introducción al Metabolismo I','11:32'],['Introducción al Metabolismo II','26:05'],['Regulación Enzimática I','23:56'],['Regulación Enzimática II','18:14']]},
- {id:'m7',n:'07',t:'Trilogía de la respiración celular',d:'Ciclo de Krebs, cadena de transporte de electrones y fosforilación oxidativa.',i:'flask',locked:true},
- {id:'m8',n:'08',t:'Escudo antioxidante y síntesis celular',d:'Defensa antioxidante y rutas de síntesis celular.',i:'net',locked:true},
- {id:'m9',n:'09',t:'Gestión del nitrógeno y detoxificación celular',d:'Metabolismo de aminoácidos, ciclo de la urea y detoxificación.',i:'inf',locked:true},
- {id:'m10',n:'10',t:'Eje insulina-glucagón',d:'Regulación hormonal del metabolismo energético.',i:'flask',locked:true},
- {id:'m11',n:'11',t:'Reserva y producción de glucosa',d:'Glucólisis, glucogenogénesis, glucogenólisis y gluconeogénesis.',i:'net',locked:true},
- {id:'m12',n:'12',t:'Metabolismo de lípidos I: Energía',d:'Obtención de energía a partir de los lípidos.',i:'inf',locked:true},
- {id:'m13',n:'13',t:'Metabolismo de lípidos II: Síntesis',d:'Síntesis de ácidos grasos, triglicéridos y colesterol.',i:'flask',locked:true},
- {id:'m14',n:'14',t:'Metabolismo del grupo hemo',d:'Síntesis y degradación del grupo hemo.',i:'net',locked:true},
- {id:'m15',n:'15',t:'Integración metabólica',d:'Conecta todas las rutas en estados de ayuno, alimentación y ejercicio.',i:'inf',locked:true},
- {id:'m16',n:'16',t:'Metabolismo del eritrocito',d:'Particularidades metabólicas del glóbulo rojo.',i:'flask',locked:true},
- {id:'m17',n:'17',t:'Bioquímica clínica',d:'Interpretación clínica de los exámenes de laboratorio.',i:'net',locked:true}
-];
-var MATS=[
- {id:'a1',k:'PDF',t:'Resumen · Fundamentos',d:'Módulo 06 · Material de apoyo'},
- {id:'a2',k:'PDF',t:'Regulación enzimática · Mapa visual',d:'Módulo 06 · Esquema de repaso'},
- {id:'a3',k:'MAP',t:'Metabolismo integrado',d:'Conexiones principales'}
-];
-MODS.forEach(function(m){m.l=m.L?m.L.length:0});
-var TOTAL=MODS.reduce(function(a,m){return a+m.l},0);
-function tagOf(m){return m.tag||('MÓDULO '+m.n)}
-function durOf(m,i){return m.L&&m.L[i-1]?m.L[i-1][1]:''}
-function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.done&&Array.isArray(d.pins)&&Array.isArray(d.notes))return d}catch(e){}return{done:{},pins:[],notes:[],open:'m0'}}
-var S=load();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
-function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function safeUrl(u){u=String(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u))u='https://'+u;try{var x=new URL(u);return/^https?:$/.test(x.protocol)?x.href:''}catch(e){return''}}
-function doneIn(m){var c=0;for(var i=1;i<=m.l;i++)if(S.done[m.id+'-'+i])c++;return c}
-function doneAll(){return MODS.reduce(function(a,m){return a+doneIn(m)},0)}
-function lessonTitle(m,i){return m.L&&m.L[i-1]?m.L[i-1][0]:'Aula '+String(i).padStart(2,'0')}
-function nextLesson(){for(var k=0;k<MODS.length;k++){var m=MODS[k];for(var i=1;i<=m.l;i++)if(!S.done[m.id+'-'+i])return{m:m,i:i}}return null}
-function isPin(id){return S.pins.indexOf(id)>-1}
-function toast(t){var e=document.getElementById('toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},2600)}
-function mod(m){var n=doneIn(m),pc=m.l?Math.round(n/m.l*100):0;
- return '<article class="mod"><button class="pinbtn'+(isPin(m.id)?' on':'')+'" data-pin="'+m.id+'" aria-label="'+(isPin(m.id)?'Quitar de Fijados':'Fijar')+' '+esc(m.t)+'">'+pinSvg(isPin(m.id))+'</button><div class="ico">'+svg(m.i)+'</div><span class="tag">'+tagOf(m)+'</span><h4>'+esc(m.t)+'</h4><p>'+esc(m.d)+'</p>'+
- (m.locked?'<div class="locked">Próximamente</div>':'<div class="bar"><i style="width:'+pc+'%"></i></div><small>'+n+' de '+m.l+' aulas</small><button class="open" data-view="curso" data-open="'+m.id+'">Abrir módulo →</button>')+'</article>'}
-var R={
- inicio:function(){var nl=nextLesson(),da=doneAll(),pc=Math.round(da/TOTAL*100);
-  var next=nl?('<div class="lesson"><div class="thumb"><div class="play">'+svg('play')+'</div><span>'+(durOf(nl.m,nl.i)||'Aula '+nl.i)+'</span></div><div class="linfo"><span class="tag">'+tagOf(nl.m)+' · '+esc(nl.m.t.toUpperCase())+'</span><h4>'+esc(lessonTitle(nl.m,nl.i))+'</h4><p>'+esc(nl.m.d)+'</p><button class="act" style="margin:0" data-done="'+nl.m.id+'-'+nl.i+'">Marcar como vista</button></div></div>'):'<p class="empty" style="margin-top:14px">Terminaste todas las aulas disponibles. Los módulos nuevos aparecerán aquí.</p>';
-  return '<section class="hero"><div class="hero-copy"><span class="pill">TU ACADEMIA DE BIOQUÍMICA</span><h2>La Bioquímica no se memoriza.<br><em>¡Se domina!</em></h2><p>Aprende de forma visual, práctica y organizada con videoaulas, materiales de apoyo y repasos pensados para conectar cada concepto.</p><div class="actions"><button class="primary" data-view="curso">Continuar estudiando →</button><button class="secondary" data-view="fijados">Ver mis fijados</button></div></div><img src="assets/professora-boneca.png" alt=""></section>'+
-  '<div class="two"><section class="card lift"><div class="sec-title"><div><span class="eyebrow">CONTINUAR DONDE LO DEJASTE</span><h3>Tu próxima clase</h3></div><button class="link" data-view="curso">Ver curso completo →</button></div>'+next+'</section>'+
-  '<section class="card"><span class="eyebrow">MI PROGRESO</span><div class="ring" style="background:conic-gradient(var(--violet) '+pc+'%,var(--surface-2) 0)"><div><b>'+pc+'%</b><span>del curso</span></div></div><div class="stats"><div><b>'+da+'</b><span>Vistas</span></div><div><b>'+(TOTAL-da)+'</b><span>Restantes</span></div><div><b>'+MODS.length+'</b><span>Módulos</span></div></div></section></div>'+
-  '<section class="card"><div class="sec-title"><div><span class="eyebrow">TU CAMINO DE APRENDIZAJE</span><h3>Módulos del curso</h3></div><button class="link" data-view="curso">Ver todos →</button></div><div class="mods">'+MODS.map(mod).join('')+'</div></section>'+
-  '<section class="tip"><figure><img src="assets/coruja.png" alt=""></figure><div><span>DICA DE LA PROFE</span><h3>No estudies rutas metabólicas como listas aisladas.</h3><p>Pregúntate siempre: ¿de dónde viene este sustrato, qué necesita la célula y hacia dónde irá después?</p></div></section>'},
- curso:function(){return '<section class="workhead"><span class="eyebrow">MI CURSO</span><h2>Bioquímica paso a paso</h2><p>Continúa desde donde paraste o elige un módulo. Marca cada aula como vista para ver tu progreso.</p></section><div class="courselist">'+MODS.map(function(m){
-   var n=doneIn(m),pc=m.l?Math.round(n/m.l*100):0,open=S.open===m.id&&!m.locked;
-   var rows='';if(open){rows='<div class="lessons">';for(var i=1;i<=m.l;i++){var k=m.id+'-'+i,d=!!S.done[k];rows+='<div class="lrow'+(d?' done':'')+'"><input type="checkbox" id="c-'+k+'" data-chk="'+k+'"'+(d?' checked':'')+'><label for="c-'+k+'">'+esc(lessonTitle(m,i))+'</label>'+(durOf(m,i)?'<small>'+durOf(m,i)+'</small>':'')+'</div>'}rows+='</div>'}
-   return '<article class="cmod'+(open?' open':'')+(m.locked?' locked-m':'')+'"><button class="chead" '+(m.locked?'disabled':'data-toggle="'+m.id+'"')+' aria-expanded="'+open+'"><b>'+m.n+'</b><div><span class="tag">'+tagOf(m)+'</span><h3>'+esc(m.t)+'</h3><p>'+(m.locked?esc(m.d)+' · Próximamente':m.l+(m.l===1?' aula':' aulas')+' · '+n+(n===1?' vista':' vistas'))+'</p>'+(m.locked?'':'<div class="bar"><i style="width:'+pc+'%"></i></div>')+'</div>'+(m.locked?'':'<span class="chev">'+svg('chev')+'</span>')+'</button>'+rows+'</article>'}).join('')+'</div>'},
- repaso:function(){var c=[['repaso','Flashcards','Repasa conceptos clave de los módulos estudiados.','Empezar repaso'],['net','Rutas metabólicas','Conecta sustratos, productos y regulación.','Repasar rutas'],['flask','Repaso de 10 min','Una selección rápida basada en tu progreso.','Iniciar']];
-  return '<section class="workhead"><span class="eyebrow">REPASO INTELIGENTE</span><h2>¿Qué quieres reforzar hoy?</h2><p>Sesiones cortas para mantener los conceptos activos.</p></section><div class="tool-grid">'+c.map(function(x){return '<article><div class="ico">'+svg(x[0])+'</div><h3>'+x[1]+'</h3><p>'+x[2]+'</p><button class="act" data-soon>'+x[3]+'</button></article>'}).join('')+'</div>'},
- preguntas:function(){return '<section class="workhead"><span class="eyebrow">BANCO DE PREGUNTAS</span><h2>Practica para comprobar que entendiste.</h2><p>Filtra por módulo y revisa tus errores.</p></section><div class="quiz"><div><span>SESIÓN RECOMENDADA</span><h3>10 preguntas · Fundamentos</h3><p>Tiempo estimado: 12 minutos</p></div><button class="act" data-soon>Comenzar →</button></div><div class="qstats"><article><b>—</b><span>Aciertos</span></article><article><b>0</b><span>Respondidas</span></article><article><b>0</b><span>Para revisar</span></article></div>'},
- materiales:function(){return '<section class="workhead"><span class="eyebrow">BIBLIOTECA</span><h2>Materiales de apoyo</h2><p>Todo lo que acompaña tus clases, organizado por módulo.</p></section><div class="mlist">'+MATS.map(function(m){return '<article class="mat"><i>'+m.k+'</i><div><h3>'+esc(m.t)+'</h3><p>'+esc(m.d)+'</p></div><button class="pinbtn'+(isPin(m.id)?' on':'')+'" data-pin="'+m.id+'" aria-label="'+(isPin(m.id)?'Quitar de Fijados':'Fijar')+' '+esc(m.t)+'">'+pinSvg(isPin(m.id))+'</button><button class="act" style="margin:0" data-soon>Ver</button></article>'}).join('')+'</div>'},
- fijados:function(){var all=MODS.map(function(m){return{id:m.id,t:m.t,s:'Módulo '+m.n,v:'curso',o:m.id}}).concat(MATS.map(function(m){return{id:m.id,t:m.t,s:m.d,v:'materiales'}}));
-  var pins=S.pins.map(function(id){return all.filter(function(x){return x.id===id})[0]}).filter(Boolean);
-  var h='<section class="workhead"><span class="eyebrow">LO QUE QUIERES TENER A MANO</span><h2>Fijados</h2><p>Módulos y materiales que fijaste, más tus propios links y notas.</p></section>';
-  h+='<div class="sub">Módulos y materiales</div>'+(pins.length?'<div class="fx-grid">'+pins.map(function(p){return '<div class="fx-card"><button class="rm" data-pin="'+p.id+'" aria-label="Quitar '+esc(p.t)+' de Fijados">✕</button><h3>'+esc(p.t)+'</h3><p>'+esc(p.s)+'</p><button class="go" data-view="'+p.v+'"'+(p.o?' data-open="'+p.o+'"':'')+'>Abrir →</button></div>'}).join('')+'</div>':'<div class="empty">Nada fijado todavía. Usa el alfiler en los módulos de Inicio y en Materiales.</div>');
-  h+='<div class="sub">Links y notas</div><form class="fx-form" id="fx-form"><label for="fx-t">Título<input id="fx-t" name="t" maxlength="120" placeholder="Ej.: Grupo de estudio de Bioquímica" required></label><label for="fx-u">Link (opcional)<input id="fx-u" name="u" maxlength="500" placeholder="drive.google.com/…"></label><button class="act" style="margin:0" type="submit">Fijar</button></form>';
-  h+=S.notes.length?'<div class="fx-grid">'+S.notes.map(function(n,i){var u=safeUrl(n.u);return '<div class="fx-card"><button class="rm" data-rn="'+i+'" aria-label="Quitar '+esc(n.t)+'">✕</button><h3>'+esc(n.t)+'</h3>'+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener noreferrer">Abrir link</a>':'<p>Nota</p>')+'</div>'}).join('')+'</div>':'<div class="empty">Aún no agregaste links ni notas.</div>';
-  return h}
-};
-var cur='inicio';
-function navHtml(){var c=S.pins.length+S.notes.length;return VIEWS.map(function(v){return '<button data-view="'+v[0]+'"'+(v[0]===cur?' aria-current="page"':'')+'>'+svg(v[0])+'<span>'+v[1]+'</span>'+(v[0]==='fijados'&&c?'<span class="badge">'+c+'</span>':'')+'</button>'}).join('')}
-function paint(){document.getElementById('snav').innerHTML=navHtml();document.getElementById('tabs').innerHTML=VIEWS.filter(function(v){return v[0]!=='repaso'}).map(function(v){return '<button data-view="'+v[0]+'"'+(v[0]===cur?' aria-current="page"':'')+'>'+svg(v[0])+'<span>'+(v[0]==='materiales'?'Material':v[1])+'</span></button>'}).join('');
- document.getElementById('crumb').textContent=VIEWS.filter(function(v){return v[0]===cur})[0][1];
- document.getElementById('page').innerHTML=R[cur]();
- var f=document.getElementById('fx-form');if(f)f.onsubmit=function(e){e.preventDefault();var t=f.t.value.trim();if(!t)return;S.notes.unshift({t:t,u:f.u.value.trim()});save();paint()}}
-function show(){var h=(location.hash||'').replace('#','');var inApp=VIEWS.some(function(v){return v[0]===h});
- document.getElementById('landing').hidden=inApp;document.getElementById('app').hidden=!inApp;
- if(inApp){cur=h;paint();window.scrollTo(0,0)}}
-function go(v){if(location.hash==='#'+v)show();else location.hash=v}
-window.addEventListener('hashchange',show);
-document.addEventListener('click',function(e){var t=e.target.closest('[data-go],[data-enter],[data-leave],[data-view],[data-pin],[data-rn],[data-toggle],[data-done],[data-soon]');if(!t)return;
- if(t.dataset.go){var s=document.getElementById(t.dataset.go);if(s)s.scrollIntoView({behavior:'smooth'});return}
- if('enter' in t.dataset){go('inicio');return}
- if('leave' in t.dataset){if(location.hash){history.pushState('',document.title,location.pathname+location.search)}show();window.scrollTo(0,0);return}
- if('soon' in t.dataset){toast('Este contenido se activa cuando se carga el curso.');return}
- if(t.dataset.pin){var id=t.dataset.pin,i=S.pins.indexOf(id);if(i>-1)S.pins.splice(i,1);else S.pins.push(id);save();paint();return}
- if(t.dataset.rn){S.notes.splice(+t.dataset.rn,1);save();paint();return}
- if(t.dataset.toggle){S.open=S.open===t.dataset.toggle?'':t.dataset.toggle;save();paint();return}
- if(t.dataset.done){S.done[t.dataset.done]=true;save();paint();toast('Aula marcada como vista.');return}
- if(t.dataset.view){if(t.dataset.open){S.open=t.dataset.open;save()}document.getElementById('results').hidden=true;go(t.dataset.view)}});
-document.addEventListener('change',function(e){var k=e.target.dataset&&e.target.dataset.chk;if(!k)return;if(e.target.checked)S.done[k]=true;else delete S.done[k];save();paint()});
-var q=document.getElementById('q'),res=document.getElementById('results');
-q.addEventListener('input',function(){var v=q.value.trim().toLowerCase();if(!v){res.hidden=true;return}
- var hits=MODS.filter(function(m){return(m.t+' '+m.d).toLowerCase().indexOf(v)>-1}).map(function(m){return{t:m.t,s:'Módulo '+m.n,v:'curso',o:m.id}}).concat(MATS.filter(function(m){return(m.t+' '+m.d).toLowerCase().indexOf(v)>-1}).map(function(m){return{t:m.t,s:m.d,v:'materiales'}})).concat(S.notes.filter(function(n){return n.t.toLowerCase().indexOf(v)>-1}).map(function(n){return{t:n.t,s:'Fijados · nota',v:'fijados'}}));
- res.innerHTML=hits.length?hits.map(function(h){return '<button data-view="'+h.v+'"'+(h.o?' data-open="'+h.o+'"':'')+'>'+esc(h.t)+'<small>'+esc(h.s)+'</small></button>'}).join(''):'<button disabled>Sin resultados<small>Prueba con otra palabra</small></button>';res.hidden=false});
-document.addEventListener('click',function(e){if(!e.target.closest('.searchbox')){res.hidden=true}});
-show();
-})();
-</script>
-<script>
-(function(){var root=document.getElementById('m4');if(!root)return;
-var tabs=[].slice.call(root.querySelectorAll('.m4-tabs button')),cards=[].slice.call(root.querySelectorAll('.c4')),stage=document.getElementById('stage'),rig=document.getElementById('rig'),cur=0;
-var N=cards.length;function set(i){cur=(i+N)%N;cards.forEach(function(c,k){var d=(k-cur+N)%N;c.dataset.pos=d===0?'0':d===1?'1':d===N-1?'3':'2'});tabs.forEach(function(t,k){var on=k===cur;t.setAttribute('aria-selected',on);var b=t.querySelector('i');b.style.animation='none';void b.offsetWidth;b.style.animation=''})}
-set(0);tabs.forEach(function(t,k){t.addEventListener('click',function(){set(k)});t.querySelector('i').addEventListener('animationend',function(){if(t.getAttribute('aria-selected')==='true')set(cur+1)})});
-cards.forEach(function(c,k){c.addEventListener('click',function(){if(c.dataset.pos!=='0')set(k)})});
-var rm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
-if(!rm){stage.addEventListener('pointermove',function(e){var r=stage.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;rig.style.setProperty('--ry',(x*12)+'deg');rig.style.setProperty('--rx',(-y*8)+'deg')});stage.addEventListener('pointerleave',function(){rig.style.setProperty('--ry','0deg');rig.style.setProperty('--rx','0deg')})}
-var sx=null;stage.addEventListener('pointerdown',function(e){sx=e.clientX});stage.addEventListener('pointerup',function(e){if(sx===null)return;var d=e.clientX-sx;sx=null;if(Math.abs(d)>50)set(cur+(d<0?1:-1))});
-var flip=document.getElementById('flip');flip.addEventListener('click',function(){flip.classList.toggle('on')});
-var opts=document.getElementById('opts'),fb=document.getElementById('fb');opts.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;[].forEach.call(opts.children,function(x){x.classList.remove('ok','no')});var ok=b.dataset.ok==='1';b.classList.add(ok?'ok':'no');if(!ok){opts.querySelector('[data-ok="1"]').classList.add('ok')}fb.hidden=false;fb.textContent=ok?'¡Correcto! En inflamación crónica la ferritina sube como reactante de fase aguda, aunque el hierro sérico esté bajo.':'Casi. Mira la respuesta marcada: la ferritina también sube con la inflamación, no solo con la carga de hierro.'});
-})();
-</script>
-<script>
-(function(){var st=document.getElementById('shotsStage');if(!st)return;var rig=document.getElementById('shotsRig'),shots=[].slice.call(st.querySelectorAll('.shot')),tabs=[].slice.call(document.querySelectorAll('.shots-tabs button')),cur=0,t=null,hold=false;
-function set(i){cur=(i+shots.length)%shots.length;shots.forEach(function(s,k){s.classList.toggle('on',k===cur);s.classList.toggle('off',k<cur)});tabs.forEach(function(b,k){b.setAttribute('aria-selected',k===cur)})}
-function loop(){clearInterval(t);if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;t=setInterval(function(){if(!hold&&!document.hidden)set(cur+1)},4500)}
-tabs.forEach(function(b,k){b.addEventListener('click',function(){set(k);loop()})});
-var box=document.getElementById('shots');box.addEventListener('pointerenter',function(){hold=true});box.addEventListener('pointerleave',function(){hold=false;rig.style.setProperty('--ry','0deg');rig.style.setProperty('--rx','0deg')});
-st.addEventListener('pointermove',function(e){if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches)return;var r=st.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;rig.style.setProperty('--ry',(x*10)+'deg');rig.style.setProperty('--rx',(-y*7)+'deg')});
-set(0);loop()})();
-</script>
-
+<script src="js/course-data.js"></script>
+<script src="js/checkout.js"></script>
+<script src="js/panel.js"></script>
+<script src="js/landing.js"></script>
 </body></html>

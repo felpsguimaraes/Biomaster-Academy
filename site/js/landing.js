@@ -14,8 +14,15 @@ $('#path').innerHTML=BIO.MODS.map(function(m){var on=!m.locked;
 
 /* ---------- Planes ---------- */
 var FEAT=['Curso completo de Bioquímica','Videoaulas y materiales','Repasos y banco de preguntas','PDFs premium (Ciclo de Krebs y más)','Actualizaciones del contenido'];
-$('#planGrid').innerHTML=BIO.PLANS.map(function(p){var hot=p.id==='anual';
- return '<article class="lp-plan'+(hot?' hot':'')+'" data-3d="rise">'+(p.badge?'<span class="badge">'+p.badge+'</span>':'')+'<h3>'+esc(p.name)+'</h3><div class="price"><small>USD</small>'+p.price.toFixed(2).replace('.',',')+'</div><p class="per">'+(p.months>1?BIO.money(p.perMonth)+' por mes · pago único de '+p.months+' meses':'por mes · menos de USD 1 por día')+'</p><ul>'+FEAT.map(function(f){return '<li>'+f+'</li>'}).join('')+'</ul><button class="lp-btn '+(hot?'gold':'navy')+'" data-pay="'+p.id+'">Elegir '+esc(p.name.split(' ')[0].toLowerCase())+' →</button></article>'}).join('');
+var CSYM={USD:'USD',PYG:'Gs',BRL:'R$'},WAYS={USD:'Tarjeta internacional',PYG:'Tarjeta · QR · transferencia',BRL:'PIX · tarjeta'};
+function renderPlans(){var c=BIO.getCur();
+ $('#curTog').innerHTML=BIO.CURS.map(function(x){return '<button type="button" data-cur="'+x[0]+'" aria-pressed="'+(x[0]===c)+'">'+x[1]+'</button>'}).join('')+'<span>Paga en tu moneda · '+WAYS[c]+'</span>';
+ $('#planGrid').innerHTML=BIO.PLANS.map(function(p){var hot=p.id==='anual',sv=BIO.saveOf(p,c),price=BIO.planPrice(p,c).replace(/^(USD|Gs|R\$)\s/,'');
+ return '<article class="lp-plan'+(hot?' hot':'')+'" data-3d="rise">'+(sv>0?'<span class="badge">Ahorra '+sv+'%</span>':'')+'<h3>'+esc(p.name)+'</h3><div class="price"><small>'+CSYM[c]+'</small>'+price+'</div><p class="per">'+(p.months>1?BIO.planPer(p,c)+' por mes · pago por '+p.months+' meses':'por mes · cancela cuando quieras')+'</p><ul>'+FEAT.map(function(f){return '<li>'+f+'</li>'}).join('')+'</ul><button class="lp-btn '+(hot?'gold':'navy')+'" data-pay="'+p.id+'">Elegir '+esc(p.name.split(' ')[0].toLowerCase())+' →</button></article>'}).join('');
+ items=$$('[data-3d]')}
+var items=[];
+$('#curTog').addEventListener('click',function(e){var b=e.target.closest('[data-cur]');if(b)BIO.setCur(b.dataset.cur)});
+document.addEventListener('biocur:change',renderPlans);
 
 /* ---------- Mundo 3D de fondo ---------- */
 var cam=$('#w3dCam'),nodes=[],DEPTH=2600,W=innerWidth,H=innerHeight;
@@ -57,7 +64,7 @@ function tilt(root,sel,max){if(RM||COARSE)return;root.addEventListener('pointerm
 tilt($('#path'),'li',10);tilt($('#planGrid'),'.lp-plan',8);
 
 /* ---------- Bucle de scroll ---------- */
-var items=$$('[data-3d]'),nav=$('#lpNav'),ticking=false,t0=performance.now();
+renderPlans();var nav=$('#lpNav'),ticking=false,t0=performance.now();
 function frame(now){ticking=false;if(L.hidden)return;
  var sy=scrollY,vh=innerHeight,tm=(now-t0)/1000;
  mx+=(tx-mx)*.06;my+=(ty-my)*.06;

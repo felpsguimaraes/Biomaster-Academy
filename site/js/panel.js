@@ -88,7 +88,7 @@ function userBox(){var ad=document.getElementById('adminLink');if(ad)ad.hidden=!
 function planBox(){userBox();var s=window.BioPay&&BioPay.sub(),el=document.getElementById('planbox'),f=document.getElementById('pfoot-plan');if(!el)return;
  if(!s){el.innerHTML='<b>Vista de demostración</b><span>Elige un plan para activar tu acceso</span><button data-pay="mensual">Elegir plan</button>';f.textContent='Sin plan activo';return}
  var p=BioPay.plan(s.plan),on=s.status==='active';
- el.innerHTML='<b>Plan '+esc(p.name)+'</b><span>'+BIO.money(p.price)+' · '+(on?'renueva el '+new Date(s.renews).toLocaleDateString('es',{day:'numeric',month:'short'}):'cancelado')+'</span><button data-manage>Gestionar plan</button>';
+ var nr=(s.brand==='PIX'||s.brand==='QR');el.innerHTML='<b>Plan '+esc(p.name)+'</b><span>'+BIO.planPrice(p,BIO.getCur())+' · '+(on?(nr?'acceso hasta el ':'renueva el ')+new Date(s.renews).toLocaleDateString('es',{day:'numeric',month:'short'}):'cancelado')+'</span><button data-manage>Gestionar plan</button>';
  f.textContent='Plan '+p.name+' · '+(on?'activo':'cancelado')}
 document.addEventListener('biopay:change',planBox);
 var cur='inicio';

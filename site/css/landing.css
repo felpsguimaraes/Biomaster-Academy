@@ -200,3 +200,6 @@
  .lp-ring-stage{height:auto}.lp-ring{transform:none!important;width:100%;aspect-ratio:auto;display:flex;gap:14px;overflow-x:auto;padding:10px;scroll-snap-type:x mandatory}
  .lp-ring figure{position:relative;flex:none;width:240px;aspect-ratio:5/4;transform:none;scroll-snap-align:center}
 }
+
+.lp-curtog{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:-10px 0 26px}.lp-curtog button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 18px;font:700 13px var(--fd);color:var(--mut)}
+.lp-curtog button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}.lp-curtog span{font-size:13px;color:var(--mut);margin-left:6px}

@@ -51,6 +51,9 @@ const ok = (m) => console.log(`  ✓ ${++n}. ${m}`);
   assert.equal((await call(env, 'POST', '/api/sim/subscribe', { cookie: ana, body: { plan: 'oro' } })).status, 400); 
   assert.equal((await call(env, 'POST', '/api/sim/subscribe', { cookie: ana, body: { plan: 'semestral', brand: 'VISA', last4: '4242' } })).status, 200);
   L = await j(await call(env, 'GET', '/api/lessons', { cookie: ana })); assert.equal(L.access, true); assert.equal(L.lessons.find((l) => l.id === 'm6-1').video, 'https://v.test/1.mp4'); ok('modo demo: suscribir desbloquea las aulas');
+  { const pix = cookieOf(await call(env, 'POST', '/api/auth/register', { body: { email: 'pix@x.com', password: 'secreto123' } }));
+    assert.equal((await call(env, 'POST', '/api/sim/subscribe', { cookie: pix, body: { plan: 'semestral', brand: 'PIX', last4: '' } })).status, 200);
+    const ps = (await j(await call(env, 'GET', '/api/me', { cookie: pix }))).subscription; assert.equal(ps.brand, 'PIX'); assert.equal(ps.last4, null); assert.equal(ps.plan, 'semestral'); ok('pago por PIX/QR (sin tarjeta) se registra sin últimos 4 dígitos'); }
   const me = await j(await call(env, 'GET', '/api/me', { cookie: ana })); assert.equal(me.subscription.plan, 'semestral'); assert.equal(me.subscription.simulated, true); assert.ok(me.subscription.renews > Date.now());
   await call(env, 'POST', '/api/sim/cancel', { cookie: ana }); assert.equal((await j(await call(env, 'GET', '/api/me', { cookie: ana }))).subscription.cancelAtPeriodEnd, true);
   await call(env, 'POST', '/api/sim/reactivate', { cookie: ana }); assert.equal((await j(await call(env, 'GET', '/api/me', { cookie: ana }))).subscription.cancelAtPeriodEnd, false); ok('cancelar / reactivar suscripción demo');

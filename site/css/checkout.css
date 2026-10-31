@@ -74,3 +74,14 @@
 .bp-inv span{color:#6b7a94}
 @media (max-width:760px){.bp{grid-template-columns:1fr}.bp-sum{border-radius:0}.bp-sim{padding-right:52px}.bp-row{grid-template-columns:1fr 1fr}}
 @media (prefers-reduced-motion:reduce){.bp,.bp-ov,.bp-ok .tick{animation:none}}
+
+/* monedas, métodos y QR */
+.bp-cur{display:flex;gap:6px;margin:-4px 0 4px}.bp-cur button{flex:1;border:1.5px solid rgba(255,255,255,.25);background:transparent;color:#c6d3ea;border-radius:99px;padding:6px 8px;font:700 12px Poppins,sans-serif;cursor:pointer}
+.bp-cur button[aria-pressed=true]{background:#e8cd8c;color:#3b2d08;border-color:#e8cd8c}
+.bp-tabs{display:flex;gap:6px;background:#eef2fa;border-radius:12px;padding:4px;margin-bottom:4px}.bp-tabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:8px 6px;font:600 13px Inter,sans-serif;color:#3d5078;cursor:pointer}
+.bp-tabs button[aria-selected=true]{background:#fff;color:#1f2f4a;box-shadow:0 2px 8px rgba(31,47,74,.12)}
+.bp-p{margin:-6px 0 4px;color:#56637f;font-size:13.5px}.bp-note{margin:6px 0 0;font-size:12px;color:#6b7a94;line-height:1.5}
+.bp-qrbox{display:flex;gap:14px;align-items:center;border:1px solid #e2e9f4;border-radius:14px;padding:12px;margin-bottom:10px}.bp-qr{width:132px;height:132px;flex:none;fill:#1a2540;border:1px solid #e2e9f4;border-radius:8px}
+.bp-qrbox b{font:800 20px Poppins,sans-serif;color:#1f2f4a;display:block}.bp-qrbox small{display:block;color:#6b7a94;margin:2px 0 8px}.bp-qrbox .bp-go{height:34px;font-size:13px;padding:0 14px;margin-bottom:6px}
+.bp-code{display:block;max-width:230px;font:500 10.5px ui-monospace,Menlo,monospace;color:#56637f;word-break:break-all;background:#f5f8fd;border-radius:8px;padding:6px 8px}
+@media (max-width:760px){.bp-qrbox{flex-direction:column;align-items:flex-start}}

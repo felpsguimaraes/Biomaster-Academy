@@ -1,0 +1,136 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(STUDENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  enrollments Enrollment[]
+  tasks       Task[]
+  attempts    QuizAttempt[]
+  notifications Notification[]
+}
+
+enum Role {
+  STUDENT
+  TEACHER
+  ADMIN
+}
+
+model Course {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now())
+  subjects    Subject[]
+}
+
+model Subject {
+  id          String    @id @default(cuid())
+  courseId    String
+  name        String
+  description String?
+  teacherId   String?
+  createdAt   DateTime  @default(now())
+
+  course      Course     @relation(fields: [courseId], references: [id])
+  materials   Material[]
+  tasks       Task[]
+  quizzes     Quiz[]
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id        String   @id @default(cuid())
+  userId    String
+  subjectId String
+  status    String   @default("active")
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  subject Subject @relation(fields: [subjectId], references: [id])
+}
+
+model Material {
+  id        String   @id @default(cuid())
+  subjectId String
+  title     String
+  type      String
+  url       String?
+  content   String?
+  createdAt DateTime @default(now())
+
+  subject Subject @relation(fields: [subjectId], references: [id])
+}
+
+model Task {
+  id        String   @id @default(cuid())
+  userId    String
+  subjectId String
+  title     String
+  dueDate   DateTime?
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+
+  user    User    @relation(fields: [userId], references: [id])
+  subject Subject @relation(fields: [subjectId], references: [id])
+}
+
+model Quiz {
+  id        String   @id @default(cuid())
+  subjectId String
+  title     String
+  createdAt DateTime @default(now())
+
+  subject   Subject       @relation(fields: [subjectId], references: [id])
+  questions Question[]
+  attempts  QuizAttempt[]
+}
+
+model Question {
+  id        String   @id @default(cuid())
+  quizId    String
+  text      String
+  type      String
+  options   Json?
+  answer    String?
+  createdAt DateTime @default(now())
+
+  quiz Quiz @relation(fields: [quizId], references: [id])
+}
+
+model QuizAttempt {
+  id        String   @id @default(cuid())
+  userId    String
+  quizId    String
+  score     Float?
+  completedAt DateTime? @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  quiz Quiz @relation(fields: [quizId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  title     String
+  message   String
+  readAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+}

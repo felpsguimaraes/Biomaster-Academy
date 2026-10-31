@@ -1,21 +1,21 @@
 # Biomaster Academy
 
-Plataforma de estudo acadêmico com foco em organização, desempenho e acompanhamento do aprendizado.
+Plataforma de estudo acadêmico para alunos, professores e administradores.
 
 ## Visão geral
 
-A Biomaster Academy é uma plataforma para alunos, professores e administradores organizarem estudos, materiais, avaliações e progresso dentro de um único ambiente.
+A Biomaster Academy centraliza materiais, cronograma, avaliações e progresso em um único ambiente para facilitar o processo de aprendizagem.
 
-## Stack sugerida
+## Stack atual
 
-- Frontend: React + Vite + TypeScript + Tailwind
-- Backend: Node.js + TypeScript + Express
-- Banco de dados: PostgreSQL
+- Frontend: React + Vite + TypeScript
+- Backend: Node.js + Express + TypeScript
+- Banco: PostgreSQL
 - ORM: Prisma
 - Autenticação: JWT
 - Infraestrutura: Docker + Docker Compose
 
-## Estrutura do projeto
+## Estrutura principal
 
 ```text
 .
@@ -26,12 +26,25 @@ A Biomaster Academy é uma plataforma para alunos, professores e administradores
 │       ├── public
 │       └── src
 ├── docs
+├── prisma
 ├── .env.example
 ├── .gitignore
 ├── docker-compose.yml
 ├── package.json
-└── README.md
+├── README.md
+└���─ LICENSE
 ```
+
+## MVP em foco
+
+- Cadastro e login
+- Perfil do usuário
+- Dashboard com métricas do aluno
+- Disciplinas e materiais
+- Agenda de estudo
+- Quiz e avaliações
+- Progresso e relatórios
+- Painel do professor e admin
 
 ## Requisitos
 
@@ -39,7 +52,7 @@ A Biomaster Academy é uma plataforma para alunos, professores e administradores
 - npm 10+
 - Docker + Docker Compose
 
-## Inicialização rápida
+## Desenvolvimento local
 
 ```bash
 npm install
@@ -49,23 +62,39 @@ npm run dev
 
 ## Scripts
 
-- `npm run dev` - inicia frontend e backend em paralelo
-- `npm run build` - gera build das aplicações
-- `npm run lint` - valida qualidade do código
+```bash
+npm run dev
+npm run build
+npm run lint
+```
 
-## Fluxo principal
+## Arquitetura
 
-1. Aluno realiza cadastro e login.
-2. Acessa disciplinas, materiais e cronograma.
-3. Marca aulas e conteúdos como concluídos.
-4. Responde quizzes e acompanha desempenho.
-5. Recebe lembretes e relatórios de progresso.
+- Frontend: experiência moderna, responsiva e orientada ao usuário
+- Backend: API REST com autenticação e regras de negócio
+- Banco de dados: persistência para cursos, usuários, materiais e avaliações
+- Segurança: JWT e controle de acesso por perfil
 
 ## Roadmap
 
-- MVP: cadastro, disciplinas, materiais, agenda, quiz e dashboard
-- Etapa 2: notificações, relatórios, flashcards e fórum
-- Etapa 3: métricas avançadas e recomendação inteligente
+### Fase 1 - MVP
+- autenticação
+- dashboard inicial
+- disciplinas e materiais
+- agenda de estudos
+- quiz
+
+### Fase 2 - Engajamento
+- notificações
+- flashcards
+- relatórios por professor
+- fórum de dúvidas
+
+### Fase 3 - Escala
+- analytics avançado
+- recomendação inteligente
+- gamificação
+- IA para revisão personalizada
 
 ## Licença
 

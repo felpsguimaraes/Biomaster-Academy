@@ -150,3 +150,4 @@ vite.config.ts.timestamp-*
 .wrangler/
 api/.wrangler/
 api/wrangler.dev.toml
+__pycache__/

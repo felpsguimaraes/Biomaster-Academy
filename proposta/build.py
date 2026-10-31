@@ -1,21 +1,7 @@
 """Genera propuesta-comercial.html con los escenarios calculados. Editar SUPUESTOS y volver a ejecutar:  python3 proposta/build.py"""
 import math, html, pathlib
-# ---------- SUPUESTOS (editar) ----------
-ARPU = 22.0          # ingreso medio mensual por alumno (USD), mezcla de planes con descuento
-MIN_ALUMNO = 240     # minutos de video vistos por alumno al mes
-MIN_CURSO = 1500     # minutos totales de video del curso (≈17 módulos × 4 aulas × ~20 min)
-FEE_HOTMART = 0.11   # comisión efectiva estimada Hotmart (9,9% + tarifa fija; ver sección 4B; puede llegar a ≈ 17% si se cobra el reproductor aparte)
-FEE_GW = 0.045       # comisión efectiva estimada de pasarela propia (tarjeta/PIX/local; a confirmar)
-A_SETUP, A_MES = 1200, 150
-B_PRECIO, B_MANT = 4800, 100
-C_SETUP, C_PCT = 500, 0.04
-ESCENARIOS = [100, 500, 2000]
-# -----------------------------------------
-def infra(n):
-    stor = 5 * math.ceil(MIN_CURSO / 1000); deliv = n * MIN_ALUMNO / 1000
-    email = 0 if n <= 1000 else 20
-    return dict(workers=5, dominio=1, email=email, stor=stor, deliv=deliv, total=5 + 1 + email + stor + deliv)
-def usd(x, d=0): return "USD " + f"{x:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+from model import *
+import html, pathlib
 rows = ""
 for n in ESCENARIOS:
     r = n * ARPU; i = infra(n); sav = r * (FEE_HOTMART - FEE_GW); a = sav - i["total"] - A_MES; b = sav - i["total"]; c = sav - i["total"] - C_PCT * r
@@ -65,42 +51,12 @@ pagos = table(["Proveedor", "PIX", "USD", "PYG", "Cobro recurrente", "Notas"], [
 ], "wide")
 
 
-# ---------- MODELO FISCAL ILUSTRATIVO (validar con contador) ----------
-FX_BRL = 5.4            # BRL por USD (supuesto)
-PY_IVA, PY_IRE = 0.10, 0.10          # IVA general 10% (incluido en el precio) · IRE 10% sobre utilidad
-PY_CONT_PF, PY_CONT_EMP = 30, 80     # contador USD/mes (estimado)
-PY_EAS_COSTO = 800                    # costo de constituir EAS (≈ USD 800 según abogado citado; SA/SRL ≈ 2.000–2.500)
-BR_CONT_PF, BR_CONT_PJ = 0, 300 / 5.4 # contador (R$ 300/mes PJ, estimado) en USD
-def br_tabla(b):  # tabla mensual progresiva (valores 2025/2026 según fuentes secundarias)
-    if b <= 2428.80: return 0
-    if b <= 2826.65: return b*0.075-182.16
-    if b <= 3751.05: return b*0.15-394.16
-    if b <= 4664.68: return b*0.225-675.49
-    return b*0.275-908.73
-def br_pf(x):     # carnê-leão mensual (R$): descuento simplificado 607,20 + redutor 2026 hasta 7.350
-    if x <= 5000: return 0
-    base = max(0, x-607.20)
-    if x <= 7350: return max(0, br_tabla(base) - max(0, 978.62-0.133145*x))
-    return br_tabla(x-607.20)
-def simples_iii(rbt12):  # Anexo III (servicios), alícuota efectiva
-    for lim, nom, ded in [(180000,.06,0),(360000,.112,9360),(720000,.135,17640),(1800000,.16,35640),(3600000,.21,125640),(4800000,.33,648000)]:
-        if rbt12 <= lim: return (rbt12*nom-ded)/rbt12
-    return .33
-def fiscal(caso, n, fee_pago):
-    r = n*ARPU; pago = r*fee_pago; inf = infra(n)['total']
-    if caso == 'py_pf':   cont = PY_CONT_PF;  iva = r*PY_IVA/(1+PY_IVA); ire = max(0, (r/(1+PY_IVA)-pago-inf-cont*1))*PY_IRE; imp = iva+ire
-    elif caso == 'py_emp': cont = PY_CONT_EMP; iva = r*PY_IVA/(1+PY_IVA); ire = max(0, (r/(1+PY_IVA)-pago-inf-cont))*PY_IRE; imp = iva+ire
-    elif caso == 'br_pf': cont = BR_CONT_PF; base = (r-pago-inf)*FX_BRL; imp = br_pf(base)/FX_BRL
-    else:                 cont = BR_CONT_PJ; imp = r*simples_iii(r*12*FX_BRL)
-    neto = r - pago - inf - cont - imp
-    return dict(r=r, pago=pago, inf=inf, cont=cont, imp=imp, neto=neto)
-CASOS = [('py_pf','🇵🇾 Paraguay · sin empresa (persona física)'),('py_emp','🇵🇾 Paraguay · con empresa (EAS/SRL)'),('br_pf','🇧🇷 Brasil · sin empresa (PF, carnê-leão)'),('br_pj','🇧🇷 Brasil · con empresa (ME, Simples Anexo III)')]
 fiscal_rows = ""
 for n in ESCENARIOS:
     for k, lab in CASOS:
-        f = fiscal(k, n, FEE_HOTMART)
-        fiscal_rows += f"<tr><td>{n}</td><td>{lab}</td><td>{usd(f['r'])}</td><td>{usd(f['pago']+f['inf'])}</td><td>{usd(f['cont'])}</td><td>{usd(f['imp'])}</td><td class='pos'>{usd(f['neto'])}</td><td>{f['neto']/f['r']*100:.0f}%</td></tr>"
-fiscal_tbl = f"<div class='scroll'><table class='t wide'><thead><tr><th>Alumnos pagos</th><th>Caso</th><th>Ingresos/mes</th><th>Comisión de pago + infra</th><th>Contador</th><th>Impuestos</th><th>Neto en bolsillo</th><th>% que queda</th></tr></thead><tbody>{fiscal_rows}</tbody></table></div>"
+        h = fiscal(k, n, FEE_HOTMART); g = fiscal(k, n, FEE_GW)
+        fiscal_rows += f"<tr><td>{n}</td><td>{lab}</td><td>{usd(h['r'])}</td><td>{usd(h['imp'])} → {usd(g['imp'])}</td><td>{usd(h['neto'])} <small>({h['neto']/h['r']*100:.0f}%)</small></td><td class='pos'>{usd(g['neto'])} <small>({g['neto']/g['r']*100:.0f}%)</small></td><td class='pos'>+{usd(g['neto']-h['neto'])}</td></tr>"
+fiscal_tbl = f"<div class='scroll'><table class='t wide'><thead><tr><th>Alumnos pagos</th><th>Caso</th><th>Ingresos/mes</th><th>Impuestos (Hotmart → pasarela propia)</th><th>Neto con Hotmart ({int(FEE_HOTMART*100)}%)</th><th>Neto con pasarela propia ({FEE_GW*100:.1f}%)</th><th>Ganancia extra/mes</th></tr></thead><tbody>{fiscal_rows}</tbody></table></div>"
 requis = table(["", "Sin empresa (persona física)", "Con empresa"], [
  ["Para empezar", "Inmediato. Hotmart y varias pasarelas aceptan persona física con documento/RUC o CPF.", "Paraguay: EAS ≈ 3–8 días hábiles y ≈ USD 800 en la práctica (SA/SRL ≈ USD 2.000–2.500). Brasil: CNPJ sin tasa de apertura + contador."],
  ["Costos fijos", "Contador opcional/barato (≈ USD 0–30/mes, estimado).", "Contador mensual ≈ USD 55–80 (≈ R$ 300 en Brasil, estimado) + obligaciones periódicas."],
@@ -212,7 +168,7 @@ footer{{padding:30px 0 50px;font-size:12px;color:var(--mut)}}footer a{{color:var
 <p class="lead">Dos caminos para vender: como <b>persona física</b> (sin empresa) o a través de una <b>empresa</b>. La diferencia depende del país donde esté registrada y de cuánto venda. <b>Las cifras son ilustrativas</b> y deben validarse con un contador local: las fuentes sobre IVA de servicios educativos online y exportación de servicios en Paraguay no se pudieron confirmar.</p>{requis}
 <h3 style="margin-top:20px">Resultado mensual estimado por caso</h3>
 <p class="lead">Supuestos: comisión de pago ≈ {int(FEE_HOTMART*100)}% (modelo actual) · IVA 10% incluido en el precio (Paraguay) · IRE 10% sobre utilidad · tipo de cambio R$ {FX_BRL:.1f} por USD · Simples Anexo III (servicios de enseñanza) · carnê-leão con descuento simplificado y tabla 2026 · contador: PF ≈ USD 30 (PY) / 0 (BR), empresa ≈ USD 80 (PY) / ≈ USD 56 (BR).</p>{fiscal_tbl}
-<div class="note"><b>Cómo leer esto:</b> en Paraguay la carga total es parecida con o sin empresa (la empresa suma costo de contador y de constitución: ≈ USD {PY_EAS_COSTO} una sola vez); lo que cambia es la <b>protección patrimonial, la facturación y el acceso a pasarelas</b>. En Brasil la diferencia es fuerte a medida que crece: como persona física la alícuota sube hasta 27,5%, mientras que una ME en el Simples tributa bastante menos desde ≈ 100 alumnos pagos. Hotmart se queda con su comisión en todos los casos.</div>
+<div class="note"><b>Cómo leer esto:</b> en Paraguay la carga total es parecida con o sin empresa (la empresa suma costo de contador y de constitución: ≈ USD {PY_EAS_COSTO} una sola vez); lo que cambia es la <b>protección patrimonial, la facturación y el acceso a pasarelas</b>. En Brasil la diferencia es fuerte a medida que crece: como persona física la alícuota sube hasta 27,5%, mientras que una ME en el Simples tributa bastante menos desde ≈ 100 alumnos pagos. La última columna muestra cuánto más queda al pasar a una <b>pasarela propia</b>, además del efecto de la empresa o la persona física.</div>
 <div class="calc"><h3 style="margin-bottom:10px">Calculadora de impuestos</h3><div class="g">
 <div><label>Alumnos pagos<input id="fn" type="number" value="500" min="0"></label></div>
 <div><label>Caso<select id="fcase" style="width:100%;height:38px;border:1px solid #d5ddec;border-radius:10px;margin-top:3px"><option value="py_pf">Paraguay · sin empresa</option><option value="py_emp">Paraguay · con empresa</option><option value="br_pf">Brasil · sin empresa</option><option value="br_pj">Brasil · con empresa (Simples)</option></select></label></div>

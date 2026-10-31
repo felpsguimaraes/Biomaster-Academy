@@ -64,3 +64,24 @@ export const recentAssessments = [
   { title: 'Atividade de Álgebra', score: '88%', date: '08/10' },
   { title: 'Quiz de Cálculo', score: '76%', date: '05/10' }
 ] as const;
+
+export const materials = [
+  { id: 'mat-1', title: 'Aula 01 - Vetores', type: 'PDF', duration: '18 min', status: 'Disponível' },
+  { id: 'mat-2', title: 'Resumo de Cálculo I', type: 'Resumo', duration: '12 min', status: 'Em revisão' },
+  { id: 'mat-3', title: 'Slides de Programação', type: 'PPT', duration: '20 min', status: 'Disponível' },
+  { id: 'mat-4', title: 'Atividade de Física', type: 'Exercício', duration: '15 min', status: 'Corrigir' }
+] as const;
+
+export const agenda = [
+  { id: 'ag-1', title: 'Revisão de Álgebra', time: 'Hoje • 18:00', type: 'Estudo' },
+  { id: 'ag-2', title: 'Quiz de Física', time: 'Amanhã • 09:30', type: 'Avaliação' },
+  { id: 'ag-3', title: 'Entrega de resumo', time: 'Quarta • 14:00', type: 'Entrega' },
+  { id: 'ag-4', title: 'Sprint de Programação', time: 'Quinta • 10:00', type: 'Trabalho' }
+] as const;
+
+export const reports = [
+  { label: 'Matemática', value: 84 },
+  { label: 'Física', value: 72 },
+  { label: 'Programação', value: 91 },
+  { label: 'História', value: 68 }
+] as const;

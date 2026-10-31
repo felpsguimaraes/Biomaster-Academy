@@ -7,6 +7,7 @@ import { authRouter } from './routes/auth.js';
 import { coursesRouter } from './routes/courses.js';
 import { subjectsRouter } from './routes/subjects.js';
 import { dashboardRouter } from './routes/dashboard.js';
+import { learningRouter } from './routes/learning.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/courses', coursesRouter);
 app.use('/api/subjects', subjectsRouter);
+app.use('/api/learning', learningRouter);
 
 app.listen(port, () => {
   console.log(`Biomaster API running on http://localhost:${port}`);

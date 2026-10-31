@@ -700,7 +700,7 @@ a{color:inherit}
 <script>
 (function(){
 var HOT='https://pay.hotmart.com/K106372869K?off=lg6zmcs9';
-var KEY='biomaster.panel.v1';
+var KEY='biomaster.panel.v2';
 var IC={
  inicio:'<path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>',
  curso:'<circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4z"/>',
@@ -716,33 +716,51 @@ function svg(n,extra){return '<svg viewBox="0 0 24 24" fill="'+(n==='play'?'curr
 function pinSvg(on){return '<svg viewBox="0 0 24 24" fill="'+(on?'currentColor':'none')+'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC.fijados+'</svg>'}
 var VIEWS=[['inicio','Inicio'],['curso','Mi curso'],['repaso','Repaso'],['preguntas','Preguntas'],['materiales','Materiales'],['fijados','Fijados']];
 var MODS=[
- {id:'m1',n:'01',t:'Fundamentos de Bioquímica',d:'Biomoléculas, agua, pH y bases para comprender el metabolismo.',l:11,i:'flask'},
- {id:'m2',n:'02',t:'Enzimas & Bioenergética',d:'Cinética enzimática, regulación y principios de energía celular.',l:10,i:'net'},
- {id:'m3',n:'03',t:'Metabolismo Integrado',d:'Carbohidratos, lípidos y aminoácidos conectados de forma visual.',l:0,i:'inf',locked:true}
+ {id:'m0',n:'00',tag:'EMPIEZA POR AQUÍ',t:'Bienvenida Biomáster',d:'Conoce la plataforma y cómo sacar el máximo provecho del curso.',i:'flask',L:[['¡Bienvenido, Biomáster! Empieza por aquí','01:09']]},
+ {id:'m1',n:'01',t:'Química básica',d:'Los cimientos químicos que necesitas antes de entrar a la bioquímica.',i:'flask',locked:true},
+ {id:'m2',n:'02',t:'Fundamentos de Bioquímica',d:'Biomoléculas, agua, pH y bases para comprender el metabolismo.',i:'net',locked:true},
+ {id:'m3',n:'03',t:'Aminoácidos y proteínas',d:'Estructura, propiedades y función de aminoácidos y proteínas.',i:'inf',locked:true},
+ {id:'m4',n:'04',t:'Carbohidratos y lípidos',d:'Estructura y función de los carbohidratos y los lípidos.',i:'flask',locked:true},
+ {id:'m5',n:'05',t:'Ácidos nucleicos y vitaminas',d:'Nucleótidos, ADN, ARN y el papel de las vitaminas.',i:'net',locked:true},
+ {id:'m6',n:'06',t:'Fundamentos del Metabolismo',d:'Introducción al metabolismo y regulación enzimática.',i:'inf',L:[['Introducción al Metabolismo I','11:32'],['Introducción al Metabolismo II','26:05'],['Regulación Enzimática I','23:56'],['Regulación Enzimática II','18:14']]},
+ {id:'m7',n:'07',t:'Trilogía de la respiración celular',d:'Ciclo de Krebs, cadena de transporte de electrones y fosforilación oxidativa.',i:'flask',locked:true},
+ {id:'m8',n:'08',t:'Escudo antioxidante y síntesis celular',d:'Defensa antioxidante y rutas de síntesis celular.',i:'net',locked:true},
+ {id:'m9',n:'09',t:'Gestión del nitrógeno y detoxificación celular',d:'Metabolismo de aminoácidos, ciclo de la urea y detoxificación.',i:'inf',locked:true},
+ {id:'m10',n:'10',t:'Eje insulina-glucagón',d:'Regulación hormonal del metabolismo energético.',i:'flask',locked:true},
+ {id:'m11',n:'11',t:'Reserva y producción de glucosa',d:'Glucólisis, glucogenogénesis, glucogenólisis y gluconeogénesis.',i:'net',locked:true},
+ {id:'m12',n:'12',t:'Metabolismo de lípidos I: Energía',d:'Obtención de energía a partir de los lípidos.',i:'inf',locked:true},
+ {id:'m13',n:'13',t:'Metabolismo de lípidos II: Síntesis',d:'Síntesis de ácidos grasos, triglicéridos y colesterol.',i:'flask',locked:true},
+ {id:'m14',n:'14',t:'Metabolismo del grupo hemo',d:'Síntesis y degradación del grupo hemo.',i:'net',locked:true},
+ {id:'m15',n:'15',t:'Integración metabólica',d:'Conecta todas las rutas en estados de ayuno, alimentación y ejercicio.',i:'inf',locked:true},
+ {id:'m16',n:'16',t:'Metabolismo del eritrocito',d:'Particularidades metabólicas del glóbulo rojo.',i:'flask',locked:true},
+ {id:'m17',n:'17',t:'Bioquímica clínica',d:'Interpretación clínica de los exámenes de laboratorio.',i:'net',locked:true}
 ];
 var MATS=[
- {id:'a1',k:'PDF',t:'Resumen · Fundamentos',d:'Módulo 01 · Material de apoyo'},
- {id:'a2',k:'PDF',t:'Enzimas · Mapa visual',d:'Módulo 02 · Esquema de repaso'},
+ {id:'a1',k:'PDF',t:'Resumen · Fundamentos',d:'Módulo 06 · Material de apoyo'},
+ {id:'a2',k:'PDF',t:'Regulación enzimática · Mapa visual',d:'Módulo 06 · Esquema de repaso'},
  {id:'a3',k:'MAP',t:'Metabolismo integrado',d:'Conexiones principales'}
 ];
+MODS.forEach(function(m){m.l=m.L?m.L.length:0});
 var TOTAL=MODS.reduce(function(a,m){return a+m.l},0);
-function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.done&&Array.isArray(d.pins)&&Array.isArray(d.notes))return d}catch(e){}return{done:{},pins:[],notes:[],open:'m1'}}
+function tagOf(m){return m.tag||('MÓDULO '+m.n)}
+function durOf(m,i){return m.L&&m.L[i-1]?m.L[i-1][1]:''}
+function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.done&&Array.isArray(d.pins)&&Array.isArray(d.notes))return d}catch(e){}return{done:{},pins:[],notes:[],open:'m0'}}
 var S=load();
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function safeUrl(u){u=String(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u))u='https://'+u;try{var x=new URL(u);return/^https?:$/.test(x.protocol)?x.href:''}catch(e){return''}}
 function doneIn(m){var c=0;for(var i=1;i<=m.l;i++)if(S.done[m.id+'-'+i])c++;return c}
 function doneAll(){return MODS.reduce(function(a,m){return a+doneIn(m)},0)}
-function lessonTitle(m,i){return (m.id==='m1'&&i===1)?'Introducción al metabolismo':'Aula '+String(i).padStart(2,'0')}
+function lessonTitle(m,i){return m.L&&m.L[i-1]?m.L[i-1][0]:'Aula '+String(i).padStart(2,'0')}
 function nextLesson(){for(var k=0;k<MODS.length;k++){var m=MODS[k];for(var i=1;i<=m.l;i++)if(!S.done[m.id+'-'+i])return{m:m,i:i}}return null}
 function isPin(id){return S.pins.indexOf(id)>-1}
 function toast(t){var e=document.getElementById('toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},2600)}
 function mod(m){var n=doneIn(m),pc=m.l?Math.round(n/m.l*100):0;
- return '<article class="mod"><button class="pinbtn'+(isPin(m.id)?' on':'')+'" data-pin="'+m.id+'" aria-label="'+(isPin(m.id)?'Quitar de Fijados':'Fijar')+' '+esc(m.t)+'">'+pinSvg(isPin(m.id))+'</button><div class="ico">'+svg(m.i)+'</div><span class="tag">MÓDULO '+m.n+'</span><h4>'+esc(m.t)+'</h4><p>'+esc(m.d)+'</p>'+
+ return '<article class="mod"><button class="pinbtn'+(isPin(m.id)?' on':'')+'" data-pin="'+m.id+'" aria-label="'+(isPin(m.id)?'Quitar de Fijados':'Fijar')+' '+esc(m.t)+'">'+pinSvg(isPin(m.id))+'</button><div class="ico">'+svg(m.i)+'</div><span class="tag">'+tagOf(m)+'</span><h4>'+esc(m.t)+'</h4><p>'+esc(m.d)+'</p>'+
  (m.locked?'<div class="locked">Próximamente</div>':'<div class="bar"><i style="width:'+pc+'%"></i></div><small>'+n+' de '+m.l+' aulas</small><button class="open" data-view="curso" data-open="'+m.id+'">Abrir módulo →</button>')+'</article>'}
 var R={
  inicio:function(){var nl=nextLesson(),da=doneAll(),pc=Math.round(da/TOTAL*100);
-  var next=nl?('<div class="lesson"><div class="thumb"><div class="play">'+svg('play')+'</div><span>'+(nl.m.id==='m1'&&nl.i===1?'12:48':'Aula '+nl.i)+'</span></div><div class="linfo"><span class="tag">MÓDULO '+nl.m.n+' · '+esc(nl.m.t.toUpperCase())+'</span><h4>'+esc(lessonTitle(nl.m,nl.i))+'</h4><p>'+(nl.m.id==='m1'&&nl.i===1?'Comprende cómo las células transforman energía y conectan las principales vías metabólicas.':esc(nl.m.d))+'</p><button class="act" style="margin:0" data-done="'+nl.m.id+'-'+nl.i+'">Marcar como vista</button></div></div>'):'<p class="empty" style="margin-top:14px">Terminaste todas las aulas disponibles. Los módulos nuevos aparecerán aquí.</p>';
+  var next=nl?('<div class="lesson"><div class="thumb"><div class="play">'+svg('play')+'</div><span>'+(durOf(nl.m,nl.i)||'Aula '+nl.i)+'</span></div><div class="linfo"><span class="tag">'+tagOf(nl.m)+' · '+esc(nl.m.t.toUpperCase())+'</span><h4>'+esc(lessonTitle(nl.m,nl.i))+'</h4><p>'+esc(nl.m.d)+'</p><button class="act" style="margin:0" data-done="'+nl.m.id+'-'+nl.i+'">Marcar como vista</button></div></div>'):'<p class="empty" style="margin-top:14px">Terminaste todas las aulas disponibles. Los módulos nuevos aparecerán aquí.</p>';
   return '<section class="hero"><div class="hero-copy"><span class="pill">TU ACADEMIA DE BIOQUÍMICA</span><h2>La Bioquímica no se memoriza.<br><em>¡Se domina!</em></h2><p>Aprende de forma visual, práctica y organizada con videoaulas, materiales de apoyo y repasos pensados para conectar cada concepto.</p><div class="actions"><button class="primary" data-view="curso">Continuar estudiando →</button><button class="secondary" data-view="fijados">Ver mis fijados</button></div></div><img src="assets/professora-boneca.png" alt=""></section>'+
   '<div class="two"><section class="card lift"><div class="sec-title"><div><span class="eyebrow">CONTINUAR DONDE LO DEJASTE</span><h3>Tu próxima clase</h3></div><button class="link" data-view="curso">Ver curso completo →</button></div>'+next+'</section>'+
   '<section class="card"><span class="eyebrow">MI PROGRESO</span><div class="ring" style="background:conic-gradient(var(--violet) '+pc+'%,var(--surface-2) 0)"><div><b>'+pc+'%</b><span>del curso</span></div></div><div class="stats"><div><b>'+da+'</b><span>Vistas</span></div><div><b>'+(TOTAL-da)+'</b><span>Restantes</span></div><div><b>'+MODS.length+'</b><span>Módulos</span></div></div></section></div>'+
@@ -750,8 +768,8 @@ var R={
   '<section class="tip"><figure><img src="assets/coruja.png" alt=""></figure><div><span>DICA DE LA PROFE</span><h3>No estudies rutas metabólicas como listas aisladas.</h3><p>Pregúntate siempre: ¿de dónde viene este sustrato, qué necesita la célula y hacia dónde irá después?</p></div></section>'},
  curso:function(){return '<section class="workhead"><span class="eyebrow">MI CURSO</span><h2>Bioquímica paso a paso</h2><p>Continúa desde donde paraste o elige un módulo. Marca cada aula como vista para ver tu progreso.</p></section><div class="courselist">'+MODS.map(function(m){
    var n=doneIn(m),pc=m.l?Math.round(n/m.l*100):0,open=S.open===m.id&&!m.locked;
-   var rows='';if(open){rows='<div class="lessons">';for(var i=1;i<=m.l;i++){var k=m.id+'-'+i,d=!!S.done[k];rows+='<div class="lrow'+(d?' done':'')+'"><input type="checkbox" id="c-'+k+'" data-chk="'+k+'"'+(d?' checked':'')+'><label for="c-'+k+'">'+esc(lessonTitle(m,i))+'</label>'+(m.id==='m1'&&i===1?'<small>12:48</small>':'')+'</div>'}rows+='</div>'}
-   return '<article class="cmod'+(open?' open':'')+(m.locked?' locked-m':'')+'"><button class="chead" '+(m.locked?'disabled':'data-toggle="'+m.id+'"')+' aria-expanded="'+open+'"><b>'+m.n+'</b><div><span class="tag">MÓDULO '+m.n+'</span><h3>'+esc(m.t)+'</h3><p>'+(m.locked?'Carbohidratos · lípidos · aminoácidos · Próximamente':m.l+' aulas · '+n+' vistas')+'</p>'+(m.locked?'':'<div class="bar"><i style="width:'+pc+'%"></i></div>')+'</div>'+(m.locked?'':'<span class="chev">'+svg('chev')+'</span>')+'</button>'+rows+'</article>'}).join('')+'</div>'},
+   var rows='';if(open){rows='<div class="lessons">';for(var i=1;i<=m.l;i++){var k=m.id+'-'+i,d=!!S.done[k];rows+='<div class="lrow'+(d?' done':'')+'"><input type="checkbox" id="c-'+k+'" data-chk="'+k+'"'+(d?' checked':'')+'><label for="c-'+k+'">'+esc(lessonTitle(m,i))+'</label>'+(durOf(m,i)?'<small>'+durOf(m,i)+'</small>':'')+'</div>'}rows+='</div>'}
+   return '<article class="cmod'+(open?' open':'')+(m.locked?' locked-m':'')+'"><button class="chead" '+(m.locked?'disabled':'data-toggle="'+m.id+'"')+' aria-expanded="'+open+'"><b>'+m.n+'</b><div><span class="tag">'+tagOf(m)+'</span><h3>'+esc(m.t)+'</h3><p>'+(m.locked?esc(m.d)+' · Próximamente':m.l+(m.l===1?' aula':' aulas')+' · '+n+(n===1?' vista':' vistas'))+'</p>'+(m.locked?'':'<div class="bar"><i style="width:'+pc+'%"></i></div>')+'</div>'+(m.locked?'':'<span class="chev">'+svg('chev')+'</span>')+'</button>'+rows+'</article>'}).join('')+'</div>'},
  repaso:function(){var c=[['repaso','Flashcards','Repasa conceptos clave de los módulos estudiados.','Empezar repaso'],['net','Rutas metabólicas','Conecta sustratos, productos y regulación.','Repasar rutas'],['flask','Repaso de 10 min','Una selección rápida basada en tu progreso.','Iniciar']];
   return '<section class="workhead"><span class="eyebrow">REPASO INTELIGENTE</span><h2>¿Qué quieres reforzar hoy?</h2><p>Sesiones cortas para mantener los conceptos activos.</p></section><div class="tool-grid">'+c.map(function(x){return '<article><div class="ico">'+svg(x[0])+'</div><h3>'+x[1]+'</h3><p>'+x[2]+'</p><button class="act" data-soon>'+x[3]+'</button></article>'}).join('')+'</div>'},
  preguntas:function(){return '<section class="workhead"><span class="eyebrow">BANCO DE PREGUNTAS</span><h2>Practica para comprobar que entendiste.</h2><p>Filtra por módulo y revisa tus errores.</p></section><div class="quiz"><div><span>SESIÓN RECOMENDADA</span><h3>10 preguntas · Fundamentos</h3><p>Tiempo estimado: 12 minutos</p></div><button class="act" data-soon>Comenzar →</button></div><div class="qstats"><article><b>—</b><span>Aciertos</span></article><article><b>0</b><span>Respondidas</span></article><article><b>0</b><span>Para revisar</span></article></div>'},

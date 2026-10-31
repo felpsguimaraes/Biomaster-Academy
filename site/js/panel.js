@@ -111,7 +111,7 @@ document.addEventListener('click',function(e){var t=e.target.closest('[data-go],
  if(t.dataset.play){player(t.dataset.play);return}
  if(t.dataset.go){var s=document.getElementById(t.dataset.go);if(s)s.scrollIntoView({behavior:'smooth'});return}
  if('enter' in t.dataset){go('inicio');return}
- if('leave' in t.dataset){if(location.hash){history.pushState('',document.title,location.pathname+location.search)}show();window.scrollTo(0,0);return}
+ if('leave' in t.dataset){if(location.hash){try{history.pushState('',document.title,location.pathname+location.search)}catch(x){location.hash=''}}show();window.scrollTo(0,0);return}
  if('soon' in t.dataset){toast('Este contenido se activa cuando se carga el curso.');return}
  if(t.dataset.pin){var id=t.dataset.pin,i=S.pins.indexOf(id);if(i>-1)S.pins.splice(i,1);else S.pins.push(id);save();paint();return}
  if(t.dataset.rn){S.notes.splice(+t.dataset.rn,1);save();paint();return}

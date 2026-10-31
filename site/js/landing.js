@@ -37,7 +37,7 @@ function placeWorld(sy,tm,mx,my){
  for(var i=0;i<nodes.length;i++){var o=nodes[i],z=((o.z+sy*.75)%DEPTH)-DEPTH+420;
   var op=clamp((z+DEPTH-420)/600,0,1)*clamp((420-z)/280,0,1);
   var px=o.x+mx*(z+DEPTH)*.02,py=o.y+my*(z+DEPTH)*.015;
-  o.el.style.opacity=(op*.85).toFixed(3);
+  o.el.style.opacity=(op*.6).toFixed(3);
   o.el.style.transform='translate3d('+px.toFixed(1)+'px,'+py.toFixed(1)+'px,'+z.toFixed(0)+'px) rotateZ('+(o.rz+tm*o.sp).toFixed(1)+'deg) rotateY('+((tm*o.sp*.6)%360).toFixed(1)+'deg)'}}
 build();var rt;addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(build,200)});
 

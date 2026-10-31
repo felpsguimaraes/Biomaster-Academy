@@ -148,7 +148,7 @@ function ok(o,sub){
 function manage(){
  if(API&&window.BioAuth&&!API.state.user){BioAuth.require(manage,'Inicia sesión para gestionar tu plan.');return}
  var s=load();
- if(API&&s&&s.real){API.req('POST','/api/portal',{}).then(function(d){location.href=d.url}).catch(function(e){alert(e.message)});return}
+ if(API&&s&&s.real){API.req('POST','/api/portal',{}).then(function(d){location.href=d.url}).catch(function(e){var f=document.createElement('div');f.className='bp-fail';f.setAttribute('role','alert');f.textContent=e.message;var m=document.querySelector('.bp-man');if(m)m.appendChild(f)});return}
  if(!s){var b=mount(SIM+'<div class="bp-man"><h3>Tu plan</h3><p>Aún no tienes un plan activo. Elige uno para desbloquear el curso completo y todas las actualizaciones.</p><button class="bp-go" id="m-pick">Elegir un plan</button></div>','one');$('#m-pick',b).onclick=function(){open()};return}
  var p=planOf(s.plan),on=s.status==='active',nr=(s.brand==='PIX'||s.brand==='QR');
  var b=mount(SIM+'<div class="bp-man"><div class="bp-brand" style="color:#1f2f4a"><img src="assets/logo-coruja.png" alt="">BIOMÁSTER ACADEMY</div><h3>Gestionar plan</h3>'+
@@ -159,7 +159,7 @@ function manage(){
  '<button class="bp-go ghost" id="m-reset" style="font-size:12px;height:36px">Reiniciar demostración (borrar plan simulado)</button></div>','one');
  var q=function(i){return $(i,b)};
  if(q('#m-chg'))q('#m-chg').onclick=function(){open({plan:s.plan})};
- if(q('#m-can'))q('#m-can').onclick=function(){if(confirm('¿Cancelar la suscripción? Mantendrás el acceso hasta '+fdate(s.renews)+'.')){if(API)API.req('POST','/api/sim/cancel',{}).then(API.refresh).then(manage);else{s.status='canceled';save(s);manage()}}};
+ if(q('#m-can'))q('#m-can').onclick=function(){if(!this.dataset.sure){this.dataset.sure='1';this.textContent='Confirmar: cancelar (acceso hasta '+fdate(s.renews)+')';return}if(API)API.req('POST','/api/sim/cancel',{}).then(API.refresh).then(manage);else{s.status='canceled';save(s);manage()}};
  if(q('#m-rea'))q('#m-rea').onclick=function(){if(API)API.req('POST','/api/sim/reactivate',{}).then(API.refresh).then(manage);else{s.status='active';save(s);manage()}};
  q('#m-reset').onclick=function(){if(API)API.req('POST','/api/sim/reset',{}).then(API.refresh).then(close);else{save(null);close()}}}
 

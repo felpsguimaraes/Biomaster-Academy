@@ -203,3 +203,11 @@
 
 .lp-curtog{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin:-10px 0 26px}.lp-curtog button{border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:7px 18px;font:700 13px var(--fd);color:var(--mut)}
 .lp-curtog button[aria-pressed=true]{background:var(--navy);color:#fff;border-color:var(--navy)}.lp-curtog span{font-size:13px;color:var(--mut);margin-left:6px}
+
+/* Legibilidad: paneles de vidrio detrás de los textos sobre el fondo molecular */
+.lp-pres-copy,.lp-tcopy,.lp-ring-copy,.lp-head{background:rgba(247,250,255,.80);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(219,229,245,.75);border-radius:26px;padding:26px 30px;box-shadow:0 18px 44px rgba(79,116,173,.10)}
+.lp-head{max-width:820px;padding:24px 32px}
+.lp-hero-copy{position:relative}
+.lp-final,.lp-plan,.lp-pain-grid article,.lp-path li,.lp-steps-grid li,.lp-faq details{position:relative}
+.lp-sec.lp-plans .lp-head{margin-bottom:30px}
+@media (max-width:640px){.lp-pres-copy,.lp-tcopy,.lp-ring-copy,.lp-head{padding:18px 18px;border-radius:20px}}

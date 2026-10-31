@@ -141,4 +141,33 @@ const ok = (m) => console.log(`  ✓ ${++n}. ${m}`);
   const real = cookieOf(await call(env2, 'POST', '/api/auth/login', { body: { email: 'prof2@x.com', password: 'verdadera123' } })); assert.equal((await call(env2, 'GET', '/api/admin/stats', { cookie: real })).status, 200); ok('tras verificar el correo (restablecer) la cuenta es administradora');
   globalThis.fetch = realFetch;
 }
+/* ---- Pedidos de pago (PIX/QR/Gs) ---- */
+{ const env = { ...baseEnv(), SIM_MODE: 'true' };
+  const reg = async (e) => cookieOf(await call(env, 'POST', '/api/auth/register', { body: { email: e, password: 'secreto123' } }));
+  const ana = await reg('ana@x.com'), otra = await reg('otra@x.com');
+  assert.equal((await call(env, 'POST', '/api/pay/start', { body: { plan: 'semestral', currency: 'BRL', method: 'pix' } })).status, 401); ok('pedido exige sesión');
+  for (const bad of [{ plan: 'oro', currency: 'BRL', method: 'pix' }, { plan: 'semestral', currency: 'EUR', method: 'pix' }, { plan: 'semestral', currency: 'PYG', method: 'pix' }])
+    assert.equal((await call(env, 'POST', '/api/pay/start', { cookie: ana, body: bad })).status, 400);
+  ok('plan, moneda o método inválidos → 400 (el servidor decide qué se puede cobrar)');
+  let r = await call(env, 'POST', '/api/pay/start', { cookie: ana, body: { plan: 'semestral', currency: 'BRL', method: 'pix', amount: 1 } }); const o1 = await j(r);
+  assert.equal(r.status, 200); assert.equal(o1.amount, 69990); assert.equal(o1.provider, 'sim'); ok('el monto lo fija el servidor (se ignora el monto del cliente): R$ 699,90');
+  assert.equal((await j(await call(env, 'GET', '/api/pay/order?id=' + o1.orderId, { cookie: ana }))).status, 'pending');
+  assert.equal((await call(env, 'GET', '/api/pay/order?id=' + o1.orderId, { cookie: otra })).status, 404); ok('un pedido ajeno no se puede consultar ni confirmar');
+  assert.equal((await call(env, 'POST', '/api/pay/sim/confirm', { cookie: otra, body: { orderId: o1.orderId } })).status, 404);
+  assert.equal((await j(await call(env, 'GET', '/api/me', { cookie: ana }))).access, false);
+  await call(env, 'POST', '/api/pay/sim/confirm', { cookie: ana, body: { orderId: o1.orderId } });
+  let me = await j(await call(env, 'GET', '/api/me', { cookie: ana })); assert.equal(me.access, true); assert.equal(me.subscription.brand, 'PIX'); assert.equal(me.subscription.plan, 'semestral');
+  const fin1 = me.subscription.renews; assert.ok(fin1 > Date.now() + 150 * 864e5 && fin1 < Date.now() + 200 * 864e5); ok('al confirmarse el pago se concede acceso por 6 meses (PIX, sin renovación automática)');
+  await call(env, 'POST', '/api/pay/sim/confirm', { cookie: ana, body: { orderId: o1.orderId } });
+  assert.equal((await j(await call(env, 'GET', '/api/me', { cookie: ana }))).subscription.renews, fin1); ok('confirmar dos veces no extiende el acceso (idempotente)');
+  const o2 = await j(await call(env, 'POST', '/api/pay/start', { cookie: ana, body: { plan: 'mensual', currency: 'PYG', method: 'qr' } })); assert.equal(o2.amount, 149000);
+  await call(env, 'POST', '/api/pay/sim/confirm', { cookie: ana, body: { orderId: o2.orderId } });
+  me = await j(await call(env, 'GET', '/api/me', { cookie: ana })); assert.ok(me.subscription.renews > fin1 + 25 * 864e5); assert.equal(me.subscription.brand, 'QR'); ok('renovar antes de vencer suma el nuevo período al final del actual (QR, Gs 149.000)');
+  assert.deepEqual((await j(await call(env, 'GET', '/api/pay/options'))).methods, { USD: ['card'], PYG: ['card', 'qr'], BRL: ['pix', 'card'] }); ok('opciones de pago disponibles por moneda');
+  assert.equal((await call(env, 'POST', '/api/pay/webhook/pagopar', { body: {}, csrf: false })).status, 503); assert.equal((await call(env, 'POST', '/api/pay/webhook/otro', { body: {}, csrf: false })).status, 404); ok('webhook de proveedor sin configurar → 503; proveedor desconocido → 404');
+  const prod = { ...baseEnv(), SIM_MODE: 'false' }; const pc = cookieOf(await call(prod, 'POST', '/api/auth/register', { body: { email: 'p@x.com', password: 'secreto123' } }));
+  assert.equal((await call(prod, 'POST', '/api/pay/start', { cookie: pc, body: { plan: 'mensual', currency: 'PYG', method: 'qr' } })).status, 503); ok('sin Pagopar configurado y fuera de demostración no se puede cobrar (503)');
+  const withKeys = { ...prod, PAGOPAR_PUBLIC_KEY: 'pub', PAGOPAR_PRIVATE_KEY: 'priv' };
+  assert.equal((await call(withKeys, 'POST', '/api/pay/start', { cookie: pc, body: { plan: 'mensual', currency: 'PYG', method: 'qr' } })).status, 501); ok('con claves de Pagopar, el esqueleto avisa que falta completar según su documentación (501)');
+}
 console.log(`\n${n} pruebas OK`);

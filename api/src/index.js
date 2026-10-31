@@ -1,6 +1,7 @@
 /* Biomáster Academy · API (Cloudflare Worker + D1).
    Auth con sesión por cookie HttpOnly, suscripción vía Stripe (Checkout + Customer Portal + webhook),
    progreso del alumno y contenido de aulas protegido por suscripción. */
+import { makePay } from './pay.js';
 import { sendEmail, welcomeEmail, resetEmail } from './mail.js';
 import { json, HttpError, now, randomHex, sha256Hex, hashPassword, timingSafeEqual, stripe, verifyStripeSignature } from './lib.js';
 
@@ -96,7 +97,10 @@ const isAdmin = (env, u) => !!u.email_verified && (env.ADMIN_EMAILS || '').toLow
 async function requireAdmin(req, env) { const u = await requireUser(req, env); if (!isAdmin(env, u)) throw new HttpError(403, 'Sin permiso.'); return u; }
 const MONTHLY_CENTS = { mensual: 2590, semestral: 2165, anual: 1833 }; // equivalente mensual (estimado), igual al sitio
 
+function assertSim(env) { if (env.SIM_MODE !== 'true' || env.STRIPE_SECRET_KEY) throw new HttpError(404, 'No encontrado.'); }
+const pay = makePay({ requireUser, getSub, saveSub, first, run, body, assertSim });
 const routes = {
+  ...pay.routes,
   'GET /api/health': async () => json({ ok: true }),
   'GET /api/config': async (req, env) => json({ stripe: !!env.STRIPE_SECRET_KEY, sim: env.SIM_MODE === 'true' && !env.STRIPE_SECRET_KEY, plans: PLANS }),
 
@@ -279,6 +283,7 @@ export default {
       if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
       let res;
       if (url.pathname === '/api/stripe/webhook' && req.method === 'POST') res = await webhook(req, env);
+      else if (url.pathname.startsWith('/api/pay/webhook/') && req.method === 'POST') res = await pay.webhook(req, env, url.pathname.split('/').pop());
       else {
         const h = routes[`${req.method} ${url.pathname}`];
         if (!h) throw new HttpError(404, 'No encontrado.');

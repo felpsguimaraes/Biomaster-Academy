@@ -46,3 +46,19 @@ Los sitios oficiales no pudieron consultarse desde el entorno de trabajo; el est
 ### Qué pasa en la plataforma según la respuesta
 - **Aceptan persona física:** se activa la ruta barata tal como está en `ROUTES`.
 - **Exigen empresa:** o se constituye la EAS (ver `proposta/flujograma-decision.pdf`, rama `claude/proposta-comercial`), o se mantiene todo en Hotmart (modelo híbrido) hasta que haya volumen.
+
+## Integración con Pagopar: API Pública (no plugins)
+Pagopar ofrece **plugins listos** (para plataformas conocidas) y **API Pública** (para sitios hechos a medida). Biomáster es a medida → **API Pública**.
+
+**Lo que ya está construido (provider-agnóstico, `api/src/pay.js`):**
+- `POST /api/pay/start {plan,currency,method}` crea un **pedido**; el **monto lo fija el servidor** (tabla `PRICES`), nunca el navegador.
+- El proveedor cobra y avisa por **webhook** (`POST /api/pay/webhook/{proveedor}`); recién entonces se concede el acceso (pago por período fijo, sin renovación automática; renovar antes de vencer suma el período al final del actual).
+- Idempotente (confirmar dos veces no extiende), con pedidos por usuario (`orders`), consulta `GET /api/pay/order?id=…` y modo demostración (`sim`).
+- `api/src/providers/pagopar.js` es un **esqueleto** con el contrato (`start`, `parseWebhook`); está deshabilitado hasta tener `PAGOPAR_PUBLIC_KEY` y `PAGOPAR_PRIVATE_KEY`.
+
+**Lo que falta, y requiere la documentación oficial y una cuenta de comercio:**
+1. Completar `start()`: crear el pedido en la API de Pagopar, guardar `provider_ref` en `orders` y devolver `{type:'redirect',url}` o `{type:'qr',code}`.
+2. Completar `parseWebhook()`: **verificar la autenticidad** del aviso (firma/hash que defina Pagopar) y devolver `{orderRef, paid}`.
+3. Registrar la URL del webhook en el panel de Pagopar (HTTPS) y probar con pagos reales de bajo monto.
+4. Confirmar si ofrecen **cobro recurrente con tarjeta** para persona física (si no, tarjeta en Gs también sería pago por período).
+5. Guardar claves como secretos: `wrangler secret put PAGOPAR_PUBLIC_KEY / PAGOPAR_PRIVATE_KEY`.

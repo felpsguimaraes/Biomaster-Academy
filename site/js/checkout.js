@@ -72,14 +72,27 @@ function openForm(opt){opt=opt||{};var plan=planOf(opt.plan||'mensual'),cur=plan
   var fin=function(ox,oy){return '<rect x="'+ox+'" y="'+oy+'" width="7" height="7"/><rect x="'+(ox+1)+'" y="'+(oy+1)+'" width="5" height="5" fill="#fff"/><rect x="'+(ox+2)+'" y="'+(oy+2)+'" width="3" height="3"/>'};
   return '<svg viewBox="-1 -1 27 27" class="bp-qr" role="img" aria-label="Código de pago de demostración (no escaneable)"><rect x="-1" y="-1" width="27" height="27" fill="#fff"/>'+cells+fin(0,0)+fin(n-7,0)+fin(0,n-7)+'</svg>'}
  function bindQr(){var f=$('#bp-qrform',box);
-  f.addEventListener('submit',function(e){e.preventDefault();var ok=true,em=f.email,nm=f.name;
-   [[em,/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value.trim())?'':'Escribe un correo válido.'],[nm,nm.value.trim().length>=3?'':'Escribe tu nombre.']].forEach(function(c){var w=c[0].closest('.bp-f');w.classList.toggle('err',!!c[1]);w.querySelector('.bp-e').textContent=c[1];if(c[1])ok=false});
-   if(!ok)return;var b=$('#bp-qrgo',box);b.disabled=true;b.innerHTML='<span class="bp-spin"></span>Generando código…';
-   setTimeout(function(){var code='00020126'+Math.random().toString().slice(2,14)+'BR.GOV.BCB.PIX-DEMO-'+cur.id.toUpperCase()+'-'+Date.now().toString(36);
-    f.hidden=true;$('#bp-qrview',box).innerHTML='<div class="bp-qrbox">'+qrSvg(code)+'<div><b>'+fp(cur)+'</b><small>Vence en <span id="bp-cd">10:00</span></small><button type="button" class="bp-go ghost" id="bp-copy">Copiar código</button><code class="bp-code">'+esc(code)+'</code></div></div><button type="button" class="bp-go" id="bp-paid">Simular pago recibido</button><p class="bp-note">Demostración: en producción, el pago se confirma automáticamente cuando el banco lo notifica.</p>';
-    var left=600,iv=setInterval(function(){left--;var c=$('#bp-cd',box);if(!c){clearInterval(iv);return}c.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left<=0)clearInterval(iv)},1000);
-    $('#bp-copy',box).onclick=function(){try{navigator.clipboard.writeText(code)}catch(x){}this.textContent='¡Copiado!'};
-    $('#bp-paid',box).onclick=function(){clearInterval(iv);this.disabled=true;this.innerHTML='<span class="bp-spin"></span>Confirmando…';setTimeout(function(){done({plan:cur,email:em.value.trim(),name:nm.value.trim(),digits:'',method:method,box:box})},900)}},900)})}
+  function showCode(o,code,orderId,url){
+   f.hidden=true;var view=$('#bp-qrview',box);
+   view.innerHTML='<div class="bp-qrbox">'+qrSvg(code)+'<div><b>'+fp(cur)+'</b><small>Vence en <span id="bp-cd">10:00</span></small><button type="button" class="bp-go ghost" id="bp-copy">Copiar código</button><code class="bp-code">'+esc(code)+'</code></div></div>'+(url?'<a class="bp-go" style="text-decoration:none" href="'+esc(url)+'" target="_blank" rel="noopener">Abrir en mi app de pago</a>':'')+(o.sim?'<button type="button" class="bp-go" id="bp-paid">Simular pago recibido</button><p class="bp-note">Demostración: en producción, el pago se confirma automáticamente cuando el banco lo notifica.</p>':'<p class="bp-note" id="bp-wait">Esperando la confirmación del pago…</p>');
+   var left=600,iv=setInterval(function(){left--;var c=$('#bp-cd',box);if(!c){clearInterval(iv);return}c.textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left<=0)clearInterval(iv)},1000),poll=null;
+   $('#bp-copy',box).onclick=function(){try{navigator.clipboard.writeText(code)}catch(x){}this.textContent='¡Copiado!'};
+   function paid(){clearInterval(iv);clearInterval(poll);if(API)API.refresh().then(function(){ok(o.ctx,load())});else done(o.ctx)}
+   if(API&&orderId){poll=setInterval(function(){API.req('GET','/api/pay/order?id='+orderId).then(function(d){if(d.status==='paid')paid()}).catch(function(){})},3000)}
+   var pb=$('#bp-paid',box);if(pb)pb.onclick=function(){this.disabled=true;this.innerHTML='<span class="bp-spin"></span>Confirmando…';
+    if(API&&orderId)API.req('POST','/api/pay/sim/confirm',{orderId:orderId}).then(paid).catch(function(e){pb.disabled=false;pb.textContent='Simular pago recibido';$('#bp-fail',box).innerHTML='<div class="bp-fail" role="alert">'+esc(e.message)+'</div>'});
+    else setTimeout(paid,900)}}
+  f.addEventListener('submit',function(e){e.preventDefault();var ok_=true,em=f.email,nm=f.name;
+   [[em,/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em.value.trim())?'':'Escribe un correo válido.'],[nm,nm.value.trim().length>=3?'':'Escribe tu nombre.']].forEach(function(c){var w=c[0].closest('.bp-f');w.classList.toggle('err',!!c[1]);w.querySelector('.bp-e').textContent=c[1];if(c[1])ok_=false});
+   if(!ok_)return;var b=$('#bp-qrgo',box);b.disabled=true;b.innerHTML='<span class="bp-spin"></span>Generando código…';$('#bp-fail',box).innerHTML='';
+   var ctx={plan:cur,email:em.value.trim(),name:nm.value.trim(),digits:'',method:method,box:box};
+   if(API){
+    API.req('POST','/api/pay/start',{plan:cur.id,currency:CURSEL,method:method}).then(function(d){
+     if(d.action&&d.action.type==='redirect'){location.href=d.action.url;return}
+     var code=(d.action&&d.action.code)||('00020126'+d.orderId.replace(/-/g,'').slice(0,12)+'BR.GOV.BCB.PIX-DEMO-'+cur.id.toUpperCase());
+     showCode({sim:d.provider==='sim',ctx:ctx},code,d.orderId,d.action&&d.action.url)})
+    .catch(function(err){b.disabled=false;refresh();$('#bp-fail',box).innerHTML='<div class="bp-fail" role="alert">'+esc(err.message)+'</div>'})}
+   else setTimeout(function(){showCode({sim:true,ctx:ctx},'00020126'+Math.random().toString().slice(2,14)+'BR.GOV.BCB.PIX-DEMO-'+cur.id.toUpperCase()+'-'+Date.now().toString(36),null)},900)})}
  function bindCard(){
   var num=$('#bp-num',box),exp=$('#bp-exp',box),cvc=$('#bp-cvc',box);
  num.addEventListener('input',function(){var d=num.value.replace(/\D/g,'').slice(0,19);num.value=d.replace(/(.{4})/g,'$1 ').trim();$('#bp-br',box).textContent=brand(d)});

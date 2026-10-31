@@ -26,3 +26,10 @@ CREATE TABLE IF NOT EXISTS throttle(key TEXT PRIMARY KEY, count INTEGER NOT NULL
 CREATE TABLE IF NOT EXISTS password_resets(
   token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   expires_at INTEGER NOT NULL, used INTEGER NOT NULL DEFAULT 0);
+CREATE TABLE IF NOT EXISTS orders(
+  id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  plan TEXT NOT NULL, currency TEXT NOT NULL, method TEXT NOT NULL, provider TEXT NOT NULL,
+  amount INTEGER NOT NULL, status TEXT NOT NULL DEFAULT 'pending', provider_ref TEXT,
+  created_at INTEGER NOT NULL, paid_at INTEGER);
+CREATE INDEX IF NOT EXISTS orders_user ON orders(user_id);
+CREATE INDEX IF NOT EXISTS orders_ref ON orders(provider, provider_ref);

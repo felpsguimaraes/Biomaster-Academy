@@ -26,11 +26,26 @@ function tagOf(m){return m.tag||('MÓDULO '+m.n)}
 function durOf(m,i){return m.L&&m.L[i-1]?m.L[i-1][1]:''}
 function load(){try{var d=JSON.parse(localStorage.getItem(KEY));if(d&&d.done&&Array.isArray(d.pins)&&Array.isArray(d.notes))return d}catch(e){}return{done:{},pins:[],notes:[],open:'m0'}}
 var S=load();
-function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+var syncT;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+ if(window.BioAPI&&BioAPI.state.on&&BioAPI.state.user){clearTimeout(syncT);syncT=setTimeout(function(){BioAPI.req('PUT','/api/progress',{progress:S}).catch(function(){})},800)}}
+var pulled=false;
+function pull(){if(pulled||!window.BioAPI||!BioAPI.state.on||!BioAPI.state.user)return;pulled=true;
+ BioAPI.req('GET','/api/progress').then(function(d){
+  if(d.progress){S=Object.assign({done:{},pins:[],notes:[],open:'m0'},d.progress);if(!S.open)S.open='m0';try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}if(!document.getElementById('app').hidden)paint()}
+  else save()}).catch(function(){pulled=false})}
+document.addEventListener('bioapi:change',function(){pull();planBox();var a=document.getElementById('app');if(a&&!a.hidden)paint()});
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function safeUrl(u){u=String(u||'').trim();if(!u)return'';if(!/^https?:\/\//i.test(u))u='https://'+u;try{var x=new URL(u);return/^https?:$/.test(x.protocol)?x.href:''}catch(e){return''}}
 function doneIn(m){var c=0;for(var i=1;i<=m.l;i++)if(S.done[m.id+'-'+i])c++;return c}
 function doneAll(){return MODS.reduce(function(a,m){return a+doneIn(m)},0)}
+function lessonBtn(k){var A=window.BioAPI;if(!A||!A.state.on)return'';var l=A.state.lessons[k];if(!l)return'';
+ return l.video?'<button class="lplay" data-play="'+k+'">▶ Ver aula</button>':(l.locked?'<button class="lplay lock" data-pay="mensual">🔒 Con plan</button>':'')}
+function player(k){var l=BioAPI.state.lessons[k];if(!l||!l.video)return;var u=l.video,el=document.createElement('div');el.className='bp-ov';el.setAttribute('role','dialog');el.setAttribute('aria-modal','true');el.setAttribute('aria-label',l.title);
+ var media=/\.(mp4|webm)(\?|$)/i.test(u)?'<video controls controlsList="nodownload" playsinline autoplay src="'+esc(u)+'"></video>':'<iframe src="'+esc(u)+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>';
+ el.innerHTML='<div class="bp one vid"><button class="bp-x" aria-label="Cerrar">×</button><div class="vwrap">'+media+'</div><div style="padding:14px 20px"><b>'+esc(l.title)+'</b></div></div>';
+ function close(){el.remove();document.body.style.overflow='';document.removeEventListener('keydown',kd)}function kd(e){if(e.key==='Escape')close()}
+ el.addEventListener('mousedown',function(e){if(e.target===el)close()});el.querySelector('.bp-x').onclick=close;document.addEventListener('keydown',kd);document.body.appendChild(el);document.body.style.overflow='hidden';el.querySelector('.bp-x').focus()}
 function lessonTitle(m,i){return m.L&&m.L[i-1]?m.L[i-1][0]:'Aula '+String(i).padStart(2,'0')}
 function nextLesson(){for(var k=0;k<MODS.length;k++){var m=MODS[k];for(var i=1;i<=m.l;i++)if(!S.done[m.id+'-'+i])return{m:m,i:i}}return null}
 function isPin(id){return S.pins.indexOf(id)>-1}
@@ -48,7 +63,7 @@ var R={
   '<section class="tip"><figure><img src="assets/coruja.png" alt=""></figure><div><span>DICA DE LA PROFE</span><h3>No estudies rutas metabólicas como listas aisladas.</h3><p>Pregúntate siempre: ¿de dónde viene este sustrato, qué necesita la célula y hacia dónde irá después?</p></div></section>'},
  curso:function(){return '<section class="workhead"><span class="eyebrow">MI CURSO</span><h2>Bioquímica paso a paso</h2><p>Continúa desde donde paraste o elige un módulo. Marca cada aula como vista para ver tu progreso.</p></section><div class="courselist">'+MODS.map(function(m){
    var n=doneIn(m),pc=m.l?Math.round(n/m.l*100):0,open=S.open===m.id&&!m.locked;
-   var rows='';if(open){rows='<div class="lessons">';for(var i=1;i<=m.l;i++){var k=m.id+'-'+i,d=!!S.done[k];rows+='<div class="lrow'+(d?' done':'')+'"><input type="checkbox" id="c-'+k+'" data-chk="'+k+'"'+(d?' checked':'')+'><label for="c-'+k+'">'+esc(lessonTitle(m,i))+'</label>'+(durOf(m,i)?'<small>'+durOf(m,i)+'</small>':'')+'</div>'}rows+='</div>'}
+   var rows='';if(open){rows='<div class="lessons">';for(var i=1;i<=m.l;i++){var k=m.id+'-'+i,d=!!S.done[k];rows+='<div class="lrow'+(d?' done':'')+'"><input type="checkbox" id="c-'+k+'" data-chk="'+k+'"'+(d?' checked':'')+'><label for="c-'+k+'">'+esc(lessonTitle(m,i))+'</label>'+(durOf(m,i)?'<small>'+durOf(m,i)+'</small>':'')+lessonBtn(k)+'</div>'}rows+='</div>'}
    return '<article class="cmod'+(open?' open':'')+(m.locked?' locked-m':'')+'"><button class="chead" '+(m.locked?'disabled':'data-toggle="'+m.id+'"')+' aria-expanded="'+open+'"><b>'+m.n+'</b><div><span class="tag">'+tagOf(m)+'</span><h3>'+esc(m.t)+'</h3><p>'+(m.locked?esc(m.d)+' · Próximamente':m.l+(m.l===1?' aula':' aulas')+' · '+n+(n===1?' vista':' vistas'))+'</p>'+(m.locked?'':'<div class="bar"><i style="width:'+pc+'%"></i></div>')+'</div>'+(m.locked?'':'<span class="chev">'+svg('chev')+'</span>')+'</button>'+rows+'</article>'}).join('')+'</div>'},
  repaso:function(){var c=[['repaso','Flashcards','Repasa conceptos clave de los módulos estudiados.','Empezar repaso'],['net','Rutas metabólicas','Conecta sustratos, productos y regulación.','Repasar rutas'],['flask','Repaso de 10 min','Una selección rápida basada en tu progreso.','Iniciar']];
   return '<section class="workhead"><span class="eyebrow">REPASO INTELIGENTE</span><h2>¿Qué quieres reforzar hoy?</h2><p>Sesiones cortas para mantener los conceptos activos.</p></section><div class="tool-grid">'+c.map(function(x){return '<article><div class="ico">'+svg(x[0])+'</div><h3>'+x[1]+'</h3><p>'+x[2]+'</p><button class="act" data-soon>'+x[3]+'</button></article>'}).join('')+'</div>'},
@@ -63,7 +78,10 @@ var R={
   return h}
 };
 
-function planBox(){var s=window.BioPay&&BioPay.sub(),el=document.getElementById('planbox'),f=document.getElementById('pfoot-plan');if(!el)return;
+function userBox(){var u=window.BioAPI&&BioAPI.state.on&&BioAPI.state.user,av=document.getElementById('meAv');if(!av)return;
+ if(!u){return}
+ var nm=u.name||u.email.split('@')[0];av.textContent=nm.slice(0,2).toUpperCase();document.getElementById('meName').textContent=nm;document.getElementById('meSub').innerHTML='<button class="linkbtn" data-logout>Cerrar sesión</button>'}
+function planBox(){userBox();var s=window.BioPay&&BioPay.sub(),el=document.getElementById('planbox'),f=document.getElementById('pfoot-plan');if(!el)return;
  if(!s){el.innerHTML='<b>Vista de demostración</b><span>Elige un plan para activar tu acceso</span><button data-pay="mensual">Elegir plan</button>';f.textContent='Sin plan activo';return}
  var p=BioPay.plan(s.plan),on=s.status==='active';
  el.innerHTML='<b>Plan '+esc(p.name)+'</b><span>'+BIO.money(p.price)+' · '+(on?'renueva el '+new Date(s.renews).toLocaleDateString('es',{day:'numeric',month:'short'}):'cancelado')+'</span><button data-manage>Gestionar plan</button>';
@@ -76,11 +94,17 @@ function paint(){document.getElementById('snav').innerHTML=navHtml();document.ge
  document.getElementById('page').innerHTML=R[cur]();
  var f=document.getElementById('fx-form');if(f)f.onsubmit=function(e){e.preventDefault();var t=f.t.value.trim();if(!t)return;S.notes.unshift({t:t,u:f.u.value.trim()});save();paint()}}
 function show(){var h=(location.hash||'').replace('#','');var inApp=VIEWS.some(function(v){return v[0]===h});
+ if(inApp&&window.BioAPI&&BioAPI.state.on){
+  if(!BioAPI.state.ready){BioAPI.refresh().then(show);return}
+  if(!BioAPI.state.user){history.replaceState(null,'',location.pathname+location.search);inApp=false;
+   document.getElementById('landing').hidden=false;document.getElementById('app').hidden=true;
+   BioAuth.require(function(){go(h)},'Crea tu cuenta gratis para entrar al panel y guardar tu progreso.');return}}
  document.getElementById('landing').hidden=inApp;document.getElementById('app').hidden=!inApp;
  if(inApp){cur=h;paint();planBox();window.scrollTo(0,0)}}
 function go(v){if(location.hash==='#'+v)show();else location.hash=v}
 window.addEventListener('hashchange',show);
-document.addEventListener('click',function(e){var t=e.target.closest('[data-go],[data-enter],[data-leave],[data-view],[data-pin],[data-rn],[data-toggle],[data-done],[data-soon]');if(!t)return;
+document.addEventListener('click',function(e){var t=e.target.closest('[data-go],[data-enter],[data-leave],[data-view],[data-pin],[data-rn],[data-toggle],[data-done],[data-soon],[data-play]');if(!t)return;
+ if(t.dataset.play){player(t.dataset.play);return}
  if(t.dataset.go){var s=document.getElementById(t.dataset.go);if(s)s.scrollIntoView({behavior:'smooth'});return}
  if('enter' in t.dataset){go('inicio');return}
  if('leave' in t.dataset){if(location.hash){history.pushState('',document.title,location.pathname+location.search)}show();window.scrollTo(0,0);return}

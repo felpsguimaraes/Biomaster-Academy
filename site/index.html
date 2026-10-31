@@ -13,7 +13,7 @@
   <header class="lp-nav" id="lpNav">
     <button class="lp-logo" data-go="top" aria-label="Biomáster Academy, ir al inicio"><img src="assets/logo-coruja.png" alt=""><span><b>BIOMÁSTER</b><small>ACADEMY</small></span></button>
     <nav aria-label="Secciones"><button data-go="metodo">Método</button><button data-go="temario">Temario</button><button data-go="panel">Panel</button><button data-go="profesora">Profesora</button><button data-go="planes">Planes</button></nav>
-    <div class="lp-nav-cta"><button class="lp-btn ghost sm" data-enter>Ver demo</button><button class="lp-btn gold sm" data-pay="mensual">Empezar</button></div>
+    <div class="lp-nav-cta"><button class="lp-btn ghost sm" id="lpLogin" data-auth="login" hidden>Entrar</button><button class="lp-btn ghost sm" data-enter>Ver demo</button><button class="lp-btn gold sm" data-pay="mensual">Empezar</button></div>
   </header>
   <main class="lp-main" id="top">
     <section class="lp-hero">
@@ -144,7 +144,7 @@
     <span class="slabel">TU ESTUDIO</span>
     <nav class="snav" id="snav" aria-label="Navegación principal"></nav>
     <div class="plan" id="planbox"></div>
-    <div class="me"><div class="avatar">AB</div><div><b>Alumno Biomáster</b><small>Mi perfil</small></div></div>
+    <div class="me"><div class="avatar" id="meAv">AB</div><div><b id="meName">Alumno Biomáster</b><small id="meSub">Mi perfil</small></div></div>
   </aside>
   <div class="content">
     <header class="topbar">
@@ -163,6 +163,9 @@
 </div>
 <div class="toast" id="toast" hidden></div>
 <script src="js/course-data.js"></script>
+<script src="js/config.js"></script>
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/checkout.js"></script>
 <script src="js/panel.js"></script>
 <script src="js/landing.js"></script>

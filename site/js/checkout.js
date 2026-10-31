@@ -5,8 +5,13 @@
 (function(){
 var KEY='biomaster.sub.v1', P=BIO.PLANS, $=function(s,r){return (r||document).querySelector(s)};
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
-function load(){try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}}
-function save(s){try{if(s)localStorage.setItem(KEY,JSON.stringify(s));else localStorage.removeItem(KEY)}catch(e){}document.dispatchEvent(new CustomEvent('biopay:change'))}
+var API=window.BioAPI&&BioAPI.state.on?BioAPI:null;
+function load(){
+ if(API){var s=API.state.sub;if(!s)return null;
+  return{plan:s.plan,email:API.state.user&&API.state.user.email||'',brand:s.brand||'TARJETA',last4:s.last4||'••••',start:s.start||new Date(s.renews||Date.now()).toISOString(),renews:new Date(s.renews||Date.now()).toISOString(),
+   status:(s.status==='active'||s.status==='trialing')&&!s.cancelAtPeriodEnd?'active':'canceled',real:!s.simulated}}
+ try{return JSON.parse(localStorage.getItem(KEY))}catch(e){return null}}
+function save(s){if(API){document.dispatchEvent(new CustomEvent('biopay:change'));return}try{if(s)localStorage.setItem(KEY,JSON.stringify(s));else localStorage.removeItem(KEY)}catch(e){}document.dispatchEvent(new CustomEvent('biopay:change'))}
 function planOf(id){return P.filter(function(p){return p.id===id})[0]||P[0]}
 function addMonths(d,m){var x=new Date(d);x.setMonth(x.getMonth()+m);return x}
 function fdate(d){return new Date(d).toLocaleDateString('es',{day:'numeric',month:'long',year:'numeric'})}
@@ -20,7 +25,10 @@ function mount(html,cls){lastFocus=document.activeElement;if(!ov){ov=document.cr
  ov.innerHTML='<div class="bp '+(cls||'')+'">'+html+'</div>';var x=ov.querySelector('.bp-x');if(x)x.onclick=close;return ov.firstChild}
 var SIM='<div class="bp-sim">MODO SIMULADOR · no se cobra nada y no se guarda tu tarjeta. Es una demostración del flujo de pago.</div><button class="bp-x" aria-label="Cerrar">×</button>';
 
-function open(opt){opt=opt||{};var plan=planOf(opt.plan||'mensual');
+function open(opt){opt=opt||{};
+ if(API&&window.BioAuth){BioAuth.require(function(){openForm(opt)},'Crea tu cuenta gratis para elegir tu plan y guardar tu progreso.');return}
+ openForm(opt)}
+function openForm(opt){opt=opt||{};var plan=planOf(opt.plan||'mensual');var stripeMode=!!(API&&API.state.cfg.stripe),noPay=!!(API&&!API.state.cfg.stripe&&!API.state.cfg.sim);
  var html=SIM+'<aside class="bp-sum"><div class="bp-brand"><img src="assets/logo-coruja.png" alt="">BIOMÁSTER ACADEMY</div><h3>Elige tu plan</h3>'+
  '<fieldset class="bp-plans"><legend>Plan</legend>'+P.map(function(p){return '<label class="bp-plan"><input type="radio" name="plan" value="'+p.id+'"'+(p.id===plan.id?' checked':'')+'><span><b>'+esc(p.name)+(p.badge?'<span class="bp-tag">'+p.badge+'</span>':'')+'</b><small>'+esc(p.note)+'</small></span><em>'+BIO.money(p.price)+'<i>'+(p.months>1?BIO.money(p.perMonth)+' / mes':'por mes')+'</i></em></label>'}).join('')+'</fieldset>'+
  '<div class="bp-total" id="bp-tot"></div><p class="bp-guar"><b>7 días de garantía.</b> Si el contenido o la metodología no cumplen tus expectativas, pides el reembolso del 100%.</p></aside>'+
@@ -33,8 +41,15 @@ function open(opt){opt=opt||{};var plan=planOf(opt.plan||'mensual');
  '<div class="bp-hint">Tarjetas de prueba: <code data-fill="4242424242424242">4242 4242 4242 4242</code> aprobada · <code data-fill="4000000000000002">4000 0000 0000 0002</code> rechazada · <code data-fill="4000002500003155">4000 0025 0000 3155</code> pide autenticación 3D Secure. Cualquier fecha futura y CVC.</div>'+
  '<div class="bp-secure">🔒 Simulación · powered by <b>Stripe</b> (demo)</div></section>';
  var box=mount(html);var cur=plan;
- function refresh(){var t=$('#bp-tot',box);t.innerHTML='<div><span>'+esc(cur.name)+'</span><span>'+BIO.money(cur.price)+'</span></div>'+(cur.save>0?'<div><span>Ahorro frente al mensual</span><span>−'+cur.save+'%</span></div>':'')+'<div class="t"><span>Total hoy</span><span>'+BIO.money(cur.price)+'</span></div><div><span>Próxima renovación</span><span>'+fdate(addMonths(new Date(),cur.months))+'</span></div>';$('#bp-submit',box).innerHTML='Pagar '+BIO.money(cur.price)}
+ if(stripeMode||noPay){var payBox=$('.bp-pay',box);
+  payBox.innerHTML=noPay?'<h3>Pagos no disponibles</h3><p>Los pagos todavía no están activos. Vuelve pronto o escríbenos para reservar tu lugar.</p>'
+   :'<h3>Pago seguro</h3><p style="color:#56637f">Serás redirigido a <b>Stripe</b> para pagar con tarjeta. Biomáster nunca ve ni guarda los datos de tu tarjeta.</p><div id="bp-fail"></div><button class="bp-go" id="bp-stripe"></button><div class="bp-secure">🔒 Pago procesado por Stripe</div>';
+  var sb=$('#bp-stripe',box);if(sb)sb.onclick=function(){sb.disabled=true;sb.innerHTML='<span class="bp-spin"></span>Redirigiendo…';
+   API.req('POST','/api/checkout',{plan:cur.id}).then(function(d){location.href=d.url}).catch(function(e){sb.disabled=false;refresh();$('#bp-fail',box).innerHTML='<div class="bp-fail" role="alert">'+esc(e.message)+'</div>'})}}
+ function refresh(){var t=$('#bp-tot',box);t.innerHTML='<div><span>'+esc(cur.name)+'</span><span>'+BIO.money(cur.price)+'</span></div>'+(cur.save>0?'<div><span>Ahorro frente al mensual</span><span>−'+cur.save+'%</span></div>':'')+'<div class="t"><span>Total hoy</span><span>'+BIO.money(cur.price)+'</span></div><div><span>Próxima renovación</span><span>'+fdate(addMonths(new Date(),cur.months))+'</span></div>';var sbtn=$('#bp-submit',box)||$('#bp-stripe',box);if(sbtn)sbtn.innerHTML=(stripeMode?'Continuar al pago · ':'Pagar ')+BIO.money(cur.price)}
  refresh();
+ if(stripeMode||noPay)return bindPlan();
+ function bindPlan(){box.addEventListener('change',function(e){if(e.target.name==='plan'){cur=planOf(e.target.value);refresh()}})}
  box.addEventListener('change',function(e){if(e.target.name==='plan'){cur=planOf(e.target.value);refresh()}});
  var num=$('#bp-num',box),exp=$('#bp-exp',box),cvc=$('#bp-cvc',box);
  num.addEventListener('input',function(){var d=num.value.replace(/\D/g,'').slice(0,19);num.value=d.replace(/(.{4})/g,'$1 ').trim();$('#bp-br',box).textContent=brand(d)});
@@ -67,13 +82,21 @@ function pay(o){var btn=$('#bp-submit',o.box),fail=$('#bp-fail',o.box);fail.inne
 function auth(o){var b=mount(SIM+'<div class="bp-3ds"><div class="bank">🏦</div><h3>Autenticación 3D Secure</h3><p>Tu banco (simulado) pide confirmar el pago de <b>'+BIO.money(o.plan.price)+'</b> a Biomáster Academy.</p><div class="acts"><button class="bp-go" id="a-ok">Completar autenticación</button><button class="bp-go ghost" id="a-no">Fallar autenticación</button></div></div>','one');
  $('#a-ok',b).focus();$('#a-ok',b).onclick=function(){done(o)};
  $('#a-no',b).onclick=function(){open({plan:o.plan.id});var f=$('#bp-fail');if(f)f.innerHTML='<div class="bp-fail" role="alert">La autenticación no se completó. Intenta de nuevo.</div>'}}
-function done(o){var now=new Date(),sub={id:'sim_'+Math.random().toString(36).slice(2,10),plan:o.plan.id,email:o.email,name:o.name,brand:brand(o.digits)||'TARJETA',last4:o.digits.slice(-4),start:now.toISOString(),renews:addMonths(now,o.plan.months).toISOString(),status:'active'};
- save(sub);
- var b=mount(SIM+'<div class="bp-ok"><div class="tick" aria-hidden="true">✓</div><h3>¡Pago confirmado!</h3><p>Bienvenido/a a Biomáster Academy. Tu plan <b>'+esc(o.plan.name)+'</b> está activo.</p><div class="bp-rcpt"><div><span>Plan</span><b>'+esc(o.plan.name)+'</b></div><div><span>Total pagado</span><b>'+BIO.money(o.plan.price)+'</b></div><div><span>Tarjeta</span><b>'+esc(sub.brand)+' •••• '+sub.last4+'</b></div><div><span>Próxima renovación</span><b>'+fdate(sub.renews)+'</b></div><div><span>Recibo enviado a</span><b>'+esc(o.email)+'</b></div></div><button class="bp-go" id="go-panel">Entrar al panel →</button></div>','one');
+function done(o){
+ if(API){var br=brand(o.digits)||'TARJETA',l4=o.digits.slice(-4);
+  API.req('POST','/api/sim/subscribe',{plan:o.plan.id,brand:br,last4:l4}).then(API.refresh).then(function(){ok(o,load())})
+   .catch(function(e){open({plan:o.plan.id});setTimeout(function(){var f=$('#bp-fail');if(f)f.innerHTML='<div class="bp-fail" role="alert">'+esc(e.message)+'</div>'},50)});return}
+ var now=new Date(),sub={id:'sim_'+Math.random().toString(36).slice(2,10),plan:o.plan.id,email:o.email,name:o.name,brand:brand(o.digits)||'TARJETA',last4:o.digits.slice(-4),start:now.toISOString(),renews:addMonths(now,o.plan.months).toISOString(),status:'active'};
+ save(sub);ok(o,sub)}
+function ok(o,sub){
+ var b=mount(SIM+'<div class="bp-ok"><div class="tick" aria-hidden="true">✓</div><h3>¡Pago confirmado!</h3><p>Bienvenido/a a Biomáster Academy. Tu plan <b>'+esc(o.plan.name)+'</b> está activo.</p><div class="bp-rcpt"><div><span>Plan</span><b>'+esc(o.plan.name)+'</b></div><div><span>Total pagado</span><b>'+BIO.money(o.plan.price)+'</b></div><div><span>Tarjeta</span><b>'+esc(sub.brand)+' •••• '+sub.last4+'</b></div><div><span>Próxima renovación</span><b>'+fdate(sub.renews)+'</b></div><div><span>Recibo enviado a</span><b>'+esc(sub.email||o.email)+'</b></div></div><button class="bp-go" id="go-panel">Entrar al panel →</button></div>','one');
  $('#go-panel',b).focus();$('#go-panel',b).onclick=function(){close();location.hash='inicio'}}
 
 /* Portal de facturación (Gestionar plan) */
-function manage(){var s=load();
+function manage(){
+ if(API&&window.BioAuth&&!API.state.user){BioAuth.require(manage,'Inicia sesión para gestionar tu plan.');return}
+ var s=load();
+ if(API&&s&&s.real){API.req('POST','/api/portal',{}).then(function(d){location.href=d.url}).catch(function(e){alert(e.message)});return}
  if(!s){var b=mount(SIM+'<div class="bp-man"><h3>Tu plan</h3><p>Aún no tienes un plan activo. Elige uno para desbloquear el curso completo y todas las actualizaciones.</p><button class="bp-go" id="m-pick">Elegir un plan</button></div>','one');$('#m-pick',b).onclick=function(){open()};return}
  var p=planOf(s.plan),on=s.status==='active';
  var b=mount(SIM+'<div class="bp-man"><div class="bp-brand" style="color:#1f2f4a"><img src="assets/logo-coruja.png" alt="">BIOMÁSTER ACADEMY</div><h3>Gestionar plan</h3>'+
@@ -84,10 +107,11 @@ function manage(){var s=load();
  '<button class="bp-go ghost" id="m-reset" style="font-size:12px;height:36px">Reiniciar demostración (borrar plan simulado)</button></div>','one');
  var q=function(i){return $(i,b)};
  if(q('#m-chg'))q('#m-chg').onclick=function(){open({plan:s.plan})};
- if(q('#m-can'))q('#m-can').onclick=function(){if(confirm('¿Cancelar la suscripción? Mantendrás el acceso hasta '+fdate(s.renews)+'.')){s.status='canceled';save(s);manage()}};
- if(q('#m-rea'))q('#m-rea').onclick=function(){s.status='active';save(s);manage()};
- q('#m-reset').onclick=function(){save(null);close()}}
+ if(q('#m-can'))q('#m-can').onclick=function(){if(confirm('¿Cancelar la suscripción? Mantendrás el acceso hasta '+fdate(s.renews)+'.')){if(API)API.req('POST','/api/sim/cancel',{}).then(API.refresh).then(manage);else{s.status='canceled';save(s);manage()}}};
+ if(q('#m-rea'))q('#m-rea').onclick=function(){if(API)API.req('POST','/api/sim/reactivate',{}).then(API.refresh).then(manage);else{s.status='active';save(s);manage()}};
+ q('#m-reset').onclick=function(){if(API)API.req('POST','/api/sim/reset',{}).then(API.refresh).then(close);else{save(null);close()}}}
 
+document.addEventListener('bioapi:change',function(){document.dispatchEvent(new CustomEvent('biopay:change'))});
 window.BioPay={open:open,manage:manage,sub:load,close:close,plan:planOf};
 document.addEventListener('click',function(e){var t=e.target.closest('[data-pay],[data-manage]');if(!t)return;e.preventDefault();if(t.hasAttribute('data-manage'))manage();else open({plan:t.dataset.pay||'mensual'})});
 })();

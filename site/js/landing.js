@@ -84,5 +84,8 @@ new MutationObserver(request).observe(L,{attributes:true,attributeFilter:['hidde
 /* nav: sombra al hacer scroll + anclas con offset */
 addEventListener('scroll',function(){nav.style.boxShadow=scrollY>10?'0 8px 24px rgba(31,47,74,.08)':'none'},{passive:true});
 $$('section[id],main[id]',L).forEach(function(s){s.style.scrollMarginTop='70px'});
+var lg=document.getElementById('lpLogin');
+function navUser(){if(!window.BioAPI||!BioAPI.state.on)return;var u=BioAPI.state.user;lg.hidden=!!u&&false;lg.textContent=u?(u.name||u.email.split('@')[0]).slice(0,14):'Entrar';if(u){lg.removeAttribute('data-auth');lg.setAttribute('data-enter','')}else{lg.setAttribute('data-auth','login');lg.removeAttribute('data-enter')}}
+document.addEventListener('bioapi:change',navUser);navUser();
 request();
 })();

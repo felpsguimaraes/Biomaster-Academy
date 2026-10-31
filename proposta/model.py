@@ -17,33 +17,23 @@ def infra(n):
     return dict(workers=5, dominio=1, email=email, stor=stor, deliv=deliv, total=5 + 1 + email + stor + deliv)
 def usd(x, d=0): return "USD " + f"{x:,.{d}f}".replace(",", "X").replace(".", ",").replace("X", ".")
 
-# ---------- MODELO FISCAL ILUSTRATIVO (validar con contador) ----------
-FX_BRL = 5.4            # BRL por USD (supuesto)
-PY_IVA, PY_IRE = 0.10, 0.10          # IVA general 10% (incluido en el precio) · IRE 10% sobre utilidad
-PY_CONT_PF, PY_CONT_EMP = 30, 80     # contador USD/mes (estimado)
-PY_EAS_COSTO = 800                    # costo de constituir EAS (≈ USD 800 según abogado citado; SA/SRL ≈ 2.000–2.500)
-BR_CONT_PF, BR_CONT_PJ = 0, 300 / 5.4 # contador (R$ 300/mes PJ, estimado) en USD
-def br_tabla(b):  # tabla mensual progresiva (valores 2025/2026 según fuentes secundarias)
-    if b <= 2428.80: return 0
-    if b <= 2826.65: return b*0.075-182.16
-    if b <= 3751.05: return b*0.15-394.16
-    if b <= 4664.68: return b*0.225-675.49
-    return b*0.275-908.73
-def br_pf(x):     # carnê-leão mensual (R$): descuento simplificado 607,20 + redutor 2026 hasta 7.350
-    if x <= 5000: return 0
-    base = max(0, x-607.20)
-    if x <= 7350: return max(0, br_tabla(base) - max(0, 978.62-0.133145*x))
-    return br_tabla(x-607.20)
-def simples_iii(rbt12):  # Anexo III (servicios), alícuota efectiva
-    for lim, nom, ded in [(180000,.06,0),(360000,.112,9360),(720000,.135,17640),(1800000,.16,35640),(3600000,.21,125640),(4800000,.33,648000)]:
-        if rbt12 <= lim: return (rbt12*nom-ded)/rbt12
-    return .33
-def fiscal(caso, n, fee_pago):
-    r = n*ARPU; pago = r*fee_pago; inf = infra(n)['total']
-    if caso == 'py_pf':   cont = PY_CONT_PF;  iva = r*PY_IVA/(1+PY_IVA); ire = max(0, (r/(1+PY_IVA)-pago-inf-cont*1))*PY_IRE; imp = iva+ire
-    elif caso == 'py_emp': cont = PY_CONT_EMP; iva = r*PY_IVA/(1+PY_IVA); ire = max(0, (r/(1+PY_IVA)-pago-inf-cont))*PY_IRE; imp = iva+ire
-    elif caso == 'br_pf': cont = BR_CONT_PF; base = (r-pago-inf)*FX_BRL; imp = br_pf(base)/FX_BRL
-    else:                 cont = BR_CONT_PJ; imp = r*simples_iii(r*12*FX_BRL)
-    neto = r - pago - inf - cont - imp
-    return dict(r=r, pago=pago, inf=inf, cont=cont, imp=imp, neto=neto)
-CASOS = [('py_pf','🇵🇾 Paraguay · sin empresa (persona física)'),('py_emp','🇵🇾 Paraguay · con empresa (EAS/SRL)'),('br_pf','🇧🇷 Brasil · sin empresa (PF, carnê-leão)'),('br_pj','🇧🇷 Brasil · con empresa (ME, Simples Anexo III)')]
+# ---------- MODELO FISCAL PARAGUAY (ILUSTRATIVO · validar con contador) ----------
+FX_PYG = 5950                 # Gs por USD (BCP ago–sep/2026 ≈ 5.900–5.960; fuentes divergen)
+RESIMPLE_LIMITE_GS = 80_000_000   # ingresos brutos anuales máximos (DNIT)
+RESIMPLE_CUOTA_GS = 80_000    # cuota fija: rango 20.000–80.000 Gs (se usa el máximo)
+IVA, IRE, IDU = 0.10, 0.10, 0.08  # IVA general · IRE 10% sobre utilidad · IDU 8% al distribuir a residentes
+CONT_PF, CONT_EMP = 30, 80    # contador USD/mes (estimado)
+EAS_COSTO = 800               # constitución de EAS (≈ USD 800 según abogado citado; SA/SRL ≈ 2.000–2.500)
+RESIMPLE_EXIME_IVA = False    # True si el contador confirma que RESIMPLE no paga IVA (una fuente lo indica)
+DISTRIB = 1.0                 # parte de la utilidad que la titular retira de la EAS
+ESCENARIOS_PY = [40, 100, 500, 2000]
+LIMITE_RESIMPLE_ALUMNOS = int(RESIMPLE_LIMITE_GS / (FX_PYG * 12 * ARPU))
+def py_flow(n, fee, empresa):
+    r = n * ARPU; pago = r * fee; inf = infra(n)["total"]; cont = CONT_EMP if empresa else CONT_PF
+    resimple = (not empresa) and (r * 12 * FX_PYG <= RESIMPLE_LIMITE_GS)
+    iva = 0 if (resimple and RESIMPLE_EXIME_IVA) else r * IVA / (1 + IVA)
+    if resimple: ire = RESIMPLE_CUOTA_GS / FX_PYG; reg = "IRE RESIMPLE (cuota fija)"
+    else: ire = max(0, r - iva - pago - inf - cont) * IRE; reg = "IRE 10% sobre la utilidad"
+    pre = r - iva - pago - inf - cont - ire
+    idu = max(0, pre) * DISTRIB * IDU if empresa else 0
+    return dict(r=r, iva=iva, pago=pago, inf=inf, cont=cont, ire=ire, idu=idu, neto=pre - idu, regimen=reg, resimple=resimple)

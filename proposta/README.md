@@ -7,5 +7,5 @@
 Os valores de comissão e de várias tarifas vêm de fontes secundárias: confirmar com cada provedor antes de apresentar.
 
 - `analisis-hotmart.html` — ferramenta (100% no navegador) para a professora medir a comissão efetiva real da Hotmart a partir do relatório de vendas (CSV) ou estimar com números próprios.
-- `flujograma-decision.html` / `.pdf` — 4 diagramas comparativos (árbol de decisión empresa vs persona física, pasos de cada camino, cuánto queda en el bolsillo con Hotmart vs pasarela propia, arquitecturas de cobro) + checklist. Gerado por `build_flow.py` (parâmetros em `model.py`). Imprimir em A4 horizontal.
+- `flujograma-decision.html` / `.pdf` — 4 diagramas para Paraguay: árbol de decisión (persona física vs EAS), pasos de cada camino, **los dos flujos de valores** (cascada de la venta al bolsillo, con Hotmart y con pasarela propia) y arquitecturas de cobro + checklist. Gerado por `build_flow.py` (parâmetros em `model.py`). Imprimir em A4 horizontal.
 - `model.py` — supostos editáveis (preços, comissões, impostos, câmbio) compartilhados pelos dois geradores. Rodar scripts com `python3` (não `-I`).

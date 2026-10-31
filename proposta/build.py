@@ -64,6 +64,53 @@ pagos = table(["Proveedor", "PIX", "USD", "PYG", "Cobro recurrente", "Notas"], [
  ["<b>Stripe</b>", "Pix para negocios brasileños (verificar)", "<b>Sí</b>", "No", "<b>Sí</b>", "Fuentes secundarias indican que <b>no abre cuentas con domicilio en Paraguay</b>; confirmar en stripe.com/global. Código de la plataforma ya listo."],
 ], "wide")
 
+
+# ---------- MODELO FISCAL ILUSTRATIVO (validar con contador) ----------
+FX_BRL = 5.4            # BRL por USD (supuesto)
+PY_IVA, PY_IRE = 0.10, 0.10          # IVA general 10% (incluido en el precio) · IRE 10% sobre utilidad
+PY_CONT_PF, PY_CONT_EMP = 30, 80     # contador USD/mes (estimado)
+PY_EAS_COSTO = 800                    # costo de constituir EAS (≈ USD 800 según abogado citado; SA/SRL ≈ 2.000–2.500)
+BR_CONT_PF, BR_CONT_PJ = 0, 300 / 5.4 # contador (R$ 300/mes PJ, estimado) en USD
+def br_tabla(b):  # tabla mensual progresiva (valores 2025/2026 según fuentes secundarias)
+    if b <= 2428.80: return 0
+    if b <= 2826.65: return b*0.075-182.16
+    if b <= 3751.05: return b*0.15-394.16
+    if b <= 4664.68: return b*0.225-675.49
+    return b*0.275-908.73
+def br_pf(x):     # carnê-leão mensual (R$): descuento simplificado 607,20 + redutor 2026 hasta 7.350
+    if x <= 5000: return 0
+    base = max(0, x-607.20)
+    if x <= 7350: return max(0, br_tabla(base) - max(0, 978.62-0.133145*x))
+    return br_tabla(x-607.20)
+def simples_iii(rbt12):  # Anexo III (servicios), alícuota efectiva
+    for lim, nom, ded in [(180000,.06,0),(360000,.112,9360),(720000,.135,17640),(1800000,.16,35640),(3600000,.21,125640),(4800000,.33,648000)]:
+        if rbt12 <= lim: return (rbt12*nom-ded)/rbt12
+    return .33
+def fiscal(caso, n, fee_pago):
+    r = n*ARPU; pago = r*fee_pago; inf = infra(n)['total']
+    if caso == 'py_pf':   cont = PY_CONT_PF;  iva = r*PY_IVA/(1+PY_IVA); ire = max(0, (r/(1+PY_IVA)-pago-inf-cont*1))*PY_IRE; imp = iva+ire
+    elif caso == 'py_emp': cont = PY_CONT_EMP; iva = r*PY_IVA/(1+PY_IVA); ire = max(0, (r/(1+PY_IVA)-pago-inf-cont))*PY_IRE; imp = iva+ire
+    elif caso == 'br_pf': cont = BR_CONT_PF; base = (r-pago-inf)*FX_BRL; imp = br_pf(base)/FX_BRL
+    else:                 cont = BR_CONT_PJ; imp = r*simples_iii(r*12*FX_BRL)
+    neto = r - pago - inf - cont - imp
+    return dict(r=r, pago=pago, inf=inf, cont=cont, imp=imp, neto=neto)
+CASOS = [('py_pf','🇵🇾 Paraguay · sin empresa (persona física)'),('py_emp','🇵🇾 Paraguay · con empresa (EAS/SRL)'),('br_pf','🇧🇷 Brasil · sin empresa (PF, carnê-leão)'),('br_pj','🇧🇷 Brasil · con empresa (ME, Simples Anexo III)')]
+fiscal_rows = ""
+for n in ESCENARIOS:
+    for k, lab in CASOS:
+        f = fiscal(k, n, FEE_HOTMART)
+        fiscal_rows += f"<tr><td>{n}</td><td>{lab}</td><td>{usd(f['r'])}</td><td>{usd(f['pago']+f['inf'])}</td><td>{usd(f['cont'])}</td><td>{usd(f['imp'])}</td><td class='pos'>{usd(f['neto'])}</td><td>{f['neto']/f['r']*100:.0f}%</td></tr>"
+fiscal_tbl = f"<div class='scroll'><table class='t wide'><thead><tr><th>Alumnos pagos</th><th>Caso</th><th>Ingresos/mes</th><th>Comisión de pago + infra</th><th>Contador</th><th>Impuestos</th><th>Neto en bolsillo</th><th>% que queda</th></tr></thead><tbody>{fiscal_rows}</tbody></table></div>"
+requis = table(["", "Sin empresa (persona física)", "Con empresa"], [
+ ["Para empezar", "Inmediato. Hotmart y varias pasarelas aceptan persona física con documento/RUC o CPF.", "Paraguay: EAS ≈ 3–8 días hábiles y ≈ USD 800 en la práctica (SA/SRL ≈ USD 2.000–2.500). Brasil: CNPJ sin tasa de apertura + contador."],
+ ["Costos fijos", "Contador opcional/barato (≈ USD 0–30/mes, estimado).", "Contador mensual ≈ USD 55–80 (≈ R$ 300 en Brasil, estimado) + obligaciones periódicas."],
+ ["Impuestos", "Paraguay: IVA 10% + IRP/IRE (RESIMPLE solo hasta ≈ PYG 80 millones al año, ≈ USD 10–11 mil → se supera con ≈ 40 alumnos pagos). Brasil: carnê-leão progresivo hasta 27,5% (exento hasta R$ 5.000 al mes desde 2026).", "Paraguay: IRE 10% sobre utilidad + IVA 10%. Brasil: MEI hasta R$ 81 mil/año; luego ME en Simples (≈ 6% a 33% progresivo según facturación y actividad)."],
+ ["Responsabilidad", "Ilimitada con tu patrimonio personal.", "Limitada a la empresa (con excepciones)."],
+ ["Cobros", "Algunos procesadores locales (Bancard, Pagopar) probablemente exigen RUC/empresa para comercios: <b>a confirmar</b>.", "Acceso más fácil a pasarelas, facturación y convenios con universidades/empresas."],
+ ["Contrato con el desarrollador", "Se firma a nombre personal; cesión de código a persona física.", "Se firma a nombre de la empresa; gastos deducibles; imagen profesional."],
+ ["Cuándo conviene", "Menos de ≈ 40–60 alumnos pagos o fase de prueba.", "Desde ≈ 100 alumnos pagos o si quiere vender a instituciones; en Brasil, antes de superar R$ 81 mil/año."],
+], "wide")
+
 hot_tbl = table(["Componente", "Qué cobra (según fuentes consultadas)", "Impacto en un plan mensual de USD 25,90", "Estado de la cifra"], [
  ["Comisión por venta", "9,9% por venta aprobada (puede bajar hasta ≈ 8,9% con facturación anual de 6 cifras)", "≈ USD 2,56 (9,9%)", "Varias fuentes concuerdan"],
  ["Tarifa fija por transacción", "Antes ≈ USD 0,50 (o R$ 1,00); fuentes recientes indican <b>R$ 2,49</b> desde el 21/09/2026", "≈ USD 0,45–0,50 (1,7–1,9 pts) y se repite en <b>cada renovación</b>", "Fuentes en conflicto: confirmar en tu cuenta"],
@@ -120,7 +167,7 @@ ul.ck{{list-style:none;padding:0;margin:10px 0;display:grid;gap:7px}}ul.ck li:be
 .steps{{counter-reset:s;list-style:none;padding:0;display:grid;gap:10px}}.steps li{{counter-increment:s;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 16px 12px 52px;position:relative}}.steps li:before{{content:counter(s);position:absolute;left:14px;top:11px;width:28px;height:28px;border-radius:9px;background:var(--navy);color:var(--gold);font:700 14px Poppins,sans-serif;display:grid;place-items:center}}
 footer{{padding:30px 0 50px;font-size:12px;color:var(--mut)}}footer a{{color:var(--blue)}}
 .shot{{border-radius:14px;border:1px solid var(--line);box-shadow:0 14px 30px rgba(31,47,74,.15);width:100%}}
-@media print{{body{{background:#fff}}section{{break-inside:auto}}.t,.card,.calc,.steps li{{break-inside:avoid}}.cover{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}.b,.note,.t th,.calc .out div{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}section>h2,section>h3,h3{{break-after:avoid}}section>h2 small{{break-after:avoid}}.t tr{{break-inside:avoid}}.page{{max-width:none;padding:0 6px}}}}
+@media print{{body{{background:#fff}}section{{break-inside:auto}}.card,.calc,.steps li{{break-inside:avoid}}.cover{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}.b,.note,.t th,.calc .out div{{-webkit-print-color-adjust:exact;print-color-adjust:exact}}section>h2,section>h3,h3{{break-after:avoid}}section>h2 small{{break-after:avoid}}.t tr{{break-inside:avoid}}.page{{max-width:none;padding:0 6px}}}}
 @media screen and (max-width:760px){{.cover .page,.cards,.calc .g,.calc .out{{grid-template-columns:1fr}}}}
 </style></head><body>
 <header class="cover"><div class="page"><div>
@@ -159,6 +206,22 @@ footer{{padding:30px 0 50px;font-size:12px;color:var(--mut)}}footer a{{color:var
 <h3 style="margin-top:20px">¿Se puede dejar solo el cobro en Hotmart y tener una plataforma propia?</h3>
 <p class="lead"><b>Sí.</b> Hotmart permite enviar <b>avisos automáticos (webhooks)</b> a un sistema externo cuando hay una compra aprobada, cancelación de suscripción, reembolso o contracargo. La plataforma propia recibe el aviso, crea o activa la cuenta del alumno y le da o quita acceso. <i>(Eventos documentados: compra aprobada y cancelación de suscripción, API de webhooks v2; la forma exacta de validar el aviso con el «hottok» debe verificarse en la documentación oficial al implementar.)</i></p>{hib_tbl}
 <div class="note"><b>Recomendación:</b> empezar por el <b>modelo 2 (híbrido)</b>: es rápido, mantiene los medios de pago que ya funcionan (tarjetas internacionales, PIX en Brasil) y deja lista la experiencia propia. Después, <b>agregar pasarelas propias</b> (modelo 3) para los nuevos alumnos —empezando por PIX/guaraníes locales— y mover el volumen gradualmente. Así se reduce el riesgo y la comisión baja por etapas. Mientras tanto, <b>negociar la tarifa con Hotmart</b> si su facturación anual supera el tramo de 6 cifras.</div>
+</section>
+
+<section><h2><small>4C · Camino financiero</small>Con empresa o sin empresa: ¿cuánto queda en el bolsillo?</h2>
+<p class="lead">Dos caminos para vender: como <b>persona física</b> (sin empresa) o a través de una <b>empresa</b>. La diferencia depende del país donde esté registrada y de cuánto venda. <b>Las cifras son ilustrativas</b> y deben validarse con un contador local: las fuentes sobre IVA de servicios educativos online y exportación de servicios en Paraguay no se pudieron confirmar.</p>{requis}
+<h3 style="margin-top:20px">Resultado mensual estimado por caso</h3>
+<p class="lead">Supuestos: comisión de pago ≈ {int(FEE_HOTMART*100)}% (modelo actual) · IVA 10% incluido en el precio (Paraguay) · IRE 10% sobre utilidad · tipo de cambio R$ {FX_BRL:.1f} por USD · Simples Anexo III (servicios de enseñanza) · carnê-leão con descuento simplificado y tabla 2026 · contador: PF ≈ USD 30 (PY) / 0 (BR), empresa ≈ USD 80 (PY) / ≈ USD 56 (BR).</p>{fiscal_tbl}
+<div class="note"><b>Cómo leer esto:</b> en Paraguay la carga total es parecida con o sin empresa (la empresa suma costo de contador y de constitución: ≈ USD {PY_EAS_COSTO} una sola vez); lo que cambia es la <b>protección patrimonial, la facturación y el acceso a pasarelas</b>. En Brasil la diferencia es fuerte a medida que crece: como persona física la alícuota sube hasta 27,5%, mientras que una ME en el Simples tributa bastante menos desde ≈ 100 alumnos pagos. Hotmart se queda con su comisión en todos los casos.</div>
+<div class="calc"><h3 style="margin-bottom:10px">Calculadora de impuestos</h3><div class="g">
+<div><label>Alumnos pagos<input id="fn" type="number" value="500" min="0"></label></div>
+<div><label>Caso<select id="fcase" style="width:100%;height:38px;border:1px solid #d5ddec;border-radius:10px;margin-top:3px"><option value="py_pf">Paraguay · sin empresa</option><option value="py_emp">Paraguay · con empresa</option><option value="br_pf">Brasil · sin empresa</option><option value="br_pj">Brasil · con empresa (Simples)</option></select></label></div>
+<div><label>Comisión de pago (%)<input id="ffee" type="number" value="{FEE_HOTMART*100:g}" step="0.1"></label></div>
+<div><label>Ingreso medio/alumno (USD)<input id="farpu" type="number" value="{ARPU}" step="0.5"></label></div>
+<div><label>Tipo de cambio (BRL por USD)<input id="ffx" type="number" value="{FX_BRL}" step="0.05"></label></div>
+<div><label>Contador (USD/mes)<input id="fcont" type="number" value="" placeholder="auto" step="1"></label></div></div>
+<div class="out"><div><span>Ingresos/mes</span><b id="f1"></b></div><div><span>Impuestos/mes</span><b id="f2"></b></div><div><span>Neto en bolsillo</span><b id="f3"></b></div><div><span>% que queda</span><b id="f4"></b></div></div></div>
+<div class="note warn"><b>Preguntas para el contador (antes de decidir):</b> (1) ¿El curso vendido a alumnos en otros países cuenta como exportación de servicios y está exento de IVA? (2) ¿Cómo se factura a Hotmart/pasarela y qué retenciones aplican? (3) ¿RESIMPLE/MEI sigue vigente y cuál es el límite actual? (4) ¿Conviene EAS o SRL? (5) ¿Qué documentos piden Bancard, Pagopar y Stripe para abrir comercio?</div>
 </section>
 
 <section><h2><small>5 · Costos de operación</small>Cuánto cuesta mantenerla</h2>{infra_tbl}
@@ -200,7 +263,7 @@ footer{{padding:30px 0 50px;font-size:12px;color:var(--mut)}}footer a{{color:var
 function upd(){{var n=+$('n').value||0,a=+$('arpu').value||0,m=+$('mins').value||0,cm=+$('cmin').value||0,h=(+$('hot').value||0)/100,g=(+$('gw').value||0)/100,o=$('opt').value;
 var r=n*a,inf=5+1+(n>1000?20:0)+5*Math.ceil(cm/1000)+n*m/1000,sav=r*(h-g),fee=o==='A'?{A_MES}:(o==='C'?{C_PCT}*r:0);
 $('o1').textContent=f(r);$('o2').textContent=f(inf);$('o3').textContent=f(sav);var net=sav-inf-fee;$('o4').textContent=f(net);$('o4').style.color=net<0?'#b03a2e':'#1f7a5c'}}
-document.querySelectorAll('.calc input,.calc select').forEach(function(e){{e.addEventListener('input',upd)}});upd()}})();
+document.querySelectorAll('#n,#arpu,#mins,#cmin,#hot,#gw,#opt').forEach(function(e){{e.addEventListener('input',upd)}});upd();var FX0={FX_BRL};function brTabla(b){{if(b<=2428.80)return 0;if(b<=2826.65)return b*0.075-182.16;if(b<=3751.05)return b*0.15-394.16;if(b<=4664.68)return b*0.225-675.49;return b*0.275-908.73}}function brPf(x){{if(x<=5000)return 0;var b=Math.max(0,x-607.20);if(x<=7350)return Math.max(0,brTabla(b)-Math.max(0,978.62-0.133145*x));return brTabla(x-607.20)}}function simples(r){{var L=[[180000,.06,0],[360000,.112,9360],[720000,.135,17640],[1800000,.16,35640],[3600000,.21,125640],[4800000,.33,648000]];for(var i=0;i<L.length;i++)if(r<=L[i][0])return(r*L[i][1]-L[i][2])/r;return .33}}function fisc(){{var n=+$('fn').value||0,a=+$('farpu').value||0,fee=(+$('ffee').value||0)/100,fx=+$('ffx').value||FX0,k=$('fcase').value,r=n*a,pago=r*fee,inf=5+1+(n>1000?20:0)+5*Math.ceil({MIN_CURSO}/1000)+n*{MIN_ALUMNO}/1000; var def={{py_pf:{PY_CONT_PF},py_emp:{PY_CONT_EMP},br_pf:{BR_CONT_PF},br_pj:{BR_CONT_PJ}}}[k],cont=$('fcont').value===''?def:(+$('fcont').value||0),imp; if(k==='py_pf'||k==='py_emp'){{imp=r*{PY_IVA}/(1+{PY_IVA})+Math.max(0,r/(1+{PY_IVA})-pago-inf-cont)*{PY_IRE}}} else if(k==='br_pf'){{imp=brPf((r-pago-inf)*fx)/fx}} else{{imp=r*simples(r*12*fx)}} var net=r-pago-inf-cont-imp;$('f1').textContent=f(r);$('f2').textContent=f(imp);$('f3').textContent=f(net);$('f4').textContent=(r?Math.round(net/r*100):0)+'%'}}document.querySelectorAll('#fn,#fcase,#ffee,#farpu,#ffx,#fcont').forEach(function(e){{e.addEventListener('input',fisc)}});fisc();}})();
 </script></body></html>"""
 pathlib.Path(__file__).with_name("propuesta-comercial.html").write_text(HTMLDOC, encoding="utf-8")
 print("ok; punto de equilibrio A =", BE)

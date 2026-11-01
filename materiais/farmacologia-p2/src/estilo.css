@@ -3,7 +3,7 @@
    Fundo aurora menta · cartões de vidro · abas em pílula · Inter
    ========================================================== */
 :root{
-  --bg:#ffffff; --ink:#111; --ink2:#10352a; --mut:#5f6664; --line:#e3e8e5;
+  --bg:#f1f8f4; --ink:#111; --ink2:#10352a; --mut:#5f6664; --line:#e3e8e5;
   --acc:#176e5b; --acc2:#0c8059; --acc-d:#0c4a3b; --acc-soft:#eef5f2;
   --warn:#8a5a00; --warn-soft:#fff3d6; --ok:#1e7d4f; --ok-soft:#e1f3e8; --bad:#a3261c; --bad-soft:#fbe6e3; --info:#2f5f8a; --info-soft:#e8f0f8;
   --glass:#ffffff;
@@ -38,12 +38,12 @@ header.top{padding:14px 0 6px}
 .kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:700}
 header.top h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.1;margin-top:4px}
 .lede{color:var(--mut);margin:8px 0 0;font-size:18px;line-height:1.55}
-.progress{height:6px;background:#eceeed;border-radius:6px;overflow:hidden;margin:14px 0 4px}
+.progress{height:6px;background:#dceae2;border-radius:6px;overflow:hidden;margin:14px 0 4px}
 .progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2a8d74,#176e5b);transition:width .3s}
 .mini{font-size:14px;color:var(--mut)}
 
 /* ---------- abas ---------- */
-nav.tabs{display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:20;margin:18px 0 8px;padding:12px 0;background:rgba(255,255,255,.96);border-bottom:1px solid #eef1ef;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:0 0 22px 22px}
+nav.tabs{display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:20;margin:18px 0 8px;padding:12px 0;background:rgba(241,248,244,.96);border-bottom:1px solid #dfece4;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:0 0 22px 22px}
 nav.tabs button{border-radius:999px;padding:9px 18px;font:500 16px var(--f);min-height:42px;background:#fff;border:1px solid #dfe5e2}
 nav.tabs button[aria-selected="true"]{background:rgba(22,110,91,.16);border-color:rgba(22,110,91,.25);color:var(--acc-d);font-weight:600}
 .toc{display:flex;gap:8px;overflow-x:auto;padding:6px 0 12px;scrollbar-width:thin}
@@ -80,7 +80,7 @@ table.t td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
 table.t tr{break-inside:avoid}
 
 /* ---------- quadros (estilo «Em 3 linhas» / «Para memorizar») ---------- */
-.box{border-radius:20px;padding:13px 16px;margin:12px 0;background:#f6f8f7;-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);border:1px solid #e3e8e5;box-shadow:none}
+.box{border-radius:20px;padding:13px 16px;margin:12px 0;background:#f4faf6;-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);border:1px solid #e3e8e5;box-shadow:none}
 .box .lb{display:block;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:4px}
 .box p{font-size:16px;margin:.2em 0}
 .box.warn{background:var(--warn-soft);border-left:4px solid var(--warn)}

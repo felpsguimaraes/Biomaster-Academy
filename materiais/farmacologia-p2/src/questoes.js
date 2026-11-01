@@ -1,4 +1,4 @@
-/* Exercícios por módulo. Formatos da plataforma (Preguntas):
+/* SINUS · exercícios por módulo (conteúdo autoral). Formatos SINUS:
    mc = múltipla escolha (options + r = índice correto) · vf = verdadeiro/falso (r = true|false)
    ab = resposta aberta: o aluno responde antes de revelar o gabarito (resp).
    Questões autorais, baseadas nos mecanismos das aulas; não são questões oficiais. */

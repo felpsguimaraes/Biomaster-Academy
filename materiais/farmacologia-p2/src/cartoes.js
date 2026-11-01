@@ -1,4 +1,4 @@
-/* Flashcards (repaso) por módulo · frente = pergunta · verso = resposta */
+/* SINUS · flashcards por módulo (conteúdo autoral) · frente = pergunta · verso = resposta */
 window.SINUS_CARTOES = {
 m1:[
  {f:'Qual é o neurotransmissor das fibras pré-ganglionares de simpático e parassimpático?',b:'Acetilcolina (ACh), que atua em receptores nicotínicos neuronais (Nn) no gânglio.'},

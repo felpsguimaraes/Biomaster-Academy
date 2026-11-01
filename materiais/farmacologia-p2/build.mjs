@@ -63,7 +63,7 @@ for (const m of MODULOS) {
   }
   body += `<section class="pg cap" id="ex${m.n}"><span class="eyebrow">Exercícios · Módulo ${mod}</span><h1 class="h1">Pratique: ${m.titulo}</h1>
 <p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="${m.q}"></div></section>\n`;
-  body += `<section class="pg cap" id="fc${m.n}"><span class="eyebrow">Flashcards · Módulo ${mod}</span><h1 class="h1">Repaso: ${m.titulo}</h1>
+  body += `<section class="pg cap" id="fc${m.n}"><span class="eyebrow">Flashcards · Módulo ${mod}</span><h1 class="h1">Flashcards: ${m.titulo}</h1>
 <p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="${m.q}"></div></section>\n`;
 }
 
@@ -79,7 +79,7 @@ const out = `<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SINUS · Farmacología I · P2 — Clases 6–9 (edição unificada)</title>
+<title>SINUS · Farmacología I · P2 — Clases 6–9 (edição completa)</title>
 <meta name="description" content="Apostila SINUS de Farmacologia P2: SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides, com mapas mentais para completar, exercícios e flashcards.">
 <style>
 ${src('estilo.css')}

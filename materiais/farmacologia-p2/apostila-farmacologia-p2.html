@@ -2,299 +2,261 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SINUS · Farmacología I · P2 — Clases 6–9 (edição completa)</title>
-<meta name="description" content="Apostila SINUS de Farmacologia P2: SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides, com mapas mentais para completar, exercícios e flashcards.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Apostila de farmacologia · P2 · SINUS</title>
+<meta name="description" content="Apostila SINUS de Farmacologia P2: SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides, com esquemas interativos, mapas mentais, exercícios e flashcards.">
+<meta name="theme-color" content="#155B48">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%20role%3D%22img%22%20aria-label%3D%22SINUS%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22sg%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%22%20stop-color%3D%22%231a9a6c%22%2F%3E%3Cstop%20offset%3D%221%22%20stop-color%3D%22%23155B48%22%2F%3E%3C%2FlinearGradient%3E%3C%2Fdefs%3E%3Crect%20width%3D%22512%22%20height%3D%22512%22%20rx%3D%22118%22%20fill%3D%22url(%23sg)%22%2F%3E%3Cpath%20d%3D%22M72.0%20268.8%20L123.5%20268.8%20C134.6%20268.8%20138.2%20218.4%20156.6%20218.4%20L175.0%20218.4%20L178.7%20268.8%20L189.8%20268.8%20L208.2%20268.8%20L215.5%20291.2%20L222.9%20291.2%20L241.3%20123.2%20L259.7%20375.2%20L270.7%20268.8%20L289.1%20268.8%20C303.8%20268.8%20311.2%20196.0%20337.0%20196.0%20L362.7%20196.0%20L370.1%20268.8%20L384.8%20268.8%20L440.0%20268.8%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%2232%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E">
 <style>
 /* ==========================================================
-   SINUS · Cadernos de Medicina — padrão visual
-   Usado em HTML (interativo) e PDF (impressão A4)
+   SINUS · identidade das apostilas (formato da apostila de anatopatologia)
+   Fundo aurora menta · cartões de vidro · abas em pílula · Inter
    ========================================================== */
 :root{
-  --g9:#1c3a2f; --g7:#2a7a52; --g6:#3b8d63; --g5:#5aa77d;
-  --mint:#e8f3ec; --mint2:#f3f9f5; --line:#d6e4dc; --line2:#e7efe9;
-  --ink:#253530; --mut:#6b7770; --paper:#ffffff; --bg:#f4f7f5;
-  --blue:#3d6f8c; --purp:#6d5a9a; --brown:#9a6f3a;
-  --ok:#1f7a4a; --bad:#a6442f;
-  --f:"Inter","Helvetica Neue",Arial,"DejaVu Sans",sans-serif;
-  --fd:"Inter","Helvetica Neue",Arial,"DejaVu Sans",sans-serif;
+  --bg:#f7fbf9; --ink:#111; --ink2:#10352a; --mut:#5f6664; --line:#e3e8e5;
+  --acc:#176e5b; --acc2:#0c8059; --acc-d:#0c4a3b; --acc-soft:#eef5f2;
+  --warn:#8a5a00; --warn-soft:#fff3d6; --ok:#1e7d4f; --ok-soft:#e1f3e8; --bad:#a3261c; --bad-soft:#fbe6e3; --info:#2f5f8a; --info-soft:#e8f0f8;
+  --glass:linear-gradient(160deg,rgba(255,255,255,.80),rgba(255,255,255,.56) 55%,rgba(255,255,255,.68));
+  --f:"Inter","Manrope","DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
 }
 *{box-sizing:border-box}
-html{background:var(--bg)}
-body{margin:0;font:400 14.5px/1.6 var(--f);color:var(--ink);-webkit-font-smoothing:antialiased}
-h1,h2,h3,h4{font-family:var(--fd);color:var(--g9);margin:0;letter-spacing:-.02em;line-height:1.15}
-p{margin:0 0 6px}
-b,strong{font-weight:700;color:var(--g9)}
-a{color:var(--g7)}
-button{font:inherit;cursor:pointer}
-:focus-visible{outline:2px solid var(--g6);outline-offset:2px}
+html,body{margin:0}
+body{position:relative;isolation:isolate;overflow-x:hidden;background:var(--bg);color:var(--ink);font:17px/1.6 var(--f);letter-spacing:-.005em;padding:0 max(16px,env(safe-area-inset-left,0px)) 40px;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-10vh -10vw;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(38vmax 38vmax at 12% 18%,rgba(56,174,139,.5),rgba(56,174,139,0) 70%),
+    radial-gradient(34vmax 34vmax at 88% 12%,rgba(22,110,91,.32),rgba(22,110,91,0) 70%),
+    radial-gradient(40vmax 40vmax at 78% 62%,rgba(95,209,176,.42),rgba(95,209,176,0) 70%),
+    radial-gradient(36vmax 36vmax at 18% 86%,rgba(22,93,76,.28),rgba(22,93,76,0) 70%),
+    radial-gradient(30vmax 30vmax at 55% 40%,rgba(207,238,227,.7),rgba(207,238,227,0) 70%);
+  filter:blur(18px) saturate(120%)}
+[hidden]{display:none!important}
+h1,h2,h3,h4{font-family:var(--f);margin:0;letter-spacing:-.02em;line-height:1.15;text-wrap:balance;color:var(--ink)}
+p{margin:.5em 0}
+b,strong{font-weight:700;color:var(--ink)}
+a{color:var(--acc)}
+button{font:inherit;cursor:pointer;color:var(--ink)}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.wrap{max-width:900px;margin:0 auto}
+.glass{background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1px 0 #fff,0 24px 48px -32px rgba(17,40,30,.35)}
 
-/* ---------- marca ---------- */
-.logo{display:inline-flex;align-items:center;gap:10px;text-decoration:none}
-.logo .ico{width:34px;height:34px;border-radius:9px;background:var(--mint);display:grid;place-items:center}
-.logo .ico svg{width:18px;height:18px}
-.logo .wm{font:800 22px/1 var(--fd);color:var(--g9);letter-spacing:-.03em}
-.logo .wm i{font-style:normal;color:var(--g7)}
+/* ---------- topo ---------- */
+.brandbar{display:flex;justify-content:space-between;align-items:center;padding:18px 0 4px}
+.brandbar img,.brandbar svg{height:38px;width:auto;display:block}
+.brandbar .rt{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600}
+header.top{padding:14px 0 6px}
+.kicker{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--acc);font-weight:700}
+header.top h1{font-size:clamp(30px,5vw,46px);font-weight:700;line-height:1.1;margin-top:4px}
+.lede{color:var(--mut);margin:8px 0 0;font-size:18px;line-height:1.55}
+.progress{height:6px;background:rgba(17,40,30,.1);border-radius:6px;overflow:hidden;margin:14px 0 4px}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,#2a8d74,#176e5b);transition:width .3s}
+.mini{font-size:14px;color:var(--mut)}
 
-/* ---------- capa e páginas ---------- */
-.pg{background:var(--paper);width:min(820px,calc(100% - 32px));margin:20px auto;padding:40px 56px 44px;border-radius:6px;box-shadow:0 1px 2px rgba(28,58,47,.06),0 8px 26px rgba(28,58,47,.07)}
-.cap{page-break-before:always;break-before:page}
-.cap:first-of-type{page-break-before:auto}
-.topline{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:26px}
-.topline .rt{font-size:10px;letter-spacing:.06em;color:var(--mut);text-transform:uppercase}
-.eyebrow{display:block;font:700 11px/1.2 var(--f);letter-spacing:.09em;text-transform:uppercase;color:var(--g7);margin-bottom:10px}
-.h1{font-size:30px;font-weight:800;margin-bottom:6px}
-.meta{font-size:12px;color:var(--mut);margin-bottom:14px}
-.lead{font-size:15px;line-height:1.6}
-h3.sub{font-size:16px;font-weight:700;color:var(--g7);margin:16px 0 6px}
-h4.sub2{font-size:14px;font-weight:700;color:var(--g9);margin:16px 0 6px}
-ul.pl,ol.pl{margin:4px 0 8px 0;padding-left:20px}
+/* ---------- abas ---------- */
+nav.tabs{display:flex;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:20;margin:18px 0 8px;padding:12px 0;background:rgba(247,251,249,.55);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-radius:0 0 22px 22px}
+nav.tabs button{border-radius:999px;padding:9px 18px;font:500 16px var(--f);min-height:42px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);box-shadow:0 6px 18px -12px rgba(17,40,30,.4)}
+nav.tabs button[aria-selected="true"]{background:rgba(22,110,91,.16);border-color:rgba(22,110,91,.25);color:var(--acc-d);font-weight:600}
+.toc{display:flex;gap:8px;overflow-x:auto;padding:6px 0 12px;scrollbar-width:thin}
+.toc a{white-space:nowrap;text-decoration:none;border-radius:999px;padding:6px 13px;font-size:14px;background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.95);color:var(--ink)}
+.toc a.done{border-color:var(--ok);color:var(--ok);background:var(--ok-soft)}
+
+/* ---------- grupos (módulos) ---------- */
+section.grupo{margin-top:28px}
+.grupo-h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;border-bottom:2px solid var(--acc);padding-bottom:6px}
+.grupo-h h2{font-size:clamp(24px,3.6vw,32px);font-weight:700}
+.grupo-h .mini{font-size:14px}
+.grupo-d{color:var(--mut);font-size:15px;margin:8px 0 0}
+
+/* ---------- capítulo (cartão) ---------- */
+.cap{border-radius:26px;padding:24px 26px 20px;margin:18px 0;scroll-margin-top:90px;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1px 0 #fff,0 24px 48px -32px rgba(17,40,30,.35)}
+.cap .head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:6px}
+.cap .num{display:block;font-size:13px;letter-spacing:.06em;color:#165d4c;font-weight:600;text-transform:uppercase}
+.cap h3{font-size:22px;font-weight:700;margin-top:2px}
+.cap .meta{font-size:13px;color:var(--mut);margin:0 0 10px}
+.cap p{font-size:17px;line-height:1.6;color:#111}
+.cap .lead{font-size:17.5px}
+label.check{display:inline-flex;gap:8px;align-items:center;font-size:15px;color:var(--mut);cursor:pointer;white-space:nowrap}
+label.check input{width:17px;height:17px;accent-color:var(--acc)}
+.cap.lido{border-color:rgba(30,125,79,.35)}
+h3.sub,.cap h4.sub{font-size:17px;font-weight:700;color:var(--acc);margin:16px 0 6px}
+ul.pl,ol.pl{margin:4px 0 8px;padding-left:22px}
 ul.pl li,ol.pl li{margin-bottom:3px}
-/* marca-texto: amarelo = cai na prova · vermelho = alerta / erro clássico */
-mark{color:inherit;padding:1px 3px;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;-webkit-print-color-adjust:exact;print-color-adjust:exact}
-mark.my{background:#fff0a6}
-mark.mr{background:#ffd6cf;color:#7a1f12;font-weight:600}
-mark.mr b{color:#7a1f12}
-.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mut);margin:6px 0 10px}
-.nav .legend{flex-direction:column;margin:12px 6px 0;gap:4px}
 
 /* ---------- tabelas ---------- */
-table.t{width:100%;border-collapse:collapse;margin:8px 0 10px;font-size:12.5px;line-height:1.45;page-break-inside:auto}
-table.t thead th{background:var(--mint);color:var(--g9);text-align:left;font-weight:700;padding:9px 10px;border-bottom:1px solid var(--line)}
-table.t td{padding:8px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
-table.t tbody tr:nth-child(even) td{background:var(--mint2)}
-table.t tr{page-break-inside:avoid}
-table.t td b{color:var(--g9)}
-.tw{overflow-x:auto}
+.tw{overflow-x:auto;border-radius:16px;margin:10px 0 12px;background:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.9)}
+table.t{width:100%;border-collapse:collapse;font-size:14.5px;line-height:1.45}
+table.t thead th{background:rgba(22,110,91,.1);color:var(--acc-d);text-align:left;font-weight:700;padding:10px 12px}
+table.t td{padding:9px 12px;border-top:1px solid var(--line);vertical-align:top}
+table.t tr{break-inside:avoid}
 
-/* ---------- caixas de destaque ---------- */
-.box{border-left:4px solid var(--g7);background:var(--mint2);border-radius:0 6px 6px 0;padding:9px 14px;margin:10px 0;page-break-inside:avoid;border-top:1px solid var(--line2);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2)}
-.box .lb{display:block;font:800 11px/1.2 var(--f);letter-spacing:.07em;text-transform:uppercase;color:var(--g7);margin-bottom:5px}
-.box p:last-child{margin-bottom:0}
-.box.warn{border-left-color:var(--brown);background:#fbf7f0}
-.box.warn .lb{color:var(--brown)}
-.box.es{border-left-color:var(--blue);background:#f1f6f9}
-.box.es .lb{color:var(--blue)}
+/* ---------- quadros (estilo «Em 3 linhas» / «Para memorizar») ---------- */
+.box{border-radius:20px;padding:13px 16px;margin:12px 0;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1px 0 #fff,0 18px 36px -30px rgba(17,40,30,.35)}
+.box .lb{display:block;font-weight:700;font-size:15px;color:var(--ink);margin-bottom:4px}
+.box p{font-size:16px;margin:.2em 0}
+.box.warn{background:var(--warn-soft);border-left:4px solid var(--warn)}
+.box.warn .lb{color:var(--warn)}
+.box.es{background:var(--info-soft);border-left:4px solid var(--info)}
+.box.es .lb{color:var(--info)}
 
-/* ---------- mapas mentais ---------- */
-.mmwrap{margin:10px 0 6px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px 10px 6px}
-.mmhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 8px 6px}
-.mmhead .k{font:800 11px var(--f);letter-spacing:.08em;color:var(--g7);text-transform:uppercase}
-.mmtools{display:flex;gap:6px;flex-wrap:wrap}
-.mmtools button{border:1px solid var(--line);background:#fff;color:var(--g9);border-radius:999px;padding:5px 11px;font:600 12px var(--f)}
-.mmtools button:hover{background:var(--mint)}
-.mm svg{display:block;width:100%;height:auto}
-.mm .leaf{cursor:pointer}
-.mm .leaf rect{transition:fill .2s}
-.mm .leaf:hover rect{stroke:var(--g6)}
-.mm .hidden rect{fill:#fff;stroke:var(--g6);stroke-dasharray:4 3}
-.mm .hidden text{fill:var(--mut);font-style:italic}
-.mm .blank rect{fill:#fff;stroke-dasharray:4 3}
-.mm .blank text{fill:var(--mut)}
-.mmcap{font-size:11.5px;color:var(--mut);padding:4px 8px 6px}
-.mmlegend{font-size:12px;color:var(--mut);margin:2px 0 8px;padding:0 2px}
+/* ---------- marca-texto SINUS ---------- */
+mark{color:#111;-webkit-box-decoration-break:clone;box-decoration-break:clone;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+mark.my{background:linear-gradient(transparent 18%,#ffe45c 18%,#ffe45c 92%,transparent 92%);padding:0 2px;border-radius:2px}
+mark.mr{background:rgba(214,40,70,.16);padding:1px 4px;border-radius:4px;border-bottom:2px solid #d62846;font-weight:600}
+mark.mr b{color:#111}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:14px;color:var(--mut)}
+.howto{border-radius:20px;padding:12px 16px;margin:4px 0 10px}
 
-/* ---------- exercícios ---------- */
-.ex{margin:14px 0 22px;page-break-inside:auto}
-.qbox{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 10px;background:#fff;page-break-inside:avoid}
-.qbox .qn{font:800 11px var(--f);letter-spacing:.07em;color:var(--g7);text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px}
-.qbox .qn em{font-style:normal;color:var(--mut);font-weight:600}
-.qbox .qt{font-weight:600;color:var(--g9);margin-bottom:10px}
-.opts{display:grid;gap:7px}
-.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;border:1px solid var(--line);background:#fff;border-radius:8px;padding:9px 12px;color:var(--ink);font:500 13.5px/1.45 var(--f)}
-.opt:hover:not(:disabled){border-color:var(--g6);background:var(--mint2)}
-.opt .L{flex:none;width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:800;color:var(--g7);background:var(--mint2)}
-.opt:disabled{cursor:default}
-.opt.ok{border-color:var(--ok);background:#eaf6ef}
-.opt.ok .L{background:var(--ok);color:#fff;border-color:var(--ok)}
-.opt.no{border-color:var(--bad);background:#fbeeea}
-.opt.no .L{background:var(--bad);color:#fff;border-color:var(--bad)}
-.fb{margin-top:10px;font-size:13px;border-radius:8px;padding:10px 12px;display:none}
-.fb.show{display:block}
-.fb.ok{background:#eaf6ef;color:#14553a}
-.fb.no{background:#fbeeea;color:#7b2f20}
-.fb b{color:inherit}
-.rv{margin-top:10px}
-.rv .ans{display:none;margin-top:8px;background:var(--mint2);border-left:3px solid var(--g6);padding:10px 12px;border-radius:0 8px 8px 0;font-size:13.5px}
-.rv .ans.show{display:block}
-.btn{border:1px solid var(--g7);background:var(--g7);color:#fff;border-radius:999px;padding:7px 15px;font:700 12.5px var(--f)}
-.btn.ghost{background:#fff;color:var(--g7)}
-.btn:hover{filter:brightness(1.05)}
-.score{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:4px 0 16px}
-.score .s{background:var(--mint);color:var(--g9);border-radius:10px;padding:8px 14px;font-size:12.5px}
-.score .s b{font-size:18px;display:block;line-height:1.1;color:var(--g7)}
-.gab{font-size:12.5px;color:var(--ink);margin-top:6px}
-.gab li{margin-bottom:4px}
-
-/* ---------- flashcards ---------- */
-.deck{margin:18px 0 24px}
-.dk-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
-.dk-stats{font-size:12.5px;color:var(--mut)}
-.card3{perspective:1100px;height:230px;margin:0 auto;max-width:640px;cursor:pointer}
-.card3 .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
-.card3.flip .in{transform:rotateY(180deg)}
-.card3 .f,.card3 .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;padding:22px 26px;display:flex;flex-direction:column;justify-content:center;box-shadow:0 10px 28px rgba(28,58,47,.12);border:1px solid var(--line)}
-.card3 .f{background:#fff}
-.card3 .b{background:var(--mint);transform:rotateY(180deg)}
-.card3 .lbl{font:800 10.5px var(--f);letter-spacing:.09em;text-transform:uppercase;color:var(--g7);margin-bottom:10px}
-.card3 .txt{font:700 19px/1.35 var(--fd);color:var(--g9)}
-.card3 .b .txt{font:500 15px/1.5 var(--f);color:var(--ink)}
-.dk-ctl{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
-.dk-ctl .btn.bad{background:#fff;color:var(--bad);border-color:var(--bad)}
-.dk-ctl .btn.good{background:var(--g7);border-color:var(--g7)}
-.fl-list{width:100%;border-collapse:collapse;font-size:12.5px;margin:12px 0 16px}
-.fl-list th{background:var(--mint);text-align:left;padding:8px 10px;color:var(--g9)}
-.fl-list td{border-bottom:1px solid var(--line2);padding:7px 10px;vertical-align:top}
-.fl-list td:first-child{width:42%;font-weight:600;color:var(--g9)}
-
-/* ---------- navegação (tela) ---------- */
-.nav{position:fixed;left:0;top:0;bottom:0;width:248px;background:#fff;border-right:1px solid var(--line);padding:22px 16px;overflow:auto;z-index:5}
-.nav .logo{margin-bottom:16px}
-.nav .sec{font:800 10.5px var(--f);letter-spacing:.08em;color:var(--mut);text-transform:uppercase;margin:14px 6px 6px}
-.nav a{display:block;text-decoration:none;color:var(--ink);font-size:12.5px;padding:5px 8px;border-radius:6px;line-height:1.35}
-.nav a:hover{background:var(--mint)}
-.nav .prog{margin:14px 6px 0;font-size:12px;color:var(--mut)}
-.nav .prog div{height:6px;background:var(--line2);border-radius:99px;overflow:hidden;margin-top:6px}
-.nav .prog i{display:block;height:100%;background:var(--g6);width:0}
-.main{margin-left:248px}
-.tag-mod{display:inline-block;font:800 10.5px var(--f);letter-spacing:.07em;background:var(--mint);color:var(--g9);border-radius:6px;padding:4px 8px;margin-bottom:12px}
-.pdf-only{display:none}
-
-/* ---------- capa ---------- */
-.cover{min-height:1000px;display:flex;flex-direction:column;page-break-after:always}
-.cover .cv-top{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:20px}
-.cover .cv-top .rt{font-size:11px;letter-spacing:.07em;color:var(--mut);text-transform:uppercase}
-.cover .chip{display:inline-block;background:var(--mint);color:var(--g7);font:800 12px var(--f);letter-spacing:.06em;padding:9px 14px;border-radius:8px;margin:70px 0 26px}
-.cover h1{font-size:58px;font-weight:800;letter-spacing:-.03em}
-.cover .sub2{font-size:28px;color:var(--g7);font-weight:600;margin-top:8px}
-.cover .tag2{font-size:16px;color:var(--mut);margin:30px 0 0}
-.cover .rule{width:56px;height:3px;background:var(--g7);margin:30px 0;border-radius:3px}
-.cover .facts{font-size:14px;line-height:2}
-.cover .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:44px}
-.cover .grid div{border:1px solid var(--line);border-radius:12px;padding:16px 18px}
-.cover .grid small{display:block;font:700 11px var(--f);color:var(--g7);letter-spacing:.05em}
-.cover .grid b{font:700 17px var(--fd);color:var(--g9)}
-.cover .foot{margin-top:auto;border-top:1px solid var(--line);padding-top:16px;font-size:12px;color:var(--mut)}
-.cover .slogan{color:var(--g7);font-weight:800;font-size:15px;margin-top:40px}
-
-/* ---------- módulo ---------- */
-.modcover .list{margin-top:20px;display:grid;gap:8px}
-.modcover .list a{display:flex;gap:12px;align-items:baseline;border:1px solid var(--line);border-radius:10px;padding:12px 14px;text-decoration:none;color:var(--ink)}
-.modcover .list a b{font:800 14px var(--fd);color:var(--g7);min-width:28px}
-
-/* ---------- responsivo (tela) ---------- */
-@media (max-width:980px){.nav{display:none}.main{margin-left:0}}
-.mmhead{flex-wrap:wrap}
-@media (max-width:640px){.mm{overflow-x:auto;-webkit-overflow-scrolling:touch}.mm svg{min-width:680px}.mmwrap{padding:10px 4px 4px}.mmlegend:after{content:" Arraste para ver tudo.";}.pg{padding:30px 20px 36px;margin:12px 8px;width:auto}.h1{font-size:24px}.cover h1{font-size:40px}.cover .grid{grid-template-columns:1fr}}
-
-/* ---------- impressão A4 ---------- */
-@media print{
-  html,body{background:#fff}
-  .nav,.noprint,.dk-ctl,.mmtools,.qbox .btn,.score .btn,.dk-top .btn{display:none!important}
-  .pg{box-shadow:none;margin:0;padding:0;width:auto;border-radius:0}
-  .cap{page-break-before:always}
-  .main{margin:0}
-  .pdf-only{display:block}
-  .card3{display:none}
-  .fl-list{display:table}
-  .opt{break-inside:avoid}
-  .box,.qbox,.mmwrap,table.t tr{break-inside:avoid}
-  .mmwrap{border:0;padding:0;margin:8px 0}
-  .fb{display:none!important}
-  .qbox{border-color:#cfd9d3}
-  .rv .ans{display:block!important}
-  .rv .btn{display:none}
-  .cover{min-height:auto;height:262mm}
-  a{color:inherit;text-decoration:none}
-}
-@page{size:A4;margin:24mm 20mm 24mm 20mm}
-
-/* ==========================================================
-   Esquemas visuais: fluxograma (.flow), árvore (.tree), comparação (.cmp)
-   Blocos com detalhe (.dt) abrem ao toque (+).
-   ========================================================== */
-.c1{--c:#2a7a52;--cb:#f0f8f3}.c2{--c:#3d6f8c;--cb:#eef5f9}.c3{--c:#6d5a9a;--cb:#f4f1fa}.c4{--c:#9a6f3a;--cb:#fbf6ee}.c5{--c:#b03a2e;--cb:#fdf0ee}
-.flow{--c:#2a7a52;--cb:#f0f8f3;display:flex;flex-wrap:wrap;gap:12px 30px;margin:10px 0 12px;align-items:flex-start}
-.flow .st{position:relative;flex:1 1 120px;min-width:118px;max-width:240px;background:var(--cb);border:1.5px solid var(--c);border-radius:10px;padding:9px 11px;text-align:left}
+/* ---------- esquemas: fluxograma, árvore, comparação ---------- */
+.c1{--c:#176e5b;--cb:#eef6f2}.c2{--c:#2f5f8a;--cb:#edf3f9}.c3{--c:#6d5a9a;--cb:#f4f1fa}.c4{--c:#9a6f3a;--cb:#fbf6ee}.c5{--c:#b03a2e;--cb:#fdf0ee}
+.flow{--c:#176e5b;--cb:#eef6f2;display:flex;flex-wrap:wrap;gap:12px 30px;margin:12px 0 14px;align-items:flex-start}
+.flow .st{position:relative;flex:1 1 120px;min-width:118px;max-width:240px;background:var(--cb);border:1.5px solid var(--c);border-radius:14px;padding:10px 12px;text-align:left}
 .flow .st+.st:before{content:"→";position:absolute;left:-24px;top:50%;transform:translateY(-50%);color:#8a958f;font:700 18px/1 var(--f)}
-.st>b,.br>b{display:block;font:700 13.5px/1.25 var(--f);color:var(--c)}
-.st small,.br span{display:block;font-size:12px;line-height:1.35;color:var(--ink);margin-top:3px}
-.dt{display:none;font-size:12px;line-height:1.45;color:var(--ink);margin:6px 0 0;padding-top:6px;border-top:1px dashed var(--c)}
-.has{cursor:pointer;padding-right:26px!important}
-.has:after{content:"+";position:absolute;right:8px;top:7px;width:16px;height:16px;border-radius:50%;background:var(--c);color:#fff;font:800 12px/16px var(--f);text-align:center}
+.st>b,.br>b{display:block;font:700 14.5px/1.25 var(--f);color:var(--c)}
+.st small,.br span{display:block;font-size:13px;line-height:1.4;color:#1c2b24;margin-top:3px}
+.dt{display:none;font-size:13px;line-height:1.45;color:#1c2b24;margin:6px 0 0;padding-top:6px;border-top:1px dashed var(--c)}
+.has{cursor:pointer;padding-right:28px!important}
+.has:after{content:"+";position:absolute;right:9px;top:8px;width:17px;height:17px;border-radius:50%;background:var(--c);color:#fff;font:800 13px/17px var(--f);text-align:center}
 .has.open .dt{display:block}
 .has.open:after{content:"–"}
-.has:hover{box-shadow:0 3px 12px rgba(28,58,47,.12)}
-.tree{display:grid;grid-template-columns:minmax(110px,170px) 1fr;gap:0 30px;align-items:center;margin:10px 0 12px}
-.tree .root{background:#2a7a52;color:#fff;border-radius:10px;padding:12px 14px;font:800 14px/1.3 var(--f);text-align:center}
-.tree .root small{display:block;font-weight:500;font-size:11.5px;opacity:.9;margin-top:3px}
-.tree .brs{display:grid;gap:8px;border-left:2px solid #c9d8cf;padding-left:18px}
-.tree .br{position:relative;background:var(--cb,#f3f9f5);border-left:4px solid var(--c,#2a7a52);border-radius:0 9px 9px 0;padding:8px 12px}
-.tree .br:before{content:"";position:absolute;left:-24px;top:50%;width:20px;height:2px;background:#c9d8cf}
-.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin:10px 0 12px}
-.cmp .cd{border:1.5px solid var(--c,#2a7a52);border-radius:10px;overflow:hidden;background:#fff}
-.cmp .cd h4{background:var(--c,#2a7a52);color:#fff;font:800 13px var(--f);padding:7px 12px;margin:0;letter-spacing:.01em}
-.cmp .cd ul{margin:0;padding:8px 12px 9px 26px;font-size:12.5px;line-height:1.45}
+.has:hover{box-shadow:0 6px 16px -8px rgba(17,40,30,.35)}
+.tree{display:grid;grid-template-columns:minmax(110px,170px) 1fr;gap:0 30px;align-items:center;margin:12px 0 14px}
+.tree .root{background:linear-gradient(160deg,#2a8d74,#176e5b);color:#fff;border-radius:16px;padding:13px 14px;font:700 15px/1.3 var(--f);text-align:center;box-shadow:0 12px 24px -16px rgba(17,40,30,.6)}
+.tree .root small{display:block;font-weight:500;font-size:12px;opacity:.92;margin-top:3px}
+.tree .brs{display:grid;gap:8px;border-left:2px solid rgba(22,110,91,.25);padding-left:18px}
+.tree .br{position:relative;background:var(--cb,#eef6f2);border-left:4px solid var(--c,#176e5b);border-radius:0 12px 12px 0;padding:9px 12px}
+.tree .br:before{content:"";position:absolute;left:-24px;top:50%;width:20px;height:2px;background:rgba(22,110,91,.25)}
+.cmp{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin:12px 0 14px}
+.cmp .cd{border:1.5px solid var(--c,#176e5b);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.85)}
+.cmp .cd h4{background:var(--c,#176e5b);color:#fff;font:700 14px var(--f);padding:8px 13px;margin:0}
+.cmp .cd ul{margin:0;padding:9px 13px 10px 28px;font-size:14px;line-height:1.45}
 .cmp .cd li{margin-bottom:2px}
-.vsn{font:800 11px var(--f);letter-spacing:.08em;color:var(--mut);text-transform:uppercase;margin:12px 0 -4px}
+
+/* ---------- mapa mental dentro do capítulo ---------- */
+details.mmdet{margin-top:14px;border-radius:20px;background:var(--acc-soft);border:1px solid rgba(22,110,91,.18);padding:4px 14px}
+details.mmdet summary{cursor:pointer;font-weight:700;color:var(--acc-d);padding:10px 0;list-style:none;display:flex;justify-content:space-between;align-items:center}
+details.mmdet summary::-webkit-details-marker{display:none}
+details.mmdet summary:after{content:"Abrir";font-size:13px;font-weight:600;color:var(--acc);background:#fff;border-radius:999px;padding:3px 11px}
+details.mmdet[open] summary:after{content:"Fechar"}
+.mmwrap{margin:4px 0 10px;background:#fff;border-radius:16px;padding:12px 8px 6px}
+.mmhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 8px 6px;flex-wrap:wrap}
+.mmhead .k{font:700 12px var(--f);letter-spacing:.08em;color:var(--acc);text-transform:uppercase}
+.mmtools{display:flex;gap:6px;flex-wrap:wrap}
+.mmtools button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font:600 12.5px var(--f)}
+.mmtools button:hover{background:var(--acc-soft)}
+.mm svg{display:block;width:100%;height:auto}
+.mm .leaf{cursor:pointer}
+.mm .leaf:hover rect{stroke:var(--acc)}
+.mm .hidden rect{fill:#fff;stroke:var(--acc);stroke-dasharray:4 3}
+.mm .hidden text{fill:var(--mut);font-style:italic}
+.mmlegend{font-size:13.5px;color:var(--mut);margin:0 0 8px}
+
+/* ---------- exercícios ---------- */
+.qbox{border-radius:20px;padding:16px 18px;margin:0 0 12px;background:var(--glass);-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);border:1px solid rgba(255,255,255,.85);box-shadow:inset 0 1px 0 #fff,0 18px 36px -30px rgba(17,40,30,.35);break-inside:avoid}
+.qbox .qn{display:flex;justify-content:space-between;gap:8px;align-items:center;font-size:13px;color:var(--mut);font-weight:600;margin-bottom:6px}
+.qbox .qn em{font-style:normal;font-size:12px;font-weight:600;color:var(--acc);background:var(--acc-soft);border-radius:999px;padding:3px 10px}
+.qbox .qt{font-size:17px;font-weight:600;margin-bottom:10px;line-height:1.45}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:10px;align-items:flex-start;text-align:left;width:100%;border:1px solid rgba(17,40,30,.12);background:rgba(255,255,255,.85);border-radius:14px;padding:10px 13px;font:500 15.5px/1.45 var(--f)}
+.opt:hover:not(:disabled){border-color:var(--acc)}
+.opt .L{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:var(--acc);background:var(--acc-soft)}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok)}
+.opt.ok .L{background:var(--ok);color:#fff}
+.opt.no{background:var(--bad-soft);border-color:var(--bad)}
+.opt.no .L{background:var(--bad);color:#fff}
+.fb{display:none;margin-top:10px;border-radius:12px;padding:10px 13px;font-size:15px}
+.fb.show{display:block}
+.fb.ok{background:var(--ok-soft)}.fb.no{background:var(--bad-soft)}
+.rv .ans{display:none;margin-top:10px;background:var(--acc-soft);border-radius:12px;padding:10px 13px;font-size:15.5px}
+.rv .ans.show{display:block}
+.btn{border-radius:999px;border:1px solid transparent;background:linear-gradient(160deg,#2a8d74,#176e5b);color:#fff;padding:8px 16px;font:600 14px var(--f);min-height:40px}
+.btn.ghost{background:rgba(255,255,255,.85);color:var(--acc-d);border-color:rgba(22,110,91,.25)}
+.score{display:flex;gap:0;flex-wrap:wrap;align-items:center;border-radius:20px;padding:14px 18px;margin:12px 0 14px;background:var(--glass);border:1px solid rgba(255,255,255,.85)}
+.score .s{padding:0 18px;border-left:1px solid var(--line);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);font-weight:600}
+.score .s:first-child{padding-left:0;border-left:0}
+.score .s b{display:block;font-size:26px;letter-spacing:-.02em;color:#111;text-transform:none}
+.score .btn{margin-left:auto}
+.gab{font-size:14px}
+
+/* ---------- flashcards ---------- */
+.deck{margin:12px 0 24px}
+.dk-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dk-stats{font-size:14px;color:var(--mut)}
+.card3{perspective:1100px;height:240px;margin:0 auto;max-width:680px;cursor:pointer}
+.card3 .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.card3.flip .in{transform:rotateY(180deg)}
+.card3 .f,.card3 .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:24px;padding:24px 28px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(255,255,255,.9);box-shadow:inset 0 1px 0 #fff,0 24px 48px -30px rgba(17,40,30,.45)}
+.card3 .f{background:var(--glass);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+.card3 .b{background:linear-gradient(160deg,#e9f6ef,#d9efe4);transform:rotateY(180deg)}
+.card3 .lbl{font:700 12px var(--f);letter-spacing:.08em;text-transform:uppercase;color:var(--acc);margin-bottom:10px}
+.card3 .txt{font:700 20px/1.35 var(--f);color:#111}
+.card3 .b .txt{font:500 16.5px/1.5 var(--f)}
+.dk-ctl{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.dk-ctl .btn.bad{background:#fff;color:var(--bad);border-color:var(--bad)}
+.fl-list{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0}
+.fl-list th{text-align:left;padding:8px 10px;background:rgba(22,110,91,.1)}
+.fl-list td{border-top:1px solid var(--line);padding:7px 10px;vertical-align:top}
+.pdf-only{display:none}
+
+/* ---------- rodapé ---------- */
+footer.pe{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:36px 0 0;padding-top:18px;border-top:1px solid rgba(17,40,30,.12);font-size:13.5px;color:var(--mut)}
+footer.pe svg{height:28px;width:auto}
+
+/* ---------- celular ---------- */
 @media (max-width:640px){
- .flow{flex-direction:column;align-items:stretch;gap:22px}
- .flow .st{flex:none;max-width:none}
- .flow .st+.st:before{content:"↓";left:50%;top:-20px;transform:translateX(-50%)}
- .tree{grid-template-columns:1fr;gap:10px}
+  body{font-size:16px}
+  .cap{padding:18px 16px 16px;border-radius:22px}
+  .cap h3{font-size:20px}
+  .cap p{font-size:16px}
+  nav.tabs{gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  nav.tabs button{flex:none}
+  nav.tabs button{padding:8px 13px;font-size:15px}
+  .flow{flex-direction:column;align-items:stretch;gap:22px}
+  .flow .st{flex:none;max-width:none}
+  .flow .st+.st:before{content:"↓";left:50%;top:-20px;transform:translateX(-50%)}
+  .tree{grid-template-columns:1fr;gap:10px}
+  .mm{overflow-x:auto}.mm svg{min-width:680px}
+  .mmlegend:after{content:" Arraste para ver tudo."}
+  .score .s{padding:0 12px}
 }
-@media print{.dt{display:block!important}.has:after{display:none}.flow,.tree,.cmp{break-inside:avoid}}
+
+/* ---------- impressão ---------- */
+@media print{
+  body::before,nav.tabs,.toc,.mmtools,.dk-ctl,.dk-top .btn,.score .btn,.rv .btn,label.check{display:none!important}
+  body{background:#fff;padding:0}
+  [data-pane]{display:block!important}
+  .cap,.box,.qbox,.score{box-shadow:none!important;backdrop-filter:none!important;background:#fff!important;border:1px solid #dde5e0!important}
+  .dt,.rv .ans{display:block!important}
+  .has:after{display:none}
+  details.mmdet>*{display:block}
+  .card3{display:none}.pdf-only{display:block}.fl-list{display:table}
+  .cap,.flow,.tree,.cmp,.box,.qbox{break-inside:avoid}
+}
+@page{size:A4;margin:16mm 14mm}
 
 </style>
 </head>
 <body>
-<nav class="nav" aria-label="Sumário"><span class="logo"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a7a52" stroke-width="2.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6" fill="#2a7a52" stroke="none"/></svg></span><span class="wm">sinus<i>.</i></span></span><div class="prog">Seu progresso<div><i id="progbar"></i></div><span id="progtxt"></span></div><div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span><span><b style="color:#2a7a52">+</b> toque para abrir o detalhe</span></div>
-<a href="#capa">Capa</a><a href="#antes">Antes de começar</a><a href="#sumario">Módulos e assuntos</a><div class="sec">Módulo 1 · Sistema nervoso autónomo</div><a href="#cap01">01. Antes do fármaco, entenda o circuito</a><a href="#cap02">02. Quem libera o quê — e em qual receptor?</a><a href="#cap03">03. Sinapse: fabricação, liberação e controle</a><a href="#cap04">04. Receptores nicotínicos e muscarínicos</a><a href="#ex1">✎ Exercícios</a><a href="#fc1">⧉ Flashcards</a><div class="sec">Módulo 2 · Fármacos colinérgicos</div><a href="#cap05">05. Agonistas diretos: imitar a acetilcolina</a><a href="#cap06">06. Anticolinesterásicos: preservar o mensageiro</a><a href="#cap07">07. Miastenia gravis, Alzheimer e aplicações</a><a href="#cap08">08. Intoxicação por organofosforados</a><a href="#cap09">09. Antimuscarínicos: prever os efeitos por órgão</a><a href="#cap10">10. Estrutura química, BHE e escolha do órgão</a><a href="#cap11">11. Síndrome anticolinérgica e carga cumulativa</a><a href="#ex2">✎ Exercícios</a><a href="#fc2">⧉ Flashcards</a><div class="sec">Módulo 3 · Fármacos adrenérgicos</div><a href="#cap12">12. Catecolaminas: da tirosina à resposta</a><a href="#cap13">13. Adrenoceptores: cinco chaves para os efeitos</a><a href="#cap14">14. Agonistas α: vasos, nariz e controle central</a><a href="#cap15">15. Adrenalina, noradrenalina, dopamina e dobutamina</a><a href="#cap16">16. β2, β3 e agentes de ação indireta</a><a href="#cap17">17. Antagonistas α e a reversão de adrenalina</a><a href="#cap18">18. β-bloqueadores: seletividade e diferenças</a><a href="#ex3">✎ Exercícios</a><a href="#fc3">⧉ Flashcards</a><div class="sec">Módulo 4 · AINEs e analgésicos</div><a href="#cap19">19. Ácido araquidônico e eicosanoides</a><a href="#cap20">20. Quatro efeitos — e os limites dessa regra</a><a href="#cap21">21. Estômago, rim e circulação: prever os riscos</a><a href="#cap22">22. Salicilatos: por que AAS é diferente</a><a href="#cap23">23. Famílias e fármacos: comparar sem decorar isoladamente</a><a href="#cap24">24. Paracetamol e dipirona: não cabem na mesma regra</a><a href="#ex4">✎ Exercícios</a><a href="#fc4">⧉ Flashcards</a><div class="sec">Módulo 5 · Dor e opioides</div><a href="#cap25">25. Dor, história e vocabulário</a><a href="#cap26">26. Receptores e interrupção do sinal doloroso</a><a href="#cap27">27. Efeitos sistêmicos e comparação entre fármacos</a><a href="#ex5">✎ Exercícios</a><a href="#fc5">⧉ Flashcards</a><div class="sec">Módulo 6 · Corticoides</div><a href="#cap28">28. Córtex suprarrenal, hormônios e controle</a><a href="#cap29">29. Do receptor intracelular à ação antiinflamatória</a><a href="#cap30">30. Potência, duração, via e metabolismo</a><a href="#cap31">31. Metabolismo e reações adversas: uma mesma história</a><a href="#cap32">32. Aplicações e retirada: interpretar sem generalizar</a><a href="#ex6">✎ Exercícios</a><a href="#fc6">⧉ Flashcards</a><div class="sec">Módulo 7 · Integração e treino</div><a href="#cap33">33. Treino de mecanismos — responda antes de conferir</a><a href="#cap34">34. Nove perguntas da aula de corticoides</a><a href="#ex7">✎ Exercícios</a><a href="#fc7">⧉ Flashcards</a><div class="sec">Apêndice</div><a href="#fichas">Fichas de doses de referência</a><a href="#fontes">Fontes, divergências e créditos</a></nav>
-<main class="main">
-<section class="pg cover" id="capa">
-<div class="cv-top"><span class="logo"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a7a52" stroke-width="2.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6" fill="#2a7a52" stroke="none"/></svg></span><span class="wm">sinus<i>.</i></span></span><span class="rt">Cadernos de Medicina</span></div>
-<span class="chip">FARMACOLOGÍA I · P2 · EDIÇÃO COMPLETA</span>
-<h1>Farmacología</h1>
-<div class="sub2">Segunda prova parcial</div>
-<p class="tag2">Entender o mecanismo. Explicar a resposta.</p>
-<div class="rule"></div>
-<div class="facts">Explicações em português · termos técnicos em espanhol<br>34 assuntos · 34 mapas mentais para completar · 79 exercícios · 68 flashcards</div>
-<div class="grid">
-<div><small>01–02</small><b>SNA e colinérgicos</b></div>
-<div><small>03</small><b>Adrenérgicos</b></div>
-<div><small>04–05</small><b>AINEs e opioides</b></div>
-<div><small>06–07</small><b>Corticoides e treino</b></div>
-</div>
-<p class="slogan">Seu estudo. Seu tempo. Seu ritmo.</p>
-<div class="foot">Base: aulas do Dr. Cristhiam Gimenez · UCP / CDE · Clases 6, 7, 8 e 9<br>Autoria: Felipe Guimarães de Souza · Edição didática SINUS · todos os direitos reservados</div>
-</section>
-
-<section class="pg cap" id="antes">
-<span class="eyebrow">Antes de começar</span>
-<h1 class="h1">Estudar com critério. Responder com precisão.</h1>
-<p class="lead">Toda a P2 em um caderno: mecanismos, classificações, doses de referência, intoxicações e o questionário da Clase 9.</p>
-
-<h3 class="sub">Como estudar</h3>
-<p>Leia o assunto → complete o mapa → faça os exercícios → passe os flashcards.</p>
-<h3 class="sub">Destaques</h3>
-<div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span><span><b style="color:#2a7a52">+</b> toque para abrir o detalhe</span></div>
-<h3 class="sub">Quadros</h3>
-<ul class="pl">
-<li><b>Entenda melhor:</b> o mecanismo passo a passo.</li>
-<li><b>Precisão:</b> o erro comum e a versão correta (R1–R12).</li>
-<li><b>Aplicação na prova:</b> o raciocínio cobrado.</li>
-<li><b>Respuesta en español:</b> a frase pronta para a prova.</li>
-</ul>
-<p>Seu progresso fica salvo neste navegador.</p>
-<div class="box warn"><span class="lb">Doses</span><p>Referências das aulas para estudo, não protocolo. Confira bula e diretriz vigente.</p></div>
-</section>
-<section class="pg cap modcover" id="sumario"><span class="eyebrow">Guia de navegação</span><h1 class="h1">Módulos e assuntos</h1><div class="list"><a href="#mod1"><b>01</b><span><strong>Sistema nervoso autónomo</strong> · Clase 6<br><small>Antes do fármaco, entenda o circuito · Quem libera o quê — e em qual receptor? · Sinapse: fabricação, liberação e controle · Receptores nicotínicos e muscarínicos</small></span></a><a href="#mod2"><b>02</b><span><strong>Fármacos colinérgicos</strong> · Clase 6<br><small>Agonistas diretos: imitar a acetilcolina · Anticolinesterásicos: preservar o mensageiro · Miastenia gravis, Alzheimer e aplicações · Intoxicação por organofosforados · Antimuscarínicos: prever os efeitos por órgão · Estrutura química, BHE e escolha do órgão · Síndrome anticolinérgica e carga cumulativa</small></span></a><a href="#mod3"><b>03</b><span><strong>Fármacos adrenérgicos</strong> · Clase 7<br><small>Catecolaminas: da tirosina à resposta · Adrenoceptores: cinco chaves para os efeitos · Agonistas α: vasos, nariz e controle central · Adrenalina, noradrenalina, dopamina e dobutamina · β2, β3 e agentes de ação indireta · Antagonistas α e a reversão de adrenalina · β-bloqueadores: seletividade e diferenças</small></span></a><a href="#mod4"><b>04</b><span><strong>AINEs e analgésicos</strong> · Clase 8<br><small>Ácido araquidônico e eicosanoides · Quatro efeitos — e os limites dessa regra · Estômago, rim e circulação: prever os riscos · Salicilatos: por que AAS é diferente · Famílias e fármacos: comparar sem decorar isoladamente · Paracetamol e dipirona: não cabem na mesma regra</small></span></a><a href="#mod5"><b>05</b><span><strong>Dor e opioides</strong> · Clase 8<br><small>Dor, história e vocabulário · Receptores e interrupção do sinal doloroso · Efeitos sistêmicos e comparação entre fármacos</small></span></a><a href="#mod6"><b>06</b><span><strong>Corticoides</strong> · Clase 9<br><small>Córtex suprarrenal, hormônios e controle · Do receptor intracelular à ação antiinflamatória · Potência, duração, via e metabolismo · Metabolismo e reações adversas: uma mesma história · Aplicações e retirada: interpretar sem generalizar</small></span></a><a href="#mod7"><b>07</b><span><strong>Integração e treino</strong> · Clases 6–9<br><small>Treino de mecanismos — responda antes de conferir · Nove perguntas da aula de corticoides</small></span></a></div></section>
-<section class="pg cap modcover" id="mod1"><span class="tag-mod">MÓDULO 01 · CLASE 6</span><h1 class="h1">Sistema nervoso autónomo</h1><p class="lead">O circuito antes do fármaco: quem libera o quê, a sinapse colinérgica e os receptores nicotínicos e muscarínicos.</p>
-<div class="list"><a href="#cap01"><b>01</b><span>Antes do fármaco, entenda o circuito</span></a><a href="#cap02"><b>02</b><span>Quem libera o quê — e em qual receptor?</span></a><a href="#cap03"><b>03</b><span>Sinapse: fabricação, liberação e controle</span></a><a href="#cap04"><b>04</b><span>Receptores nicotínicos e muscarínicos</span></a>
-<a href="#ex1"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc1"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
-<section class="pg cap" id="cap01">
-<span class="eyebrow">01 · Sistema nervoso autónomo</span>
-<h1 class="h1">01. Antes do fármaco, entenda o circuito</h1>
+<div class="wrap">
+<div class="brandbar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" role="img" aria-label="SINUS"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a9a6c"/><stop offset="1" stop-color="#155B48"/></linearGradient></defs><rect x="2" y="4" width="56" height="56" rx="14" fill="url(#sg)"/><path d="M9.0 33.0 L14.9 33.0 C16.1 33.0 16.6 26.9 18.7 26.9 L20.8 26.9 L21.2 33.0 L22.4 33.0 L24.5 33.0 L25.4 35.8 L26.2 35.8 L28.3 15.4 L30.4 46.0 L31.7 33.0 L33.8 33.0 C35.5 33.0 36.3 24.2 39.2 24.2 L42.2 24.2 L43.0 33.0 L44.7 33.0 L51.0 33.0" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M94.595703125 50.5947265625C103.2333984375 50.5947265625 109.435546875 46.4033203125 109.435546875 39.8896484375C109.435546875 35.3017578125 106.4052734375 32.5263671875 100.1181640625 31.3369140625L94.0576171875 30.2041015625C91.3388671875 29.666015625 90.4892578125 28.6748046875 90.4892578125 27.400390625C90.4892578125 25.7861328125 92.3583984375 24.73828125 94.7373046875 24.73828125C97.3994140625 24.73828125 99.2119140625 25.984375 99.806640625 28.1083984375L108.529296875 26.720703125C107.4248046875 21.283203125 102.4970703125 17.94140625 94.5673828125 17.94140625C86.0712890625 17.94140625 80.6337890625 21.6796875 80.6337890625 27.9951171875C80.6337890625 32.837890625 83.7490234375 35.9248046875 90.0078125 37.1142578125L95.5302734375 38.1904296875C98.1640625 38.728515625 99.41015625 39.5498046875 99.41015625 41.0224609375C99.41015625 42.63671875 97.7392578125 43.65625 94.9638671875 43.65625C91.59375 43.65625 89.8095703125 42.240234375 89.0166015625 39.4931640625L79.8408203125 40.9375C80.9453125 46.998046875 86.49609375 50.5947265625 94.595703125 50.5947265625Z M111.8948828125 50.0H121.778671875V18.337890625H111.8948828125ZM116.8226171875 14.6279296875C119.6546484375 14.6279296875 121.94859375 12.50390625 121.94859375 9.8701171875C121.94859375 7.236328125 119.6546484375 5.1123046875 116.8226171875 5.1123046875C114.01890625 5.1123046875 111.7249609375 7.236328125 111.7249609375 9.8701171875C111.7249609375 12.50390625 114.01890625 14.6279296875 116.8226171875 14.6279296875Z M135.594453125 31.931640625C135.594453125 28.25 137.7751171875 26.0693359375 141.0036328125 26.0693359375C144.2321484375 26.0693359375 146.1579296875 28.193359375 146.1579296875 31.76171875V50.0H156.04171875V29.8359375C156.04171875 22.6708984375 151.7087109375 17.94140625 145.0817578125 17.94140625C139.95578125 17.94140625 136.840546875 20.7734375 135.1696484375 25.1630859375L134.9997265625 18.337890625H125.7106640625V50.0H135.594453125Z M170.93367187500002 50.396484375C176.03132812500002 50.396484375 179.14656250000002 47.564453125 180.84578125000002 43.146484375L180.98738281250002 50.0H190.27644531250002V18.337890625H180.39265625000002V36.40625C180.39265625000002 40.087890625 178.21199218750002 42.2685546875 174.98347656250002 42.2685546875C171.75496093750002 42.2685546875 169.82917968750002 40.14453125 169.82917968750002 36.576171875V18.337890625H159.94539062500002V38.501953125C159.94539062500002 45.6669921875 164.27839843750002 50.396484375 170.93367187500002 50.396484375Z M207.518984375 50.5947265625C216.1566796875 50.5947265625 222.358828125 46.4033203125 222.358828125 39.8896484375C222.358828125 35.3017578125 219.3285546875 32.5263671875 213.0414453125 31.3369140625L206.9808984375 30.2041015625C204.2621484375 29.666015625 203.4125390625 28.6748046875 203.4125390625 27.400390625C203.4125390625 25.7861328125 205.2816796875 24.73828125 207.6605859375 24.73828125C210.3226953125 24.73828125 212.1351953125 25.984375 212.729921875 28.1083984375L221.452578125 26.720703125C220.3480859375 21.283203125 215.4203515625 17.94140625 207.4906640625 17.94140625C198.9945703125 17.94140625 193.5570703125 21.6796875 193.5570703125 27.9951171875C193.5570703125 32.837890625 196.6723046875 35.9248046875 202.93109375 37.1142578125L208.4535546875 38.1904296875C211.08734375 38.728515625 212.3334375 39.5498046875 212.3334375 41.0224609375C212.3334375 42.63671875 210.6625390625 43.65625 207.8871484375 43.65625C204.51703125 43.65625 202.7328515625 42.240234375 201.9398828125 39.4931640625L192.7641015625 40.9375C193.86859375 46.998046875 199.419375 50.5947265625 207.518984375 50.5947265625Z" fill="#10352a"/><circle cx="230.6" cy="46" r="5.6" fill="#0e8a5f"/></svg><span class="rt">Cadernos de Medicina</span></div>
+<header class="top">
+<div class="kicker">Farmacología I · UCP · P2</div>
+<h1>Apostila de farmacologia</h1>
+<p class="lede">SNA, colinérgicos, adrenérgicos, AINEs, opioides e corticoides. Explicação em português com os termos em espanhol, esquemas interativos e exercícios que corrigem na hora.</p>
+<div class="progress"><i id="progbar"></i></div>
+<div class="mini" id="progtxt">Capítulos lidos: 0 de 34</div>
+</header>
+<nav class="tabs" role="tablist">
+<button role="tab" data-tab="apostila" aria-selected="true">Apostila</button>
+<button role="tab" data-tab="exercicios" aria-selected="false">Exercícios <span class="mini">62</span></button>
+<button role="tab" data-tab="flashcards" aria-selected="false">Flashcards <span class="mini">68</span></button>
+<button role="tab" data-tab="consulta" aria-selected="false">Consulta</button>
+</nav>
+<main>
+<div data-pane="apostila">
+<div class="howto glass"><div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span><span><b style="color:#176e5b">+</b> toque para abrir o detalhe</span></div></div>
+<nav class="toc" aria-label="Capítulos"><a href="#cap01" data-toc="01">01. Antes do fármaco, entenda o circuito</a><a href="#cap02" data-toc="02">02. Quem libera o quê — e em qual receptor?</a><a href="#cap03" data-toc="03">03. Sinapse: fabricação, liberação e controle</a><a href="#cap04" data-toc="04">04. Receptores nicotínicos e muscarínicos</a><a href="#cap05" data-toc="05">05. Agonistas diretos: imitar a acetilcolina</a><a href="#cap06" data-toc="06">06. Anticolinesterásicos: preservar o mensageiro</a><a href="#cap07" data-toc="07">07. Miastenia gravis, Alzheimer e aplicações</a><a href="#cap08" data-toc="08">08. Intoxicação por organofosforados</a><a href="#cap09" data-toc="09">09. Antimuscarínicos: prever os efeitos por órgão</a><a href="#cap10" data-toc="10">10. Estrutura química, BHE e escolha do órgão</a><a href="#cap11" data-toc="11">11. Síndrome anticolinérgica e carga cumulativa</a><a href="#cap12" data-toc="12">12. Catecolaminas: da tirosina à resposta</a><a href="#cap13" data-toc="13">13. Adrenoceptores: cinco chaves para os efeitos</a><a href="#cap14" data-toc="14">14. Agonistas α: vasos, nariz e controle central</a><a href="#cap15" data-toc="15">15. Adrenalina, noradrenalina, dopamina e dobutamina</a><a href="#cap16" data-toc="16">16. β2, β3 e agentes de ação indireta</a><a href="#cap17" data-toc="17">17. Antagonistas α e a reversão de adrenalina</a><a href="#cap18" data-toc="18">18. β-bloqueadores: seletividade e diferenças</a><a href="#cap19" data-toc="19">19. Ácido araquidônico e eicosanoides</a><a href="#cap20" data-toc="20">20. Quatro efeitos — e os limites dessa regra</a><a href="#cap21" data-toc="21">21. Estômago, rim e circulação: prever os riscos</a><a href="#cap22" data-toc="22">22. Salicilatos: por que AAS é diferente</a><a href="#cap23" data-toc="23">23. Famílias e fármacos: comparar sem decorar isoladamente</a><a href="#cap24" data-toc="24">24. Paracetamol e dipirona: não cabem na mesma regra</a><a href="#cap25" data-toc="25">25. Dor, história e vocabulário</a><a href="#cap26" data-toc="26">26. Receptores e interrupção do sinal doloroso</a><a href="#cap27" data-toc="27">27. Efeitos sistêmicos e comparação entre fármacos</a><a href="#cap28" data-toc="28">28. Córtex suprarrenal, hormônios e controle</a><a href="#cap29" data-toc="29">29. Do receptor intracelular à ação antiinflamatória</a><a href="#cap30" data-toc="30">30. Potência, duração, via e metabolismo</a><a href="#cap31" data-toc="31">31. Metabolismo e reações adversas: uma mesma história</a><a href="#cap32" data-toc="32">32. Aplicações e retirada: interpretar sem generalizar</a><a href="#cap33" data-toc="33">33. Treino de mecanismos — responda antes de conferir</a><a href="#cap34" data-toc="34">34. Nove perguntas da aula de corticoides</a></nav>
+<section class="grupo" id="mod1"><div class="grupo-h"><h2>Sistema nervoso autónomo</h2><span class="mini">4 capítulos · Clase 6</span></div><article class="cap" id="cap01" data-cap="01"><div class="head"><div><span class="num">01 · Sistema nervoso autónomo</span><h3>Antes do fármaco, entenda o circuito</h3></div><label class="check"><input type="checkbox" data-lido="01"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 5–23</div>
 
 <p class="lead">O <b>SNA</b> <mark class="my">regula funções viscerais sem decisão consciente</mark> (FC, PA, motilidade, pupila, micção, secreções) e mantém a <b>homeostasis</b>.</p>
@@ -338,13 +300,8 @@ table.t td b{color:var(--g9)}
 </div>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«El sistema nervioso autónomo regula de forma involuntaria las funciones viscerales y contribuye al mantenimiento de la homeostasis».</p></div>
-</section>
-<section class="pg cap" id="mm01"><span class="eyebrow">Mapa mental 01 · Recuperação ativa</span><h1 class="h1">Sistema nervoso autónomo</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="01"></div></div></section>
-<section class="pg cap" id="cap02">
-<span class="eyebrow">01 · Sistema nervoso autónomo</span>
-<h1 class="h1">02. Quem libera o quê — e em qual receptor?</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="01"></div></div></details></article>
+<article class="cap" id="cap02" data-cap="02"><div class="head"><div><span class="num">02 · Sistema nervoso autónomo</span><h3>Quem libera o quê — e em qual receptor?</h3></div><label class="check"><input type="checkbox" data-lido="02"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 14–22, 30–41</div>
 
 <p class="lead"><b>Colinérgico</b> = usa ACh. <b>Adrenérgico</b> = usa catecolaminas. O nome do ramo não define o transmissor.</p>
@@ -371,13 +328,8 @@ table.t td b{color:var(--g9)}
 <div class="flow"><div class="st c1"><b>1. O que chega?</b><small>Substância no tecido</small></div><div class="st c2"><b>2. Qual receptor?</b><small>Disponível no órgão</small></div><div class="st c3"><b>3. Qual resposta?</b><small>Efeito do receptor</small></div></div>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>«Todas las fibras preganglionares del SNA» → <mark class="my"><b>acetilcolina e receptor nicotínico</b></mark>.</p></div>
-</section>
-<section class="pg cap" id="mm02"><span class="eyebrow">Mapa mental 02 · Recuperação ativa</span><h1 class="h1">Neurotransmissores</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="02"></div></div></section>
-<section class="pg cap" id="cap03">
-<span class="eyebrow">01 · Sistema nervoso autónomo</span>
-<h1 class="h1">03. Sinapse: fabricação, liberação e controle</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="02"></div></div></details></article>
+<article class="cap" id="cap03" data-cap="03"><div class="head"><div><span class="num">03 · Sistema nervoso autónomo</span><h3>Sinapse: fabricação, liberação e controle</h3></div><label class="check"><input type="checkbox" data-lido="03"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 23–29; figura: página 24</div>
 
 <p class="lead">Seis passos da sinapse colinérgica. Toque no <b>+</b> para ver o alvo farmacológico.</p>
@@ -403,13 +355,8 @@ table.t td b{color:var(--g9)}
 </tbody></table></div>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Agonista aciona · antagonista bloqueia · inibidor da degradação aumenta o transmissor. Bloquear síntese ou liberação dá <mark class="my"><b>menor transmissão mesmo com receptor intacto</b></mark>.</p></div>
-</section>
-<section class="pg cap" id="mm03"><span class="eyebrow">Mapa mental 03 · Recuperação ativa</span><h1 class="h1">Sinapse colinérgica</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="03"></div></div></section>
-<section class="pg cap" id="cap04">
-<span class="eyebrow">01 · Sistema nervoso autónomo</span>
-<h1 class="h1">04. Receptores nicotínicos e muscarínicos</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="03"></div></div></details></article>
+<article class="cap" id="cap04" data-cap="04"><div class="head"><div><span class="num">04 · Sistema nervoso autónomo</span><h3>Receptores nicotínicos e muscarínicos</h3></div><label class="check"><input type="checkbox" data-lido="04"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 30–41; figura: página 37</div>
 
 <div class="tree"><div class="root">Receptor colinérgico</div><div class="brs">
@@ -433,20 +380,9 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">Gq não significa contração em qualquer célula</mark>. No endotélio: ↑ Ca²⁺ → NO → o vaso relaxa.</p></div>
 <p><b>Atropina</b> bloqueia só muscarínicos; não reverte bloqueio de Nm.</p>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="04"></div></div></details></article>
 </section>
-<section class="pg cap" id="mm04"><span class="eyebrow">Mapa mental 04 · Recuperação ativa</span><h1 class="h1">Receptores colinérgicos</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="04"></div></div></section>
-<section class="pg cap" id="ex1"><span class="eyebrow">Exercícios · Módulo 01</span><h1 class="h1">Pratique: Sistema nervoso autónomo</h1>
-<div class="quiz ex" data-quiz="m1"></div></section>
-<section class="pg cap" id="fc1"><span class="eyebrow">Flashcards · Módulo 01</span><h1 class="h1">Flashcards: Sistema nervoso autónomo</h1>
-<div class="deck" data-deck="m1"></div></section>
-<section class="pg cap modcover" id="mod2"><span class="tag-mod">MÓDULO 02 · CLASE 6</span><h1 class="h1">Fármacos colinérgicos</h1><p class="lead">Agonistas diretos, anticolinesterásicos, miastenia e Alzheimer, organofosforados, antimuscarínicos e síndrome anticolinérgica.</p>
-<div class="list"><a href="#cap05"><b>05</b><span>Agonistas diretos: imitar a acetilcolina</span></a><a href="#cap06"><b>06</b><span>Anticolinesterásicos: preservar o mensageiro</span></a><a href="#cap07"><b>07</b><span>Miastenia gravis, Alzheimer e aplicações</span></a><a href="#cap08"><b>08</b><span>Intoxicação por organofosforados</span></a><a href="#cap09"><b>09</b><span>Antimuscarínicos: prever os efeitos por órgão</span></a><a href="#cap10"><b>10</b><span>Estrutura química, BHE e escolha do órgão</span></a><a href="#cap11"><b>11</b><span>Síndrome anticolinérgica e carga cumulativa</span></a>
-<a href="#ex2"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc2"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
-<section class="pg cap" id="cap05">
-<span class="eyebrow">02 · Fármacos colinérgicos</span>
-<h1 class="h1">05. Agonistas diretos: imitar a acetilcolina</h1>
+<section class="grupo" id="mod2"><div class="grupo-h"><h2>Fármacos colinérgicos</h2><span class="mini">7 capítulos · Clase 6</span></div><article class="cap" id="cap05" data-cap="05"><div class="head"><div><span class="num">05 · Fármacos colinérgicos</span><h3>Agonistas diretos: imitar a acetilcolina</h3></div><label class="check"><input type="checkbox" data-lido="05"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 42–48, 60 e 66</div>
 
 <div class="tree"><div class="root">Agonista direto<small>liga-se ao receptor e ativa</small></div><div class="brs">
@@ -477,13 +413,8 @@ table.t td b{color:var(--g9)}
 <div class="box warn"><span class="lb">Atenção</span><p><mark class="mr">Aumentar a contração não resolve uma obstrução mecânica.</mark> <mark class="my">A ação útil em um órgão pode ser indesejada em outro.</mark></p></div>
 
 <div class="box warn"><span class="lb">Intoxicação por cogumelos (setas)</span><p><i>Inocybe</i> (muscarina) → em <b>30–60 min</b>: salivação, sudorese, vômitos, diarreia, broncoespasmo, bradicardia, hipotensão. <mark class="my"><b>Antídoto: atropina</b></mark>.</p></div>
-</section>
-<section class="pg cap" id="mm05"><span class="eyebrow">Mapa mental 05 · Recuperação ativa</span><h1 class="h1">Agonistas diretos</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="05"></div></div></section>
-<section class="pg cap" id="cap06">
-<span class="eyebrow">02 · Fármacos colinérgicos</span>
-<h1 class="h1">06. Anticolinesterásicos: preservar o mensageiro</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="05"></div></div></details></article>
+<article class="cap" id="cap06" data-cap="06"><div class="head"><div><span class="num">06 · Fármacos colinérgicos</span><h3>Anticolinesterásicos: preservar o mensageiro</h3></div><label class="check"><input type="checkbox" data-lido="06"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 49–55, 59–70</div>
 
 <div class="flow">
@@ -501,13 +432,8 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Precisão</span><p>Atropina bloqueia M, mas não remove ACh nem reativa a AChE. <mark class="mr">Por isso não corrige a fraqueza da placa motora por excesso nicotínico.</mark></p></div>
 <p>Excesso na placa: fasciculações → fraqueza. <mark class="mr"><b>Mais ACh não significa mais força.</b></mark></p>
-</section>
-<section class="pg cap" id="mm06"><span class="eyebrow">Mapa mental 06 · Recuperação ativa</span><h1 class="h1">Anticolinesterásicos</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="06"></div></div></section>
-<section class="pg cap" id="cap07">
-<span class="eyebrow">02 · Fármacos colinérgicos</span>
-<h1 class="h1">07. Miastenia gravis, Alzheimer e aplicações</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="06"></div></div></details></article>
+<article class="cap" id="cap07" data-cap="07"><div class="head"><div><span class="num">07 · Fármacos colinérgicos</span><h3>Miastenia gravis, Alzheimer e aplicações</h3></div><label class="check"><input type="checkbox" data-lido="07"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 61–69</div>
 
 <div class="flow">
@@ -534,13 +460,8 @@ table.t td b{color:var(--g9)}
 </tbody></table></div>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p><b>Neostigmina</b> = periferia. <b>Fisostigmina</b> = SNC. A química explica por que não são intercambiáveis.</p></div>
-</section>
-<section class="pg cap" id="mm07"><span class="eyebrow">Mapa mental 07 · Recuperação ativa</span><h1 class="h1">Aplicações colinérgicas</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="07"></div></div></section>
-<section class="pg cap" id="cap08">
-<span class="eyebrow">02 · Fármacos colinérgicos</span>
-<h1 class="h1">08. Intoxicação por organofosforados</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="07"></div></div></details></article>
+<article class="cap" id="cap08" data-cap="08"><div class="head"><div><span class="num">08 · Fármacos colinérgicos</span><h3>Intoxicação por organofosforados</h3></div><label class="check"><input type="checkbox" data-lido="08"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 56–59 e 70; precisão: referência R2</div>
 
 <p class="lead">AChE inibida → ACh acumula em <b>todas</b> as sinapses. <mark class="my">O quadro <b>não é apenas parassimpático</b>.</mark></p>
@@ -563,13 +484,8 @@ table.t td b{color:var(--g9)}
 <p><b>Ecotiofato</b> (glaucoma refratário; prolonga a succinilcolina), <b>malatião</b> (pediculose tópica) e <b>paratião</b> (inseticida): contextos diferentes.</p>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«La atropina antagoniza los efectos muscarínicos; la pralidoxima puede reactivar la acetilcolinesterasa antes del envejecimiento. El soporte respiratorio es fundamental».</p></div>
-</section>
-<section class="pg cap" id="mm08"><span class="eyebrow">Mapa mental 08 · Recuperação ativa</span><h1 class="h1">Organofosforados</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="08"></div></div></section>
-<section class="pg cap" id="cap09">
-<span class="eyebrow">02 · Fármacos colinérgicos</span>
-<h1 class="h1">09. Antimuscarínicos: prever os efeitos por órgão</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="08"></div></div></details></article>
+<article class="cap" id="cap09" data-cap="09"><div class="head"><div><span class="num">09 · Fármacos colinérgicos</span><h3>Antimuscarínicos: prever os efeitos por órgão</h3></div><label class="check"><input type="checkbox" data-lido="09"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 71–88</div>
 
 <p class="lead">Bloqueiam a ACh no receptor M. <b>Efeito = o oposto do parassimpático.</b> Protótipos: <b>atropina</b> e <b>escopolamina</b>.</p>
@@ -595,13 +511,8 @@ table.t td b{color:var(--g9)}
 </div>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Pele seca e quente: as sudoríparas são simpáticas, mas usam ACh. A exceção do circuito explica o efeito.</p></div>
-</section>
-<section class="pg cap" id="mm09"><span class="eyebrow">Mapa mental 09 · Recuperação ativa</span><h1 class="h1">Antimuscarínicos</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="09"></div></div></section>
-<section class="pg cap" id="cap10">
-<span class="eyebrow">02 · Fármacos colinérgicos</span>
-<h1 class="h1">10. Estrutura química, BHE e escolha do órgão</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="09"></div></div></details></article>
+<article class="cap" id="cap10" data-cap="10"><div class="head"><div><span class="num">10 · Fármacos colinérgicos</span><h3>Estrutura química, BHE e escolha do órgão</h3></div><label class="check"><input type="checkbox" data-lido="10"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 78–90, 94–110; precisão: R1</div>
 
 <div class="cmp">
@@ -620,13 +531,8 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Precisão</span><p>Diciclomina e hiosciamina aparecem como «cuaternarias» no slide. <mark class="mr">Essa classificação não deve ser memorizada: são <b>aminas terciárias</b>.</mark> Butilbrometo de hioscina é quaternário (R1).</p></div>
 <p>Trospio quase não chega ao cérebro, mas ainda seca a boca e constipa. <mark class="mr">«Tópico» não significa ausência de efeito sistêmico.</mark></p>
-</section>
-<section class="pg cap" id="mm10"><span class="eyebrow">Mapa mental 10 · Recuperação ativa</span><h1 class="h1">Estrutura e órgão</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="10"></div></div></section>
-<section class="pg cap" id="cap11">
-<span class="eyebrow">02 · Fármacos colinérgicos</span>
-<h1 class="h1">11. Síndrome anticolinérgica e carga cumulativa</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="10"></div></div></details></article>
+<article class="cap" id="cap11" data-cap="11"><div class="head"><div><span class="num">11 · Fármacos colinérgicos</span><h3>Síndrome anticolinérgica e carga cumulativa</h3></div><label class="check"><input type="checkbox" data-lido="11"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 6 · páginas 91–101; precisão: R3</div>
 
 <div class="flow">
@@ -651,20 +557,9 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">A fisostigmina não é antídoto universal</mark>. Com tricíclicos ou alteração de condução: avaliação especializada (R3).</p></div>
 <div class="box"><span class="lb">Aplicação na prova</span><p><mark class="my">Pele seca + midríase + retenção + delirium = antimuscarínico.</mark> Secreções + miose + fasciculações = excesso colinérgico.</p></div>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="11"></div></div></details></article>
 </section>
-<section class="pg cap" id="mm11"><span class="eyebrow">Mapa mental 11 · Recuperação ativa</span><h1 class="h1">Síndrome anticolinérgica</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="11"></div></div></section>
-<section class="pg cap" id="ex2"><span class="eyebrow">Exercícios · Módulo 02</span><h1 class="h1">Pratique: Fármacos colinérgicos</h1>
-<div class="quiz ex" data-quiz="m2"></div></section>
-<section class="pg cap" id="fc2"><span class="eyebrow">Flashcards · Módulo 02</span><h1 class="h1">Flashcards: Fármacos colinérgicos</h1>
-<div class="deck" data-deck="m2"></div></section>
-<section class="pg cap modcover" id="mod3"><span class="tag-mod">MÓDULO 03 · CLASE 7</span><h1 class="h1">Fármacos adrenérgicos</h1><p class="lead">Catecolaminas, adrenoceptores, agonistas α e β, agentes indiretos, bloqueadores α e β-bloqueadores.</p>
-<div class="list"><a href="#cap12"><b>12</b><span>Catecolaminas: da tirosina à resposta</span></a><a href="#cap13"><b>13</b><span>Adrenoceptores: cinco chaves para os efeitos</span></a><a href="#cap14"><b>14</b><span>Agonistas α: vasos, nariz e controle central</span></a><a href="#cap15"><b>15</b><span>Adrenalina, noradrenalina, dopamina e dobutamina</span></a><a href="#cap16"><b>16</b><span>β2, β3 e agentes de ação indireta</span></a><a href="#cap17"><b>17</b><span>Antagonistas α e a reversão de adrenalina</span></a><a href="#cap18"><b>18</b><span>β-bloqueadores: seletividade e diferenças</span></a>
-<a href="#ex3"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc3"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
-<section class="pg cap" id="cap12">
-<span class="eyebrow">03 · Fármacos adrenérgicos</span>
-<h1 class="h1">12. Catecolaminas: da tirosina à resposta</h1>
+<section class="grupo" id="mod3"><div class="grupo-h"><h2>Fármacos adrenérgicos</h2><span class="mini">7 capítulos · Clase 7</span></div><article class="cap" id="cap12" data-cap="12"><div class="head"><div><span class="num">12 · Fármacos adrenérgicos</span><h3>Catecolaminas: da tirosina à resposta</h3></div><label class="check"><input type="checkbox" data-lido="12"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 7 · páginas 4–18; figura: página 12</div>
 
 <h3 class="sub">Síntese</h3>
@@ -698,13 +593,8 @@ table.t td b{color:var(--g9)}
 </div></div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>Anfetamina, cocaína e tiramina não se diferenciam por inibir MAO/COMT. <mark class="mr">Separe <b>liberação</b>, <b>recaptação</b> e <b>degradação</b>.</mark></p></div>
-</section>
-<section class="pg cap" id="mm12"><span class="eyebrow">Mapa mental 12 · Recuperação ativa</span><h1 class="h1">Catecolaminas</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="12"></div></div></section>
-<section class="pg cap" id="cap13">
-<span class="eyebrow">03 · Fármacos adrenérgicos</span>
-<h1 class="h1">13. Adrenoceptores: cinco chaves para os efeitos</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="12"></div></div></details></article>
+<article class="cap" id="cap13" data-cap="13"><div class="head"><div><span class="num">13 · Fármacos adrenérgicos</span><h3>Adrenoceptores: cinco chaves para os efeitos</h3></div><label class="check"><input type="checkbox" data-lido="13"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 7 · páginas 13–20, 41–42</div>
 
 <div class="tree"><div class="root">Adrenoceptores<small>todos acoplados à proteína G</small></div><div class="brs">
@@ -736,13 +626,8 @@ table.t td b{color:var(--g9)}
 <p><mark class="my">Mesmo resultado visível, <b>mecanismos diferentes</b>.</mark></p>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los receptores α1 se acoplan a Gq; α2 a Gi; β1, β2 y β3 a Gs. La respuesta depende del órgano donde se expresan».</p></div>
-</section>
-<section class="pg cap" id="mm13"><span class="eyebrow">Mapa mental 13 · Recuperação ativa</span><h1 class="h1">Adrenoceptores</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="13"></div></div></section>
-<section class="pg cap" id="cap14">
-<span class="eyebrow">03 · Fármacos adrenérgicos</span>
-<h1 class="h1">14. Agonistas α: vasos, nariz e controle central</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="13"></div></div></details></article>
+<article class="cap" id="cap14" data-cap="14"><div class="head"><div><span class="num">14 · Fármacos adrenérgicos</span><h3>Agonistas α: vasos, nariz e controle central</h3></div><label class="check"><input type="checkbox" data-lido="14"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 7 · páginas 21–24</div>
 
 <div class="tree"><div class="root">Agonistas α</div><div class="brs">
@@ -760,13 +645,8 @@ table.t td b{color:var(--g9)}
 <div class="cd c2"><h4>Prova: α2</h4><ul><li>Redução da liberação → feedback negativo</li></ul></div>
 <div class="cd c1"><h4>Prova: α1</h4><ul><li>Resistência periférica → contração vascular</li></ul></div>
 </div>
-</section>
-<section class="pg cap" id="mm14"><span class="eyebrow">Mapa mental 14 · Recuperação ativa</span><h1 class="h1">Agonistas α</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="14"></div></div></section>
-<section class="pg cap" id="cap15">
-<span class="eyebrow">03 · Fármacos adrenérgicos</span>
-<h1 class="h1">15. Adrenalina, noradrenalina, dopamina e dobutamina</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="14"></div></div></details></article>
+<article class="cap" id="cap15" data-cap="15"><div class="head"><div><span class="num">15 · Fármacos adrenérgicos</span><h3>Adrenalina, noradrenalina, dopamina e dobutamina</h3></div><label class="check"><input type="checkbox" data-lido="15"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 7 · páginas 25–33; precisão: R8</div>
 
 <p class="lead"><mark class="my">Esses fármacos <b>não são intercambiáveis</b>.</mark> Toque no + de cada um.</p>
@@ -788,13 +668,8 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">Via inicial: <b>intramuscular</b></mark>, não «SC ou IV» (R8). Corticoide não reproduz a resposta imediata. «Dopamina renal» não previne insuficiência renal.</p></div>
 <p>Dobutamina melhora a <b>bomba</b>, não corrige um <b>vaso</b> muito dilatado. Separe os dois problemas.</p>
-</section>
-<section class="pg cap" id="mm15"><span class="eyebrow">Mapa mental 15 · Recuperação ativa</span><h1 class="h1">Agonistas e hemodinâmica</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="15"></div></div></section>
-<section class="pg cap" id="cap16">
-<span class="eyebrow">03 · Fármacos adrenérgicos</span>
-<h1 class="h1">16. β2, β3 e agentes de ação indireta</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="15"></div></div></details></article>
+<article class="cap" id="cap16" data-cap="16"><div class="head"><div><span class="num">16 · Fármacos adrenérgicos</span><h3>β2, β3 e agentes de ação indireta</h3></div><label class="check"><input type="checkbox" data-lido="16"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 7 · páginas 34–38 e 65; precisão: R4</div>
 
 <div class="cmp">
@@ -816,13 +691,8 @@ table.t td b{color:var(--g9)}
 </div></div>
 
 <p>Bexiga hiperativa, duas lógicas: <b>bloquear M3</b> ou <b>ativar β3</b>.</p>
-</section>
-<section class="pg cap" id="mm16"><span class="eyebrow">Mapa mental 16 · Recuperação ativa</span><h1 class="h1">β2 · β3 · indiretos</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="16"></div></div></section>
-<section class="pg cap" id="cap17">
-<span class="eyebrow">03 · Fármacos adrenérgicos</span>
-<h1 class="h1">17. Antagonistas α e a reversão de adrenalina</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="16"></div></div></details></article>
+<article class="cap" id="cap17" data-cap="17"><div class="head"><div><span class="num">17 · Fármacos adrenérgicos</span><h3>Antagonistas α e a reversão de adrenalina</h3></div><label class="check"><input type="checkbox" data-lido="17"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 7 · páginas 39–51</div>
 
 <div class="flow">
@@ -850,13 +720,8 @@ table.t td b{color:var(--g9)}
 <div class="box warn"><span class="lb">Atenção</span><p><mark class="mr"><b>Efeito de primeira dose</b>: hipotensão ortostática e síncope</mark> → iniciar com dose baixa, ao deitar. <b>IFIS</b> (íris flácida) na cirurgia de catarata, sobretudo com tansulosina.</p></div>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los antagonistas α1 disminuyen la resistencia vascular periférica y pueden producir hipotensión ortostática».</p></div>
-</section>
-<section class="pg cap" id="mm17"><span class="eyebrow">Mapa mental 17 · Recuperação ativa</span><h1 class="h1">Antagonistas α</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="17"></div></div></section>
-<section class="pg cap" id="cap18">
-<span class="eyebrow">03 · Fármacos adrenérgicos</span>
-<h1 class="h1">18. β-bloqueadores: seletividade e diferenças</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="17"></div></div></details></article>
+<article class="cap" id="cap18" data-cap="18"><div class="head"><div><span class="num">18 · Fármacos adrenérgicos</span><h3>β-bloqueadores: seletividade e diferenças</h3></div><label class="check"><input type="checkbox" data-lido="18"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 7 · páginas 52–65; precisão: R4</div>
 
 <div class="flow">
@@ -878,20 +743,9 @@ table.t td b{color:var(--g9)}
 </div>
 
 <p><b>Meia-vida:</b> esmolol (10 min) &lt; metoprolol (3–4 h) &lt; propranolol (4–6 h) &lt; carvedilol (7–10 h) &lt; nadolol (14–24 h) &lt; nebivolol (10–30 h).</p>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="18"></div></div></details></article>
 </section>
-<section class="pg cap" id="mm18"><span class="eyebrow">Mapa mental 18 · Recuperação ativa</span><h1 class="h1">β-bloqueadores</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="18"></div></div></section>
-<section class="pg cap" id="ex3"><span class="eyebrow">Exercícios · Módulo 03</span><h1 class="h1">Pratique: Fármacos adrenérgicos</h1>
-<div class="quiz ex" data-quiz="m3"></div></section>
-<section class="pg cap" id="fc3"><span class="eyebrow">Flashcards · Módulo 03</span><h1 class="h1">Flashcards: Fármacos adrenérgicos</h1>
-<div class="deck" data-deck="m3"></div></section>
-<section class="pg cap modcover" id="mod4"><span class="tag-mod">MÓDULO 04 · CLASE 8</span><h1 class="h1">AINEs e analgésicos</h1><p class="lead">Eicosanoides, os quatro efeitos e seus limites, riscos, salicilatos, famílias, paracetamol e dipirona.</p>
-<div class="list"><a href="#cap19"><b>19</b><span>Ácido araquidônico e eicosanoides</span></a><a href="#cap20"><b>20</b><span>Quatro efeitos — e os limites dessa regra</span></a><a href="#cap21"><b>21</b><span>Estômago, rim e circulação: prever os riscos</span></a><a href="#cap22"><b>22</b><span>Salicilatos: por que AAS é diferente</span></a><a href="#cap23"><b>23</b><span>Famílias e fármacos: comparar sem decorar isoladamente</span></a><a href="#cap24"><b>24</b><span>Paracetamol e dipirona: não cabem na mesma regra</span></a>
-<a href="#ex4"><b>✎</b><span>Exercícios (10)</span></a><a href="#fc4"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
-<section class="pg cap" id="cap19">
-<span class="eyebrow">04 · AINEs</span>
-<h1 class="h1">19. Ácido araquidônico e eicosanoides</h1>
+<section class="grupo" id="mod4"><div class="grupo-h"><h2>AINEs e analgésicos</h2><span class="mini">6 capítulos · Clase 8</span></div><article class="cap" id="cap19" data-cap="19"><div class="head"><div><span class="num">19 · AINEs e analgésicos</span><h3>Ácido araquidônico e eicosanoides</h3></div><label class="check"><input type="checkbox" data-lido="19"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 3–12; figura: página 7</div>
 
 <div class="flow">
@@ -924,13 +778,8 @@ table.t td b{color:var(--g9)}
 
 <p><mark class="my">Benefício e efeito adverso nascem do mesmo mecanismo, em órgãos diferentes.</mark></p>
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los AINEs inhiben ciclooxigenasas y disminuyen la síntesis de prostanoides; no bloquean directamente toda la vía de los leucotrienos».</p></div>
-</section>
-<section class="pg cap" id="mm19"><span class="eyebrow">Mapa mental 19 · Recuperação ativa</span><h1 class="h1">Ácido araquidónico e eicosanoides</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="19"></div></div></section>
-<section class="pg cap" id="cap20">
-<span class="eyebrow">04 · AINEs</span>
-<h1 class="h1">20. Quatro efeitos — e os limites dessa regra</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="19"></div></div></details></article>
+<article class="cap" id="cap20" data-cap="20"><div class="head"><div><span class="num">20 · AINEs e analgésicos</span><h3>Quatro efeitos — e os limites dessa regra</h3></div><label class="check"><input type="checkbox" data-lido="20"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 12–16</div>
 
 <div class="flow">
@@ -954,13 +803,8 @@ table.t td b{color:var(--g9)}
 </div>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>Febre: ajusta o termostato. Dor: reduz a sensibilização. Sem febre, a temperatura não cai.</p></div>
-</section>
-<section class="pg cap" id="mm20"><span class="eyebrow">Mapa mental 20 · Recuperação ativa</span><h1 class="h1">Efeitos dos AINEs</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="20"></div></div></section>
-<section class="pg cap" id="cap21">
-<span class="eyebrow">04 · AINEs</span>
-<h1 class="h1">21. Estômago, rim e circulação: prever os riscos</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="20"></div></div></details></article>
+<article class="cap" id="cap21" data-cap="21"><div class="head"><div><span class="num">21 · AINEs e analgésicos</span><h3>Estômago, rim e circulação: prever os riscos</h3></div><label class="check"><input type="checkbox" data-lido="21"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 9–15, 20 e 32; precisão: R5</div>
 
 <div class="tree"><div class="root">↓ Prostaglandinas</div><div class="brs">
@@ -982,13 +826,8 @@ table.t td b{color:var(--g9)}
 </tbody></table></div>
 
 <p><mark class="my">Alívio da dor não informa a perfusão renal.</mark></p>
-</section>
-<section class="pg cap" id="mm21"><span class="eyebrow">Mapa mental 21 · Recuperação ativa</span><h1 class="h1">Riscos dos AINEs</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="21"></div></div></section>
-<section class="pg cap" id="cap22">
-<span class="eyebrow">04 · AINEs</span>
-<h1 class="h1">22. Salicilatos: por que AAS é diferente</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="21"></div></div></details></article>
+<article class="cap" id="cap22" data-cap="22"><div class="head"><div><span class="num">22 · AINEs e analgésicos</span><h3>Salicilatos: por que AAS é diferente</h3></div><label class="check"><input type="checkbox" data-lido="22"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 17–21 e 33–34; precisão: R9</div>
 
 <div class="flow">
@@ -1009,13 +848,8 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="my">A alcalose inicial vem do estímulo respiratório</mark>, não da depressão. Pode coexistir acidose metabólica.</p></div>
 <div class="box warn"><span class="lb">Atenção</span><p>Síndrome de Reye: <mark class="mr"><b>contraindicado em crianças</b></mark> com virose. Suspensão pré-cirurgia depende do risco, não é regra fixa de 1 semana.</p></div>
-</section>
-<section class="pg cap" id="mm22"><span class="eyebrow">Mapa mental 22 · Recuperação ativa</span><h1 class="h1">Salicilatos</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="22"></div></div></section>
-<section class="pg cap" id="cap23">
-<span class="eyebrow">04 · AINEs</span>
-<h1 class="h1">23. Famílias e fármacos: comparar sem decorar isoladamente</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="22"></div></div></details></article>
+<article class="cap" id="cap23" data-cap="23"><div class="head"><div><span class="num">23 · AINEs e analgésicos</span><h3>Famílias e fármacos: comparar sem decorar isoladamente</h3></div><label class="check"><input type="checkbox" data-lido="23"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 16 e 22–29; precisão: R10</div>
 
 <div class="tree"><div class="root">AINEs por família</div><div class="brs">
@@ -1031,13 +865,8 @@ table.t td b{color:var(--g9)}
 <p>Cetorolaco é potente, mas <b>não é opioide</b>. Dois AINEs juntos somam toxicidade.</p>
 <p><mark class="my">Menor risco relativo ≠ risco inexistente.</mark></p>
 <div class="box"><span class="lb">Aplicação na prova</span><p>Dois fármacos da mesma família: explique o mecanismo comum e depois o que os diferencia.</p></div>
-</section>
-<section class="pg cap" id="mm23"><span class="eyebrow">Mapa mental 23 · Recuperação ativa</span><h1 class="h1">Famílias de AINEs</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="23"></div></div></section>
-<section class="pg cap" id="cap24">
-<span class="eyebrow">04 · AINEs</span>
-<h1 class="h1">24. Paracetamol e dipirona: não cabem na mesma regra</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="23"></div></div></details></article>
+<article class="cap" id="cap24" data-cap="24"><div class="head"><div><span class="num">24 · AINEs e analgésicos</span><h3>Paracetamol e dipirona: não cabem na mesma regra</h3></div><label class="check"><input type="checkbox" data-lido="24"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 30–31 e 35–36; precisão: R6, R9 e R11</div>
 
 <div class="cmp">
@@ -1065,20 +894,9 @@ table.t td b{color:var(--g9)}
 <p>Dose tóxica: 150–250 mg/kg. O slide diz «izquierdo»: o fígado fica à <b>direita</b>.</p>
 
 <div class="box warn"><span class="lb">Atenção</span><p>Anafilaxia por dipirona: <mark class="my">mantém <b>adrenalina como primeira linha</b></mark> (R8). Analgésicos combinados podem conter paracetamol: some todas as fontes (R6).</p></div>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="24"></div></div></details></article>
 </section>
-<section class="pg cap" id="mm24"><span class="eyebrow">Mapa mental 24 · Recuperação ativa</span><h1 class="h1">Paracetamol e dipirona</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="24"></div></div></section>
-<section class="pg cap" id="ex4"><span class="eyebrow">Exercícios · Módulo 04</span><h1 class="h1">Pratique: AINEs e analgésicos</h1>
-<div class="quiz ex" data-quiz="m4"></div></section>
-<section class="pg cap" id="fc4"><span class="eyebrow">Flashcards · Módulo 04</span><h1 class="h1">Flashcards: AINEs e analgésicos</h1>
-<div class="deck" data-deck="m4"></div></section>
-<section class="pg cap modcover" id="mod5"><span class="tag-mod">MÓDULO 05 · CLASE 8</span><h1 class="h1">Dor e opioides</h1><p class="lead">Dor, escada analgésica, receptores μ, κ e δ, classificação dos opioides e efeitos sistêmicos.</p>
-<div class="list"><a href="#cap25"><b>25</b><span>Dor, história e vocabulário</span></a><a href="#cap26"><b>26</b><span>Receptores e interrupção do sinal doloroso</span></a><a href="#cap27"><b>27</b><span>Efeitos sistêmicos e comparação entre fármacos</span></a>
-<a href="#ex5"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc5"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
-<section class="pg cap" id="cap25">
-<span class="eyebrow">05 · Opioides</span>
-<h1 class="h1">25. Dor, história e vocabulário</h1>
+<section class="grupo" id="mod5"><div class="grupo-h"><h2>Dor e opioides</h2><span class="mini">3 capítulos · Clase 8</span></div><article class="cap" id="cap25" data-cap="25"><div class="head"><div><span class="num">25 · Dor e opioides</span><h3>Dor, história e vocabulário</h3></div><label class="check"><input type="checkbox" data-lido="25"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 38–58; figura: página 42</div>
 
 <p class="lead"><b>Dor</b>: experiência sensorial e emocional ligada a dano real ou potencial. Escala 0–10: 1–3 leve · 4–7 moderada · 8–10 severa.</p>
@@ -1117,13 +935,8 @@ table.t td b{color:var(--g9)}
 </div>
 
 <div class="box warn"><span class="lb">Precisão</span><p>Papaverina vem do ópio, mas <mark class="mr">não é agonista opioide como a morfina</mark>.</p></div>
-</section>
-<section class="pg cap" id="mm25"><span class="eyebrow">Mapa mental 25 · Recuperação ativa</span><h1 class="h1">Dor e opioides</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="25"></div></div></section>
-<section class="pg cap" id="cap26">
-<span class="eyebrow">05 · Opioides</span>
-<h1 class="h1">26. Receptores e interrupção do sinal doloroso</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="25"></div></div></details></article>
+<article class="cap" id="cap26" data-cap="26"><div class="head"><div><span class="num">26 · Dor e opioides</span><h3>Receptores e interrupção do sinal doloroso</h3></div><label class="check"><input type="checkbox" data-lido="26"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 57–64</div>
 
 <div class="flow">
@@ -1150,13 +963,8 @@ table.t td b{color:var(--g9)}
 
 <div class="box"><span class="lb">Entenda melhor</span><p><mark class="my">Afinidade = se ligar. Atividade intrínseca = ativar.</mark> Antagonista tem afinidade sem ativar.</p></div>
 <div class="box warn"><span class="lb">Precisão</span><p>O slide chama dinorfina de «antagonista»: <mark class="mr">dinorfinas são peptídeos agonistas</mark> (κ).</p></div>
-</section>
-<section class="pg cap" id="mm26"><span class="eyebrow">Mapa mental 26 · Recuperação ativa</span><h1 class="h1">Receptores opioides</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="26"></div></div></section>
-<section class="pg cap" id="cap27">
-<span class="eyebrow">05 · Opioides</span>
-<h1 class="h1">27. Efeitos sistêmicos e comparação entre fármacos</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="26"></div></div></details></article>
+<article class="cap" id="cap27" data-cap="27"><div class="head"><div><span class="num">27 · Dor e opioides</span><h3>Efeitos sistêmicos e comparação entre fármacos</h3></div><label class="check"><input type="checkbox" data-lido="27"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 8 · páginas 65–72; precisão: R7</div>
 
 <div class="tree"><div class="root">Efeitos dos opioides</div><div class="brs">
@@ -1187,20 +995,9 @@ table.t td b{color:var(--g9)}
 
 <p>Naloxona reverte, mas <mark class="mr">dura menos que o opioide</mark>: o quadro pode voltar.</p>
 <div class="box"><span class="lb">Aplicação na prova</span><p>AINE reduz mediadores na periferia. Opioide altera a transmissão e a percepção.</p></div>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="27"></div></div></details></article>
 </section>
-<section class="pg cap" id="mm27"><span class="eyebrow">Mapa mental 27 · Recuperação ativa</span><h1 class="h1">Opioides: efeitos e comparação</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="27"></div></div></section>
-<section class="pg cap" id="ex5"><span class="eyebrow">Exercícios · Módulo 05</span><h1 class="h1">Pratique: Dor e opioides</h1>
-<div class="quiz ex" data-quiz="m5"></div></section>
-<section class="pg cap" id="fc5"><span class="eyebrow">Flashcards · Módulo 05</span><h1 class="h1">Flashcards: Dor e opioides</h1>
-<div class="deck" data-deck="m5"></div></section>
-<section class="pg cap modcover" id="mod6"><span class="tag-mod">MÓDULO 06 · CLASE 9</span><h1 class="h1">Corticoides</h1><p class="lead">Córtex suprarrenal e eixo HHA, mecanismo genômico, potência e duração, efeitos adversos, aplicações e retirada.</p>
-<div class="list"><a href="#cap28"><b>28</b><span>Córtex suprarrenal, hormônios e controle</span></a><a href="#cap29"><b>29</b><span>Do receptor intracelular à ação antiinflamatória</span></a><a href="#cap30"><b>30</b><span>Potência, duração, via e metabolismo</span></a><a href="#cap31"><b>31</b><span>Metabolismo e reações adversas: uma mesma história</span></a><a href="#cap32"><b>32</b><span>Aplicações e retirada: interpretar sem generalizar</span></a>
-<a href="#ex6"><b>✎</b><span>Exercícios (8)</span></a><a href="#fc6"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
-<section class="pg cap" id="cap28">
-<span class="eyebrow">06 · Corticoides</span>
-<h1 class="h1">28. Córtex suprarrenal, hormônios e controle</h1>
+<section class="grupo" id="mod6"><div class="grupo-h"><h2>Corticoides</h2><span class="mini">5 capítulos · Clase 9</span></div><article class="cap" id="cap28" data-cap="28"><div class="head"><div><span class="num">28 · Corticoides</span><h3>Córtex suprarrenal, hormônios e controle</h3></div><label class="check"><input type="checkbox" data-lido="28"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 9 · páginas 5–16; figura: página 10</div>
 
 <p class="lead">Feitos a partir do <b>colesterol</b>, sem reserva: <mark class="my">a taxa de síntese determina a secreção</mark>.</p>
@@ -1231,13 +1028,8 @@ table.t td b{color:var(--g9)}
 <div class="cd c2"><h4>Addison · falta</h4><ul><li>Insuficiência primária (autoimune)</li><li>Hipotensão, emagrecimento</li><li><b>Hiperpigmentação</b> (↑ ACTH/MSH)</li></ul></div>
 <div class="cd c5"><h4>Cushing · excesso</h4><ul><li>Lua cheia, giba, estrias violáceas</li><li>Obesidade central, osteoporose</li><li>Iatrogênico = por medicamento</li></ul></div>
 </div>
-</section>
-<section class="pg cap" id="mm28"><span class="eyebrow">Mapa mental 28 · Recuperação ativa</span><h1 class="h1">Córtex suprarrenal</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="28"></div></div></section>
-<section class="pg cap" id="cap29">
-<span class="eyebrow">06 · Corticoides</span>
-<h1 class="h1">29. Do receptor intracelular à ação antiinflamatória</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="28"></div></div></details></article>
+<article class="cap" id="cap29" data-cap="29"><div class="head"><div><span class="num">29 · Corticoides</span><h3>Do receptor intracelular à ação antiinflamatória</h3></div><label class="check"><input type="checkbox" data-lido="29"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 9 · páginas 17–22 e 29; figura: página 21</div>
 
 <h3 class="sub">Mecanismo genômico</h3>
@@ -1261,13 +1053,8 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">«Bloqueia diretamente a PLA2» é simplificação</mark>: age por genes e proteínas.</p></div>
 <p><b>MR</b> (néfron distal, cólon) liga aldosterona e cortisol igualmente.</p>
-</section>
-<section class="pg cap" id="mm29"><span class="eyebrow">Mapa mental 29 · Recuperação ativa</span><h1 class="h1">Ação dos corticoides</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="29"></div></div></section>
-<section class="pg cap" id="cap30">
-<span class="eyebrow">06 · Corticoides</span>
-<h1 class="h1">30. Potência, duração, via e metabolismo</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="29"></div></div></details></article>
+<article class="cap" id="cap30" data-cap="30"><div class="head"><div><span class="num">30 · Corticoides</span><h3>Potência, duração, via e metabolismo</h3></div><label class="check"><input type="checkbox" data-lido="30"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 9 · páginas 23–26 e 36</div>
 
 <p class="lead"><mark class="my">Miligrama de um corticoide não equivale ao de outro.</mark> Compare potência, duração e efeito mineral.</p>
@@ -1301,13 +1088,8 @@ table.t td b{color:var(--g9)}
 <div class="cd c3"><h4>Via local</h4><ul><li>Pele, nariz, olho, inalada</li><li>Ainda pode ter absorção sistêmica</li></ul></div>
 </div>
 <p>Ligação: transcortina (CBG) e albumina (~90%). Excreção renal após conjugação hepática.</p>
-</section>
-<section class="pg cap" id="mm30"><span class="eyebrow">Mapa mental 30 · Recuperação ativa</span><h1 class="h1">Perfis dos corticoides</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="30"></div></div></section>
-<section class="pg cap" id="cap31">
-<span class="eyebrow">06 · Corticoides</span>
-<h1 class="h1">31. Metabolismo e reações adversas: uma mesma história</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="30"></div></div></details></article>
+<article class="cap" id="cap31" data-cap="31"><div class="head"><div><span class="num">31 · Corticoides</span><h3>Metabolismo e reações adversas: uma mesma história</h3></div><label class="check"><input type="checkbox" data-lido="31"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 9 · páginas 27–35</div>
 
 <p class="lead">Cada efeito adverso é uma função fisiológica em excesso. Toque no + para ver o mecanismo.</p>
@@ -1326,13 +1108,8 @@ table.t td b{color:var(--g9)}
 <div class="box"><span class="lb">Entenda melhor</span><p><mark class="my">Ganha peso e perde músculo ao mesmo tempo</mark>: o peso não diz qual tecido mudou.</p></div>
 <p>Cushing iatrogênico + eixo suprimido coexistem: excesso de fármaco, produção própria reduzida.</p>
 <div class="box warn"><span class="lb">Atenção</span><p><mark class="mr">Corticoide + AINE = risco digestivo somado.</mark></p></div>
-</section>
-<section class="pg cap" id="mm31"><span class="eyebrow">Mapa mental 31 · Recuperação ativa</span><h1 class="h1">Efeitos metabólicos</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="31"></div></div></section>
-<section class="pg cap" id="cap32">
-<span class="eyebrow">06 · Corticoides</span>
-<h1 class="h1">32. Aplicações e retirada: interpretar sem generalizar</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="31"></div></div></details></article>
+<article class="cap" id="cap32" data-cap="32"><div class="head"><div><span class="num">32 · Corticoides</span><h3>Aplicações e retirada: interpretar sem generalizar</h3></div><label class="check"><input type="checkbox" data-lido="32"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 9 · páginas 36–46; precisão: R8 e R12</div>
 
 <div class="cmp">
@@ -1360,20 +1137,9 @@ table.t td b{color:var(--g9)}
 <div class="box warn"><span class="lb">Precisão</span><p>Curso <mark class="my">menor que <b>3–4 semanas</b></mark> geralmente dispensa desmame (R12).</p></div>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los glucocorticoides exógenos pueden suprimir el eje hipotálamo–hipófisis–suprarrenal. Tras un tratamiento prolongado, la retirada brusca puede provocar insuficiencia suprarrenal».</p></div>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="32"></div></div></details></article>
 </section>
-<section class="pg cap" id="mm32"><span class="eyebrow">Mapa mental 32 · Recuperação ativa</span><h1 class="h1">Uso e retirada</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="32"></div></div></section>
-<section class="pg cap" id="ex6"><span class="eyebrow">Exercícios · Módulo 06</span><h1 class="h1">Pratique: Corticoides</h1>
-<div class="quiz ex" data-quiz="m6"></div></section>
-<section class="pg cap" id="fc6"><span class="eyebrow">Flashcards · Módulo 06</span><h1 class="h1">Flashcards: Corticoides</h1>
-<div class="deck" data-deck="m6"></div></section>
-<section class="pg cap modcover" id="mod7"><span class="tag-mod">MÓDULO 07 · CLASES 6–9</span><h1 class="h1">Integração e treino</h1><p class="lead">Treino de mecanismos com resposta aberta e as nove perguntas oficiais da aula de corticoides.</p>
-<div class="list"><a href="#cap33"><b>33</b><span>Treino de mecanismos — responda antes de conferir</span></a><a href="#cap34"><b>34</b><span>Nove perguntas da aula de corticoides</span></a>
-<a href="#ex7"><b>✎</b><span>Exercícios (8)</span></a><a href="#fc7"><b>⧉</b><span>Flashcards (8)</span></a></div></section>
-<section class="pg cap" id="cap33">
-<span class="eyebrow">07 · Recuperação ativa</span>
-<h1 class="h1">33. Treino de mecanismos — responda antes de conferir</h1>
+<section class="grupo" id="mod7"><div class="grupo-h"><h2>Integração e treino</h2><span class="mini">2 capítulos · Clases 6–9</span></div><article class="cap" id="cap33" data-cap="33"><div class="head"><div><span class="num">33 · Integração e treino</span><h3>Treino de mecanismos — responda antes de conferir</h3></div><label class="check"><input type="checkbox" data-lido="33"> Já estudei</label></div>
 <div class="meta">Base do assunto: integração das Clases 6–9</div>
 
 <p class="lead">Responda primeiro, depois revele.</p>
@@ -1390,13 +1156,8 @@ table.t td b{color:var(--g9)}
 </div>
 
 <div class="box"><span class="lb">Como usar</span><p>Ao errar, registre qual elo falhou: <mark class="my"><b>receptor, mecanismo, órgão, indicação ou reação adversa</b></mark>. Releia esse elo e explique novamente sem olhar.</p></div>
-</section>
-<section class="pg cap" id="mm33"><span class="eyebrow">Mapa mental 33 · Recuperação ativa</span><h1 class="h1">Raciocínio de prova</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="33"></div></div></section>
-<section class="pg cap" id="cap34">
-<span class="eyebrow">07 · Recuperação ativa</span>
-<h1 class="h1">34. Nove perguntas da aula de corticoides</h1>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="33"></div></div></details></article>
+<article class="cap" id="cap34" data-cap="34"><div class="head"><div><span class="num">34 · Integração e treino</span><h3>Nove perguntas da aula de corticoides</h3></div><label class="check"><input type="checkbox" data-lido="34"> Já estudei</label></div>
 <div class="meta">Base do assunto: Clase 9 · páginas 44 e 46 · questionário oficial de revisão (gabarito desenvolvido)</div>
 
 <p class="lead">Responda em espanhol, depois revele.</p>
@@ -1412,17 +1173,34 @@ table.t td b{color:var(--g9)}
 <div class="qbox rv"><div class="qn">Pergunta 8</div><div class="qt">¿Qué es el síndrome de Cushing iatrogénico?</div><button class="btn ghost" data-rv>Revelar resposta</button><div class="ans">É o conjunto de manifestações (face em lua cheia, obesidade central, giba dorsal, estrias violáceas) causado pelo excesso de ação glicocorticoide administrada como medicamento.</div></div>
 <div class="qbox rv"><div class="qn">Pergunta 9</div><div class="qt">¿Por qué no se deben suspender bruscamente los corticoides?</div><button class="btn ghost" data-rv>Revelar resposta</button><div class="ans">Após exposição prolongada, o eixo hipotálamo–hipófise–suprarrenal fica suprimido e a produção endógena de cortisol pode estar insuficiente: a retirada abrupta pode causar insuficiência suprarrenal aguda. Tratamentos curtos (&lt; 3–4 semanas) nem sempre exigem desmame (R12).</div></div>
 </div>
+<details class="mmdet"><summary>Mapa mental · completar</summary><p class="mmlegend">Diga a resposta e toque para conferir.</p><div class="mmwrap"><div class="mm" data-mm="34"></div></div></details></article>
 </section>
-<section class="pg cap" id="mm34"><span class="eyebrow">Mapa mental 34 · Recuperação ativa</span><h1 class="h1">Corticoides: oral</h1>
-<p class="mmlegend">Diga a resposta e toque para conferir.</p>
-<div class="mmwrap"><div class="mm" data-mm="34"></div></div></section>
-<section class="pg cap" id="ex7"><span class="eyebrow">Exercícios · Módulo 07</span><h1 class="h1">Pratique: Integração e treino</h1>
-<div class="quiz ex" data-quiz="m7"></div></section>
-<section class="pg cap" id="fc7"><span class="eyebrow">Flashcards · Módulo 07</span><h1 class="h1">Flashcards: Integração e treino</h1>
-<div class="deck" data-deck="m7"></div></section>
-<section class="pg cap" id="fichas">
-<span class="eyebrow">Apêndice A · Consulta rápida</span>
-<h1 class="h1">Fichas de doses de referência</h1>
+
+</div>
+<div data-pane="exercicios" hidden>
+<p class="lede">Responda sem consultar. A correção e a justificativa aparecem na hora.</p>
+<section class="grupo" id="ex1"><div class="grupo-h"><h2>Sistema nervoso autónomo</h2><span class="mini">9 questões</span></div><div class="quiz ex" data-quiz="m1"></div></section>
+<section class="grupo" id="ex2"><div class="grupo-h"><h2>Fármacos colinérgicos</h2><span class="mini">9 questões</span></div><div class="quiz ex" data-quiz="m2"></div></section>
+<section class="grupo" id="ex3"><div class="grupo-h"><h2>Fármacos adrenérgicos</h2><span class="mini">9 questões</span></div><div class="quiz ex" data-quiz="m3"></div></section>
+<section class="grupo" id="ex4"><div class="grupo-h"><h2>AINEs e analgésicos</h2><span class="mini">10 questões</span></div><div class="quiz ex" data-quiz="m4"></div></section>
+<section class="grupo" id="ex5"><div class="grupo-h"><h2>Dor e opioides</h2><span class="mini">9 questões</span></div><div class="quiz ex" data-quiz="m5"></div></section>
+<section class="grupo" id="ex6"><div class="grupo-h"><h2>Corticoides</h2><span class="mini">8 questões</span></div><div class="quiz ex" data-quiz="m6"></div></section>
+<section class="grupo" id="ex7"><div class="grupo-h"><h2>Integração e treino</h2><span class="mini">8 questões</span></div><div class="quiz ex" data-quiz="m7"></div></section>
+
+</div>
+<div data-pane="flashcards" hidden>
+<p class="lede">Toque no cartão para virar. «Sei» tira da pilha; «Revisar de novo» manda para o fim.</p>
+<section class="grupo" id="fc1"><div class="grupo-h"><h2>Sistema nervoso autónomo</h2><span class="mini">10 cartões</span></div><div class="deck" data-deck="m1"></div></section>
+<section class="grupo" id="fc2"><div class="grupo-h"><h2>Fármacos colinérgicos</h2><span class="mini">10 cartões</span></div><div class="deck" data-deck="m2"></div></section>
+<section class="grupo" id="fc3"><div class="grupo-h"><h2>Fármacos adrenérgicos</h2><span class="mini">10 cartões</span></div><div class="deck" data-deck="m3"></div></section>
+<section class="grupo" id="fc4"><div class="grupo-h"><h2>AINEs e analgésicos</h2><span class="mini">10 cartões</span></div><div class="deck" data-deck="m4"></div></section>
+<section class="grupo" id="fc5"><div class="grupo-h"><h2>Dor e opioides</h2><span class="mini">10 cartões</span></div><div class="deck" data-deck="m5"></div></section>
+<section class="grupo" id="fc6"><div class="grupo-h"><h2>Corticoides</h2><span class="mini">10 cartões</span></div><div class="deck" data-deck="m6"></div></section>
+<section class="grupo" id="fc7"><div class="grupo-h"><h2>Integração e treino</h2><span class="mini">8 cartões</span></div><div class="deck" data-deck="m7"></div></section>
+
+</div>
+<div data-pane="consulta" hidden>
+<article class="cap" id="fichas"><div class="head"><div><span class="num">Apêndice A · Consulta rápida</span><h3>Fichas de doses de referência</h3></div></div>
 <div class="meta">Referências das aulas (Clases 6–9). Uso didático: conferir bula e diretriz vigente.</div>
 
 <h3 class="sub">Colinérgicos e anticolinérgicos</h3>
@@ -1491,11 +1269,8 @@ table.t td b{color:var(--g9)}
 <tr><td>Fentanil</td><td>Adesivo 12–100 µg/h; sublingual 50–800 µg; amp. 50–100 µg/kg</td><td>80–100× morfina</td></tr>
 <tr><td>Oxicodona</td><td>Comp. 10 a 80 mg; cáps. 5–15 mg</td><td>Contraindicada em TCE</td></tr>
 </tbody></table></div>
-</section>
-
-<section class="pg cap" id="fontes">
-<span class="eyebrow">Rastreabilidade</span>
-<h1 class="h1">Fontes, erros frequentes corrigidos e autoria</h1>
+</article>
+<article class="cap" id="fontes"><div class="head"><div><span class="num">Rastreabilidade</span><h3>Fontes, erros frequentes corrigidos e autoria</h3></div></div>
 <p><b>Fontes primárias:</b> CLASE 6 (111 páginas), CLASE 7 (66), CLASE 8 (73) e CLASE 9 (46), Dr. Cristhiam Gimenez, UCP-CDE. A numeração citada é a posição da página no PDF.</p>
 <p><b>Autoria:</b> Felipe Guimarães de Souza · SINUS. Textos didáticos, mapas mentais, exercícios, flashcards e projeto gráfico são autorais da SINUS. Todos os direitos reservados.</p>
 
@@ -1530,10 +1305,12 @@ table.t td b{color:var(--g9)}
 <li><b>R11.</b> EMA · Metamizol: revisão do risco de agranulocitose.</li>
 <li><b>R12.</b> Endocrine Society / ESE · Glucocorticoid-induced adrenal insufficiency (2024).</li>
 </ol>
-</section>
+</article>
 
-<p style="text-align:center;color:#6b7770;font-size:12px;margin:24px 0 40px">sinus. · Seu estudo. Seu tempo. Seu ritmo.</p>
+</div>
 </main>
+<footer class="pe"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" role="img" aria-label="SINUS"><defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#1a9a6c"/><stop offset="1" stop-color="#155B48"/></linearGradient></defs><rect x="2" y="4" width="56" height="56" rx="14" fill="url(#sg)"/><path d="M9.0 33.0 L14.9 33.0 C16.1 33.0 16.6 26.9 18.7 26.9 L20.8 26.9 L21.2 33.0 L22.4 33.0 L24.5 33.0 L25.4 35.8 L26.2 35.8 L28.3 15.4 L30.4 46.0 L31.7 33.0 L33.8 33.0 C35.5 33.0 36.3 24.2 39.2 24.2 L42.2 24.2 L43.0 33.0 L44.7 33.0 L51.0 33.0" fill="none" stroke="#fff" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M94.595703125 50.5947265625C103.2333984375 50.5947265625 109.435546875 46.4033203125 109.435546875 39.8896484375C109.435546875 35.3017578125 106.4052734375 32.5263671875 100.1181640625 31.3369140625L94.0576171875 30.2041015625C91.3388671875 29.666015625 90.4892578125 28.6748046875 90.4892578125 27.400390625C90.4892578125 25.7861328125 92.3583984375 24.73828125 94.7373046875 24.73828125C97.3994140625 24.73828125 99.2119140625 25.984375 99.806640625 28.1083984375L108.529296875 26.720703125C107.4248046875 21.283203125 102.4970703125 17.94140625 94.5673828125 17.94140625C86.0712890625 17.94140625 80.6337890625 21.6796875 80.6337890625 27.9951171875C80.6337890625 32.837890625 83.7490234375 35.9248046875 90.0078125 37.1142578125L95.5302734375 38.1904296875C98.1640625 38.728515625 99.41015625 39.5498046875 99.41015625 41.0224609375C99.41015625 42.63671875 97.7392578125 43.65625 94.9638671875 43.65625C91.59375 43.65625 89.8095703125 42.240234375 89.0166015625 39.4931640625L79.8408203125 40.9375C80.9453125 46.998046875 86.49609375 50.5947265625 94.595703125 50.5947265625Z M111.8948828125 50.0H121.778671875V18.337890625H111.8948828125ZM116.8226171875 14.6279296875C119.6546484375 14.6279296875 121.94859375 12.50390625 121.94859375 9.8701171875C121.94859375 7.236328125 119.6546484375 5.1123046875 116.8226171875 5.1123046875C114.01890625 5.1123046875 111.7249609375 7.236328125 111.7249609375 9.8701171875C111.7249609375 12.50390625 114.01890625 14.6279296875 116.8226171875 14.6279296875Z M135.594453125 31.931640625C135.594453125 28.25 137.7751171875 26.0693359375 141.0036328125 26.0693359375C144.2321484375 26.0693359375 146.1579296875 28.193359375 146.1579296875 31.76171875V50.0H156.04171875V29.8359375C156.04171875 22.6708984375 151.7087109375 17.94140625 145.0817578125 17.94140625C139.95578125 17.94140625 136.840546875 20.7734375 135.1696484375 25.1630859375L134.9997265625 18.337890625H125.7106640625V50.0H135.594453125Z M170.93367187500002 50.396484375C176.03132812500002 50.396484375 179.14656250000002 47.564453125 180.84578125000002 43.146484375L180.98738281250002 50.0H190.27644531250002V18.337890625H180.39265625000002V36.40625C180.39265625000002 40.087890625 178.21199218750002 42.2685546875 174.98347656250002 42.2685546875C171.75496093750002 42.2685546875 169.82917968750002 40.14453125 169.82917968750002 36.576171875V18.337890625H159.94539062500002V38.501953125C159.94539062500002 45.6669921875 164.27839843750002 50.396484375 170.93367187500002 50.396484375Z M207.518984375 50.5947265625C216.1566796875 50.5947265625 222.358828125 46.4033203125 222.358828125 39.8896484375C222.358828125 35.3017578125 219.3285546875 32.5263671875 213.0414453125 31.3369140625L206.9808984375 30.2041015625C204.2621484375 29.666015625 203.4125390625 28.6748046875 203.4125390625 27.400390625C203.4125390625 25.7861328125 205.2816796875 24.73828125 207.6605859375 24.73828125C210.3226953125 24.73828125 212.1351953125 25.984375 212.729921875 28.1083984375L221.452578125 26.720703125C220.3480859375 21.283203125 215.4203515625 17.94140625 207.4906640625 17.94140625C198.9945703125 17.94140625 193.5570703125 21.6796875 193.5570703125 27.9951171875C193.5570703125 32.837890625 196.6723046875 35.9248046875 202.93109375 37.1142578125L208.4535546875 38.1904296875C211.08734375 38.728515625 212.3334375 39.5498046875 212.3334375 41.0224609375C212.3334375 42.63671875 210.6625390625 43.65625 207.8871484375 43.65625C204.51703125 43.65625 202.7328515625 42.240234375 201.9398828125 39.4931640625L192.7641015625 40.9375C193.86859375 46.998046875 199.419375 50.5947265625 207.518984375 50.5947265625Z" fill="#10352a"/><circle cx="230.6" cy="46" r="5.6" fill="#0e8a5f"/></svg><span>Seu estudo. Seu tempo. Seu ritmo.<br>Autoria: Felipe Guimarães de Souza · SINUS</span></footer>
+</div>
 <script>
 /* Mapas mentais · 34 assuntos · 4 ramos × 2 folhas cada.
    mod = módulo (1–7) · id = número do assunto (mesmo número do capítulo). */
@@ -1962,17 +1739,31 @@ function deckAct(box,a){var k=box.dataset.deck,d=deckState(k);
  else if(a==='reset'){delete S.fc[k];deckState(k)}
  save();drawDeck(box)}
 
-/* ---------------- progresso ---------------- */
-function prog(){var tot=0,ok=0;
- Object.keys(MAPS).forEach(function(id){tot+=8;var st=S.mm[id]||{};for(var i=0;i<4;i++)for(var j=0;j<2;j++)if(st[i+'-'+j])ok++});
+/* ---------------- progresso: capítulos lidos + prática ---------------- */
+S.lido=S.lido||{};
+function prog(){var caps=document.querySelectorAll('[data-cap]'),n=0;
+ caps.forEach(function(c){var on=!!S.lido[c.dataset.cap];if(on)n++;c.classList.toggle('lido',on);var cb=c.querySelector('[data-lido]');if(cb)cb.checked=on});
+ document.querySelectorAll('[data-toc]').forEach(function(a){a.classList.toggle('done',!!S.lido[a.dataset.toc])});
+ var tot=0,ok=0;
  Object.keys(Q).forEach(function(k){Q[k].forEach(function(q,i){if(q.tipo==='ab')return;tot++;if(S.q[k]&&S.q[k][i]!=null)ok++})});
  Object.keys(C).forEach(function(k){tot+=C[k].length;ok+=S.fc[k]&&S.fc[k].known?S.fc[k].known.length:0});
- var p=tot?Math.round(ok/tot*100):0,b=document.getElementById('progbar'),t=document.getElementById('progtxt');if(b)b.style.width=p+'%';if(t)t.textContent=p+'% praticado'}
+ var b=document.getElementById('progbar'),t=document.getElementById('progtxt');
+ if(b)b.style.width=(caps.length?Math.round(n/caps.length*100):0)+'%';
+ if(t)t.textContent='Capítulos lidos: '+n+' de '+caps.length+' · '+(tot?Math.round(ok/tot*100):0)+'% dos exercícios e flashcards praticados'}
+
+/* ---------------- abas ---------------- */
+function tab(name){document.querySelectorAll('[data-tab]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===name?'true':'false')});
+ document.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==name})}
+function goTo(id){var el=document.getElementById(id);if(!el)return;var pane=el.closest('[data-pane]');if(pane&&pane.hidden)tab(pane.dataset.pane);
+ setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'})},30)}
+document.addEventListener('change',function(e){var c=e.target.closest&&e.target.closest('[data-lido]');if(!c)return;if(c.checked)S.lido[c.dataset.lido]=1;else delete S.lido[c.dataset.lido];save()});
 
 /* ---------------- esquemas: blocos com detalhe ---------------- */
 document.querySelectorAll('.st,.br').forEach(function(n){if(n.querySelector('.dt')){n.classList.add('has');n.tabIndex=0;n.setAttribute('role','button')}});
 /* ---------------- eventos ---------------- */
 document.addEventListener('click',function(e){var t=e.target;
+ var tb=t.closest('[data-tab]');if(tb){tab(tb.dataset.tab);window.scrollTo({top:document.querySelector('nav.tabs').offsetTop-4,behavior:'smooth'});return}
+ var an=t.closest('a[href^="#"]');if(an&&an.getAttribute('href').length>1){e.preventDefault();goTo(an.getAttribute('href').slice(1));return}
  var leaf=t.closest('.mm .leaf');if(leaf){mapAct(leaf.closest('.mm'),'leaf',leaf.dataset.k);return}
  var mb=t.closest('[data-mmall],[data-mmhide],[data-mmprova]');if(mb){mapAct(mb.closest('.mm'),'mmall' in mb.dataset?'all':'mmhide' in mb.dataset?'hide':'prova');return}
  var o=t.closest('.opt');if(o&&!o.disabled){var qb=o.closest('.qbox');answer(o.closest('.quiz'),+qb.dataset.i,+o.dataset.o);return}
@@ -1989,6 +1780,7 @@ document.querySelectorAll('.mm').forEach(drawMap);
 document.querySelectorAll('.quiz').forEach(drawQuiz);
 document.querySelectorAll('.deck').forEach(drawDeck);
 prog();
+if(location.hash)goTo(location.hash.slice(1));
 })();
 
 </script>

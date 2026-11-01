@@ -81,17 +81,31 @@ function deckAct(box,a){var k=box.dataset.deck,d=deckState(k);
  else if(a==='reset'){delete S.fc[k];deckState(k)}
  save();drawDeck(box)}
 
-/* ---------------- progresso ---------------- */
-function prog(){var tot=0,ok=0;
- Object.keys(MAPS).forEach(function(id){tot+=8;var st=S.mm[id]||{};for(var i=0;i<4;i++)for(var j=0;j<2;j++)if(st[i+'-'+j])ok++});
+/* ---------------- progresso: capítulos lidos + prática ---------------- */
+S.lido=S.lido||{};
+function prog(){var caps=document.querySelectorAll('[data-cap]'),n=0;
+ caps.forEach(function(c){var on=!!S.lido[c.dataset.cap];if(on)n++;c.classList.toggle('lido',on);var cb=c.querySelector('[data-lido]');if(cb)cb.checked=on});
+ document.querySelectorAll('[data-toc]').forEach(function(a){a.classList.toggle('done',!!S.lido[a.dataset.toc])});
+ var tot=0,ok=0;
  Object.keys(Q).forEach(function(k){Q[k].forEach(function(q,i){if(q.tipo==='ab')return;tot++;if(S.q[k]&&S.q[k][i]!=null)ok++})});
  Object.keys(C).forEach(function(k){tot+=C[k].length;ok+=S.fc[k]&&S.fc[k].known?S.fc[k].known.length:0});
- var p=tot?Math.round(ok/tot*100):0,b=document.getElementById('progbar'),t=document.getElementById('progtxt');if(b)b.style.width=p+'%';if(t)t.textContent=p+'% praticado'}
+ var b=document.getElementById('progbar'),t=document.getElementById('progtxt');
+ if(b)b.style.width=(caps.length?Math.round(n/caps.length*100):0)+'%';
+ if(t)t.textContent='Capítulos lidos: '+n+' de '+caps.length+' · '+(tot?Math.round(ok/tot*100):0)+'% dos exercícios e flashcards praticados'}
+
+/* ---------------- abas ---------------- */
+function tab(name){document.querySelectorAll('[data-tab]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===name?'true':'false')});
+ document.querySelectorAll('[data-pane]').forEach(function(p){p.hidden=p.dataset.pane!==name})}
+function goTo(id){var el=document.getElementById(id);if(!el)return;var pane=el.closest('[data-pane]');if(pane&&pane.hidden)tab(pane.dataset.pane);
+ setTimeout(function(){el.scrollIntoView({behavior:'smooth',block:'start'})},30)}
+document.addEventListener('change',function(e){var c=e.target.closest&&e.target.closest('[data-lido]');if(!c)return;if(c.checked)S.lido[c.dataset.lido]=1;else delete S.lido[c.dataset.lido];save()});
 
 /* ---------------- esquemas: blocos com detalhe ---------------- */
 document.querySelectorAll('.st,.br').forEach(function(n){if(n.querySelector('.dt')){n.classList.add('has');n.tabIndex=0;n.setAttribute('role','button')}});
 /* ---------------- eventos ---------------- */
 document.addEventListener('click',function(e){var t=e.target;
+ var tb=t.closest('[data-tab]');if(tb){tab(tb.dataset.tab);window.scrollTo({top:document.querySelector('nav.tabs').offsetTop-4,behavior:'smooth'});return}
+ var an=t.closest('a[href^="#"]');if(an&&an.getAttribute('href').length>1){e.preventDefault();goTo(an.getAttribute('href').slice(1));return}
  var leaf=t.closest('.mm .leaf');if(leaf){mapAct(leaf.closest('.mm'),'leaf',leaf.dataset.k);return}
  var mb=t.closest('[data-mmall],[data-mmhide],[data-mmprova]');if(mb){mapAct(mb.closest('.mm'),'mmall' in mb.dataset?'all':'mmhide' in mb.dataset?'hide':'prova');return}
  var o=t.closest('.opt');if(o&&!o.disabled){var qb=o.closest('.qbox');answer(o.closest('.quiz'),+qb.dataset.i,+o.dataset.o);return}
@@ -108,4 +122,5 @@ document.querySelectorAll('.mm').forEach(drawMap);
 document.querySelectorAll('.quiz').forEach(drawQuiz);
 document.querySelectorAll('.deck').forEach(drawDeck);
 prog();
+if(location.hash)goTo(location.hash.slice(1));
 })();

@@ -88,6 +88,8 @@ function prog(){var tot=0,ok=0;
  Object.keys(C).forEach(function(k){tot+=C[k].length;ok+=S.fc[k]&&S.fc[k].known?S.fc[k].known.length:0});
  var p=tot?Math.round(ok/tot*100):0,b=document.getElementById('progbar'),t=document.getElementById('progtxt');if(b)b.style.width=p+'%';if(t)t.textContent=p+'% praticado'}
 
+/* ---------------- esquemas: blocos com detalhe ---------------- */
+document.querySelectorAll('.st,.br').forEach(function(n){if(n.querySelector('.dt')){n.classList.add('has');n.tabIndex=0;n.setAttribute('role','button')}});
 /* ---------------- eventos ---------------- */
 document.addEventListener('click',function(e){var t=e.target;
  var leaf=t.closest('.mm .leaf');if(leaf){mapAct(leaf.closest('.mm'),'leaf',leaf.dataset.k);return}
@@ -95,11 +97,12 @@ document.addEventListener('click',function(e){var t=e.target;
  var o=t.closest('.opt');if(o&&!o.disabled){var qb=o.closest('.qbox');answer(o.closest('.quiz'),+qb.dataset.i,+o.dataset.o);return}
  if(t.closest('[data-qreset]')){var qz=t.closest('.quiz');S.q[qz.dataset.quiz]={};save();drawQuiz(qz);return}
  var rv=t.closest('[data-rv]');if(rv){var a=rv.parentNode.querySelector('.ans');a.classList.toggle('show');rv.textContent=a.classList.contains('show')?'Ocultar resposta':'Revelar resposta';return}
+ var hs=t.closest('.has');if(hs){hs.classList.toggle('open');return}
  var f=t.closest('[data-flip]');if(f){f.classList.toggle('flip');return}
  var fb=t.closest('[data-fok],[data-fno],[data-fshuf],[data-freset]');if(fb){deckAct(fb.closest('.deck'),'fok' in fb.dataset?'ok':'fno' in fb.dataset?'no':'fshuf' in fb.dataset?'shuf':'reset')}
 });
 document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var t=e.target;
- if(t.matches&&(t.matches('.mm .leaf')||t.matches('[data-flip]'))){e.preventDefault();t.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
+ if(t.matches&&(t.matches('.mm .leaf')||t.matches('[data-flip]')||t.matches('.has'))){e.preventDefault();t.dispatchEvent(new MouseEvent('click',{bubbles:true}))}});
 
 document.querySelectorAll('.mm').forEach(drawMap);
 document.querySelectorAll('.quiz').forEach(drawQuiz);

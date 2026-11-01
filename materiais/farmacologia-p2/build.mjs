@@ -86,7 +86,7 @@ ${src('estilo.css')}
 </style>
 </head>
 <body>
-<nav class="nav" aria-label="Sumário">${LOGO}<div class="prog">Seu progresso<div><i id="progbar"></i></div><span id="progtxt"></span></div><div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span></div>
+<nav class="nav" aria-label="Sumário">${LOGO}<div class="prog">Seu progresso<div><i id="progbar"></i></div><span id="progtxt"></span></div><div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span><span><b style="color:#2a7a52">+</b> toque para abrir o detalhe</span></div>
 <a href="#capa">Capa</a><a href="#antes">Antes de começar</a><a href="#sumario">Módulos e assuntos</a>${nav}</nav>
 <main class="main">
 ${body}

@@ -47,24 +47,24 @@ for (const m of MODULOS) {
   const mod = String(m.n).padStart(2, '0');
 
   nav += `<div class="sec">Módulo ${m.n} · ${m.titulo}</div>` + itens.map((c) => `<a href="#cap${c.id}">${c.titulo}</a>`).join('') +
-    `<a href="#ex${m.n}">✎ Exercícios do módulo</a><a href="#fc${m.n}">⧉ Flashcards do módulo</a>`;
+    `<a href="#ex${m.n}">✎ Exercícios</a><a href="#fc${m.n}">⧉ Flashcards</a>`;
   toc += `<a href="#mod${m.n}"><b>${mod}</b><span><strong>${m.titulo}</strong> · ${m.aula}<br><small>${itens.map((c) => c.titulo.replace(/^\d+\.\s*/, '')).join(' · ')}</small></span></a>`;
 
   body += `<section class="pg cap modcover" id="mod${m.n}"><span class="tag-mod">MÓDULO ${mod} · ${m.aula.toUpperCase()}</span><h1 class="h1">${m.titulo}</h1><p class="lead">${m.desc}</p>
 <div class="list">${itens.map((c) => `<a href="#cap${c.id}"><b>${c.id}</b><span>${c.titulo.replace(/^\d+\.\s*/, '')}</span></a>`).join('')}
-<a href="#ex${m.n}"><b>✎</b><span>Exercícios: ${QUEST[m.q].length} questões com correção imediata</span></a><a href="#fc${m.n}"><b>⧉</b><span>Flashcards: ${CART[m.q].length} cartões</span></a></div></section>\n`;
+<a href="#ex${m.n}"><b>✎</b><span>Exercícios (${QUEST[m.q].length})</span></a><a href="#fc${m.n}"><b>⧉</b><span>Flashcards (${CART[m.q].length})</span></a></div></section>\n`;
 
   for (const c of itens) {
     body += c.html + '\n';
     const mp = MAPAS.find((x) => x.id === c.id);
     if (mp) body += `<section class="pg cap" id="mm${c.id}"><span class="eyebrow">Mapa mental ${c.id} · Recuperação ativa</span><h1 class="h1">${mp.title}</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="${c.id}"></div></div></section>\n`;
   }
   body += `<section class="pg cap" id="ex${m.n}"><span class="eyebrow">Exercícios · Módulo ${mod}</span><h1 class="h1">Pratique: ${m.titulo}</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="${m.q}"></div></section>\n`;
+<div class="quiz ex" data-quiz="${m.q}"></div></section>\n`;
   body += `<section class="pg cap" id="fc${m.n}"><span class="eyebrow">Flashcards · Módulo ${mod}</span><h1 class="h1">Flashcards: ${m.titulo}</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="${m.q}"></div></section>\n`;
+<div class="deck" data-deck="${m.q}"></div></section>\n`;
 }
 
 body += src('apendice.html');
@@ -86,7 +86,7 @@ ${src('estilo.css')}
 </style>
 </head>
 <body>
-<nav class="nav" aria-label="Sumário">${LOGO}<div class="prog">Seu progresso<div><i id="progbar"></i></div><span id="progtxt"></span></div>
+<nav class="nav" aria-label="Sumário">${LOGO}<div class="prog">Seu progresso<div><i id="progbar"></i></div><span id="progtxt"></span></div><div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span></div>
 <a href="#capa">Capa</a><a href="#antes">Antes de começar</a><a href="#sumario">Módulos e assuntos</a>${nav}</nav>
 <main class="main">
 ${body}

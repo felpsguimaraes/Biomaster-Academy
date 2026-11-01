@@ -23,7 +23,7 @@
 html{background:var(--bg)}
 body{margin:0;font:400 14.5px/1.6 var(--f);color:var(--ink);-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:var(--fd);color:var(--g9);margin:0;letter-spacing:-.02em;line-height:1.15}
-p{margin:0 0 10px}
+p{margin:0 0 6px}
 b,strong{font-weight:700;color:var(--g9)}
 a{color:var(--g7)}
 button{font:inherit;cursor:pointer}
@@ -37,23 +37,29 @@ button{font:inherit;cursor:pointer}
 .logo .wm i{font-style:normal;color:var(--g7)}
 
 /* ---------- capa e páginas ---------- */
-.pg{background:var(--paper);width:min(820px,calc(100% - 32px));margin:24px auto;padding:56px 64px 64px;border-radius:6px;box-shadow:0 1px 2px rgba(28,58,47,.06),0 8px 26px rgba(28,58,47,.07)}
+.pg{background:var(--paper);width:min(820px,calc(100% - 32px));margin:20px auto;padding:40px 56px 44px;border-radius:6px;box-shadow:0 1px 2px rgba(28,58,47,.06),0 8px 26px rgba(28,58,47,.07)}
 .cap{page-break-before:always;break-before:page}
 .cap:first-of-type{page-break-before:auto}
 .topline{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:26px}
 .topline .rt{font-size:10px;letter-spacing:.06em;color:var(--mut);text-transform:uppercase}
 .eyebrow{display:block;font:700 11px/1.2 var(--f);letter-spacing:.09em;text-transform:uppercase;color:var(--g7);margin-bottom:10px}
-.h1{font-size:30px;font-weight:800;margin-bottom:8px}
-.meta{font-size:12px;color:var(--mut);margin-bottom:22px}
-.lead{font-size:15px;line-height:1.65}
-h3.sub{font-size:16px;font-weight:700;color:var(--g7);margin:24px 0 10px}
+.h1{font-size:30px;font-weight:800;margin-bottom:6px}
+.meta{font-size:12px;color:var(--mut);margin-bottom:14px}
+.lead{font-size:15px;line-height:1.6}
+h3.sub{font-size:16px;font-weight:700;color:var(--g7);margin:16px 0 6px}
 h4.sub2{font-size:14px;font-weight:700;color:var(--g9);margin:16px 0 6px}
-ul.pl,ol.pl{margin:6px 0 12px 0;padding-left:20px}
-ul.pl li,ol.pl li{margin-bottom:5px}
-.hl{background:linear-gradient(transparent 58%,#cfe8d9 58%);padding:0 1px}
+ul.pl,ol.pl{margin:4px 0 8px 0;padding-left:20px}
+ul.pl li,ol.pl li{margin-bottom:3px}
+/* marca-texto: amarelo = cai na prova · vermelho = alerta / erro clássico */
+mark{color:inherit;padding:1px 3px;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+mark.my{background:#fff0a6}
+mark.mr{background:#ffd6cf;color:#7a1f12;font-weight:600}
+mark.mr b{color:#7a1f12}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mut);margin:6px 0 10px}
+.nav .legend{flex-direction:column;margin:12px 6px 0;gap:4px}
 
 /* ---------- tabelas ---------- */
-table.t{width:100%;border-collapse:collapse;margin:14px 0 16px;font-size:12.5px;line-height:1.45;page-break-inside:auto}
+table.t{width:100%;border-collapse:collapse;margin:8px 0 10px;font-size:12.5px;line-height:1.45;page-break-inside:auto}
 table.t thead th{background:var(--mint);color:var(--g9);text-align:left;font-weight:700;padding:9px 10px;border-bottom:1px solid var(--line)}
 table.t td{padding:8px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
 table.t tbody tr:nth-child(even) td{background:var(--mint2)}
@@ -62,7 +68,7 @@ table.t td b{color:var(--g9)}
 .tw{overflow-x:auto}
 
 /* ---------- caixas de destaque ---------- */
-.box{border-left:4px solid var(--g7);background:var(--mint2);border-radius:0 6px 6px 0;padding:12px 16px;margin:16px 0;page-break-inside:avoid;border-top:1px solid var(--line2);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.box{border-left:4px solid var(--g7);background:var(--mint2);border-radius:0 6px 6px 0;padding:9px 14px;margin:10px 0;page-break-inside:avoid;border-top:1px solid var(--line2);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2)}
 .box .lb{display:block;font:800 11px/1.2 var(--f);letter-spacing:.07em;text-transform:uppercase;color:var(--g7);margin-bottom:5px}
 .box p:last-child{margin-bottom:0}
 .box.warn{border-left-color:var(--brown);background:#fbf7f0}
@@ -71,7 +77,7 @@ table.t td b{color:var(--g9)}
 .box.es .lb{color:var(--blue)}
 
 /* ---------- mapas mentais ---------- */
-.mmwrap{margin:22px 0 10px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px 10px 6px}
+.mmwrap{margin:10px 0 6px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px 10px 6px}
 .mmhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 8px 6px}
 .mmhead .k{font:800 11px var(--f);letter-spacing:.08em;color:var(--g7);text-transform:uppercase}
 .mmtools{display:flex;gap:6px;flex-wrap:wrap}
@@ -86,11 +92,11 @@ table.t td b{color:var(--g9)}
 .mm .blank rect{fill:#fff;stroke-dasharray:4 3}
 .mm .blank text{fill:var(--mut)}
 .mmcap{font-size:11.5px;color:var(--mut);padding:4px 8px 6px}
-.mmlegend{font-size:11.5px;color:var(--mut);margin:4px 0 14px;padding:0 2px}
+.mmlegend{font-size:12px;color:var(--mut);margin:2px 0 8px;padding:0 2px}
 
 /* ---------- exercícios ---------- */
 .ex{margin:14px 0 22px;page-break-inside:auto}
-.qbox{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 12px;background:#fff;page-break-inside:avoid}
+.qbox{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 10px;background:#fff;page-break-inside:avoid}
 .qbox .qn{font:800 11px var(--f);letter-spacing:.07em;color:var(--g7);text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px}
 .qbox .qn em{font-style:normal;color:var(--mut);font-weight:600}
 .qbox .qt{font-weight:600;color:var(--g9);margin-bottom:10px}
@@ -179,7 +185,7 @@ table.t td b{color:var(--g9)}
 /* ---------- responsivo (tela) ---------- */
 @media (max-width:980px){.nav{display:none}.main{margin-left:0}}
 .mmhead{flex-wrap:wrap}
-@media (max-width:640px){.mm{overflow-x:auto;-webkit-overflow-scrolling:touch}.mm svg{min-width:680px}.mmwrap{padding:10px 4px 4px}.mmlegend:after{content:" Arraste o mapa para o lado para ver tudo.";}.pg{padding:30px 20px 36px;margin:12px 8px;width:auto}.h1{font-size:24px}.cover h1{font-size:40px}.cover .grid{grid-template-columns:1fr}}
+@media (max-width:640px){.mm{overflow-x:auto;-webkit-overflow-scrolling:touch}.mm svg{min-width:680px}.mmwrap{padding:10px 4px 4px}.mmlegend:after{content:" Arraste para ver tudo.";}.pg{padding:30px 20px 36px;margin:12px 8px;width:auto}.h1{font-size:24px}.cover h1{font-size:40px}.cover .grid{grid-template-columns:1fr}}
 
 /* ---------- impressão A4 ---------- */
 @media print{
@@ -206,8 +212,8 @@ table.t td b{color:var(--g9)}
 </style>
 </head>
 <body>
-<nav class="nav" aria-label="Sumário"><span class="logo"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a7a52" stroke-width="2.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6" fill="#2a7a52" stroke="none"/></svg></span><span class="wm">sinus<i>.</i></span></span><div class="prog">Seu progresso<div><i id="progbar"></i></div><span id="progtxt"></span></div>
-<a href="#capa">Capa</a><a href="#antes">Antes de começar</a><a href="#sumario">Módulos e assuntos</a><div class="sec">Módulo 1 · Sistema nervoso autónomo</div><a href="#cap01">01. Antes do fármaco, entenda o circuito</a><a href="#cap02">02. Quem libera o quê — e em qual receptor?</a><a href="#cap03">03. Sinapse: fabricação, liberação e controle</a><a href="#cap04">04. Receptores nicotínicos e muscarínicos</a><a href="#ex1">✎ Exercícios do módulo</a><a href="#fc1">⧉ Flashcards do módulo</a><div class="sec">Módulo 2 · Fármacos colinérgicos</div><a href="#cap05">05. Agonistas diretos: imitar a acetilcolina</a><a href="#cap06">06. Anticolinesterásicos: preservar o mensageiro</a><a href="#cap07">07. Miastenia gravis, Alzheimer e aplicações</a><a href="#cap08">08. Intoxicação por organofosforados</a><a href="#cap09">09. Antimuscarínicos: prever os efeitos por órgão</a><a href="#cap10">10. Estrutura química, BHE e escolha do órgão</a><a href="#cap11">11. Síndrome anticolinérgica e carga cumulativa</a><a href="#ex2">✎ Exercícios do módulo</a><a href="#fc2">⧉ Flashcards do módulo</a><div class="sec">Módulo 3 · Fármacos adrenérgicos</div><a href="#cap12">12. Catecolaminas: da tirosina à resposta</a><a href="#cap13">13. Adrenoceptores: cinco chaves para os efeitos</a><a href="#cap14">14. Agonistas α: vasos, nariz e controle central</a><a href="#cap15">15. Adrenalina, noradrenalina, dopamina e dobutamina</a><a href="#cap16">16. β2, β3 e agentes de ação indireta</a><a href="#cap17">17. Antagonistas α e a reversão de adrenalina</a><a href="#cap18">18. β-bloqueadores: seletividade e diferenças</a><a href="#ex3">✎ Exercícios do módulo</a><a href="#fc3">⧉ Flashcards do módulo</a><div class="sec">Módulo 4 · AINEs e analgésicos</div><a href="#cap19">19. Ácido araquidônico e eicosanoides</a><a href="#cap20">20. Quatro efeitos — e os limites dessa regra</a><a href="#cap21">21. Estômago, rim e circulação: prever os riscos</a><a href="#cap22">22. Salicilatos: por que AAS é diferente</a><a href="#cap23">23. Famílias e fármacos: comparar sem decorar isoladamente</a><a href="#cap24">24. Paracetamol e dipirona: não cabem na mesma regra</a><a href="#ex4">✎ Exercícios do módulo</a><a href="#fc4">⧉ Flashcards do módulo</a><div class="sec">Módulo 5 · Dor e opioides</div><a href="#cap25">25. Dor, história e vocabulário</a><a href="#cap26">26. Receptores e interrupção do sinal doloroso</a><a href="#cap27">27. Efeitos sistêmicos e comparação entre fármacos</a><a href="#ex5">✎ Exercícios do módulo</a><a href="#fc5">⧉ Flashcards do módulo</a><div class="sec">Módulo 6 · Corticoides</div><a href="#cap28">28. Córtex suprarrenal, hormônios e controle</a><a href="#cap29">29. Do receptor intracelular à ação antiinflamatória</a><a href="#cap30">30. Potência, duração, via e metabolismo</a><a href="#cap31">31. Metabolismo e reações adversas: uma mesma história</a><a href="#cap32">32. Aplicações e retirada: interpretar sem generalizar</a><a href="#ex6">✎ Exercícios do módulo</a><a href="#fc6">⧉ Flashcards do módulo</a><div class="sec">Módulo 7 · Integração e treino</div><a href="#cap33">33. Treino de mecanismos — responda antes de conferir</a><a href="#cap34">34. Nove perguntas da aula de corticoides</a><a href="#ex7">✎ Exercícios do módulo</a><a href="#fc7">⧉ Flashcards do módulo</a><div class="sec">Apêndice</div><a href="#fichas">Fichas de doses de referência</a><a href="#fontes">Fontes, divergências e créditos</a></nav>
+<nav class="nav" aria-label="Sumário"><span class="logo"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a7a52" stroke-width="2.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6" fill="#2a7a52" stroke="none"/></svg></span><span class="wm">sinus<i>.</i></span></span><div class="prog">Seu progresso<div><i id="progbar"></i></div><span id="progtxt"></span></div><div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span></div>
+<a href="#capa">Capa</a><a href="#antes">Antes de começar</a><a href="#sumario">Módulos e assuntos</a><div class="sec">Módulo 1 · Sistema nervoso autónomo</div><a href="#cap01">01. Antes do fármaco, entenda o circuito</a><a href="#cap02">02. Quem libera o quê — e em qual receptor?</a><a href="#cap03">03. Sinapse: fabricação, liberação e controle</a><a href="#cap04">04. Receptores nicotínicos e muscarínicos</a><a href="#ex1">✎ Exercícios</a><a href="#fc1">⧉ Flashcards</a><div class="sec">Módulo 2 · Fármacos colinérgicos</div><a href="#cap05">05. Agonistas diretos: imitar a acetilcolina</a><a href="#cap06">06. Anticolinesterásicos: preservar o mensageiro</a><a href="#cap07">07. Miastenia gravis, Alzheimer e aplicações</a><a href="#cap08">08. Intoxicação por organofosforados</a><a href="#cap09">09. Antimuscarínicos: prever os efeitos por órgão</a><a href="#cap10">10. Estrutura química, BHE e escolha do órgão</a><a href="#cap11">11. Síndrome anticolinérgica e carga cumulativa</a><a href="#ex2">✎ Exercícios</a><a href="#fc2">⧉ Flashcards</a><div class="sec">Módulo 3 · Fármacos adrenérgicos</div><a href="#cap12">12. Catecolaminas: da tirosina à resposta</a><a href="#cap13">13. Adrenoceptores: cinco chaves para os efeitos</a><a href="#cap14">14. Agonistas α: vasos, nariz e controle central</a><a href="#cap15">15. Adrenalina, noradrenalina, dopamina e dobutamina</a><a href="#cap16">16. β2, β3 e agentes de ação indireta</a><a href="#cap17">17. Antagonistas α e a reversão de adrenalina</a><a href="#cap18">18. β-bloqueadores: seletividade e diferenças</a><a href="#ex3">✎ Exercícios</a><a href="#fc3">⧉ Flashcards</a><div class="sec">Módulo 4 · AINEs e analgésicos</div><a href="#cap19">19. Ácido araquidônico e eicosanoides</a><a href="#cap20">20. Quatro efeitos — e os limites dessa regra</a><a href="#cap21">21. Estômago, rim e circulação: prever os riscos</a><a href="#cap22">22. Salicilatos: por que AAS é diferente</a><a href="#cap23">23. Famílias e fármacos: comparar sem decorar isoladamente</a><a href="#cap24">24. Paracetamol e dipirona: não cabem na mesma regra</a><a href="#ex4">✎ Exercícios</a><a href="#fc4">⧉ Flashcards</a><div class="sec">Módulo 5 · Dor e opioides</div><a href="#cap25">25. Dor, história e vocabulário</a><a href="#cap26">26. Receptores e interrupção do sinal doloroso</a><a href="#cap27">27. Efeitos sistêmicos e comparação entre fármacos</a><a href="#ex5">✎ Exercícios</a><a href="#fc5">⧉ Flashcards</a><div class="sec">Módulo 6 · Corticoides</div><a href="#cap28">28. Córtex suprarrenal, hormônios e controle</a><a href="#cap29">29. Do receptor intracelular à ação antiinflamatória</a><a href="#cap30">30. Potência, duração, via e metabolismo</a><a href="#cap31">31. Metabolismo e reações adversas: uma mesma história</a><a href="#cap32">32. Aplicações e retirada: interpretar sem generalizar</a><a href="#ex6">✎ Exercícios</a><a href="#fc6">⧉ Flashcards</a><div class="sec">Módulo 7 · Integração e treino</div><a href="#cap33">33. Treino de mecanismos — responda antes de conferir</a><a href="#cap34">34. Nove perguntas da aula de corticoides</a><a href="#ex7">✎ Exercícios</a><a href="#fc7">⧉ Flashcards</a><div class="sec">Apêndice</div><a href="#fichas">Fichas de doses de referência</a><a href="#fontes">Fontes, divergências e créditos</a></nav>
 <main class="main">
 <section class="pg cover" id="capa">
 <div class="cv-top"><span class="logo"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#2a7a52" stroke-width="2.4"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.6" fill="#2a7a52" stroke="none"/></svg></span><span class="wm">sinus<i>.</i></span></span><span class="rt">Cadernos de Medicina</span></div>
@@ -230,40 +236,32 @@ table.t td b{color:var(--g9)}
 <section class="pg cap" id="antes">
 <span class="eyebrow">Antes de começar</span>
 <h1 class="h1">Estudar com critério. Responder com precisão.</h1>
-<p class="lead">Este caderno SINUS reúne toda a P2 em um só lugar: raciocínio por mecanismo, quadros <b>Precisão</b>, classificações completas, doses de referência, intoxicações, tabela de potência dos corticoides e o questionário da Clase 9. Textos, mapas mentais, exercícios e flashcards são autorais da SINUS.</p>
+<p class="lead">Toda a P2 em um caderno: mecanismos, classificações, doses de referência, intoxicações e o questionário da Clase 9.</p>
 
-<h3 class="sub">Como percorrer cada assunto</h3>
-<p>Leia a explicação e siga a cadeia: <b>receptor → mecanismo → efeito no órgão → indicação → reação adversa</b>. Depois complete o mapa mental sem olhar o texto. Ao final de cada módulo, faça os exercícios e passe os flashcards.</p>
-
-<h3 class="sub">O papel de cada quadro</h3>
+<h3 class="sub">Como estudar</h3>
+<p>Leia o assunto → complete o mapa → faça os exercícios → passe os flashcards.</p>
+<h3 class="sub">Destaques</h3>
+<div class="legend"><span><mark class="my">amarelo</mark> cai na prova</span><span><mark class="mr">vermelho</mark> alerta / erro clássico</span><span><b>negrito</b> termo-chave</span></div>
+<h3 class="sub">Quadros</h3>
 <ul class="pl">
-<li><b>Entenda melhor</b> conecta etapas do mecanismo.</li>
-<li><b>Precisão</b> distingue simplificações, erros frequentes e atualizações (com referências R1–R12).</li>
-<li><b>Aplicação na prova</b> mostra o raciocínio exigido.</li>
-<li><b>Respuesta en español</b> dá a frase pronta para responder na prova.</li>
+<li><b>Entenda melhor:</b> o mecanismo passo a passo.</li>
+<li><b>Precisão:</b> o erro comum e a versão correta (R1–R12).</li>
+<li><b>Aplicação na prova:</b> o raciocínio cobrado.</li>
+<li><b>Respuesta en español:</b> a frase pronta para a prova.</li>
 </ul>
-
-<h3 class="sub">Formatos de exercício SINUS</h3>
-<ul class="pl">
-<li><b>Mapa mental para completar:</b> as folhas começam ocultas. Diga a resposta e toque para conferir. Use «Revelar tudo» para revisar e «Modo prova» para ocultar também os ramos.</li>
-<li><b>Múltipla escolha</b> e <b>verdadeiro ou falso</b>, com correção imediata e justificativa.</li>
-<li><b>Resposta aberta:</b> responda antes de revelar o gabarito.</li>
-<li><b>Flashcards:</b> toque no cartão para virar; marque «Sei» ou «Revisar». Os cartões marcados para revisão voltam ao fim da pilha.</li>
-</ul>
-<p>O progresso (mapas revelados, acertos e flashcards) fica salvo neste navegador.</p>
-
-<div class="box warn"><span class="lb">Doses</span><p>As doses são referências das aulas e servem para estudo. Não são protocolo de prescrição: confira bula e diretriz vigente. Quando uma formulação frequente está imprecisa, o texto indica a versão correta e por quê.</p></div>
+<p>Seu progresso fica salvo neste navegador.</p>
+<div class="box warn"><span class="lb">Doses</span><p>Referências das aulas para estudo, não protocolo. Confira bula e diretriz vigente.</p></div>
 </section>
 <section class="pg cap modcover" id="sumario"><span class="eyebrow">Guia de navegação</span><h1 class="h1">Módulos e assuntos</h1><div class="list"><a href="#mod1"><b>01</b><span><strong>Sistema nervoso autónomo</strong> · Clase 6<br><small>Antes do fármaco, entenda o circuito · Quem libera o quê — e em qual receptor? · Sinapse: fabricação, liberação e controle · Receptores nicotínicos e muscarínicos</small></span></a><a href="#mod2"><b>02</b><span><strong>Fármacos colinérgicos</strong> · Clase 6<br><small>Agonistas diretos: imitar a acetilcolina · Anticolinesterásicos: preservar o mensageiro · Miastenia gravis, Alzheimer e aplicações · Intoxicação por organofosforados · Antimuscarínicos: prever os efeitos por órgão · Estrutura química, BHE e escolha do órgão · Síndrome anticolinérgica e carga cumulativa</small></span></a><a href="#mod3"><b>03</b><span><strong>Fármacos adrenérgicos</strong> · Clase 7<br><small>Catecolaminas: da tirosina à resposta · Adrenoceptores: cinco chaves para os efeitos · Agonistas α: vasos, nariz e controle central · Adrenalina, noradrenalina, dopamina e dobutamina · β2, β3 e agentes de ação indireta · Antagonistas α e a reversão de adrenalina · β-bloqueadores: seletividade e diferenças</small></span></a><a href="#mod4"><b>04</b><span><strong>AINEs e analgésicos</strong> · Clase 8<br><small>Ácido araquidônico e eicosanoides · Quatro efeitos — e os limites dessa regra · Estômago, rim e circulação: prever os riscos · Salicilatos: por que AAS é diferente · Famílias e fármacos: comparar sem decorar isoladamente · Paracetamol e dipirona: não cabem na mesma regra</small></span></a><a href="#mod5"><b>05</b><span><strong>Dor e opioides</strong> · Clase 8<br><small>Dor, história e vocabulário · Receptores e interrupção do sinal doloroso · Efeitos sistêmicos e comparação entre fármacos</small></span></a><a href="#mod6"><b>06</b><span><strong>Corticoides</strong> · Clase 9<br><small>Córtex suprarrenal, hormônios e controle · Do receptor intracelular à ação antiinflamatória · Potência, duração, via e metabolismo · Metabolismo e reações adversas: uma mesma história · Aplicações e retirada: interpretar sem generalizar</small></span></a><a href="#mod7"><b>07</b><span><strong>Integração e treino</strong> · Clases 6–9<br><small>Treino de mecanismos — responda antes de conferir · Nove perguntas da aula de corticoides</small></span></a></div></section>
 <section class="pg cap modcover" id="mod1"><span class="tag-mod">MÓDULO 01 · CLASE 6</span><h1 class="h1">Sistema nervoso autónomo</h1><p class="lead">O circuito antes do fármaco: quem libera o quê, a sinapse colinérgica e os receptores nicotínicos e muscarínicos.</p>
 <div class="list"><a href="#cap01"><b>01</b><span>Antes do fármaco, entenda o circuito</span></a><a href="#cap02"><b>02</b><span>Quem libera o quê — e em qual receptor?</span></a><a href="#cap03"><b>03</b><span>Sinapse: fabricação, liberação e controle</span></a><a href="#cap04"><b>04</b><span>Receptores nicotínicos e muscarínicos</span></a>
-<a href="#ex1"><b>✎</b><span>Exercícios: 9 questões com correção imediata</span></a><a href="#fc1"><b>⧉</b><span>Flashcards: 10 cartões</span></a></div></section>
+<a href="#ex1"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc1"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
 <section class="pg cap" id="cap01">
 <span class="eyebrow">01 · Sistema nervoso autónomo</span>
 <h1 class="h1">01. Antes do fármaco, entenda o circuito</h1>
 <div class="meta">Base do assunto: Clase 6 · páginas 5–23</div>
 
-<p class="lead">O <b>sistema nervoso autónomo (SNA)</b> regula funções viscerais sem decisão consciente: frequência cardíaca, pressão arterial, motilidade intestinal, diâmetro da pupila, micção e secreções glandulares. Ele participa da <b>homeostasis</b> e ajusta o funcionamento dos órgãos às necessidades do momento.</p>
+<p class="lead">O <b>sistema nervoso autónomo (SNA)</b> <mark class="my">regula funções viscerais sem decisão consciente</mark>: frequência cardíaca, pressão arterial, motilidade intestinal, diâmetro da pupila, micção e secreções glandulares. Ele participa da <b>homeostasis</b> e ajusta o funcionamento dos órgãos às necessidades do momento.</p>
 
 <p>Anatomicamente, o sistema nervoso divide-se em <b>sistema nervoso central (SNC)</b>, cérebro e medula espinhal, e <b>sistema nervoso periférico (SNP)</b>. O SNP se subdivide em <b>somático</b>, que comanda músculos voluntários esqueléticos sem gânglios periféricos, e <b>autônomo</b>. As <b>fibras aferentes</b> levam informação das vísceras ao SNC, inclusive a dor referida. As <b>fibras eferentes</b> executam as respostas autonômicas, divididas em dois ramos antagônicos: <b>simpático</b> (luta ou fuga) e <b>parassimpático</b> (repouso e digestão).</p>
 
@@ -283,7 +281,7 @@ table.t td b{color:var(--g9)}
 
 <div class="box"><span class="lb">Entenda melhor</span><p>A via autonômica geralmente usa <b>dois neurônios</b>: o primeiro sai do SNC e termina no gânglio; o segundo segue do gânglio até o órgão. Na via somática para músculo esquelético, <b>um único</b> neurônio motor vai do SNC até a união neuromuscular. Essa diferença explica por que a placa motora é bem definida e a sinapse autonômica é difusa.</p></div>
 
-<p>A <b>dupla inervação</b> ajuda a explicar respostas opostas no coração, na pupila e no intestino. Porém, não transforme esse padrão em regra absoluta: muitos vasos recebem principalmente controle simpático. A ausência de inervação parassimpática importante <b>não</b> significa ausência de receptores capazes de responder a um fármaco.</p>
+<p>A <b>dupla inervação</b> ajuda a explicar respostas opostas no coração, na pupila e no intestino. Porém, não transforme esse padrão em regra absoluta: muitos vasos recebem principalmente controle simpático. <mark class="mr">A ausência de inervação parassimpática importante <b>não</b> significa ausência de receptores capazes de responder a um fármaco</mark>.</p>
 
 <div class="box"><span class="lb">Precisão</span><p>Dupla inervação não é regra absoluta. Vasos sanguíneos recebem, em geral, controle simpático, e as glândulas sudoríparas, embora simpáticas, usam acetilcolina.</p></div>
 
@@ -292,14 +290,14 @@ table.t td b{color:var(--g9)}
 <li><b>Cotransmissão:</b> cada neurônio autonômico tem um transmissor primário (ACh ou NA), mas pode liberar vários cotransmissores ao mesmo tempo, como ATP, óxido nítrico (NO), neuropeptídeo Y (NPY) e peptídeo intestinal vasoativo (VIP). Eles modulam a resposta principal nos órgãos com dupla inervação.</li>
 <li><b>Sinapse autonômica versus placa motora:</b> no músculo esquelético há placa motora definida (um neurônio para uma fibra muscular, bloqueável por atracúrio ou tubocurarina em Nm). No SNA a comunicação é <b>difusa</b>: as fibras apresentam dilatações em colar chamadas <b>varicosidades</b>.</li>
 <li><b>Transmissão eletrotônica:</b> em intestino, vasos e bexiga, o potencial de ação percorre o axônio e libera transmissores no espaço extracelular que ativam células vizinhas acopladas eletricamente. O sinal passa de célula a célula, permitindo resposta coordenada.</li>
-<li><b>Receptores pós-sinápticos versus pré-sinápticos:</b> os pós-sinápticos estão na célula efetora e executam a resposta (contração, relaxamento, secreção). Os pré-sinápticos estão no terminal neuronal e modulam a liberação do transmissor. Dividem-se em <b>autorreceptores</b> (reconhecem o mesmo transmissor liberado, p. ex. α2 para noradrenalina, M2/M4 para ACh), que geram <b>feedback negativo</b>, e <b>heterorreceptores</b> (respondem a outros mensageiros, p. ex. serotonina 5-HT e neuropeptídeos), que podem aumentar ou diminuir a liberação.</li>
+<li><b>Receptores pós-sinápticos versus pré-sinápticos:</b> os pós-sinápticos estão na célula efetora e executam a resposta (contração, relaxamento, secreção). Os pré-sinápticos estão no terminal neuronal e modulam a liberação do transmissor. Dividem-se em <b>autorreceptores</b> (reconhecem o mesmo transmissor liberado, p. ex. α2 para noradrenalina, M2/M4 para ACh), <mark class="my">que geram <b>feedback negativo</b></mark>, e <b>heterorreceptores</b> (respondem a outros mensageiros, p. ex. serotonina 5-HT e neuropeptídeos), que podem aumentar ou diminuir a liberação.</li>
 <li><b>Três formas de ação farmacológica no SNA:</b> (1) <b>agonistas</b>, que imitam o transmissor e ativam o receptor; (2) <b>antagonistas/bloqueadores</b>, que bloqueiam o receptor sem ativá-lo; (3) <b>fármacos que modificam neurotransmissores</b>, que inibem a síntese, o armazenamento, a liberação ou a degradação enzimática.</li>
 </ul>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«El sistema nervioso autónomo regula de forma involuntaria las funciones viscerales y contribuye al mantenimiento de la homeostasis».</p></div>
 </section>
 <section class="pg cap" id="mm01"><span class="eyebrow">Mapa mental 01 · Recuperação ativa</span><h1 class="h1">Sistema nervoso autónomo</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="01"></div></div></section>
 <section class="pg cap" id="cap02">
 <span class="eyebrow">01 · Sistema nervoso autónomo</span>
@@ -319,15 +317,15 @@ table.t td b{color:var(--g9)}
 <tr><td>Junção neuromuscular</td><td>Acetilcolina</td><td>Nicotínico muscular (Nm)</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>«Colinérgico» não é sinônimo de «parassimpático». A transmissão ganglionar simpática também é colinérgica. Nas glândulas sudoríparas, a exceção continua até o órgão efetor.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">«Colinérgico» não é sinônimo de «parassimpático»</mark>. A transmissão ganglionar simpática também é colinérgica. Nas glândulas sudoríparas, a exceção continua até o órgão efetor.</p></div>
 
 <p>A <b>adrenalina</b> liberada pela <b>medula suprarrenal</b> circula no sangue e alcança vários órgãos. Já a <b>noradrenalina</b> liberada em terminações nervosas age predominantemente perto do local de liberação. Por isso, uma figura que mostra adrenalina em toda fibra simpática posganglionar simplifica demais o circuito.</p>
 <p>Para estudar uma ação, faça três perguntas: <b>qual substância chega ao tecido</b>, <b>qual receptor está disponível</b> e <b>qual resposta aquele receptor produz</b>. Esse raciocínio evita decorar listas de efeitos sem ligação entre elas.</p>
 
-<div class="box"><span class="lb">Aplicação na prova</span><p>Se a pergunta disser «todas las fibras preganglionares del SNA», a resposta é <b>acetilcolina e receptor nicotínico</b>; não separe simpático de parassimpático nesse ponto.</p></div>
+<div class="box"><span class="lb">Aplicação na prova</span><p>Se a pergunta disser «todas las fibras preganglionares del SNA», a resposta é <mark class="my"><b>acetilcolina e receptor nicotínico</b></mark>; não separe simpático de parassimpático nesse ponto.</p></div>
 </section>
 <section class="pg cap" id="mm02"><span class="eyebrow">Mapa mental 02 · Recuperação ativa</span><h1 class="h1">Neurotransmissores</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="02"></div></div></section>
 <section class="pg cap" id="cap03">
 <span class="eyebrow">01 · Sistema nervoso autónomo</span>
@@ -336,13 +334,13 @@ table.t td b{color:var(--g9)}
 
 <p class="lead">A <b>acetilcolina</b> é sintetizada a partir de <b>colina</b> e <b>acetil-CoA</b>, pela <b>colina acetiltransferase</b>. Depois é armazenada em vesículas. Quando chega o <b>potencial de ação</b>, entra Ca²⁺ por canais dependentes de voltagem e ocorre a liberação do neurotransmissor.</p>
 
-<p>Na <b>fenda sináptica</b>, a ACh ativa receptores. A <b>acetilcolinesterase (AChE)</b> encerra rapidamente sua ação ao hidrolisá-la em colina e acetato. A colina pode ser recaptada para uma nova síntese. <b>Observe que a enzima que fabrica ACh é diferente da enzima que a degrada.</b></p>
+<p>Na <b>fenda sináptica</b>, a ACh ativa receptores. A <b>acetilcolinesterase (AChE)</b> encerra rapidamente sua ação ao hidrolisá-la em colina e acetato. A colina pode ser recaptada para uma nova síntese. <mark class="mr"><b>Observe que a enzima que fabrica ACh é diferente da enzima que a degrada.</b></mark></p>
 
 <h3 class="sub">Seis passos da neurotransmissão colinérgica</h3>
 <ol class="pl">
 <li><b>Síntese:</b> a colina entra no neurônio por cotransporte com Na⁺ (processo inibido experimentalmente pelo <b>hemicolínio</b>) e reage com acetil-CoA pela ChAT.</li>
 <li><b>Armazenamento:</b> a ACh é transportada para vesículas, onde fica protegida da degradação.</li>
-<li><b>Liberação:</b> o potencial de ação abre canais de Ca²⁺. Quando a vesícula se funde à membrana, ocorre exocitose. A <b>toxina botulínica</b> impede essa etapa.</li>
+<li><b>Liberação:</b> o potencial de ação abre canais de Ca²⁺. Quando a vesícula se funde à membrana, ocorre exocitose. <mark class="my">A <b>toxina botulínica</b> impede essa etapa</mark>.</li>
 <li><b>Ligação ao receptor:</b> ativa receptores muscarínicos ou nicotínicos.</li>
 <li><b>Degradação:</b> a ACh é hidrolisada na fenda pela AChE.</li>
 <li><b>Reciclagem:</b> a colina retorna ao terminal neuronal, pelo transportador que o hemicolínio inibe.</li>
@@ -361,10 +359,10 @@ table.t td b{color:var(--g9)}
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Um agonista aciona o receptor; um antagonista impede sua ativação; um fármaco que inibe a degradação aumenta a quantidade de neurotransmissor disponível. As três estratégias podem modificar o mesmo órgão, mas atuam em etapas diferentes.</p></div>
 
-<p>Intervenções em outras etapas também alteram a resposta: o <b>hemicolínio</b> reduz a captação de colina, o armazenamento e a exocitose são alvos de fármacos, e a <b>toxina botulínica</b> impede a liberação de ACh. A consequência pode ser <b>menor transmissão mesmo que o receptor esteja intacto</b>.</p>
+<p>Intervenções em outras etapas também alteram a resposta: o <b>hemicolínio</b> reduz a captação de colina, o armazenamento e a exocitose são alvos de fármacos, e a <b>toxina botulínica</b> impede a liberação de ACh. A consequência pode ser <mark class="my"><b>menor transmissão mesmo que o receptor esteja intacto</b></mark>.</p>
 </section>
 <section class="pg cap" id="mm03"><span class="eyebrow">Mapa mental 03 · Recuperação ativa</span><h1 class="h1">Sinapse colinérgica</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="03"></div></div></section>
 <section class="pg cap" id="cap04">
 <span class="eyebrow">01 · Sistema nervoso autónomo</span>
@@ -385,23 +383,23 @@ table.t td b{color:var(--g9)}
 <tr><td><b>M5</b></td><td>Gq → IP3/DAG → ↑ Ca²⁺</td><td>SNC (substância negra), vasos cerebrais, salivação e músculo ciliar</td><td>Regulação dopaminérgica, vasodilatação cerebral, salivação e acomodação</td></tr>
 </tbody></table></div>
 
-<p>A regra «ímpares Gq, pares Gi» organiza os subtipos muscarínicos: M1, M3 e M5 são ímpares (Gq); M2 e M4 são pares (Gi). Na via <b>Gq</b>, a <b>fosfolipase C</b> gera <b>IP3</b> e <b>DAG</b>, elevando a sinalização por Ca²⁺. Na via <b>Gi</b>, há redução de <b>AMPc</b>; no coração, outros efeitos sobre canais também favorecem menor excitabilidade.</p>
+<p><mark class="my">A regra «ímpares Gq, pares Gi» organiza os subtipos muscarínicos</mark>: M1, M3 e M5 são ímpares (Gq); M2 e M4 são pares (Gi). Na via <b>Gq</b>, a <b>fosfolipase C</b> gera <b>IP3</b> e <b>DAG</b>, elevando a sinalização por Ca²⁺. Na via <b>Gi</b>, há redução de <b>AMPc</b>; no coração, outros efeitos sobre canais também favorecem menor excitabilidade.</p>
 
-<div class="box warn"><span class="lb">Precisão</span><p>Gq não significa contração em qualquer célula. No endotélio, o aumento de Ca²⁺ favorece produção de óxido nítrico, que relaxa o músculo liso vascular. O receptor e o tipo celular precisam ser interpretados juntos.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">Gq não significa contração em qualquer célula</mark>. No endotélio, o aumento de Ca²⁺ favorece produção de óxido nítrico, que relaxa o músculo liso vascular. O receptor e o tipo celular precisam ser interpretados juntos.</p></div>
 
 <p><b>Atropina</b> bloqueia receptores muscarínicos; não reverte, por esse mecanismo, um bloqueio de Nm. <b>Tubocurarina</b> e <b>atracúrio</b> representam bloqueadores da transmissão neuromuscular nicotínica. Não generalize o efeito de um bloqueador muscular a todos os receptores Nn e Nm.</p>
 <p>Nos receptores nicotínicos, a estrutura pentamérica exige duas moléculas de ACh para a abertura do canal; a entrada de Na⁺ e K⁺ predomina, e a participação do Ca²⁺/Mg²⁺ é menor. Isso produz um potencial excitatório pós-sináptico rápido.</p>
 </section>
 <section class="pg cap" id="mm04"><span class="eyebrow">Mapa mental 04 · Recuperação ativa</span><h1 class="h1">Receptores colinérgicos</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="04"></div></div></section>
 <section class="pg cap" id="ex1"><span class="eyebrow">Exercícios · Módulo 01</span><h1 class="h1">Pratique: Sistema nervoso autónomo</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="m1"></div></section>
+<div class="quiz ex" data-quiz="m1"></div></section>
 <section class="pg cap" id="fc1"><span class="eyebrow">Flashcards · Módulo 01</span><h1 class="h1">Flashcards: Sistema nervoso autónomo</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="m1"></div></section>
+<div class="deck" data-deck="m1"></div></section>
 <section class="pg cap modcover" id="mod2"><span class="tag-mod">MÓDULO 02 · CLASE 6</span><h1 class="h1">Fármacos colinérgicos</h1><p class="lead">Agonistas diretos, anticolinesterásicos, miastenia e Alzheimer, organofosforados, antimuscarínicos e síndrome anticolinérgica.</p>
 <div class="list"><a href="#cap05"><b>05</b><span>Agonistas diretos: imitar a acetilcolina</span></a><a href="#cap06"><b>06</b><span>Anticolinesterásicos: preservar o mensageiro</span></a><a href="#cap07"><b>07</b><span>Miastenia gravis, Alzheimer e aplicações</span></a><a href="#cap08"><b>08</b><span>Intoxicação por organofosforados</span></a><a href="#cap09"><b>09</b><span>Antimuscarínicos: prever os efeitos por órgão</span></a><a href="#cap10"><b>10</b><span>Estrutura química, BHE e escolha do órgão</span></a><a href="#cap11"><b>11</b><span>Síndrome anticolinérgica e carga cumulativa</span></a>
-<a href="#ex2"><b>✎</b><span>Exercícios: 9 questões com correção imediata</span></a><a href="#fc2"><b>⧉</b><span>Flashcards: 10 cartões</span></a></div></section>
+<a href="#ex2"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc2"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
 <section class="pg cap" id="cap05">
 <span class="eyebrow">02 · Fármacos colinérgicos</span>
 <h1 class="h1">05. Agonistas diretos: imitar a acetilcolina</h1>
@@ -421,7 +419,7 @@ table.t td b{color:var(--g9)}
 
 <p>O efeito terapêutico vem da função normal estimulada. Para facilitar a <b>micção</b>, é útil contrair o <b>músculo detrusor</b>; para reduzir <b>pressão intraocular</b>, a <b>miose</b> e a contração do <b>músculo ciliar</b> podem facilitar a saída de <b>humor aquoso</b>.</p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>Aumentar a contração não resolve uma obstrução mecânica. Se a saída está bloqueada, estimular intestino ou bexiga pode aumentar a pressão e o desconforto sem corrigir a causa.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p><mark class="mr">Aumentar a contração não resolve uma obstrução mecânica.</mark> Se a saída está bloqueada, estimular intestino ou bexiga pode aumentar a pressão e o desconforto sem corrigir a causa.</p></div>
 
 <h3 class="sub">Ações sistêmicas dos agonistas diretos</h3>
 <ul class="pl">
@@ -433,12 +431,12 @@ table.t td b{color:var(--g9)}
 <li><b>Glândulas exócrinas:</b> estimulam saliva (<b>sialorreia</b>), suor (<b>diaforese</b>), lágrimas e sucos digestivos.</li>
 </ul>
 
-<p>As <b>reações adversas</b> seguem o mesmo mecanismo: sialorreia, diaforese, cólicas, diarreia, bradicardia, hipotensão, broncoespasmo e secreção brônquica aumentada. A ação útil em um órgão pode ser indesejada em outro.</p>
+<p>As <b>reações adversas</b> seguem o mesmo mecanismo: sialorreia, diaforese, cólicas, diarreia, bradicardia, hipotensão, broncoespasmo e secreção brônquica aumentada. <mark class="my">A ação útil em um órgão pode ser indesejada em outro.</mark></p>
 
-<div class="box warn"><span class="lb">Intoxicação por cogumelos (setas)</span><p>Ingestão de cogumelos do gênero <i>Inocybe</i> (contém <b>muscarina</b>) provoca quadro agudo em <b>30 a 60 minutos</b>, com hipersalivação, sudorese, vômitos, diarreia, broncoespasmo, bradicardia e hipotensão. <b>Antídoto: atropina</b> (0,5–1 mg IM ou IV; em intoxicações graves, 1–2 mg IM a cada 30 min).</p></div>
+<div class="box warn"><span class="lb">Intoxicação por cogumelos (setas)</span><p>Ingestão de cogumelos do gênero <i>Inocybe</i> (contém <b>muscarina</b>) provoca quadro agudo em <b>30 a 60 minutos</b>, com hipersalivação, sudorese, vômitos, diarreia, broncoespasmo, bradicardia e hipotensão. <mark class="my"><b>Antídoto: atropina</b></mark> (0,5–1 mg IM ou IV; em intoxicações graves, 1–2 mg IM a cada 30 min).</p></div>
 </section>
 <section class="pg cap" id="mm05"><span class="eyebrow">Mapa mental 05 · Recuperação ativa</span><h1 class="h1">Agonistas diretos</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="05"></div></div></section>
 <section class="pg cap" id="cap06">
 <span class="eyebrow">02 · Fármacos colinérgicos</span>
@@ -460,14 +458,14 @@ table.t td b{color:var(--g9)}
 
 <p>A aula diferencia três classes: <b>álcoois simples</b> (edrofônio), <b>derivados carbâmicos</b> (neostigmina, piridostigmina, fisostigmina, donepezila, rivastigmina, galantamina) e <b>organofosforados</b>. Os carbamatos formam uma ligação que demora mais para ser hidrolisada que a ligação normal da ACh. Nos organofosforados, o <b>envelhecimento</b> estabiliza o complexo e dificulta ou impede a reativação por <b>oximas</b>.</p>
 
-<div class="box warn"><span class="lb">Precisão</span><p>A <b>atropina</b> bloqueia a resposta muscarínica, mas não remove ACh da sinapse nem reativa a AChE. Isso explica por que ela não corrige diretamente a fraqueza da placa motora por excesso nicotínico.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>A <b>atropina</b> bloqueia a resposta muscarínica, mas não remove ACh da sinapse nem reativa a AChE. <mark class="mr">Isso explica por que ela não corrige diretamente a fraqueza da placa motora por excesso nicotínico.</mark></p></div>
 
-<p>Os efeitos indesejados incluem secreções excessivas, <b>bradicardia</b>, <b>broncoespasmo</b>, cólicas e diarreia. Na placa motora, o excesso pode produzir <b>fasciculações</b> e depois <b>fraqueza</b>. Portanto, <b>mais ACh não significa força muscular cada vez maior</b>.</p>
+<p>Os efeitos indesejados incluem secreções excessivas, <b>bradicardia</b>, <b>broncoespasmo</b>, cólicas e diarreia. Na placa motora, o excesso pode produzir <b>fasciculações</b> e depois <b>fraqueza</b>. Portanto, <mark class="mr"><b>mais ACh não significa força muscular cada vez maior</b></mark>.</p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>Carbamatos (neostigmina, piridostigmina) são hidrossolúveis e não cruzam a BHE; agem na periferia. Fisostigmina é terciária e lipossolúvel, por isso atravessa a BHE. Essa diferença química explica por que não são intercambiáveis.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p>Carbamatos (neostigmina, piridostigmina) são hidrossolúveis e não cruzam a BHE; agem na periferia. <mark class="my">Fisostigmina é terciária e lipossolúvel, por isso atravessa a BHE</mark>. Essa diferença química explica por que não são intercambiáveis.</p></div>
 </section>
 <section class="pg cap" id="mm06"><span class="eyebrow">Mapa mental 06 · Recuperação ativa</span><h1 class="h1">Anticolinesterásicos</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="06"></div></div></section>
 <section class="pg cap" id="cap07">
 <span class="eyebrow">02 · Fármacos colinérgicos</span>
@@ -476,7 +474,7 @@ table.t td b{color:var(--g9)}
 
 <p class="lead">Na <b>miastenia gravis</b>, a transmissão na <b>união neuromuscular</b> fica comprometida por um processo autoimune. Em muitos pacientes há anticorpos contra receptores de ACh. O resultado é <b>fraqueza fatigável</b>. Aumentar a ACh na sinapse ajuda a aproveitar os receptores funcionais restantes.</p>
 
-<p>A <b>piridostigmina</b> trata sintomas; ela não elimina a autoimunidade. Por isso a aula também menciona <b>corticoides</b>, outros <b>imunossupressores</b> e <b>timectomia</b> em contextos específicos. O <b>edrofônio</b> aparece como instrumento diagnóstico histórico, mas não deve ser apresentado como teste rotineiro atual.</p>
+<p><mark class="my">A <b>piridostigmina</b> trata sintomas; ela não elimina a autoimunidade.</mark> Por isso a aula também menciona <b>corticoides</b>, outros <b>imunossupressores</b> e <b>timectomia</b> em contextos específicos. O <b>edrofônio</b> aparece como instrumento diagnóstico histórico, mas não deve ser apresentado como teste rotineiro atual.</p>
 
 <p>Na reversão de <b>bloqueio neuromuscular no despolarizante</b>, a <b>neostigmina</b> aumenta a competição da ACh pelo receptor Nm. Um <b>antimuscarínico</b> pode acompanhar essa reversão para reduzir efeitos cardíacos e glandulares. Os dois fármacos não se anulam na placa motora: seus alvos são diferentes.</p>
 
@@ -490,19 +488,19 @@ table.t td b{color:var(--g9)}
 <tr><td>Síndrome antimuscarínica (selecionados)</td><td>Aumentar ACh para competir com o antagonista</td></tr>
 </tbody></table></div>
 
-<p><b>Donepezila</b>, <b>rivastigmina</b> e <b>galantamina</b> podem oferecer benefício cognitivo ou funcional sintomático. Isso não equivale a regenerar neurônios ou curar a <b>doença de Alzheimer</b>. Náuseas, perda de peso, <b>bradicardia</b> e <b>síncope</b> precisam ser ligados à intensificação colinérgica.</p>
+<p><b>Donepezila</b>, <b>rivastigmina</b> e <b>galantamina</b> podem oferecer benefício cognitivo ou funcional sintomático. <mark class="mr">Isso não equivale a regenerar neurônios ou curar a <b>doença de Alzheimer</b>.</mark> Náuseas, perda de peso, <b>bradicardia</b> e <b>síncope</b> precisam ser ligados à intensificação colinérgica.</p>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>Compare as barreiras: <b>neostigmina</b> age sobretudo na periferia; <b>fisostigmina</b> alcança o SNC. A diferença química ajuda a explicar por que não são intercambiáveis.</p></div>
 </section>
 <section class="pg cap" id="mm07"><span class="eyebrow">Mapa mental 07 · Recuperação ativa</span><h1 class="h1">Aplicações colinérgicas</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="07"></div></div></section>
 <section class="pg cap" id="cap08">
 <span class="eyebrow">02 · Fármacos colinérgicos</span>
 <h1 class="h1">08. Intoxicação por organofosforados</h1>
 <div class="meta">Base do assunto: Clase 6 · páginas 56–59 e 70; precisão: referência R2</div>
 
-<p class="lead">Quando a AChE é inibida de forma intensa, a ACh se acumula em diferentes sinapses. O quadro <b>não é apenas parassimpático</b>: inclui também <b>receptores nicotínicos</b> e o <b>SNC</b>. A gravidade depende do agente, da quantidade, da via de exposição e da rapidez do atendimento.</p>
+<p class="lead">Quando a AChE é inibida de forma intensa, a ACh se acumula em diferentes sinapses. <mark class="my">O quadro <b>não é apenas parassimpático</b></mark>: inclui também <b>receptores nicotínicos</b> e o <b>SNC</b>. A gravidade depende do agente, da quantidade, da via de exposição e da rapidez do atendimento.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Componente</th><th>Manifestações que ajudam a reconhecer</th></tr></thead>
@@ -512,7 +510,7 @@ table.t td b{color:var(--g9)}
 <tr><td><b>Central</b></td><td>Agitação, confusão, ataxia, convulsões, depressão respiratória e coma</td></tr>
 </tbody></table></div>
 
-<p>A ameaça respiratória pode combinar secreções, obstrução brônquica, depressão central e fraqueza muscular. <b>Não basta observar a pupila</b>: é necessário interpretar o conjunto.</p>
+<p>A ameaça respiratória pode combinar secreções, obstrução brônquica, depressão central e fraqueza muscular. <mark class="mr"><b>Não basta observar a pupila</b></mark>: é necessário interpretar o conjunto.</p>
 
 <h3 class="sub">Os três pilares do tratamento</h3>
 <ol class="pl">
@@ -521,14 +519,14 @@ table.t td b{color:var(--g9)}
 <li><b>Reativação da AChE com oximas:</b> <b>pralidoxima</b> ou obidoxima deslocam o grupamento fosfato do sítio ativo. O benefício depende do organofosforado e do envelhecimento da enzima.</li>
 </ol>
 
-<div class="box warn"><span class="lb">Precisão</span><p>O intervalo útil para uma oxima depende do organofosforado e do processo de envelhecimento. <b>Não memorize «24–48 horas» como janela universal</b>. A indicação e a oportunidade do tratamento exigem avaliação toxicológica (referência R2).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>O intervalo útil para uma oxima depende do organofosforado e do processo de envelhecimento. <mark class="mr"><b>Não memorize «24–48 horas» como janela universal</b></mark>. A indicação e a oportunidade do tratamento exigem avaliação toxicológica (referência R2).</p></div>
 
 <p><b>Ecotiofato</b>, <b>malatião</b> e <b>paratião</b> aparecem no grupo, mas não têm o mesmo contexto de uso ou toxicidade. O slide associa ecotiofato ao uso oftálmico histórico (glaucoma de ângulo aberto refratário) e malatião a preparações tópicas para pediculose; isso não torna segura uma exposição sistêmica.</p>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«La atropina antagoniza los efectos muscarínicos; la pralidoxima puede reactivar la acetilcolinesterasa antes del envejecimiento. El soporte respiratorio es fundamental».</p></div>
 </section>
 <section class="pg cap" id="mm08"><span class="eyebrow">Mapa mental 08 · Recuperação ativa</span><h1 class="h1">Organofosforados</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="08"></div></div></section>
 <section class="pg cap" id="cap09">
 <span class="eyebrow">02 · Fármacos colinérgicos</span>
@@ -556,9 +554,9 @@ table.t td b{color:var(--g9)}
 
 <h3 class="sub">Ordem dos efeitos da atropina conforme aumenta a dose</h3>
 <ol class="pl">
-<li><b>Glândulas (salivares, brônquicas, sudoríparas):</b> são as mais sensíveis. Boca seca, dificuldade para engolir ou falar, pele seca e quente (hipertermia/febre atropínica).</li>
-<li><b>Coração e vasos:</b> elimina tônus vagal (M2) → taquicardia sinusal, ↑ condução AV, ↓ intervalo PR. Doses muito baixas podem causar <b>bradicardia paradoxal transitória</b>; doses altas causam vasodilatação cutânea (flush atropínico).</li>
-<li><b>Olho:</b> bloqueia esfíncter da íris (M3) → <b>midríase</b>; bloqueia músculo ciliar → <b>cicloplegia</b>. Precipita <b>crise de glaucoma de ângulo fechado</b> (contraindicado).</li>
+<li><b>Glândulas (salivares, brônquicas, sudoríparas):</b> <mark class="my">são as mais sensíveis</mark>. Boca seca, dificuldade para engolir ou falar, pele seca e quente (hipertermia/febre atropínica).</li>
+<li><b>Coração e vasos:</b> elimina tônus vagal (M2) → taquicardia sinusal, ↑ condução AV, ↓ intervalo PR. <mark class="my">Doses muito baixas podem causar <b>bradicardia paradoxal transitória</b></mark>; doses altas causam vasodilatação cutânea (flush atropínico).</li>
+<li><b>Olho:</b> bloqueia esfíncter da íris (M3) → <b>midríase</b>; bloqueia músculo ciliar → <b>cicloplegia</b>. <mark class="mr">Precipita <b>crise de glaucoma de ângulo fechado</b> (contraindicado)</mark>.</li>
 <li><b>Tubo digestivo:</b> ↓ tônus, ↓ peristaltismo e retardo do esvaziamento gástrico (efeito antiespasmódico).</li>
 <li><b>Vias urinárias:</b> dilatação de pelve renal e ↓ tônus do detrusor → risco de <b>retenção urinária aguda</b> em homens com hiperplasia prostática benigna.</li>
 <li><b>Secreção gástrica e gânglios:</b> menos sensíveis (inibem apenas a fase cefálica vagal da secreção ácida).</li>
@@ -567,14 +565,14 @@ table.t td b{color:var(--g9)}
 <p><b>Diferença no SNC:</b> em doses terapêuticas, a atropina quase não afeta o SNC; em doses altas causa excitação, irritabilidade, alucinações, delírio e, em doses letais, depressão bulbar e coma. A <b>escopolamina</b> penetra intensamente na BHE mesmo em doses terapêuticas, causando <b>sonolência, euforia, amnésia</b> e ação anticinetótica (ou excitação/delírio).</p>
 </section>
 <section class="pg cap" id="mm09"><span class="eyebrow">Mapa mental 09 · Recuperação ativa</span><h1 class="h1">Antimuscarínicos</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="09"></div></div></section>
 <section class="pg cap" id="cap10">
 <span class="eyebrow">02 · Fármacos colinérgicos</span>
 <h1 class="h1">10. Estrutura química, BHE e escolha do órgão</h1>
 <div class="meta">Base do assunto: Clase 6 · páginas 78–90, 94–110; precisão: R1</div>
 
-<p class="lead">A estrutura química influencia absorção e distribuição. <b>Aminas terciárias</b> podem alcançar o SNC em graus variáveis. <b>Compostos de amônio quaternário</b> têm carga permanente e atravessam pouco a BHE. Essa diferença permite buscar efeito periférico com menor exposição cerebral.</p>
+<p class="lead">A estrutura química influencia absorção e distribuição. <mark class="my"><b>Aminas terciárias</b> podem alcançar o SNC em graus variáveis</mark>. <b>Compostos de amônio quaternário</b> têm carga permanente e atravessam pouco a BHE. Essa diferença permite buscar efeito periférico com menor exposição cerebral.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Uso / órgão</th><th>Fármacos presentes nas aulas</th><th>Distinção útil</th></tr></thead>
@@ -588,10 +586,10 @@ table.t td b{color:var(--g9)}
 <tr><td>Uso gástrico histórico</td><td>Pirenzepina; telenzepina</td><td>Preferência M1; uso hoje limitado</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>A foto coloca <b>diciclomina</b> e <b>hiosciamina</b> sob «aminas cuaternarias». Essa classificação não deve ser memorizada: são <b>aminas terciárias</b>. O <b>butilbromuro de hioscina</b> é derivado <b>quaternário</b>; não é sinônimo farmacocinético de escopolamina. A estrutura da diciclomina pode ser conferida na referência R1.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>A foto coloca <b>diciclomina</b> e <b>hiosciamina</b> sob «aminas cuaternarias». <mark class="mr">Essa classificação não deve ser memorizada: são <b>aminas terciárias</b>.</mark> O <b>butilbromuro de hioscina</b> é derivado <b>quaternário</b>; não é sinônimo farmacocinético de escopolamina. A estrutura da diciclomina pode ser conferida na referência R1.</p></div>
 
 <p>O <b>trospio</b> tem baixa penetração cerebral, mas continua capaz de produzir boca seca e <b>estreñimiento</b>, pois esses efeitos são periféricos. A seletividade funcional para bexiga também não significa ação exclusiva nesse órgão.</p>
-<p>O uso inalado de <b>ipratrópio</b> e <b>tiotrópio</b> favorece efeito broncodilatador. Já o uso tópico ocular pode ter absorção sistêmica: «tópico» não significa automaticamente ausência de efeitos fora do local.</p>
+<p>O uso inalado de <b>ipratrópio</b> e <b>tiotrópio</b> favorece efeito broncodilatador. Já o uso tópico ocular pode ter absorção sistêmica: <mark class="mr">«tópico» não significa automaticamente ausência de efeitos fora do local</mark>.</p>
 
 <h3 class="sub">Antimuscarínicos na bexiga hiperativa: a escolha da molécula</h3>
 <ul class="pl">
@@ -602,14 +600,14 @@ table.t td b{color:var(--g9)}
 </ul>
 </section>
 <section class="pg cap" id="mm10"><span class="eyebrow">Mapa mental 10 · Recuperação ativa</span><h1 class="h1">Estrutura e órgão</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="10"></div></div></section>
 <section class="pg cap" id="cap11">
 <span class="eyebrow">02 · Fármacos colinérgicos</span>
 <h1 class="h1">11. Síndrome anticolinérgica e carga cumulativa</h1>
 <div class="meta">Base do assunto: Clase 6 · páginas 91–101; precisão: R3</div>
 
-<p class="lead">Muitos medicamentos que não recebem o nome de anticolinérgicos têm atividade <b>antimuscarínica</b>: alguns <b>antihistamínicos</b>, <b>antipsicóticos</b>, <b>antidepressivos tricíclicos</b> e <b>antiarrítmicos</b>. A soma dessas ações é importante, especialmente em idosos e crianças.</p>
+<p class="lead">Muitos medicamentos que não recebem o nome de anticolinérgicos têm atividade <b>antimuscarínica</b>: alguns <b>antihistamínicos</b>, <b>antipsicóticos</b>, <b>antidepressivos tricíclicos</b> e <b>antiarrítmicos</b>. <mark class="my">A soma dessas ações é importante, especialmente em idosos e crianças.</mark></p>
 
 <p>A <b>síndrome anticolinérgica periférica</b> reúne boca seca, menor sudorese, <b>midríase</b>, visão borrada, <b>taquicardia</b>, <b>retenção urinária</b> e redução da atividade intestinal. O componente central inclui desatenção, alterações de memória, desorientação, alucinações e <b>delirium</b>.</p>
 
@@ -623,7 +621,7 @@ table.t td b{color:var(--g9)}
 <tr><td>Músculo esquelético</td><td>Pode haver fasciculações e fraqueza</td><td>Não é efeito típico do bloqueio muscarínico puro</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>A <b>fisostigmina</b> não é antídoto universal para qualquer intoxicação com sinais anticolinérgicos, nem deve ser usada como teste simples de confirmação. Em suspeita de toxicidade por tricíclicos ou alterações de condução, a escolha requer avaliação especializada e monitorização (referência R3).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">A <b>fisostigmina</b> não é antídoto universal</mark> para qualquer intoxicação com sinais anticolinérgicos, nem deve ser usada como teste simples de confirmação. Em suspeita de toxicidade por tricíclicos ou alterações de condução, a escolha requer avaliação especializada e monitorização (referência R3).</p></div>
 
 <p>O tratamento do quadro grave começa pela avaliação das funções vitais, identificação das exposições e manejo das complicações. As doses e os procedimentos de descontaminação impressos no slide permanecem no original para conferência, mas não foram transformados aqui em um protocolo de atendimento.</p>
 
@@ -633,18 +631,18 @@ table.t td b{color:var(--g9)}
 <li><b>Síndrome central:</b> 1º grau: alterações de humor, ataxia, alteração da marcha. 2º grau: déficit de atenção e memória. 3º grau: desorientação, alucinações e <i>delirium</i> (em idosos, frequentemente confundido com demência).</li>
 </ul>
 
-<div class="box"><span class="lb">Aplicação na prova</span><p>«Pele seca + midríase + retenção urinária + delirium» aponta para síndrome antimuscarínica. «Secreções abundantes + miose + fasciculações» sugere excesso colinérgico com componente nicotínico.</p></div>
+<div class="box"><span class="lb">Aplicação na prova</span><p><mark class="my">«Pele seca + midríase + retenção urinária + delirium» aponta para síndrome antimuscarínica</mark>. «Secreções abundantes + miose + fasciculações» sugere excesso colinérgico com componente nicotínico.</p></div>
 </section>
 <section class="pg cap" id="mm11"><span class="eyebrow">Mapa mental 11 · Recuperação ativa</span><h1 class="h1">Síndrome anticolinérgica</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="11"></div></div></section>
 <section class="pg cap" id="ex2"><span class="eyebrow">Exercícios · Módulo 02</span><h1 class="h1">Pratique: Fármacos colinérgicos</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="m2"></div></section>
+<div class="quiz ex" data-quiz="m2"></div></section>
 <section class="pg cap" id="fc2"><span class="eyebrow">Flashcards · Módulo 02</span><h1 class="h1">Flashcards: Fármacos colinérgicos</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="m2"></div></section>
+<div class="deck" data-deck="m2"></div></section>
 <section class="pg cap modcover" id="mod3"><span class="tag-mod">MÓDULO 03 · CLASE 7</span><h1 class="h1">Fármacos adrenérgicos</h1><p class="lead">Catecolaminas, adrenoceptores, agonistas α e β, agentes indiretos, bloqueadores α e β-bloqueadores.</p>
 <div class="list"><a href="#cap12"><b>12</b><span>Catecolaminas: da tirosina à resposta</span></a><a href="#cap13"><b>13</b><span>Adrenoceptores: cinco chaves para os efeitos</span></a><a href="#cap14"><b>14</b><span>Agonistas α: vasos, nariz e controle central</span></a><a href="#cap15"><b>15</b><span>Adrenalina, noradrenalina, dopamina e dobutamina</span></a><a href="#cap16"><b>16</b><span>β2, β3 e agentes de ação indireta</span></a><a href="#cap17"><b>17</b><span>Antagonistas α e a reversão de adrenalina</span></a><a href="#cap18"><b>18</b><span>β-bloqueadores: seletividade e diferenças</span></a>
-<a href="#ex3"><b>✎</b><span>Exercícios: 9 questões com correção imediata</span></a><a href="#fc3"><b>⧉</b><span>Flashcards: 10 cartões</span></a></div></section>
+<a href="#ex3"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc3"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
 <section class="pg cap" id="cap12">
 <span class="eyebrow">03 · Fármacos adrenérgicos</span>
 <h1 class="h1">12. Catecolaminas: da tirosina à resposta</h1>
@@ -652,7 +650,7 @@ table.t td b{color:var(--g9)}
 
 <p class="lead">Os <b>neurônios adrenérgicos</b> liberam principalmente <b>noradrenalina</b>. A síntese começa com <b>tirosina</b>, convertida em <b>L-DOPA</b> pela <b>tirosina hidroxilase</b>. A <b>DOPA descarboxilase</b> forma <b>dopamina</b>; dentro das vesículas, a <b>dopamina β-hidroxilase</b> produz noradrenalina.</p>
 
-<p>Na <b>medula suprarrenal</b>, a <b>feniletanolamina N-metiltransferase (PNMT)</b> converte noradrenalina em <b>adrenalina</b>. Essa localização evita interpretar que toda terminação simpática produz e libera adrenalina como transmissor principal.</p>
+<p>Na <b>medula suprarrenal</b>, <mark class="my">a <b>feniletanolamina N-metiltransferase (PNMT)</b> converte noradrenalina em <b>adrenalina</b></mark>. Essa localização evita interpretar que toda terminação simpática produz e libera adrenalina como transmissor principal.</p>
 
 <h3 class="sub">As cinco etapas da transmissão adrenérgica</h3>
 <div class="tw"><table class="t">
@@ -665,7 +663,7 @@ table.t td b{color:var(--g9)}
 <tr><td><b>5. Eliminação</b></td><td>Recaptação neuronal (NET), MAO intraneuronal e COMT no espaço sináptico</td><td><b>Cocaína</b> e antidepressivos tricíclicos inibem a recaptação; IMAO inibe a MAO</td></tr>
 </tbody></table></div>
 
-<p>As <b>catecolaminas</b> (adrenalina, noradrenalina, isoproterenol, dopamina, dobutamina) possuem o grupo 3,4-di-hidroxibenzeno (<b>catecol</b>). Apresentam: (1) <b>alta potência direta</b> em α/β; (2) <b>inativação rápida</b> por COMT (pós-sináptica/intestino) e MAO (intraneuronal/intestino/fígado), por isso são <b>ineficazes por via oral</b> e de curta duração parenteral; (3) <b>má penetração no SNC</b> (são polares).</p>
+<p>As <b>catecolaminas</b> (adrenalina, noradrenalina, isoproterenol, dopamina, dobutamina) possuem o grupo 3,4-di-hidroxibenzeno (<b>catecol</b>). Apresentam: (1) <b>alta potência direta</b> em α/β; (2) <b>inativação rápida</b> por COMT (pós-sináptica/intestino) e MAO (intraneuronal/intestino/fígado), <mark class="my">por isso são <b>ineficazes por via oral</b></mark> e de curta duração parenteral; (3) <b>má penetração no SNC</b> (são polares).</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Propriedade</th><th>Catecolaminas</th><th>Não catecolaminas (fenilefrina, efedrina, pseudoefedrina, anfetamina)</th></tr></thead>
@@ -684,10 +682,10 @@ table.t td b{color:var(--g9)}
 <li><b>Agonistas de ação mista</b> (efedrina, pseudoefedrina): ativam receptores diretamente e liberam NE. A resposta é <b>reduzida</b>, mas não abolida, por reserpina ou guanetidina.</li>
 </ul>
 
-<div class="box warn"><span class="lb">Precisão</span><p>O resumo manuscrito atribui à anfetamina, à cocaína e à tiramina uma inibição conjunta de MAO e COMT. Esse não é o mecanismo que diferencia esses fármacos. Separe <b>liberação</b>, <b>recaptação</b> e <b>degradação</b>, como faz a própria aula na classificação dos agentes indiretos.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>O resumo manuscrito atribui à anfetamina, à cocaína e à tiramina uma inibição conjunta de MAO e COMT. Esse não é o mecanismo que diferencia esses fármacos. <mark class="mr">Separe <b>liberação</b>, <b>recaptação</b> e <b>degradação</b></mark>, como faz a própria aula na classificação dos agentes indiretos.</p></div>
 </section>
 <section class="pg cap" id="mm12"><span class="eyebrow">Mapa mental 12 · Recuperação ativa</span><h1 class="h1">Catecolaminas</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="12"></div></div></section>
 <section class="pg cap" id="cap13">
 <span class="eyebrow">03 · Fármacos adrenérgicos</span>
@@ -706,17 +704,17 @@ table.t td b{color:var(--g9)}
 <tr><td><b>β3</b></td><td>Gs → ↑ AMPc</td><td>Tecido adiposo (↑ lipólise) e bexiga (relaxamento do detrusor)</td><td>Mirabegron; bexiga hiperativa</td></tr>
 </tbody></table></div>
 
-<p><b>Ordem de potência:</b> nos receptores α, <b>epinefrina ≥ norepinefrina ≫ isoproterenol</b>. Nos receptores β, <b>isoproterenol &gt; epinefrina ≥ norepinefrina</b>; em <b>β1</b> epinefrina e noradrenalina têm efeito semelhante, mas em <b>β2</b> a epinefrina é muito mais potente. Por isso a noradrenalina não serve para broncoespasmo ou anafilaxia.</p>
+<p><b>Ordem de potência:</b> nos receptores α, <b>epinefrina ≥ norepinefrina ≫ isoproterenol</b>. Nos receptores β, <b>isoproterenol &gt; epinefrina ≥ norepinefrina</b>; em <b>β1</b> epinefrina e noradrenalina têm efeito semelhante, mas em <b>β2</b> a epinefrina é muito mais potente. <mark class="mr">Por isso a noradrenalina não serve para broncoespasmo ou anafilaxia.</mark></p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>β1 e β2 usam Gs, mas não produzem a mesma resposta. No coração, maior sinalização por AMPc favorece entrada e manejo de Ca²⁺, aumentando trabalho. No músculo liso brônquico, a via favorece relaxamento. O segundo mensageiro não substitui o conhecimento do tecido.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p>β1 e β2 usam Gs, mas não produzem a mesma resposta. No coração, maior sinalização por AMPc favorece entrada e manejo de Ca²⁺, aumentando trabalho. No músculo liso brônquico, a via favorece relaxamento. <mark class="my">O segundo mensageiro não substitui o conhecimento do tecido.</mark></p></div>
 
 <p>O <b>barorreflexo</b> pode mudar o que aparece no pulso. Se uma substância aumenta muito a pressão por vasoconstrição, o organismo pode responder aumentando o tônus vagal e reduzindo a frequência cardíaca. Assim, a observação clínica não é apenas a soma direta de receptores cardíacos ativados.</p>
-<p>No olho, a <b>fenilefrina</b> produz midríase por <b>α1</b> no músculo radial. A <b>atropina</b> produz midríase por bloqueio muscarínico do esfíncter e também pode causar cicloplegia. Mesmo resultado visível, <b>mecanismos diferentes</b>.</p>
+<p>No olho, a <b>fenilefrina</b> produz midríase por <b>α1</b> no músculo radial. A <b>atropina</b> produz midríase por bloqueio muscarínico do esfíncter e também pode causar cicloplegia. <mark class="my">Mesmo resultado visível, <b>mecanismos diferentes</b>.</mark></p>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los receptores α1 se acoplan a Gq; α2 a Gi; β1, β2 y β3 a Gs. La respuesta depende del órgano donde se expresan».</p></div>
 </section>
 <section class="pg cap" id="mm13"><span class="eyebrow">Mapa mental 13 · Recuperação ativa</span><h1 class="h1">Adrenoceptores</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="13"></div></div></section>
 <section class="pg cap" id="cap14">
 <span class="eyebrow">03 · Fármacos adrenérgicos</span>
@@ -734,30 +732,30 @@ table.t td b{color:var(--g9)}
 <tr><td>Midodrina</td><td>Ação α1 por metabólito ativo</td><td>Elevação do tônus vascular</td></tr>
 <tr><td>Oximetazolina</td><td>Agonismo α1 e α2 na mucosa nasal</td><td>Descongestão; risco de rebote. Não usar por mais de 3 dias</td></tr>
 <tr><td>Clonidina / guanfacina</td><td>α2 central</td><td>Diminui saída simpática</td></tr>
-<tr><td>Alfametildopa</td><td>Pró-fármaco → α-metilnoradrenalina (falso neurotransmissor que ativa α2 central)</td><td>Reduz atividade simpática; 1ª escolha na hipertensão da gravidez (pré-eclâmpsia)</td></tr>
+<tr><td>Alfametildopa</td><td>Pró-fármaco → α-metilnoradrenalina (falso neurotransmissor que ativa α2 central)</td><td>Reduz atividade simpática; <mark class="my">1ª escolha na hipertensão da gravidez (pré-eclâmpsia)</mark></td></tr>
 </tbody></table></div>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>Um agonista adrenérgico pode reduzir pressão. A clonidina ativa um receptor inibitório em circuitos centrais e diminui o comando simpático aos órgãos. «Agonista» significa ativar o receptor, não aumentar obrigatoriamente a função do órgão.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p>Um agonista adrenérgico pode reduzir pressão. A clonidina ativa um receptor inibitório em circuitos centrais e diminui o comando simpático aos órgãos. <mark class="my">«Agonista» significa ativar o receptor, não aumentar obrigatoriamente a função do órgão.</mark></p></div>
 
-<p>A retirada abrupta de <b>clonidina</b> pode produzir hiperatividade simpática e <b>hipertensão de rebote</b>, por isso não se suspende de repente. Sedação e boca seca ajudam a reconhecer seu perfil. A <b>alfametildopa</b> é apresentada na aula em hipertensão na gestação; seu mecanismo deve ser associado ao sistema central, não à vasodilatação β2.</p>
+<p>A retirada abrupta de <b>clonidina</b> <mark class="mr">pode produzir hiperatividade simpática e <b>hipertensão de rebote</b>, por isso não se suspende de repente</mark>. Sedação e boca seca ajudam a reconhecer seu perfil. A <b>alfametildopa</b> é apresentada na aula em hipertensão na gestação; seu mecanismo deve ser associado ao sistema central, não à vasodilatação β2.</p>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>Se o enunciado perguntar por α2 e redução de liberação de neurotransmissor, pense em retroalimentação negativa. Se perguntar por α1 e resistência periférica, pense em contração vascular.</p></div>
 </section>
 <section class="pg cap" id="mm14"><span class="eyebrow">Mapa mental 14 · Recuperação ativa</span><h1 class="h1">Agonistas α</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="14"></div></div></section>
 <section class="pg cap" id="cap15">
 <span class="eyebrow">03 · Fármacos adrenérgicos</span>
 <h1 class="h1">15. Adrenalina, noradrenalina, dopamina e dobutamina</h1>
 <div class="meta">Base do assunto: Clase 7 · páginas 25–33; precisão: R8</div>
 
-<p class="lead">Esses fármacos <b>não são intercambiáveis</b>. A <b>adrenalina (epinefrina)</b> atua em α e β; a <b>noradrenalina (norepinefrina)</b> tem efeito vasoconstritor importante e atividade β1, com ação β2 muito menor. A <b>dobutamina</b> é estudada principalmente como agente inotrópico β1.</p>
+<p class="lead"><mark class="my">Esses fármacos <b>não são intercambiáveis</b></mark>. A <b>adrenalina (epinefrina)</b> atua em α e β; a <b>noradrenalina (norepinefrina)</b> tem efeito vasoconstritor importante e atividade β1, com ação β2 muito menor. A <b>dobutamina</b> é estudada principalmente como agente inotrópico β1.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Receptores / efeito predominante</th><th>Ações, indicações e precauções</th></tr></thead>
 <tbody>
-<tr><td><b>Adrenalina</b></td><td>α1, α2, β1, β2, β3. Dose baixa → β2 (vasodilatação); dose alta → α1 (vasoconstrição)</td><td>↑ FC e contratilidade (β1); ↑ renina; broncodilatação potente; mastócitos (inibe liberação de histamina); hiperglicemia. <b>Usos:</b> choque anafilático (fármaco de escolha; via IM na face anterolateral da coxa), parada cardíaca (IV), broncoespasmo agudo (SC/inalatória), anestésicos locais (1:100.000). Adversos: ansiedade, tremor, edema pulmonar, arritmias</td></tr>
-<tr><td><b>Noradrenalina</b></td><td>α1, α2, β1 (fraca β2)</td><td>Vasoconstrição intensa; ativa barorreceptores → bradicardia reflexa (mascara o efeito cronotrópico de β1, mas mantém o inotropismo). <b>Usos:</b> choque séptico/distributivo (infusão IV contínua). Não serve para asma ou anafilaxia. <b>Adversos:</b> necrose tecidual por extravasamento; antídoto: fentolamina local</td></tr>
+<tr><td><b>Adrenalina</b></td><td>α1, α2, β1, β2, β3. Dose baixa → β2 (vasodilatação); dose alta → α1 (vasoconstrição)</td><td>↑ FC e contratilidade (β1); ↑ renina; broncodilatação potente; mastócitos (inibe liberação de histamina); hiperglicemia. <b>Usos:</b> <mark class="my">choque anafilático (fármaco de escolha; via IM na face anterolateral da coxa)</mark>, parada cardíaca (IV), broncoespasmo agudo (SC/inalatória), anestésicos locais (1:100.000). Adversos: ansiedade, tremor, edema pulmonar, arritmias</td></tr>
+<tr><td><b>Noradrenalina</b></td><td>α1, α2, β1 (fraca β2)</td><td>Vasoconstrição intensa; ativa barorreceptores → bradicardia reflexa (mascara o efeito cronotrópico de β1, mas mantém o inotropismo). <b>Usos:</b> choque séptico/distributivo (infusão IV contínua). Não serve para asma ou anafilaxia. <b>Adversos:</b> <mark class="mr">necrose tecidual por extravasamento</mark>; antídoto: fentolamina local</td></tr>
 <tr><td><b>Isoproterenol</b></td><td>β1 e β2 não seletivo</td><td>↑ FC e contratilidade; vasodilatação e broncodilatação potente. Rara vez usado hoje pela falta de seletividade</td></tr>
 <tr><td><b>Dopamina</b></td><td>Dose-dependente: D1/D2 (baixa) → β1 (média) → α1 (alta)</td><td>Doses baixas: vasodilatação renal e esplâncnica. Médias: inotropismo e débito cardíaco. Altas: vasoconstrição. <b>Usos:</b> choque cardiogênico e séptico; IC grave; bradicardia refratária (infusão contínua)</td></tr>
 <tr><td><b>Dobutamina</b></td><td>Agonista seletivo β1</td><td>↑ FC e débito com poucos efeitos vasculares; menor aumento do consumo miocárdico de O₂. Usada na insuficiência cardíaca aguda e no pós-cirurgia cardíaca. <b>Cuidado:</b> na fibrilação atrial pode aumentar a condução AV</td></tr>
@@ -767,11 +765,11 @@ table.t td b{color:var(--g9)}
 <div class="box warn"><span class="lb">Precisão</span><p>A descrição de vasodilatação renal por dopamina não significa indicação de «dopamina renal» para prevenir insuficiência renal. E a lista conjunta de indicações na foto não deve ser aplicada a todos os fármacos do quadro.</p></div>
 
 <p>A <b>adrenalina</b> pode aumentar trabalho cardíaco e consumo de oxigênio, produzindo <b>taquicardia</b> e <b>arritmias</b>. Na <b>noradrenalina</b>, a elevação de pressão pode desencadear <b>bradicardia reflexa</b>, mesmo existindo estimulação β1 direta.</p>
-<p>Na <b>anafilaxia</b>, a adrenalina atua sobre vários componentes: α1 reverte vasodilatação e edema; β1 sustenta o desempenho cardíaco; β2 favorece broncodilatação. Corticoides não reproduzem essa resposta imediata. A via inicial de referência é <b>intramuscular</b>, e não uma generalização «SC ou IV» (referência R8).</p>
+<p>Na <b>anafilaxia</b>, a adrenalina atua sobre vários componentes: α1 reverte vasodilatação e edema; β1 sustenta o desempenho cardíaco; β2 favorece broncodilatação. Corticoides não reproduzem essa resposta imediata. <mark class="mr">A via inicial de referência é <b>intramuscular</b></mark>, e não uma generalização «SC ou IV» (referência R8).</p>
 <p><b>Dobutamina</b> pode melhorar débito sem necessariamente corrigir uma vasodilatação intensa. Para compreender um caso, separe o problema da <b>bomba</b> do problema do <b>tônus vascular</b>.</p>
 </section>
 <section class="pg cap" id="mm15"><span class="eyebrow">Mapa mental 15 · Recuperação ativa</span><h1 class="h1">Agonistas e hemodinâmica</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="15"></div></div></section>
 <section class="pg cap" id="cap16">
 <span class="eyebrow">03 · Fármacos adrenérgicos</span>
@@ -780,9 +778,9 @@ table.t td b{color:var(--g9)}
 
 <p class="lead"><b>Salbutamol</b> é um agonista β2 de <b>ação curta</b>. Ao relaxar músculo liso brônquico, melhora o componente de <b>broncoespasmo</b>. <b>Salmeterol</b> tem duração prolongada e finalidade de <b>manutenção</b>; não equivale a um medicamento para alívio imediato.</p>
 
-<div class="box warn"><span class="lb">Precisão</span><p>Em asma, o salmeterol <b>não deve ser utilizado como monoterapia</b> sem <b>corticoide inalado</b>. Ele também não é indicado para aliviar broncoespasmo agudo. A distinção entre controle inflamatório e broncodilatação é essencial (referência R4).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>Em asma, <mark class="mr">o salmeterol <b>não deve ser utilizado como monoterapia</b> sem <b>corticoide inalado</b></mark>. Ele também não é indicado para aliviar broncoespasmo agudo. A distinção entre controle inflamatório e broncodilatação é essencial (referência R4).</p></div>
 
-<p><b>Terbutalina</b>, citada nos resumos, também se relaciona a β2. Seu relaxamento uterino explica a associação didática com <b>tocólise</b>, mas indicação, duração e riscos dependem do contexto obstétrico. Tremor, palpitações e <b>hipopotassemia</b> podem acompanhar estimulação β2.</p>
+<p><b>Terbutalina</b>, citada nos resumos, também se relaciona a β2. Seu relaxamento uterino explica a associação didática com <b>tocólise</b>, mas indicação, duração e riscos dependem do contexto obstétrico. <mark class="my">Tremor, palpitações e <b>hipopotassemia</b> podem acompanhar estimulação β2</mark>.</p>
 <p><b>Mirabegron</b> ativa β3 e relaxa o <b>detrusor</b> durante o armazenamento de urina. A <b>bexiga hiperativa</b> pode, portanto, ser abordada por duas lógicas: bloquear a contração muscarínica ou favorecer o relaxamento β3.</p>
 
 <div class="tw"><table class="t">
@@ -804,7 +802,7 @@ table.t td b{color:var(--g9)}
 </ul>
 </section>
 <section class="pg cap" id="mm16"><span class="eyebrow">Mapa mental 16 · Recuperação ativa</span><h1 class="h1">β2 · β3 · indiretos</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="16"></div></div></section>
 <section class="pg cap" id="cap17">
 <span class="eyebrow">03 · Fármacos adrenérgicos</span>
@@ -823,23 +821,23 @@ table.t td b{color:var(--g9)}
 <tr><td>α2 seletivo competitivo</td><td>Ioimbina (yohimbina)</td><td>Aumenta saída simpática; utilidade limitada e não recomendada por falta de eficácia demonstrada</td></tr>
 </tbody></table></div>
 
-<p>A <b>reversão de epinefrina</b> é um exercício clássico. Com α bloqueado, a vasoconstrição da adrenalina fica reduzida, enquanto a vasodilatação β2 permanece. A pressão arterial pode então tornar-se depressora. A noradrenalina não apresenta a mesma reversão típica porque tem pouca ação β2 vascular.</p>
+<p><mark class="my">A <b>reversão de epinefrina</b> é um exercício clássico.</mark> Com α bloqueado, a vasoconstrição da adrenalina fica reduzida, enquanto a vasodilatação β2 permanece. A pressão arterial pode então tornar-se depressora. A noradrenalina não apresenta a mesma reversão típica porque tem pouca ação β2 vascular.</p>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Bloquear α1 na próstata e no colo vesical facilita o fluxo urinário; isso é diferente de bloquear M3 no detrusor para reduzir urgência. Um atua na resistência à saída; o outro, na contração da parede da bexiga.</p></div>
 
-<p>O <b>efeito de primeira dose</b> descreve hipotensão ortostática acentuada no início de certos bloqueadores α1. Tontura, síncope e congestão nasal decorrem da perda de tônus vascular. O <b>síndrome de íris flácida intraoperatório (IFIS)</b> é uma associação importante para cirurgia de catarata: <b>não</b> deve ser resumido apenas como «todo paciente com catarata tem contraindicação absoluta».</p>
+<p><mark class="mr">O <b>efeito de primeira dose</b> descreve hipotensão ortostática acentuada</mark> no início de certos bloqueadores α1. Tontura, síncope e congestão nasal decorrem da perda de tônus vascular. O <b>síndrome de íris flácida intraoperatório (IFIS)</b> é uma associação importante para cirurgia de catarata: <b>não</b> deve ser resumido apenas como «todo paciente com catarata tem contraindicação absoluta».</p>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los antagonistas α1 disminuyen la resistencia vascular periférica y pueden producir hipotensión ortostática».</p></div>
 </section>
 <section class="pg cap" id="mm17"><span class="eyebrow">Mapa mental 17 · Recuperação ativa</span><h1 class="h1">Antagonistas α</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="17"></div></div></section>
 <section class="pg cap" id="cap18">
 <span class="eyebrow">03 · Fármacos adrenérgicos</span>
 <h1 class="h1">18. β-bloqueadores: seletividade e diferenças</h1>
 <div class="meta">Base do assunto: Clase 7 · páginas 52–65; precisão: R4</div>
 
-<p class="lead">Os <b>β-bloqueadores</b> reduzem respostas às catecolaminas. No coração, o bloqueio β1 diminui frequência, força e condução, reduzindo consumo de oxigênio. No rim, reduz liberação de <b>renina</b>. O bloqueio β2 pode limitar broncodilatação e respostas metabólicas.</p>
+<p class="lead">Os <b>β-bloqueadores</b> reduzem respostas às catecolaminas. No coração, <mark class="my">o bloqueio β1 diminui frequência, força e condução, reduzindo consumo de oxigênio</mark>. No rim, reduz liberação de <b>renina</b>. O bloqueio β2 pode limitar broncodilatação e respostas metabólicas.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Perfil</th><th>Exemplos</th><th>Diferencial</th></tr></thead>
@@ -858,27 +856,27 @@ table.t td b{color:var(--g9)}
 
 <h3 class="sub">Gerações e subgrupos</h3>
 <ul class="pl">
-<li><b>1ª geração (β1 e β2 não seletivos):</b> propranolol (protótipo), nadolol, timolol, carteolol, levobunolol, metipranolol. Propranolol tem alta lipofilicidade (cruza a BHE) e intenso efeito de 1ª passagem hepática. Na HAS reduz PA por ↓ DC e ↓ renina. Pós-infarto exerce efeito cardioprotetor. Adversos: broncoconstrição (contraindicado na asma), fadiga, hipoglicemia prolongada e mascaramento da taquicardia hipoglicêmica em diabéticos insulinodependentes.</li>
-<li><b>2ª geração (β1 cardiosseletivos):</b> atenolol, bisoprolol, metoprolol, esmolol, acebutolol, betaxolol. Minimizam broncoconstrição; usos em pacientes hipertensos ou anginosos com asma/DPOC ou diabetes (com cautela). <b>Jamais iniciar na IC aguda descompensada.</b></li>
+<li><b>1ª geração (β1 e β2 não seletivos):</b> propranolol (protótipo), nadolol, timolol, carteolol, levobunolol, metipranolol. Propranolol tem alta lipofilicidade (cruza a BHE) e intenso efeito de 1ª passagem hepática. Na HAS reduz PA por ↓ DC e ↓ renina. Pós-infarto exerce efeito cardioprotetor. <mark class="mr">Adversos: broncoconstrição (contraindicado na asma)</mark>, fadiga, hipoglicemia prolongada e mascaramento da taquicardia hipoglicêmica em diabéticos insulinodependentes.</li>
+<li><b>2ª geração (β1 cardiosseletivos):</b> atenolol, bisoprolol, metoprolol, esmolol, acebutolol, betaxolol. Minimizam broncoconstrição; usos em pacientes hipertensos ou anginosos com asma/DPOC ou diabetes (com cautela). <mark class="mr"><b>Jamais iniciar na IC aguda descompensada.</b></mark></li>
 <li><b>3ª geração (mistos α1 + β ou vasodilatadores NO):</b> labetalol, carvedilol (α1 + β1, β2) e nebivolol e celiprolol (β1 seletivos vasodilatadores). Carvedilol reduz peroxidação lipídica e é fundamental na IC crônica estável. Adverso: hipotensão ortostática e tontura pelo bloqueio α1.</li>
 </ul>
 
 <p>Duração de eliminação: esmolol (10 min, ultracurto, metabolizado por esterases hemáticas, exclusivo IV) &lt; acebutolol / pindolol / metoprolol (3–4 h) &lt; propranolol / timolol / labetalol (4–6 h) &lt; carvedilol (7–10 h) &lt; nadolol (14–24 h) &lt; nebivolol (10–30 h).</p>
 
-<p>As <b>reações adversas</b> incluem bradicardia, bloqueio AV, fadiga e extremidades frias. Agentes não seletivos podem provocar broncoespasmo e mascarar parte dos sinais de hipoglicemia. A cardiosseletividade reduz alguns riscos, mas não os elimina. <b>Retirada abrupta</b> pode causar resposta adrenérgica de rebote.</p>
+<p>As <b>reações adversas</b> incluem bradicardia, bloqueio AV, fadiga e extremidades frias. Agentes não seletivos podem provocar broncoespasmo e mascarar parte dos sinais de hipoglicemia. A cardiosseletividade reduz alguns riscos, mas não os elimina. <mark class="mr"><b>Retirada abrupta</b> pode causar resposta adrenérgica de rebote</mark>.</p>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Antagonistas parciais (ASI, pindolol e acebutolol) estimulam fracamente β1/β2 enquanto bloqueiam catecolaminas endógenas potentes. Reduzem menos a FC de repouso e o DC, e não alteram o perfil lipídico. Úteis em hipertensos com bradicardia moderada; <b>não devem ser usados em angina estável ou arritmias</b>.</p></div>
 </section>
 <section class="pg cap" id="mm18"><span class="eyebrow">Mapa mental 18 · Recuperação ativa</span><h1 class="h1">β-bloqueadores</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="18"></div></div></section>
 <section class="pg cap" id="ex3"><span class="eyebrow">Exercícios · Módulo 03</span><h1 class="h1">Pratique: Fármacos adrenérgicos</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="m3"></div></section>
+<div class="quiz ex" data-quiz="m3"></div></section>
 <section class="pg cap" id="fc3"><span class="eyebrow">Flashcards · Módulo 03</span><h1 class="h1">Flashcards: Fármacos adrenérgicos</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="m3"></div></section>
+<div class="deck" data-deck="m3"></div></section>
 <section class="pg cap modcover" id="mod4"><span class="tag-mod">MÓDULO 04 · CLASE 8</span><h1 class="h1">AINEs e analgésicos</h1><p class="lead">Eicosanoides, os quatro efeitos e seus limites, riscos, salicilatos, famílias, paracetamol e dipirona.</p>
 <div class="list"><a href="#cap19"><b>19</b><span>Ácido araquidônico e eicosanoides</span></a><a href="#cap20"><b>20</b><span>Quatro efeitos — e os limites dessa regra</span></a><a href="#cap21"><b>21</b><span>Estômago, rim e circulação: prever os riscos</span></a><a href="#cap22"><b>22</b><span>Salicilatos: por que AAS é diferente</span></a><a href="#cap23"><b>23</b><span>Famílias e fármacos: comparar sem decorar isoladamente</span></a><a href="#cap24"><b>24</b><span>Paracetamol e dipirona: não cabem na mesma regra</span></a>
-<a href="#ex4"><b>✎</b><span>Exercícios: 10 questões com correção imediata</span></a><a href="#fc4"><b>⧉</b><span>Flashcards: 10 cartões</span></a></div></section>
+<a href="#ex4"><b>✎</b><span>Exercícios (10)</span></a><a href="#fc4"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
 <section class="pg cap" id="cap19">
 <span class="eyebrow">04 · AINEs</span>
 <h1 class="h1">19. Ácido araquidônico e eicosanoides</h1>
@@ -897,7 +895,7 @@ table.t td b{color:var(--g9)}
 <div class="tw"><table class="t">
 <thead><tr><th>Sistema / órgão</th><th>Mediador eicosanoide</th><th>Função fisiológica e consequência da inibição pelos AINEs</th></tr></thead>
 <tbody>
-<tr><td><b>Cardiovascular e plaquetas</b></td><td>PGI2 vs TXA2; PGE2 e PGI2</td><td><b>PGI2</b> (endotélio): vasodilatador e antiagregante. <b>TXA2</b> (plaquetas, via COX-1): vasoconstritor e pró-agregante. O bloqueio seletivo da COX-2 pelos coxibs reduz PGI2 endotelial sem inibir o TXA2 plaquetário → <b>risco trombótico/IAM/AVC</b>. PGE2 e PGI2 perinatais mantêm <b>aberto o canal arterial</b> (AINEs como indometacina promovem seu fechamento)</td></tr>
+<tr><td><b>Cardiovascular e plaquetas</b></td><td>PGI2 vs TXA2; PGE2 e PGI2</td><td><b>PGI2</b> (endotélio): vasodilatador e antiagregante. <b>TXA2</b> (plaquetas, via COX-1): vasoconstritor e pró-agregante. <mark class="mr">O bloqueio seletivo da COX-2 pelos coxibs reduz PGI2 endotelial sem inibir o TXA2 plaquetário → <b>risco trombótico/IAM/AVC</b></mark>. PGE2 e PGI2 perinatais mantêm <b>aberto o canal arterial</b> (AINEs como indometacina promovem seu fechamento)</td></tr>
 <tr><td><b>Rim</b></td><td>PGE2 e PGI2 vs TXA2</td><td>PGs vasodilatadoras aumentam o fluxo sanguíneo renal, a TFG, a diurese e a natriurese. A inibição causa vasoconstrição renal, retenção de Na⁺/água e perda do efeito anti-hipertensivo; risco em IC, cirrose/ascite e DRC</td></tr>
 <tr><td><b>Trato gastrointestinal</b></td><td>PGE2 e PGI2 (via COX-1)</td><td><b>Citoproteção gástrica:</b> ↑ muco e bicarbonato e ↓ secreção de HCl. A inibição causa dispepsia, gastrite e úlceras gastroduodenais</td></tr>
 <tr><td><b>Respiratório e leucócitos</b></td><td>PGF2α, TXA2 e leucotrienos</td><td>PGF2α e TXA2 são broncoconstritores. Leucotrienos: potente broncoespasmo, ↑ muco, ↑ permeabilidade vascular e quimiotaxia de neutrófilos. Ao bloquear a COX, o AA pode ser desviado para a LOX, precipitando <b>broncoespasmo induzido por AAS</b></td></tr>
@@ -907,21 +905,21 @@ table.t td b{color:var(--g9)}
 
 <p>As prostaglandinas também participam da perfusão renal, da fisiologia uterina e da manutenção fetal do <b>conduto arterioso</b>. Portanto, não são apenas substâncias que provocam inflamação: exercem funções de proteção e regulação.</p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>O mesmo bloqueio que reduz a sensibilização do nociceptor pode reduzir muco e bicarbonato gástricos. Benefício e reação adversa podem nascer do mesmo mecanismo, em órgãos diferentes.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p>O mesmo bloqueio que reduz a sensibilização do nociceptor pode reduzir muco e bicarbonato gástricos. <mark class="my">Benefício e reação adversa podem nascer do mesmo mecanismo, em órgãos diferentes.</mark></p></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>COX-1 é frequentemente apresentada como constitutiva e ligada à manutenção fisiológica; COX-2, como induzida na inflamação. A distinção é útil para começar, mas COX-2 também tem expressão e funções fisiológicas em certos tecidos. <b>Não use «COX-1 boa, COX-2 ruim»</b> como definição.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>COX-1 é frequentemente apresentada como constitutiva e ligada à manutenção fisiológica; COX-2, como induzida na inflamação. A distinção é útil para começar, mas COX-2 também tem expressão e funções fisiológicas em certos tecidos. <mark class="mr"><b>Não use «COX-1 boa, COX-2 ruim»</b> como definição</mark>.</p></div>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los AINEs inhiben ciclooxigenasas y disminuyen la síntesis de prostanoides; no bloquean directamente toda la vía de los leucotrienos».</p></div>
 </section>
 <section class="pg cap" id="mm19"><span class="eyebrow">Mapa mental 19 · Recuperação ativa</span><h1 class="h1">Ácido araquidónico e eicosanoides</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="19"></div></div></section>
 <section class="pg cap" id="cap20">
 <span class="eyebrow">04 · AINEs</span>
 <h1 class="h1">20. Quatro efeitos — e os limites dessa regra</h1>
 <div class="meta">Base do assunto: Clase 8 · páginas 12–16</div>
 
-<p class="lead">Os <b>antiinflamatórios não esteroides (AINEs)</b> inibem a COX com potências e seletividades diferentes. Muitos se ligam reversivelmente; o <b>ácido acetilsalicílico (AAS)</b> modifica a enzima de forma <b>irreversível</b>. Essa diferença é decisiva para as plaquetas.</p>
+<p class="lead">Os <b>antiinflamatórios não esteroides (AINEs)</b> inibem a COX com potências e seletividades diferentes. Muitos se ligam reversivelmente; <mark class="my">o <b>ácido acetilsalicílico (AAS)</b> modifica a enzima de forma <b>irreversível</b></mark>. Essa diferença é decisiva para as plaquetas.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Efeito</th><th>Explicação em português</th></tr></thead>
@@ -932,9 +930,9 @@ table.t td b{color:var(--g9)}
 <tr><td><b>Antiagregante</b></td><td>Depende do efeito sobre TXA2 e plaquetas; é particularmente importante para o AAS</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>A regra «4 A» é um ponto de partida, não uma propriedade idêntica de todos os fármacos. <b>Paracetamol</b> tem fraca ação antiinflamatória periférica e não é antiagregante clínico. <b>Coxibs</b> não reproduzem o efeito antiagregante duradouro do AAS.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>A regra «4 A» é um ponto de partida, não uma propriedade idêntica de todos os fármacos. <mark class="mr"><b>Paracetamol</b> tem fraca ação antiinflamatória periférica e não é antiagregante clínico</mark>. <b>Coxibs</b> não reproduzem o efeito antiagregante duradouro do AAS.</p></div>
 
-<p>O <b>efeito teto</b> significa que aumentar a dose além de determinado ponto produz pouco ganho analgésico, enquanto o risco continua aumentando. Isso não é tolerância: a ausência de resposta adicional decorre do limite da relação dose–efeito, não de adaptação após uso repetido.</p>
+<p>O <b>efeito teto</b> significa que aumentar a dose além de determinado ponto produz pouco ganho analgésico, enquanto o risco continua aumentando. <mark class="my">Isso não é tolerância</mark>: a ausência de resposta adicional decorre do limite da relação dose–efeito, não de adaptação após uso repetido.</p>
 <p>Os AINEs <b>não têm o padrão clássico de dependência física</b> dos opioides. Ainda assim, «não causar dependência» não significa serem inofensivos. Dose, duração, doença de base e associação com outros fármacos mudam o risco.</p>
 
 <h3 class="sub">Três formas de união dos AINEs à COX-1</h3>
@@ -948,13 +946,13 @@ table.t td b{color:var(--g9)}
 <ul class="pl">
 <li><b>Alta ligação à albumina plasmática (~99%):</b> hipoalbuminemia aumenta a fração livre e a toxicidade; desloca anticoagulantes orais e hipoglicemiantes.</li>
 <li><b>Atravessam a BHE e a placenta.</b></li>
-<li><b>Interações:</b> diminuem o efeito de anti-hipertensivos (IECA e diuréticos tiazídicos/de alça); aumentam risco de hemorragia com anticoagulantes orais; aumentam risco de úlcera com corticoides e álcool; potencializam hipoglicemiantes orais e penicilinas (probenecida); reduzem excreção renal e causam toxicidade grave com <b>lítio</b> e <b>metotrexato</b>; aumentam nefrotoxicidade com aminoglicosídeos.</li>
+<li><b>Interações:</b> diminuem o efeito de anti-hipertensivos (IECA e diuréticos tiazídicos/de alça); aumentam risco de hemorragia com anticoagulantes orais; aumentam risco de úlcera com corticoides e álcool; potencializam hipoglicemiantes orais e penicilinas (probenecida); reduzem excreção renal e causam <mark class="mr">toxicidade grave com <b>lítio</b> e <b>metotrexato</b></mark>; aumentam nefrotoxicidade com aminoglicosídeos.</li>
 </ul>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>Explique febre e dor separadamente: <b>antipirese modifica o ajuste térmico</b>; <b>analgesia reduz sensibilização</b>. Uma pessoa sem febre não precisa apresentar queda importante da temperatura após uma dose antipirética.</p></div>
 </section>
 <section class="pg cap" id="mm20"><span class="eyebrow">Mapa mental 20 · Recuperação ativa</span><h1 class="h1">Efeitos dos AINEs</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="20"></div></div></section>
 <section class="pg cap" id="cap21">
 <span class="eyebrow">04 · AINEs</span>
@@ -974,22 +972,22 @@ table.t td b{color:var(--g9)}
 <tr><td>Lítio ou metotrexato</td><td>Alteração de eliminação e interações específicas</td><td>Possível toxicidade</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>O risco cardiovascular não pertence exclusivamente aos coxibs. <b>AINEs não aspirínicos também podem elevar risco de infarto e AVC</b>, inclusive no início do uso; dose e duração influenciam esse risco (referência R5).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>O risco cardiovascular não pertence exclusivamente aos coxibs. <mark class="mr"><b>AINEs não aspirínicos também podem elevar risco de infarto e AVC</b></mark>, inclusive no início do uso; dose e duração influenciam esse risco (referência R5).</p></div>
 
 <p>A associação de AINE, diurético e fármaco que interfere no sistema <b>renina–angiotensina</b> pode comprometer diferentes mecanismos de perfusão renal. A aula cita redução da resposta a anti-hipertensivos; mecanismos de retenção de sódio/água e menor produção de vasodilatadores ajudam a explicar isso.</p>
 <p><b>Hipersensibilidade</b> e <b>broncoespasmo</b> precisam ser lembrados. Em alguns pacientes, o desequilíbrio da via do ácido araquidônico após inibição de COX-1 favorece manifestações respiratórias. Não é correto concluir que todos os pacientes com asma terão essa resposta, mas a história de reação prévia importa.</p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>Um analgésico pode aliviar a dor e, ao mesmo tempo, reduzir a perfusão renal. Avaliar só o alívio dos sintomas não informa tudo sobre sua ação no organismo.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p><mark class="my">Um analgésico pode aliviar a dor e, ao mesmo tempo, reduzir a perfusão renal.</mark> Avaliar só o alívio dos sintomas não informa tudo sobre sua ação no organismo.</p></div>
 </section>
 <section class="pg cap" id="mm21"><span class="eyebrow">Mapa mental 21 · Recuperação ativa</span><h1 class="h1">Riscos dos AINEs</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="21"></div></div></section>
 <section class="pg cap" id="cap22">
 <span class="eyebrow">04 · AINEs</span>
 <h1 class="h1">22. Salicilatos: por que AAS é diferente</h1>
 <div class="meta">Base do assunto: Clase 8 · páginas 17–21 e 33–34; precisão: R9</div>
 
-<p class="lead">O <b>ácido acetilsalicílico</b>, também chamado <b>aspirina</b>, acetila a COX de forma irreversível. As plaquetas não conseguem repor a enzima como células nucleadas; por isso o efeito sobre a produção de <b>TXA2</b> pode persistir além da presença do fármaco no plasma.</p>
+<p class="lead">O <b>ácido acetilsalicílico</b>, também chamado <b>aspirina</b>, acetila a COX de forma irreversível. As plaquetas não conseguem repor a enzima como células nucleadas; por isso <mark class="my">o efeito sobre a produção de <b>TXA2</b> pode persistir além da presença do fármaco no plasma</mark>.</p>
 
 <p>Em doses e contextos diferentes, a aula relaciona AAS a analgesia, antipirese, ação antiinflamatória e antiagregação. Essas finalidades não usam automaticamente o mesmo esquema. As apresentações e doses do material original estão preservadas para consulta, sem convertê-las em uma recomendação única.</p>
 
@@ -1005,7 +1003,7 @@ table.t td b{color:var(--g9)}
 <tr><td>Hipertermia</td><td>Desacoplamento da fosforilação oxidativa</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>A página 21 relaciona <b>alcalose respiratória</b> à depressão do centro respiratório. O mecanismo inicial é estímulo respiratório com hiperventilação. Em intoxicação, pode coexistir <b>acidose metabólica</b>; não reduza todo quadro a «acidose mista».</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>A página 21 relaciona <b>alcalose respiratória</b> à depressão do centro respiratório. <mark class="my">O mecanismo inicial é estímulo respiratório com hiperventilação.</mark> Em intoxicação, pode coexistir <b>acidose metabólica</b>; não reduza todo quadro a «acidose mista».</p></div>
 
 <h3 class="sub">Intoxicação por AAS (salicilismo)</h3>
 <ul class="pl">
@@ -1016,10 +1014,10 @@ table.t td b{color:var(--g9)}
 <p>A aula cita <b>10 a 30 g</b> como faixa de dose letal (DL50) do AAS. Esse valor é apresentado como referência didática: confira na fonte toxicológica antes de usá-lo em prova ou prática.</p>
 
 <h3 class="sub">Reações adversas e cuidados</h3>
-<p>As reações adversas incluem <b>dispepsia, lesão e sangramento gastrointestinal</b>, efeitos renais e hipersensibilidade. O <b>síndrome de Reye</b> é uma associação importante com salicilatos em crianças/adolescentes com certas infecções virais: <b>contraindicado em crianças</b>. A interrupção antes de procedimentos depende do risco hemorrágico e trombótico: não transforme a frase «uma semana antes de toda cirurgia» em regra universal.</p>
+<p>As reações adversas incluem <b>dispepsia, lesão e sangramento gastrointestinal</b>, efeitos renais e hipersensibilidade. O <b>síndrome de Reye</b> é uma associação importante com salicilatos em crianças/adolescentes com certas infecções virais: <mark class="mr"><b>contraindicado em crianças</b></mark>. A interrupção antes de procedimentos depende do risco hemorrágico e trombótico: não transforme a frase «uma semana antes de toda cirurgia» em regra universal.</p>
 </section>
 <section class="pg cap" id="mm22"><span class="eyebrow">Mapa mental 22 · Recuperação ativa</span><h1 class="h1">Salicilatos</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="22"></div></div></section>
 <section class="pg cap" id="cap23">
 <span class="eyebrow">04 · AINEs</span>
@@ -1043,17 +1041,17 @@ table.t td b{color:var(--g9)}
 <p>A <b>indometacina</b> pode favorecer fechamento do <b>conduto arterioso</b> porque diminui prostaglandinas que ajudam a mantê-lo aberto. Essa ação é uma aplicação específica, não uma indicação genérica para qualquer paciente.</p>
 <p>O <b>cetorolaco</b> aparece como analgésico de uso breve. Potência analgésica não o transforma em opioide: seu mecanismo continua relacionado à COX. Associar dois AINEs geralmente soma toxicidade sem criar um mecanismo complementar.</p>
 
-<div class="box warn"><span class="lb">Precisão</span><p>O mapa de classificação da aula inclui <b>rofecoxibe</b>. Ele deve ser identificado como referência histórica, e não como opção terapêutica atual: foi retirado do mercado por risco cardiovascular (referência R10).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>O mapa de classificação da aula inclui <b>rofecoxibe</b>. Ele deve ser identificado como referência histórica, e não como opção terapêutica atual: <mark class="mr">foi retirado do mercado por risco cardiovascular</mark> (referência R10).</p></div>
 
-<p>A <b>seletividade por COX-2</b> pode reduzir parte da agressão gástrica em determinadas comparações, mas não significa ausência de úlcera nem proteção do rim. Sempre preserve a diferença entre <b>menor risco relativo</b> e <b>risco inexistente</b>.</p>
+<p>A <b>seletividade por COX-2</b> pode reduzir parte da agressão gástrica em determinadas comparações, mas não significa ausência de úlcera nem proteção do rim. <mark class="my">Sempre preserve a diferença entre <b>menor risco relativo</b> e <b>risco inexistente</b>.</mark></p>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>Diante de dois fármacos da mesma família, explique primeiro o mecanismo comum e depois a característica que os distingue.</p></div>
 
 <h3 class="sub">Pirazolonas e não AINEs</h3>
-<p><b>Metamizol (dipirona)</b> tem excelente efeito antipirético e analgésico, sem ação antiinflamatória relevante. Seus adversos graves são <b>aplasia medular, agranulocitose</b> e choque anafilático grave.</p>
+<p><b>Metamizol (dipirona)</b> tem excelente efeito antipirético e analgésico, sem ação antiinflamatória relevante. Seus adversos graves são <mark class="mr"><b>aplasia medular, agranulocitose</b></mark> e choque anafilático grave.</p>
 </section>
 <section class="pg cap" id="mm23"><span class="eyebrow">Mapa mental 23 · Recuperação ativa</span><h1 class="h1">Famílias de AINEs</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="23"></div></div></section>
 <section class="pg cap" id="cap24">
 <span class="eyebrow">04 · AINEs</span>
@@ -1062,7 +1060,7 @@ table.t td b{color:var(--g9)}
 
 <p class="lead"><b>Paracetamol</b> é principalmente analgésico e antipirético, com pouca ação antiinflamatória periférica. Não deve receber automaticamente todos os efeitos dos AINEs clássicos. É metabolizado no fígado, sobretudo por conjugação; uma fração forma o metabólito reativo <b>NAPQI</b>, normalmente neutralizado por <b>glutationa</b>.</p>
 
-<p>Quando a capacidade de detoxificação é ultrapassada, o NAPQI pode produzir <b>necrose hepática centrolobular</b>. A <b>N-acetilcisteína (NAC)</b> repõe capacidade de detoxificação e é o antídoto central na avaliação de intoxicação por paracetamol.</p>
+<p>Quando a capacidade de detoxificação é ultrapassada, <mark class="mr">o NAPQI pode produzir <b>necrose hepática centrolobular</b></mark>. <mark class="my">A <b>N-acetilcisteína (NAC)</b> repõe capacidade de detoxificação</mark> e é o antídoto central na avaliação de intoxicação por paracetamol.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Fármaco</th><th>Efeito de destaque</th><th>Toxicidade que diferencia</th></tr></thead>
@@ -1071,7 +1069,7 @@ table.t td b{color:var(--g9)}
 <tr><td>Dipirona / metamizol</td><td>Analgesia, antipirese e ação espasmolítica</td><td>Agranulocitose, reações de hipersensibilidade e hipotensão em certos contextos</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>A aula destaca benefício da NAC entre 16–24 horas, mas <b>não se deve esperar esse intervalo</b>. O benefício preventivo é maior quando o tratamento indicado começa cedo, especialmente nas primeiras oito horas. A decisão utiliza tempo de ingestão, níveis e contexto clínico (referência R9).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>A aula destaca benefício da NAC entre 16–24 horas, mas <mark class="mr"><b>não se deve esperar esse intervalo</b></mark>. O benefício preventivo é maior quando o tratamento indicado começa cedo, especialmente nas primeiras oito horas. A decisão utiliza tempo de ingestão, níveis e contexto clínico (referência R9).</p></div>
 
 <h3 class="sub">Quatro etapas clínicas da intoxicação por paracetamol</h3>
 <ul class="pl">
@@ -1084,20 +1082,20 @@ table.t td b{color:var(--g9)}
 
 <div class="box warn"><span class="lb">Correção do slide</span><p>O fígado fica à <b>direita</b>. A expressão «dolor costal izquierdo» na página 35 deve ser corrigida para dor no hipocôndrio direito.</p></div>
 
-<p>A <b>dipirona</b> não é isenta de reações graves. <b>Agranulocitose</b> é um risco específico importante. A afirmação do slide de que seu shock anafilático «não responde a adrenalina» não deve ser ensinada como regra: a abordagem da anafilaxia mantém <b>adrenalina como primeira linha</b> (referência R8).</p>
+<p>A <b>dipirona</b> não é isenta de reações graves. <b>Agranulocitose</b> é um risco específico importante. A afirmação do slide de que seu shock anafilático «não responde a adrenalina» não deve ser ensinada como regra: a abordagem da anafilaxia <mark class="my">mantém <b>adrenalina como primeira linha</b></mark> (referência R8).</p>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>Analgésicos combinados podem conter paracetamol. A exposição total depende de todas as apresentações utilizadas, e não apenas de um produto.</p></div>
 </section>
 <section class="pg cap" id="mm24"><span class="eyebrow">Mapa mental 24 · Recuperação ativa</span><h1 class="h1">Paracetamol e dipirona</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="24"></div></div></section>
 <section class="pg cap" id="ex4"><span class="eyebrow">Exercícios · Módulo 04</span><h1 class="h1">Pratique: AINEs e analgésicos</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="m4"></div></section>
+<div class="quiz ex" data-quiz="m4"></div></section>
 <section class="pg cap" id="fc4"><span class="eyebrow">Flashcards · Módulo 04</span><h1 class="h1">Flashcards: AINEs e analgésicos</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="m4"></div></section>
+<div class="deck" data-deck="m4"></div></section>
 <section class="pg cap modcover" id="mod5"><span class="tag-mod">MÓDULO 05 · CLASE 8</span><h1 class="h1">Dor e opioides</h1><p class="lead">Dor, escada analgésica, receptores μ, κ e δ, classificação dos opioides e efeitos sistêmicos.</p>
 <div class="list"><a href="#cap25"><b>25</b><span>Dor, história e vocabulário</span></a><a href="#cap26"><b>26</b><span>Receptores e interrupção do sinal doloroso</span></a><a href="#cap27"><b>27</b><span>Efeitos sistêmicos e comparação entre fármacos</span></a>
-<a href="#ex5"><b>✎</b><span>Exercícios: 9 questões com correção imediata</span></a><a href="#fc5"><b>⧉</b><span>Flashcards: 10 cartões</span></a></div></section>
+<a href="#ex5"><b>✎</b><span>Exercícios (9)</span></a><a href="#fc5"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
 <section class="pg cap" id="cap25">
 <span class="eyebrow">05 · Opioides</span>
 <h1 class="h1">25. Dor, história e vocabulário</h1>
@@ -1124,16 +1122,16 @@ table.t td b{color:var(--g9)}
 <tr><td>3</td><td>Severa</td><td>Opioides fortes (morfina, fentanil, metadona, oxicodona) ± AINEs/coadjuvantes</td></tr>
 <tr><td>4</td><td>Refratária</td><td>Técnicas intervencionistas (PCA, bloqueios centrais/periféricos)</td></tr>
 </tbody></table></div>
-<p>Na dor crônica, sobe-se a escada; na dor aguda intensa, desce-se a escada.</p>
+<p><mark class="my">Na dor crônica, sobe-se a escada; na dor aguda intensa, desce-se a escada.</mark></p>
 
 <p><b>Opiáceos</b> são substâncias relacionadas aos alcaloides do ópio (morfina, codeína, papaverina); <b>opioides</b> é um termo mais amplo para substâncias que atuam no sistema opioide, incluindo compostos sintéticos e peptídeos endógenos. <b>Encefalinas</b> (afinidade δ &gt; μ), <b>endorfinas</b> (β-endorfina, derivada da POMC; afinidade μ, δ ≫ κ) e <b>dinorfinas</b> (afinidade κ &gt; μ) pertencem a famílias endógenas distintas.</p>
 
 <p>O bloco histórico dos slides percorre o uso antigo de <b>Papaver somniferum</b> (ópio, 20 alcaloides, uso há mais de 5.000 anos), o isolamento da morfina por Sertürner (1806), a heroína (síntese em 1874/1898, usada como antitussígeno), a meperidina (1938, primeiro opioide sintético), a naloxona (1949) e o fentanil (1961). Essa trajetória mostra por que potência analgésica e potencial de dano precisam ser estudados juntos.</p>
 
-<div class="box warn"><span class="lb">Precisão</span><p><b>Papaverina</b> é um alcaloide do ópio, mas não é um analgésico agonista opioide como morfina. Sua presença na lista de «naturales» não deve apagar essa diferença farmacológica.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p><b>Papaverina</b> é um alcaloide do ópio, mas <mark class="mr">não é um analgésico agonista opioide como morfina</mark>. Sua presença na lista de «naturales» não deve apagar essa diferença farmacológica.</p></div>
 </section>
 <section class="pg cap" id="mm25"><span class="eyebrow">Mapa mental 25 · Recuperação ativa</span><h1 class="h1">Dor e opioides</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="25"></div></div></section>
 <section class="pg cap" id="cap26">
 <span class="eyebrow">05 · Opioides</span>
@@ -1142,7 +1140,7 @@ table.t td b{color:var(--g9)}
 
 <p class="lead">Os <b>receptores opioides μ (mu), κ (kappa) e δ (delta)</b> pertencem à família de receptores acoplados à proteína G, predominantemente <b>Gi/o</b>. A ativação reduz a excitabilidade e a liberação de neurotransmissores em circuitos de dor.</p>
 
-<p>Na membrana <b>presináptica</b> (terminal da fibra C aferente no corno dorsal), menor entrada de Ca²⁺ reduz a liberação de transmissores excitatórios (substância P e glutamato). Na membrana <b>postsináptica</b>, maior condutância de K⁺ favorece <b>hiperpolarização</b>, tornando o neurônio menos propenso a disparar. Em circuitos supraespinhais (substância cinzenta periaquedutal, locus coeruleus, núcleo dorsal da rafe), a redução de GABA pode desinibir vias descendentes que modulam a dor.</p>
+<p>Na membrana <b>presináptica</b> (terminal da fibra C aferente no corno dorsal), <mark class="my">menor entrada de Ca²⁺ reduz a liberação de transmissores excitatórios</mark> (substância P e glutamato). Na membrana <b>postsináptica</b>, <mark class="my">maior condutância de K⁺ favorece <b>hiperpolarização</b></mark>, tornando o neurônio menos propenso a disparar. Em circuitos supraespinhais (substância cinzenta periaquedutal, locus coeruleus, núcleo dorsal da rafe), a redução de GABA pode desinibir vias descendentes que modulam a dor.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Receptor</th><th>Localização e afinidade endógena</th><th>Associação didática</th></tr></thead>
@@ -1163,14 +1161,14 @@ table.t td b{color:var(--g9)}
 
 <p><b>Segundo a origem:</b> naturais (morfina, codeína, papaverina); semissintéticos (heroína, oxicodona, oximorfona, hidromorfona, hidrocodona, buprenorfina); sintéticos (fentanil, remifentanil, meperidina, metadona, tramadol). <b>Segundo a potência:</b> menores (codeína, tramadol, hidrocodona) e maiores (morfina, fentanil, metadona, oxicodona).</p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>Afinidade é capacidade de se ligar; atividade intrínseca é capacidade de ativar. Um antagonista pode ter grande afinidade e não produzir ativação. Um agonista parcial pode reduzir a resposta de um agonista pleno ao ocupar seus receptores.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p><mark class="my">Afinidade é capacidade de se ligar; atividade intrínseca é capacidade de ativar.</mark> Um antagonista pode ter grande afinidade e não produzir ativação. Um agonista parcial pode reduzir a resposta de um agonista pleno ao ocupar seus receptores.</p></div>
 
-<p>A figura da aula que escreve <b>dinorfina</b> como «antagonista endógeno» deve ser lida com correção: dinorfinas são peptídeos agonistas, especialmente relacionados a κ. Da mesma forma, encefalinas e β-endorfina são endógenas, mesmo quando um rótulo do slide as posiciona sob «exógeno».</p>
+<p>A figura da aula que escreve <b>dinorfina</b> como «antagonista endógeno» deve ser lida com correção: <mark class="mr">dinorfinas são peptídeos agonistas</mark>, especialmente relacionados a κ. Da mesma forma, encefalinas e β-endorfina são endógenas, mesmo quando um rótulo do slide as posiciona sob «exógeno».</p>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>Explique duas membranas: «Menor entrada presináptica de Ca²⁺ reduz liberação; maior saída postsináptica de K⁺ favorece hiperpolarização».</p></div>
 </section>
 <section class="pg cap" id="mm26"><span class="eyebrow">Mapa mental 26 · Recuperação ativa</span><h1 class="h1">Receptores opioides</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="26"></div></div></section>
 <section class="pg cap" id="cap27">
 <span class="eyebrow">05 · Opioides</span>
@@ -1184,7 +1182,7 @@ table.t td b{color:var(--g9)}
 <li><b>SNC:</b> analgesia, euforia/sedação, supressão do reflexo da tosse (antitussígeno), <b>miose</b>, hipotermia e náuseas/vômitos (zona de gatilho quimiorreceptora).</li>
 <li><b>Respiratório:</b> depressão respiratória dose-dependente (↓ resposta ao CO₂); broncoconstrição em doses altas por liberação de histamina.</li>
 <li><b>Cardiovascular:</b> bradicardia vagal e hipotensão ortostática (vasodilatação por histamina).</li>
-<li><b>TGI e biliar:</b> retarda esvaziamento gástrico, reduz peristaltismo (<b>constipação</b> — não sofre tolerância), contrai o <b>esfíncter de Oddi</b> (contraindicado na pancreatite/cólica biliar), retenção urinária.</li>
+<li><b>TGI e biliar:</b> retarda esvaziamento gástrico, reduz peristaltismo <mark class="my">(<b>constipação</b> — não sofre tolerância)</mark>, <mark class="mr">contrai o <b>esfíncter de Oddi</b> (contraindicado na pancreatite/cólica biliar)</mark>, retenção urinária.</li>
 <li><b>Endócrino:</b> ↓ LH, FSH, ACTH e β-endorfina.</li>
 </ul>
 
@@ -1199,29 +1197,29 @@ table.t td b{color:var(--g9)}
 <tr><td>Oxicodona</td><td>Agonista opioide oral potente; alto potencial de dependência e depressão respiratória; contraindicado em TCE (retenção de CO₂ → ↑ pressão intracraniana)</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>Tramadol pode causar <b>convulsões</b> e <b>síndrome serotoninérgica</b>, especialmente com interações serotoninérgicas ou metabólicas. CYP2D6 influencia a formação de seu metabólito ativo. «Opioide menor» não significa ausência de toxicidade grave (referência R7).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>Tramadol pode causar <b>convulsões</b> e <b>síndrome serotoninérgica</b>, especialmente com interações serotoninérgicas ou metabólicas. CYP2D6 influencia a formação de seu metabólito ativo. <mark class="mr">«Opioide menor» não significa ausência de toxicidade grave</mark> (referência R7).</p></div>
 
 <p><b>Tolerância</b> é necessidade de maior exposição para obter determinado efeito; <b>dependência física</b> implica possibilidade de abstinência após retirada; <b>transtorno por uso de opioides</b> envolve um padrão problemático de uso. São conceitos relacionados, mas não equivalentes.</p>
-<p>A <b>naloxona</b> antagoniza efeitos opioides e aparece no estudo da reversão de toxicidade. Seu efeito pode durar menos que o do agente responsável; recuperação inicial não exclui recorrência. Não confunda naloxona com N-acetilcisteína: atuam em intoxicações e mecanismos diferentes.</p>
+<p>A <b>naloxona</b> antagoniza efeitos opioides e aparece no estudo da reversão de toxicidade. <mark class="mr">Seu efeito pode durar menos que o do agente responsável</mark>; recuperação inicial não exclui recorrência. Não confunda naloxona com N-acetilcisteína: atuam em intoxicações e mecanismos diferentes.</p>
 
 <div class="box"><span class="lb">Aplicação na prova</span><p>Compare a analgesia do AINE, que reduz mediadores e sensibilização, com a do opioide, que modifica a transmissão e a percepção da dor.</p></div>
 </section>
 <section class="pg cap" id="mm27"><span class="eyebrow">Mapa mental 27 · Recuperação ativa</span><h1 class="h1">Opioides: efeitos e comparação</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="27"></div></div></section>
 <section class="pg cap" id="ex5"><span class="eyebrow">Exercícios · Módulo 05</span><h1 class="h1">Pratique: Dor e opioides</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="m5"></div></section>
+<div class="quiz ex" data-quiz="m5"></div></section>
 <section class="pg cap" id="fc5"><span class="eyebrow">Flashcards · Módulo 05</span><h1 class="h1">Flashcards: Dor e opioides</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="m5"></div></section>
+<div class="deck" data-deck="m5"></div></section>
 <section class="pg cap modcover" id="mod6"><span class="tag-mod">MÓDULO 06 · CLASE 9</span><h1 class="h1">Corticoides</h1><p class="lead">Córtex suprarrenal e eixo HHA, mecanismo genômico, potência e duração, efeitos adversos, aplicações e retirada.</p>
 <div class="list"><a href="#cap28"><b>28</b><span>Córtex suprarrenal, hormônios e controle</span></a><a href="#cap29"><b>29</b><span>Do receptor intracelular à ação antiinflamatória</span></a><a href="#cap30"><b>30</b><span>Potência, duração, via e metabolismo</span></a><a href="#cap31"><b>31</b><span>Metabolismo e reações adversas: uma mesma história</span></a><a href="#cap32"><b>32</b><span>Aplicações e retirada: interpretar sem generalizar</span></a>
-<a href="#ex6"><b>✎</b><span>Exercícios: 8 questões com correção imediata</span></a><a href="#fc6"><b>⧉</b><span>Flashcards: 10 cartões</span></a></div></section>
+<a href="#ex6"><b>✎</b><span>Exercícios (8)</span></a><a href="#fc6"><b>⧉</b><span>Flashcards (10)</span></a></div></section>
 <section class="pg cap" id="cap28">
 <span class="eyebrow">06 · Corticoides</span>
 <h1 class="h1">28. Córtex suprarrenal, hormônios e controle</h1>
 <div class="meta">Base do assunto: Clase 9 · páginas 5–16; figura: página 10</div>
 
-<p class="lead"><b>Corticoides</b> são hormônios esteroides do <b>córtex suprarrenal</b> e fármacos que reproduzem parte de suas ações. São sintetizados a partir do <b>colesterol</b>, sem reservas pré-formadas: a taxa de síntese determina a secreção. Os <b>glicocorticoides</b>, como cortisol, participam do metabolismo, da resposta ao estresse e da modulação inflamatória. Os <b>mineralocorticoides</b>, como aldosterona, regulam sobretudo transporte de eletrólitos e água.</p>
+<p class="lead"><b>Corticoides</b> são hormônios esteroides do <b>córtex suprarrenal</b> e fármacos que reproduzem parte de suas ações. São sintetizados a partir do <b>colesterol</b>, sem reservas pré-formadas: <mark class="my">a taxa de síntese determina a secreção</mark>. Os <b>glicocorticoides</b>, como cortisol, participam do metabolismo, da resposta ao estresse e da modulação inflamatória. Os <b>mineralocorticoides</b>, como aldosterona, regulam sobretudo transporte de eletrólitos e água.</p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Região</th><th>Produto predominante</th><th>Controle relevante</th></tr></thead>
@@ -1229,7 +1227,7 @@ table.t td b{color:var(--g9)}
 <tr><td>Zona glomerulosa (externa)</td><td>Aldosterona (mineralocorticoide)</td><td>Sistema renina–angiotensina (angiotensina II via AT1) e hipercalemia. Promove reabsorção de Na⁺ e água e excreção de K⁺ e H⁺</td></tr>
 <tr><td>Zona fasciculada (média)</td><td>Cortisol (glicocorticoide)</td><td>Eixo hipotálamo–hipófise–suprarrenal: CRH → ACTH → cortisol</td></tr>
 <tr><td>Zona reticular (interna)</td><td>Andrógenos suprarrenais (DHEA e androstenediona)</td><td>ACTH e contexto fisiológico (adrenarca/puberdade)</td></tr>
-<tr><td>Medula suprarrenal</td><td>Catecolaminas (adrenalina e noradrenalina)</td><td>Estímulo simpático; <b>não é córtex</b></td></tr>
+<tr><td>Medula suprarrenal</td><td>Catecolaminas (adrenalina e noradrenalina)</td><td>Estímulo simpático; <mark class="mr"><b>não é córtex</b></mark></td></tr>
 </tbody></table></div>
 
 <h3 class="sub">Três níveis de regulação do cortisol</h3>
@@ -1241,12 +1239,12 @@ table.t td b{color:var(--g9)}
 
 <p><b>Esteroidogênese:</b> o colesterol é convertido em <b>pregnenolona</b> pela colesterol desmolase (CYP11A / P450scc). Na zona glomerulosa (sem 17α-hidroxilase) segue até <b>aldosterona</b>; na fasciculada, pela 17α-hidroxilase, até <b>cortisol</b> (21- e 11β-hidroxilases); na reticular, a 17,20-liase origina <b>DHEA e androstenediona</b>. Na <b>hiperplasia suprarrenal congênita</b>, o bloqueio enzimático reduz cortisol e aldosterona (perda salina) e desvia precursores para andrógenos (virilização). A figura deve ser estudada como rede de conversões, não como se cada célula produzisse todos os produtos em igual proporção.</p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>Se o organismo recebe glicocorticoide de fora por tempo suficiente, o eixo reduz seu próprio estímulo. Quando o fármaco desaparece, a produção endógena pode demorar a se recuperar.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p>Se o organismo recebe glicocorticoide de fora por tempo suficiente, o eixo reduz seu próprio estímulo. Quando o fármaco desaparece, <mark class="my">a produção endógena pode demorar a se recuperar</mark>.</p></div>
 
 <p><b>Doença de Addison</b> é a insuficiência suprarrenal primária (70–90% autoimune): hipotensão, emagrecimento, anorexia, vômitos, diarreia, perda de pelos e <b>hiperpigmentação</b> por excesso de POMC (↑ ACTH e MSH). <b>Síndrome de Cushing</b> descreve excesso de ação glicocorticoide: face em lua cheia, obesidade central, giba de búfalo, estrias violáceas, atrofia cutânea, hirsutismo, osteoporose, miopatia proximal, hipertensão e resistência à insulina. O Cushing iatrogênico vem de exposição medicamentosa e não deve ser confundido com a doença hipofisária de Cushing.</p>
 </section>
 <section class="pg cap" id="mm28"><span class="eyebrow">Mapa mental 28 · Recuperação ativa</span><h1 class="h1">Córtex suprarrenal</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="28"></div></div></section>
 <section class="pg cap" id="cap29">
 <span class="eyebrow">06 · Corticoides</span>
@@ -1256,7 +1254,7 @@ table.t td b{color:var(--g9)}
 <p class="lead">Os glicocorticoides atravessam a membrana e interagem com o <b>receptor glicocorticoide (GR)</b> citoplasmático, inativo enquanto ligado às proteínas de choque térmico <b>HSP70 e HSP90</b>. A ligação libera as HSPs, promove dimerização e <b>translocação nuclear</b>; o complexo liga-se aos <b>elementos de resposta (GRE)</b> do DNA e ativa ou reprime genes. É o <b>mecanismo genômico</b>, lento e principal; existem também efeitos não genômicos, mais rápidos.</p>
 
 <ul class="pl">
-<li><b>Indução de lipocortina-1 (anexina A1) e inibição da fosfolipase A2:</b> reduz a liberação de ácido araquidônico na origem, suprimindo tanto a via da COX (prostaglandinas) quanto a da LOX (leucotrienos).</li>
+<li><b>Indução de lipocortina-1 (anexina A1) e inibição da fosfolipase A2:</b> reduz a liberação de ácido araquidônico na origem, <mark class="my">suprimindo tanto a via da COX (prostaglandinas) quanto a da LOX (leucotrienos)</mark>.</li>
 <li><b>Bloqueio do fator de transcrição NF-κB:</b> inibe a expressão da COX-2 induzível, da iNOS, de citocinas (IL-1, IL-2, IL-6, TNF-α), PAF e moléculas de adesão (ICAM, VCAM).</li>
 </ul>
 
@@ -1269,20 +1267,20 @@ table.t td b{color:var(--g9)}
 <tr><td>Consequência</td><td>Analgesia / antipirese / ação antiinflamatória</td><td>Potente ação antiinflamatória e imunossupressora</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>Dizer que o corticoide «bloqueia diretamente a PLA2» é uma simplificação. O mecanismo envolve regulação de proteínas e genes. Da mesma forma, a redução de IL-2 não deve ser explicada apenas como consequência de diminuir prostaglandinas.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">Dizer que o corticoide «bloqueia diretamente a PLA2» é uma simplificação.</mark> O mecanismo envolve regulação de proteínas e genes. Da mesma forma, a redução de IL-2 não deve ser explicada apenas como consequência de diminuir prostaglandinas.</p></div>
 
 <p>A aula descreve redução de vasodilatação, edema, migração leucocitária, depósito de fibrina e respostas proliferativas tardias; inibição da liberação de histamina por mastócitos e da ativação de linfócitos B. Isso pode reduzir lesão causada por inflamação excessiva, mas também interferir na defesa contra microrganismos e na reparação.</p>
 <p>O <b>receptor mineralocorticoide (MR)</b> participa de ações no néfron distal/coletor, cólon e glândulas salivares, com igual afinidade por aldosterona e cortisol. GR e MR têm distribuição e seletividade diferentes; variações químicas entre fármacos procuram separar potência antiinflamatória e retenção hidrossalina.</p>
 </section>
 <section class="pg cap" id="mm29"><span class="eyebrow">Mapa mental 29 · Recuperação ativa</span><h1 class="h1">Ação dos corticoides</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="29"></div></div></section>
 <section class="pg cap" id="cap30">
 <span class="eyebrow">06 · Corticoides</span>
 <h1 class="h1">30. Potência, duração, via e metabolismo</h1>
 <div class="meta">Base do assunto: Clase 9 · páginas 23–26 e 36</div>
 
-<p class="lead">Escolher um corticoide exige olhar mais que o nome. A aula destaca <b>potência</b>, <b>duração da ação</b> e <b>atividade mineralocorticoide</b>. A dose em miligramas de um fármaco não é diretamente equivalente à de outro.</p>
+<p class="lead">Escolher um corticoide exige olhar mais que o nome. A aula destaca <b>potência</b>, <b>duração da ação</b> e <b>atividade mineralocorticoide</b>. <mark class="my">A dose em miligramas de um fármaco não é diretamente equivalente à de outro.</mark></p>
 
 <div class="tw"><table class="t">
 <thead><tr><th>Duração / grupo</th><th>Fármaco</th><th>Potência glico</th><th>Potência mineralo</th><th>Dose equivalente</th><th>Meia-vida plasmática</th></tr></thead>
@@ -1299,8 +1297,8 @@ table.t td b{color:var(--g9)}
 <tr><td>Mineralocorticoide</td><td>Fludrocortisona</td><td>~10</td><td>125–150</td><td>0,05–0,1 mg/dia</td><td>—</td></tr>
 </tbody></table></div>
 
-<p><b>Prednisona</b> precisa ser convertida em <b>prednisolona</b>; <b>cortisona</b>, em cortisol. O fígado participa dessas conversões. Disfunção hepática exige avaliação da escolha (preferir diretamente prednisolona ou hidrocortisona), mas a frase «nunca podem ser usados em qualquer insuficiência hepática» é ampla demais.</p>
-<p><b>Meia-vida plasmática</b> e duração biológica não são a mesma coisa. Mesmo após reduzir concentração circulante, a modificação da expressão gênica pode continuar produzindo efeitos e prolongar a supressão do eixo.</p>
+<p><mark class="my"><b>Prednisona</b> precisa ser convertida em <b>prednisolona</b>; <b>cortisona</b>, em cortisol.</mark> O fígado participa dessas conversões. Disfunção hepática exige avaliação da escolha (preferir diretamente prednisolona ou hidrocortisona), mas a frase «nunca podem ser usados em qualquer insuficiência hepática» é ampla demais.</p>
+<p><mark class="mr"><b>Meia-vida plasmática</b> e duração biológica não são a mesma coisa.</mark> Mesmo após reduzir concentração circulante, a modificação da expressão gênica pode continuar produzindo efeitos e prolongar a supressão do eixo.</p>
 
 <div class="box"><span class="lb">Entenda melhor</span><p>O sal e a formulação mudam o comportamento. Sais de <b>fosfato</b> (p. ex. fosfato dissódico de dexametasona) têm absorção rápida; sais de <b>acetato</b> (p. ex. acetato de metilprednisolona) formam depósito de absorção lenta. A via intravenosa não tem fase de absorção como a intramuscular.</p></div>
 
@@ -1308,7 +1306,7 @@ table.t td b{color:var(--g9)}
 <p>A ligação a <b>transcortina (CBG)</b>, de alta afinidade e baixa capacidade, e a <b>albumina</b> (~90% ligados), o metabolismo hepático (fase I e conjugação) e a excreção predominantemente renal ajudam a explicar diferenças de disponibilidade, mas variam entre glicocorticoides; os percentuais gerais do slide não devem ser universalizados.</p>
 </section>
 <section class="pg cap" id="mm30"><span class="eyebrow">Mapa mental 30 · Recuperação ativa</span><h1 class="h1">Perfis dos corticoides</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="30"></div></div></section>
 <section class="pg cap" id="cap31">
 <span class="eyebrow">06 · Corticoides</span>
@@ -1332,13 +1330,13 @@ table.t td b{color:var(--g9)}
 
 <p>A lipólise e o aumento de gordura central não são uma contradição simples: há mobilização de substratos, alterações hormonais e redistribuição ao longo do tempo. O resultado crônico é diferente de uma resposta metabólica aguda isolada.</p>
 
-<div class="box"><span class="lb">Entenda melhor</span><p>A pessoa pode ter aumento de peso e, simultaneamente, perder massa muscular. Peso corporal não informa sozinho qual tecido aumentou ou diminuiu.</p></div>
+<div class="box"><span class="lb">Entenda melhor</span><p>A pessoa pode ter aumento de peso e, simultaneamente, perder massa muscular. <mark class="my">Peso corporal não informa sozinho qual tecido aumentou ou diminuiu.</mark></p></div>
 
 <p>O <b>síndrome de Cushing iatrogênico</b> reúne manifestações de excesso medicamentoso. A <b>supressão do eixo</b> pode coexistir com aparência cushingoide: há excesso de ação do medicamento, mas produção endógena reduzida.</p>
-<p>O risco depende de dose, duração, potência, via e suscetibilidade individual. <b>Candidíase bucofaríngea</b> se relaciona ao depósito local de corticoide inalado (prevenir lavando a boca após o uso). O risco digestivo merece atenção quando corticoides se associam a AINEs. Nem todos os pacientes apresentarão todos os efeitos, e nem todo efeito tem a mesma relação dose–tempo.</p>
+<p>O risco depende de dose, duração, potência, via e suscetibilidade individual. <b>Candidíase bucofaríngea</b> se relaciona ao depósito local de corticoide inalado (<mark class="my">prevenir lavando a boca após o uso</mark>). <mark class="mr">O risco digestivo merece atenção quando corticoides se associam a AINEs.</mark> Nem todos os pacientes apresentarão todos os efeitos, e nem todo efeito tem a mesma relação dose–tempo.</p>
 </section>
 <section class="pg cap" id="mm31"><span class="eyebrow">Mapa mental 31 · Recuperação ativa</span><h1 class="h1">Efeitos metabólicos</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="31"></div></div></section>
 <section class="pg cap" id="cap32">
 <span class="eyebrow">06 · Corticoides</span>
@@ -1361,30 +1359,30 @@ table.t td b{color:var(--g9)}
 <tr><td>Maturação pulmonar fetal</td><td>Acelerar maturação em risco de parto prematuro</td><td>Betametasona ou dexametasona IM na gestante</td></tr>
 </tbody></table></div>
 
-<div class="box warn"><span class="lb">Precisão</span><p>Corticoide <b>não substitui adrenalina na anafilaxia</b>, e seu uso rotineiro para tratar a reação aguda não é recomendado pela diretriz consultada (R8). As doses inaladas da página 39 também precisam de conferência de unidade: <b>mg e µg diferem por um fator de mil</b>.</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p><mark class="mr">Corticoide <b>não substitui adrenalina na anafilaxia</b></mark>, e seu uso rotineiro para tratar a reação aguda não é recomendado pela diretriz consultada (R8). As doses inaladas da página 39 também precisam de conferência de unidade: <mark class="mr"><b>mg e µg diferem por um fator de mil</b></mark>.</p></div>
 
-<p>Após exposição prolongada, a retirada abrupta pode deixar o organismo sem medicamento e sem produção endógena suficiente. Isso explica <b>insuficiência suprarrenal</b> (crise adrenal, potencialmente fatal) após retirada. A redução deve considerar controle da doença e recuperação do eixo.</p>
+<p>Após exposição prolongada, a retirada abrupta pode deixar o organismo sem medicamento e sem produção endógena suficiente. Isso explica <b>insuficiência suprarrenal</b> <mark class="mr">(crise adrenal, potencialmente fatal)</mark> após retirada. A redução deve considerar controle da doença e recuperação do eixo.</p>
 
-<div class="box warn"><span class="lb">Precisão</span><p>Nem todo curso curto exige desmame. A diretriz consultada geralmente dispensa redução gradual para tratamentos inferiores a <b>3–4 semanas</b>; exposição prolongada e características individuais mudam a avaliação. Não use a frase «nunca suspender bruscamente» sem considerar o contexto (R12).</p></div>
+<div class="box warn"><span class="lb">Precisão</span><p>Nem todo curso curto exige desmame. A diretriz consultada geralmente dispensa redução gradual para tratamentos <mark class="my">inferiores a <b>3–4 semanas</b></mark>; exposição prolongada e características individuais mudam a avaliação. Não use a frase «nunca suspender bruscamente» sem considerar o contexto (R12).</p></div>
 
 <div class="box es"><span class="lb">Respuesta en español</span><p>«Los glucocorticoides exógenos pueden suprimir el eje hipotálamo–hipófisis–suprarrenal. Tras un tratamiento prolongado, la retirada brusca puede provocar insuficiencia suprarrenal».</p></div>
 </section>
 <section class="pg cap" id="mm32"><span class="eyebrow">Mapa mental 32 · Recuperação ativa</span><h1 class="h1">Uso e retirada</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="32"></div></div></section>
 <section class="pg cap" id="ex6"><span class="eyebrow">Exercícios · Módulo 06</span><h1 class="h1">Pratique: Corticoides</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="m6"></div></section>
+<div class="quiz ex" data-quiz="m6"></div></section>
 <section class="pg cap" id="fc6"><span class="eyebrow">Flashcards · Módulo 06</span><h1 class="h1">Flashcards: Corticoides</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="m6"></div></section>
+<div class="deck" data-deck="m6"></div></section>
 <section class="pg cap modcover" id="mod7"><span class="tag-mod">MÓDULO 07 · CLASES 6–9</span><h1 class="h1">Integração e treino</h1><p class="lead">Treino de mecanismos com resposta aberta e as nove perguntas oficiais da aula de corticoides.</p>
 <div class="list"><a href="#cap33"><b>33</b><span>Treino de mecanismos — responda antes de conferir</span></a><a href="#cap34"><b>34</b><span>Nove perguntas da aula de corticoides</span></a>
-<a href="#ex7"><b>✎</b><span>Exercícios: 8 questões com correção imediata</span></a><a href="#fc7"><b>⧉</b><span>Flashcards: 8 cartões</span></a></div></section>
+<a href="#ex7"><b>✎</b><span>Exercícios (8)</span></a><a href="#fc7"><b>⧉</b><span>Flashcards (8)</span></a></div></section>
 <section class="pg cap" id="cap33">
 <span class="eyebrow">07 · Recuperação ativa</span>
 <h1 class="h1">33. Treino de mecanismos — responda antes de conferir</h1>
 <div class="meta">Base do assunto: integração das Clases 6–9</div>
 
-<p class="lead">Leia o cenário, formule sua resposta <b>em voz alta ou por escrito</b> e só depois revele a explicação. As questões são autorais, baseadas nos mecanismos das aulas; não são questões oficiais do professor.</p>
+<p class="lead">Responda primeiro, depois revele.</p>
 
 <div class="ex">
 <div class="qbox rv"><div class="qn">Treino 1 <em>resposta aberta</em></div><div class="qt">Um fármaco aumenta ACh na sinapse. Ele age só no parassimpático?</div><button class="btn ghost" data-rv>Revelar resposta</button><div class="ans">Não. ACh também participa de gânglios autonômicos e da junção neuromuscular. Um anticolinesterásico pode intensificar respostas muscarínicas e nicotínicas; alguns chegam ao SNC.</div></div>
@@ -1397,17 +1395,17 @@ table.t td b{color:var(--g9)}
 <div class="qbox rv"><div class="qn">Treino 8 <em>resposta aberta</em></div><div class="qt">Como Cushing iatrogênico e supressão do eixo coexistem?</div><button class="btn ghost" data-rv>Revelar resposta</button><div class="ans">O medicamento produz excesso de ação glicocorticoide, enquanto a retroalimentação negativa reduz CRH/ACTH e a produção endógena.</div></div>
 </div>
 
-<div class="box"><span class="lb">Como usar</span><p>Ao errar, registre qual elo falhou: <b>receptor, mecanismo, órgão, indicação ou reação adversa</b>. Releia esse elo e explique novamente sem olhar.</p></div>
+<div class="box"><span class="lb">Como usar</span><p>Ao errar, registre qual elo falhou: <mark class="my"><b>receptor, mecanismo, órgão, indicação ou reação adversa</b></mark>. Releia esse elo e explique novamente sem olhar.</p></div>
 </section>
 <section class="pg cap" id="mm33"><span class="eyebrow">Mapa mental 33 · Recuperação ativa</span><h1 class="h1">Raciocínio de prova</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="33"></div></div></section>
 <section class="pg cap" id="cap34">
 <span class="eyebrow">07 · Recuperação ativa</span>
 <h1 class="h1">34. Nove perguntas da aula de corticoides</h1>
 <div class="meta">Base do assunto: Clase 9 · páginas 44 e 46 · questionário oficial de revisão (gabarito desenvolvido)</div>
 
-<p class="lead">As perguntas estão em espanhol, como na aula. Tente responder em espanhol antes de revelar; a resposta vem em português, com os termos técnicos preservados.</p>
+<p class="lead">Responda em espanhol, depois revele.</p>
 
 <div class="ex">
 <div class="qbox rv"><div class="qn">Pergunta 1</div><div class="qt">¿Qué son los corticoides?</div><button class="btn ghost" data-rv>Revelar resposta</button><div class="ans">São hormônios esteroides da corteza suprarrenal e fármacos sintéticos que reproduzem suas ações. Incluem glicocorticoides e mineralocorticoides.</div></div>
@@ -1422,12 +1420,12 @@ table.t td b{color:var(--g9)}
 </div>
 </section>
 <section class="pg cap" id="mm34"><span class="eyebrow">Mapa mental 34 · Recuperação ativa</span><h1 class="h1">Corticoides: oral</h1>
-<p class="mmlegend">Complete o mapa: diga a folha em voz alta e toque para conferir. No <b>modo prova</b>, os ramos também ficam ocultos. Depois explique cada ramo: «Esse efeito acontece porque…», com o nome técnico em espanhol.</p>
+<p class="mmlegend">Diga a resposta e toque para conferir.</p>
 <div class="mmwrap"><div class="mm" data-mm="34"></div></div></section>
 <section class="pg cap" id="ex7"><span class="eyebrow">Exercícios · Módulo 07</span><h1 class="h1">Pratique: Integração e treino</h1>
-<p class="lead">Responda sem consultar. A correção aparece na hora, com a justificativa. Os erros ficam contados em <b>Para revisar</b>.</p><div class="quiz ex" data-quiz="m7"></div></section>
+<div class="quiz ex" data-quiz="m7"></div></section>
 <section class="pg cap" id="fc7"><span class="eyebrow">Flashcards · Módulo 07</span><h1 class="h1">Flashcards: Integração e treino</h1>
-<p class="lead">Toque no cartão para virar. «Sei» tira o cartão da pilha; «Revisar de novo» manda para o fim.</p><div class="deck" data-deck="m7"></div></section>
+<div class="deck" data-deck="m7"></div></section>
 <section class="pg cap" id="fichas">
 <span class="eyebrow">Apêndice A · Consulta rápida</span>
 <h1 class="h1">Fichas de doses de referência</h1>
@@ -1921,12 +1919,12 @@ function drawMap(box){
   svg+='<g class="branch'+(showB?'':' hidden leaf')+'" data-k="'+k+'"><rect x="'+bX+'" y="'+(by-21)+'" width="'+bW+'" height="42" rx="'+rx+'" fill="'+BG[i%4]+'" stroke="'+c+'" stroke-width="1.3"/>'+tx(bl,bX+12,by+4,14,'font-size="12.5" font-weight="700" fill="'+c+'"')+'</g>';
   r.f.forEach(function(f,j){var ly=gy+j*(LH+GAP)+LH/2,kk=i+'-'+j,show=!!st[kk];
    svg+='<g class="leaf'+(show?'':' hidden')+'" data-k="'+kk+'" tabindex="0" role="button" aria-label="'+(show?esc(f):'Revelar folha do ramo '+esc(r.t))+'"><rect x="'+lX+'" y="'+(ly-LH/2)+'" width="'+lW+'" height="'+LH+'" rx="7" fill="#fff" stroke="#d6e4dc"/>'+
-   tx(show?wrap(f,48):['toque para revelar'],lX+12,ly+4,13,'font-size="12.5" fill="#253530"')+'</g>'});
+   tx(show?wrap(f,48):['revelar'],lX+12,ly+4,13,'font-size="12.5" fill="#253530"')+'</g>'});
  });
  var rl=wrap(m.root,15);
  svg+='<rect x="'+rootX+'" y="'+(cy-Math.max(30,rl.length*10+14))+'" width="'+rootW+'" height="'+Math.max(60,rl.length*20+28)+'" rx="9" fill="#2a7a52"/>'+tx(rl,rootX+14,cy+5,19,'font-size="15" font-weight="800" fill="#fff"');
  var tot=8,done=0;for(var i=0;i<4;i++)for(var j=0;j<2;j++)if(st[i+'-'+j])done++;
- box.innerHTML='<div class="mmhead"><span class="k">'+done+' de '+tot+' folhas completadas'+(prova?' · modo prova':'')+'</span><span class="mmtools noprint"><button data-mmall>Revelar tudo</button><button data-mmhide>Ocultar tudo</button><button data-mmprova>'+(prova?'Sair do modo prova':'Modo prova')+'</button></span></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mapa mental: '+esc(m.title)+'">'+svg+'</svg>';
+ box.innerHTML='<div class="mmhead"><span class="k">'+done+'/'+tot+(prova?' · modo prova':'')+'</span><span class="mmtools noprint"><button data-mmall>Revelar tudo</button><button data-mmhide>Ocultar tudo</button><button data-mmprova>'+(prova?'Sair do modo prova':'Modo prova')+'</button></span></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mapa mental: '+esc(m.title)+'">'+svg+'</svg>';
 }
 function mapAct(box,act,k){var id=box.dataset.mm,st=S.mm[id]||(S.mm[id]={});
  if(act==='leaf'){st[k]=1}
@@ -1959,7 +1957,7 @@ function answer(box,i,o){var k=box.dataset.quiz,q=Q[k][i],right=q.tipo==='vf'?(q
 function deckState(k){var L=C[k]||[],d=S.fc[k];if(!d||!Array.isArray(d.queue)||d.n!==L.length){d=S.fc[k]={n:L.length,queue:L.map(function(_,i){return i}),known:[],rev:0}}return d}
 function drawDeck(box){var k=box.dataset.deck,L=C[k]||[],d=deckState(k),cur=d.queue[0];
  var h='<div class="dk-top"><span class="dk-stats"><b>'+d.known.length+'</b> de '+L.length+' dominados · '+d.queue.length+' na pilha · '+d.rev+' revisões</span><span><button class="btn ghost" data-fshuf>Embaralhar</button> <button class="btn ghost" data-freset>Reiniciar</button></span></div>';
- if(cur==null)h+='<div class="box"><span class="lb">Pilha concluída</span><p>Você dominou todos os cartões deste módulo. Reinicie para repassar ou volte amanhã para fixar.</p></div>';
+ if(cur==null)h+='<div class="box"><span class="lb">Pilha concluída</span><p>Todos dominados. Reinicie para repassar.</p></div>';
  else h+='<div class="card3" data-flip tabindex="0" role="button" aria-label="Virar cartão"><div class="in"><div class="f"><span class="lbl">Cartão '+(cur+1)+' · frente</span><div class="txt">'+esc(L[cur].f)+'</div></div><div class="b"><span class="lbl">Verso</span><div class="txt">'+esc(L[cur].b)+'</div></div></div></div><div class="dk-ctl"><button class="btn bad" data-fno>Revisar de novo</button><button class="btn good" data-fok>Sei</button></div>';
  h+='<table class="fl-list pdf-only"><thead><tr><th>Frente</th><th>Verso</th></tr></thead><tbody>'+L.map(function(c){return '<tr><td>'+esc(c.f)+'</td><td>'+esc(c.b)+'</td></tr>'}).join('')+'</tbody></table>';
  box.innerHTML=h}
@@ -1975,7 +1973,7 @@ function prog(){var tot=0,ok=0;
  Object.keys(MAPS).forEach(function(id){tot+=8;var st=S.mm[id]||{};for(var i=0;i<4;i++)for(var j=0;j<2;j++)if(st[i+'-'+j])ok++});
  Object.keys(Q).forEach(function(k){Q[k].forEach(function(q,i){if(q.tipo==='ab')return;tot++;if(S.q[k]&&S.q[k][i]!=null)ok++})});
  Object.keys(C).forEach(function(k){tot+=C[k].length;ok+=S.fc[k]&&S.fc[k].known?S.fc[k].known.length:0});
- var p=tot?Math.round(ok/tot*100):0,b=document.getElementById('progbar'),t=document.getElementById('progtxt');if(b)b.style.width=p+'%';if(t)t.textContent=p+'% do caderno praticado'}
+ var p=tot?Math.round(ok/tot*100):0,b=document.getElementById('progbar'),t=document.getElementById('progtxt');if(b)b.style.width=p+'%';if(t)t.textContent=p+'% praticado'}
 
 /* ---------------- eventos ---------------- */
 document.addEventListener('click',function(e){var t=e.target;

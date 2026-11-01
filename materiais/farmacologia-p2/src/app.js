@@ -32,12 +32,12 @@ function drawMap(box){
   svg+='<g class="branch'+(showB?'':' hidden leaf')+'" data-k="'+k+'"><rect x="'+bX+'" y="'+(by-21)+'" width="'+bW+'" height="42" rx="'+rx+'" fill="'+BG[i%4]+'" stroke="'+c+'" stroke-width="1.3"/>'+tx(bl,bX+12,by+4,14,'font-size="12.5" font-weight="700" fill="'+c+'"')+'</g>';
   r.f.forEach(function(f,j){var ly=gy+j*(LH+GAP)+LH/2,kk=i+'-'+j,show=!!st[kk];
    svg+='<g class="leaf'+(show?'':' hidden')+'" data-k="'+kk+'" tabindex="0" role="button" aria-label="'+(show?esc(f):'Revelar folha do ramo '+esc(r.t))+'"><rect x="'+lX+'" y="'+(ly-LH/2)+'" width="'+lW+'" height="'+LH+'" rx="7" fill="#fff" stroke="#d6e4dc"/>'+
-   tx(show?wrap(f,48):['toque para revelar'],lX+12,ly+4,13,'font-size="12.5" fill="#253530"')+'</g>'});
+   tx(show?wrap(f,48):['revelar'],lX+12,ly+4,13,'font-size="12.5" fill="#253530"')+'</g>'});
  });
  var rl=wrap(m.root,15);
  svg+='<rect x="'+rootX+'" y="'+(cy-Math.max(30,rl.length*10+14))+'" width="'+rootW+'" height="'+Math.max(60,rl.length*20+28)+'" rx="9" fill="#2a7a52"/>'+tx(rl,rootX+14,cy+5,19,'font-size="15" font-weight="800" fill="#fff"');
  var tot=8,done=0;for(var i=0;i<4;i++)for(var j=0;j<2;j++)if(st[i+'-'+j])done++;
- box.innerHTML='<div class="mmhead"><span class="k">'+done+' de '+tot+' folhas completadas'+(prova?' · modo prova':'')+'</span><span class="mmtools noprint"><button data-mmall>Revelar tudo</button><button data-mmhide>Ocultar tudo</button><button data-mmprova>'+(prova?'Sair do modo prova':'Modo prova')+'</button></span></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mapa mental: '+esc(m.title)+'">'+svg+'</svg>';
+ box.innerHTML='<div class="mmhead"><span class="k">'+done+'/'+tot+(prova?' · modo prova':'')+'</span><span class="mmtools noprint"><button data-mmall>Revelar tudo</button><button data-mmhide>Ocultar tudo</button><button data-mmprova>'+(prova?'Sair do modo prova':'Modo prova')+'</button></span></div><svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Mapa mental: '+esc(m.title)+'">'+svg+'</svg>';
 }
 function mapAct(box,act,k){var id=box.dataset.mm,st=S.mm[id]||(S.mm[id]={});
  if(act==='leaf'){st[k]=1}
@@ -70,7 +70,7 @@ function answer(box,i,o){var k=box.dataset.quiz,q=Q[k][i],right=q.tipo==='vf'?(q
 function deckState(k){var L=C[k]||[],d=S.fc[k];if(!d||!Array.isArray(d.queue)||d.n!==L.length){d=S.fc[k]={n:L.length,queue:L.map(function(_,i){return i}),known:[],rev:0}}return d}
 function drawDeck(box){var k=box.dataset.deck,L=C[k]||[],d=deckState(k),cur=d.queue[0];
  var h='<div class="dk-top"><span class="dk-stats"><b>'+d.known.length+'</b> de '+L.length+' dominados · '+d.queue.length+' na pilha · '+d.rev+' revisões</span><span><button class="btn ghost" data-fshuf>Embaralhar</button> <button class="btn ghost" data-freset>Reiniciar</button></span></div>';
- if(cur==null)h+='<div class="box"><span class="lb">Pilha concluída</span><p>Você dominou todos os cartões deste módulo. Reinicie para repassar ou volte amanhã para fixar.</p></div>';
+ if(cur==null)h+='<div class="box"><span class="lb">Pilha concluída</span><p>Todos dominados. Reinicie para repassar.</p></div>';
  else h+='<div class="card3" data-flip tabindex="0" role="button" aria-label="Virar cartão"><div class="in"><div class="f"><span class="lbl">Cartão '+(cur+1)+' · frente</span><div class="txt">'+esc(L[cur].f)+'</div></div><div class="b"><span class="lbl">Verso</span><div class="txt">'+esc(L[cur].b)+'</div></div></div></div><div class="dk-ctl"><button class="btn bad" data-fno>Revisar de novo</button><button class="btn good" data-fok>Sei</button></div>';
  h+='<table class="fl-list pdf-only"><thead><tr><th>Frente</th><th>Verso</th></tr></thead><tbody>'+L.map(function(c){return '<tr><td>'+esc(c.f)+'</td><td>'+esc(c.b)+'</td></tr>'}).join('')+'</tbody></table>';
  box.innerHTML=h}
@@ -86,7 +86,7 @@ function prog(){var tot=0,ok=0;
  Object.keys(MAPS).forEach(function(id){tot+=8;var st=S.mm[id]||{};for(var i=0;i<4;i++)for(var j=0;j<2;j++)if(st[i+'-'+j])ok++});
  Object.keys(Q).forEach(function(k){Q[k].forEach(function(q,i){if(q.tipo==='ab')return;tot++;if(S.q[k]&&S.q[k][i]!=null)ok++})});
  Object.keys(C).forEach(function(k){tot+=C[k].length;ok+=S.fc[k]&&S.fc[k].known?S.fc[k].known.length:0});
- var p=tot?Math.round(ok/tot*100):0,b=document.getElementById('progbar'),t=document.getElementById('progtxt');if(b)b.style.width=p+'%';if(t)t.textContent=p+'% do caderno praticado'}
+ var p=tot?Math.round(ok/tot*100):0,b=document.getElementById('progbar'),t=document.getElementById('progtxt');if(b)b.style.width=p+'%';if(t)t.textContent=p+'% praticado'}
 
 /* ---------------- eventos ---------------- */
 document.addEventListener('click',function(e){var t=e.target;

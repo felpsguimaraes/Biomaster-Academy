@@ -15,7 +15,7 @@
 html{background:var(--bg)}
 body{margin:0;font:400 14.5px/1.6 var(--f);color:var(--ink);-webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:var(--fd);color:var(--g9);margin:0;letter-spacing:-.02em;line-height:1.15}
-p{margin:0 0 10px}
+p{margin:0 0 6px}
 b,strong{font-weight:700;color:var(--g9)}
 a{color:var(--g7)}
 button{font:inherit;cursor:pointer}
@@ -29,23 +29,29 @@ button{font:inherit;cursor:pointer}
 .logo .wm i{font-style:normal;color:var(--g7)}
 
 /* ---------- capa e páginas ---------- */
-.pg{background:var(--paper);width:min(820px,calc(100% - 32px));margin:24px auto;padding:56px 64px 64px;border-radius:6px;box-shadow:0 1px 2px rgba(28,58,47,.06),0 8px 26px rgba(28,58,47,.07)}
+.pg{background:var(--paper);width:min(820px,calc(100% - 32px));margin:20px auto;padding:40px 56px 44px;border-radius:6px;box-shadow:0 1px 2px rgba(28,58,47,.06),0 8px 26px rgba(28,58,47,.07)}
 .cap{page-break-before:always;break-before:page}
 .cap:first-of-type{page-break-before:auto}
 .topline{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:26px}
 .topline .rt{font-size:10px;letter-spacing:.06em;color:var(--mut);text-transform:uppercase}
 .eyebrow{display:block;font:700 11px/1.2 var(--f);letter-spacing:.09em;text-transform:uppercase;color:var(--g7);margin-bottom:10px}
-.h1{font-size:30px;font-weight:800;margin-bottom:8px}
-.meta{font-size:12px;color:var(--mut);margin-bottom:22px}
-.lead{font-size:15px;line-height:1.65}
-h3.sub{font-size:16px;font-weight:700;color:var(--g7);margin:24px 0 10px}
+.h1{font-size:30px;font-weight:800;margin-bottom:6px}
+.meta{font-size:12px;color:var(--mut);margin-bottom:14px}
+.lead{font-size:15px;line-height:1.6}
+h3.sub{font-size:16px;font-weight:700;color:var(--g7);margin:16px 0 6px}
 h4.sub2{font-size:14px;font-weight:700;color:var(--g9);margin:16px 0 6px}
-ul.pl,ol.pl{margin:6px 0 12px 0;padding-left:20px}
-ul.pl li,ol.pl li{margin-bottom:5px}
-.hl{background:linear-gradient(transparent 58%,#cfe8d9 58%);padding:0 1px}
+ul.pl,ol.pl{margin:4px 0 8px 0;padding-left:20px}
+ul.pl li,ol.pl li{margin-bottom:3px}
+/* marca-texto: amarelo = cai na prova · vermelho = alerta / erro clássico */
+mark{color:inherit;padding:1px 3px;border-radius:3px;-webkit-box-decoration-break:clone;box-decoration-break:clone;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+mark.my{background:#fff0a6}
+mark.mr{background:#ffd6cf;color:#7a1f12;font-weight:600}
+mark.mr b{color:#7a1f12}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--mut);margin:6px 0 10px}
+.nav .legend{flex-direction:column;margin:12px 6px 0;gap:4px}
 
 /* ---------- tabelas ---------- */
-table.t{width:100%;border-collapse:collapse;margin:14px 0 16px;font-size:12.5px;line-height:1.45;page-break-inside:auto}
+table.t{width:100%;border-collapse:collapse;margin:8px 0 10px;font-size:12.5px;line-height:1.45;page-break-inside:auto}
 table.t thead th{background:var(--mint);color:var(--g9);text-align:left;font-weight:700;padding:9px 10px;border-bottom:1px solid var(--line)}
 table.t td{padding:8px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
 table.t tbody tr:nth-child(even) td{background:var(--mint2)}
@@ -54,7 +60,7 @@ table.t td b{color:var(--g9)}
 .tw{overflow-x:auto}
 
 /* ---------- caixas de destaque ---------- */
-.box{border-left:4px solid var(--g7);background:var(--mint2);border-radius:0 6px 6px 0;padding:12px 16px;margin:16px 0;page-break-inside:avoid;border-top:1px solid var(--line2);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2)}
+.box{border-left:4px solid var(--g7);background:var(--mint2);border-radius:0 6px 6px 0;padding:9px 14px;margin:10px 0;page-break-inside:avoid;border-top:1px solid var(--line2);border-right:1px solid var(--line2);border-bottom:1px solid var(--line2)}
 .box .lb{display:block;font:800 11px/1.2 var(--f);letter-spacing:.07em;text-transform:uppercase;color:var(--g7);margin-bottom:5px}
 .box p:last-child{margin-bottom:0}
 .box.warn{border-left-color:var(--brown);background:#fbf7f0}
@@ -63,7 +69,7 @@ table.t td b{color:var(--g9)}
 .box.es .lb{color:var(--blue)}
 
 /* ---------- mapas mentais ---------- */
-.mmwrap{margin:22px 0 10px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px 10px 6px}
+.mmwrap{margin:10px 0 6px;border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px 10px 6px}
 .mmhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:0 8px 6px}
 .mmhead .k{font:800 11px var(--f);letter-spacing:.08em;color:var(--g7);text-transform:uppercase}
 .mmtools{display:flex;gap:6px;flex-wrap:wrap}
@@ -78,11 +84,11 @@ table.t td b{color:var(--g9)}
 .mm .blank rect{fill:#fff;stroke-dasharray:4 3}
 .mm .blank text{fill:var(--mut)}
 .mmcap{font-size:11.5px;color:var(--mut);padding:4px 8px 6px}
-.mmlegend{font-size:11.5px;color:var(--mut);margin:4px 0 14px;padding:0 2px}
+.mmlegend{font-size:12px;color:var(--mut);margin:2px 0 8px;padding:0 2px}
 
 /* ---------- exercícios ---------- */
 .ex{margin:14px 0 22px;page-break-inside:auto}
-.qbox{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:0 0 12px;background:#fff;page-break-inside:avoid}
+.qbox{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0 0 10px;background:#fff;page-break-inside:avoid}
 .qbox .qn{font:800 11px var(--f);letter-spacing:.07em;color:var(--g7);text-transform:uppercase;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px}
 .qbox .qn em{font-style:normal;color:var(--mut);font-weight:600}
 .qbox .qt{font-weight:600;color:var(--g9);margin-bottom:10px}
@@ -171,7 +177,7 @@ table.t td b{color:var(--g9)}
 /* ---------- responsivo (tela) ---------- */
 @media (max-width:980px){.nav{display:none}.main{margin-left:0}}
 .mmhead{flex-wrap:wrap}
-@media (max-width:640px){.mm{overflow-x:auto;-webkit-overflow-scrolling:touch}.mm svg{min-width:680px}.mmwrap{padding:10px 4px 4px}.mmlegend:after{content:" Arraste o mapa para o lado para ver tudo.";}.pg{padding:30px 20px 36px;margin:12px 8px;width:auto}.h1{font-size:24px}.cover h1{font-size:40px}.cover .grid{grid-template-columns:1fr}}
+@media (max-width:640px){.mm{overflow-x:auto;-webkit-overflow-scrolling:touch}.mm svg{min-width:680px}.mmwrap{padding:10px 4px 4px}.mmlegend:after{content:" Arraste para ver tudo.";}.pg{padding:30px 20px 36px;margin:12px 8px;width:auto}.h1{font-size:24px}.cover h1{font-size:40px}.cover .grid{grid-template-columns:1fr}}
 
 /* ---------- impressão A4 ---------- */
 @media print{
